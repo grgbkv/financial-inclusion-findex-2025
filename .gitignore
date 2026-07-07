@@ -1,0 +1,14 @@
+# private / not for the public repo
+Thesis_final_v5.docx
+THESIS_ERRATA_private.md
+02_Notebooks/FindexNotebook.ipynb
+02_Notebooks/figure_4.*.png
+03_Outputs/Findex_Report.html
+
+# system / tooling
+.DS_Store
+.ipynb_checkpoints/
+__pycache__/
+.claude/
+.venv/
+~$*

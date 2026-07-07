@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this analysis or the working paper, please cite it as below."
+title: "Access Without Depth: Financial Inclusion 2011-2024 and Aggregation Pitfalls in the Global Findex Database 2025"
+authors:
+  - family-names: "[Surname]"
+    given-names: "[Given name]"
+date-released: 2026-07-05
+type: article
+url: "[repository URL]"
+identifiers:
+  - type: doi
+    value: "[Zenodo DOI once minted]"
+abstract: >-
+  Balanced-panel trends in financial access, usage and resilience from the
+  Global Findex Database 2025, together with a quantified taxonomy of four
+  aggregation pitfalls in the database's country file and a validation-first
+  workflow that catches them.
