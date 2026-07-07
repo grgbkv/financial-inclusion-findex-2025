@@ -53,3 +53,6 @@ jupyter notebook 02_Notebooks/financial-inclusion-findex-2025.ipynb
 
 Global Findex Database 2025, World Bank — [worldbank.org/globalfindex](https://www.worldbank.org/en/publication/globalfindex).
 Klapper, L., Singer, D., Starita, L., & Norris, A. (2025). *The Global Findex Database 2025: Connectivity and Financial Inclusion in the Digital Economy.* Washington, DC: World Bank.
+
+---
+*Developed in collaboration with Claude (Anthropic).*
