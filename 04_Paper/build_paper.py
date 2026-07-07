@@ -140,9 +140,7 @@ para('', space_after=30)
 para('Access Without Depth: Financial Inclusion 2011–2024 and Aggregation '
      'Pitfalls in the Global Findex Database 2025',
      size=17, bold=True, align='center', space_after=18)
-para('[Author Name]', size=13, align='center', space_after=2)
-para('[Affiliation]', size=12, align='center', space_after=2)
-para('[email@example.com]', size=11, align='center', space_after=24)
+para('Georgy Bykov', size=13, align='center', space_after=24)
 para('Working Paper — July 2026', size=11, italic=True, align='center', space_after=28)
 
 para('Abstract', size=12, bold=True, align='center', space_after=8)
@@ -166,7 +164,7 @@ para('The Global Findex Database 2025 extends the World Bank’s survey of how a
 para('*Keywords:* financial inclusion; Global Findex; mobile money; digital payments; '
      'measurement error; reproducibility', size=11, align='left', space_after=4)
 para('*JEL codes:* C81, G21, G51, O16', size=11, align='left', space_after=4)
-para('*Data and code:* [repository URL]', size=11, align='left', space_after=4)
+para('*Data and code:* https://github.com/grgbkv/financial-inclusion-findex-2025', size=11, align='left', space_after=4)
 para('This paper grew out of the author’s bachelor’s thesis; the empirical analysis was '
      'rebuilt and audited for this version, and the audit of the earlier version supplied the '
      'error catalogue analysed in Section 5. All remaining errors are the author’s own.',
@@ -523,7 +521,8 @@ para('Methodologically, the paper’s message is that the Findex 2025 file is bo
 heading(None, 'Data and code availability')
 para('The Global Findex Database 2025 is published by the World Bank at '
      'worldbank.org/globalfindex. All code producing every figure, table and statistic in this '
-     'paper, together with the analysis notebook, is available at [repository URL].')
+     'paper, together with the analysis notebook, is available at '
+     'https://github.com/grgbkv/financial-inclusion-findex-2025.')
 heading(None, 'References')
 refs = [
     'Demirgüç-Kunt, A., and L. Klapper (2012). “Measuring Financial Inclusion: '
