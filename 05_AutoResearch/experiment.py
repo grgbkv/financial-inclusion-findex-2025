@@ -1,42 +1,37 @@
-"""E3: Did gender gaps in account ownership close faster where mobile money grew?
+"""E5: Is digital-payment usage a leading indicator of account-ownership growth?
 
-Pre-registered in RESEARCH_LOG.md. Developing panel countries; gap from group2 rows.
+"Usage headroom": countries where accounts are used intensively (g20_any close to or
+above account level) should convert usage pressure into new accounts 2021->2024.
+Pre-registered in RESEARCH_LOG.md.
 """
 from harness import Findex, INDICATORS
 
 
 def run(fx: Findex):
-    dev_names = set(fx.pan_dev["countrynewwb"].unique())
-    grp = fx.pan_grp[fx.pan_grp["countrynewwb"].isin(dev_names)]
+    acc = fx.country_panel(fx.pan_dev, INDICATORS["account"]["headline"], [2021, 2024])
+    dp = fx.country_panel(fx.pan_dev, INDICATORS["digital_payment"]["headline"], [2021])
 
-    def gap_for(year):
-        men = grp[(grp["group2"] == "men") & (grp["year"] == year)].set_index(
-            "countrynewwb")["account_t_d"] * 100
-        women = grp[(grp["group2"] == "women") & (grp["year"] == year)].set_index(
-            "countrynewwb")["account_t_d"] * 100
-        return men - women
+    ratio = (dp[2021] / acc[2021]).rename("usage_ratio")  # usage intensity of the stock
+    d_acc = (acc[2024] - acc[2021]).rename("d_acc")
+    w = acc["pop"]
 
-    d_gap = (gap_for(2024) - gap_for(2021)).rename("d_gap")
-    mm = fx.country_panel(fx.pan_dev, INDICATORS["mobile_money"]["headline"], [2021, 2024])
-    d_mm = (mm[2024] - mm[2021]).rename("d_mm")
-    w = mm["pop"]
-
-    r, n = fx.weighted_corr(d_gap, d_mm, w)
+    r, n = fx.weighted_corr(ratio, d_acc, w)
     gates = [
-        fx.gate_coverage(fx.pan_dev, "account_t_d", 2024),
-        fx.gate_jackknife(d_gap, d_mm, w),
+        fx.gate_variant("digital_payment", INDICATORS["digital_payment"]["headline"]),
+        fx.gate_coverage(fx.pan_dev, INDICATORS["digital_payment"]["headline"], 2021),
+        fx.gate_jackknife(ratio, d_acc, w),
     ]
 
-    both = d_gap.to_frame().join(d_mm).join(w).dropna()
-    both["mm_tercile"] = both["d_mm"].rank(pct=True).apply(
+    both = ratio.to_frame().join(d_acc).join(w).dropna()
+    both["tercile"] = both["usage_ratio"].rank(pct=True).apply(
         lambda p: "high" if p > 2 / 3 else ("mid" if p > 1 / 3 else "low"))
     terciles = {
-        t: round(float((both[both.mm_tercile == t]["d_gap"] * both[both.mm_tercile == t]["pop"]).sum()
-                       / both[both.mm_tercile == t]["pop"].sum()), 2)
+        t: round(float((both[both.tercile == t]["d_acc"] * both[both.tercile == t]["pop"]).sum()
+                       / both[both.tercile == t]["pop"].sum()), 1)
         for t in ["low", "mid", "high"]}
 
-    print(f"weighted r(d_gap, d_mm) = {r:.3f}  (n={n})")
-    print("weighted mean d_gap by MM-growth tercile:", terciles)
+    print(f"weighted r(usage_ratio_2021, d_acc) = {r:.3f}  (n={n})")
+    print("weighted mean d_acc by usage-ratio tercile:", terciles)
     for g in gates:
         print(g)
 
