@@ -83,3 +83,9 @@ magnitude retention, not just sign stability.
 β·mobile_money_2021 + γ·Δmm(2017→2021), β,γ fit by weighted OLS on the 2017→2021
 transition (train-period supervision only, no 2024 leakage in fitting).
 **Keep if:** saving MAE < 8.448 without touching other targets.
+**P3 verdict: DISCARD, reverted to P2.** The saving surge was not forecastable from
+pre-2021 mobile-money features fit on the previous transition — contemporaneous
+correlation (E1) is not predictability. The surge reads as a regime change.
+
+## Session close-out
+Budget reached; distilling kept findings into EXTENSIONS_DRAFT.md.

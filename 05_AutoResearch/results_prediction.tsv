@@ -5,3 +5,4 @@ commit	target	mae_pp	n	status	description
 3bc74da	account_t_d	6.123	117	discard	P1 damped trend l=0.5: worse (baseline 5.576)
 3bc74da	fin17a_17a1_d	8.448	81	discard	P1 damped trend: better (baseline 9.767) but bundled with account regression
 691b3df	fin17a_17a1_d	8.448	81	keep	P2 per-target: damped trend for saving only; account/resilience persistence unchanged
+253c7b9	fin17a_17a1_d	9.747	81	discard	P3 MM-informed growth model: worse than P2 champion 8.448 - surge is a regime change, not learnable from the 2017-21 transition
