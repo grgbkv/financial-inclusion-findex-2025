@@ -50,3 +50,12 @@ faster account growth (accounts-first expansion pattern).
 (residualize both on account_2021, weighted); compare |r_partial| to plain convergence
 r(account_2021, Δaccount). Gates G4/G6 on the partials.
 **Keep if:** |r_partial| ≥ 0.30 with stable sign.
+**E5b verdict: KEEP** (threshold met; sign survives control and jackknife). Caveat logged:
+magnitude concentrates in large economies. Reading: mass account-opening drives run ahead
+of usage infrastructure — the access-vs-depth gap has a growth signature.
+
+## E7 — pre-registered
+**H:** Where formal saving surged 2021→2024, savings became a materially bigger *source of
+emergency funds*: Δ(fin24sav share among the resilient) correlates with Δ(saved_formally).
+**Test:** fin24sav (would use savings for emergency funds) as pp of adults; weighted corr of
+Δfin24sav vs Δsaved_formally, dev panel; G4/G6. **Keep if:** |r| ≥ 0.30, stable.
