@@ -22,3 +22,10 @@ but account +0.55pp — deceleration makes global trend extrapolation overshoot.
 ## P2 — pre-registered
 **Idea:** per-target policy: persistence for account & resilience; damped trend (λ=0.5)
 only for saved_formally. **Keep if:** saving MAE < 9.767 with account/resilience unchanged.
+**P2 verdict: KEEP.** Saving 8.448 (was 9.767), others unchanged. Champion updated.
+
+## E3 — pre-registered
+**H:** Gender gaps in account ownership closed faster where mobile money grew:
+Δ(gap) 2021→2024 correlates negatively with Δmobile_money (dev panel countries, group2 rows).
+**Test:** per-country gap = men − women (account_t_d, group2), Δgap vs Δmm, weighted; G4/G6.
+**Keep if:** |r| ≥ 0.30, sign negative, G6 stable.
