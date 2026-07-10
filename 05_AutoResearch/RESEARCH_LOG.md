@@ -16,3 +16,9 @@ reliably follow within three years — consistent with the paper's access-vs-dep
 ## P1 — pre-registered (prediction stream)
 **Idea:** damped-trend predictor: 2024 = 2021 + λ·(2021−2017), λ=0.5, clipped to [0,100].
 **Keep if:** MAE improves on persistence for a target without worsening others materially.
+**P1 verdict: DISCARD** (pre-registered rule: no material worsening). Saving −1.32pp MAE,
+but account +0.55pp — deceleration makes global trend extrapolation overshoot.
+
+## P2 — pre-registered
+**Idea:** per-target policy: persistence for account & resilience; damped trend (λ=0.5)
+only for saved_formally. **Keep if:** saving MAE < 9.767 with account/resilience unchanged.
