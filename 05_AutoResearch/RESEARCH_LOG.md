@@ -59,3 +59,17 @@ of usage infrastructure — the access-vs-depth gap has a growth signature.
 emergency funds*: Δ(fin24sav share among the resilient) correlates with Δ(saved_formally).
 **Test:** fin24sav (would use savings for emergency funds) as pp of adults; weighted corr of
 Δfin24sav vs Δsaved_formally, dev panel; G4/G6. **Keep if:** |r| ≥ 0.30, stable.
+**E7 verdict: KEEP.** r=0.541; composition of resilience is shifting toward own savings
+where the saving surge landed. Same big-economy concentration caveat as E5b.
+
+## E4 — pre-registered
+**H:** Dormancy follows account drives with a lag: countries with larger account growth in
+2014→2017 had higher inactivity in 2017 (the J-curve the notebook's aggregate chart hints at).
+**Test:** weighted corr of Δaccount(2014→2017) vs inactive_t_d(2017)/account(2017) ratio,
+dev panel; G4/G6. **Keep if:** r ≥ 0.30 stable.
+
+## E6 — pre-registered
+**H:** The unusually narrow 2021 income gap partially reverted by 2024: countries whose
+poorest-40 account share jumped most 2017→2021 saw the largest gap re-widening 2021→2024.
+**Test:** weighted corr of Δpoor40(2017→2021) vs Δgap(2021→2024), dev panel group2; G4/G6.
+**Keep if:** r ≥ 0.30 stable.
