@@ -1,21 +1,25 @@
-"""Prediction stream — the file the loop edits. Baseline version.
+"""Prediction stream — P1: damped-trend predictor.
 
-Task (fixed in harness): from panel history <= 2021, predict 2024 per-country values
-(pp) for account ownership, resilience, formal saving.
-
-Baseline: persistence — 2024 = 2021 value. The null model every idea must beat.
+2024 = 2021 + lambda * (2021 - 2017), lambda = 0.5, clipped to [0, 100].
+Countries missing 2017 fall back to persistence.
 """
 import pandas as pd
 
 from harness import Findex
+
+DAMP = 0.5
 
 
 def predict(fx: Findex) -> dict:
     train, _ = fx.prediction_task()
     preds = {}
     for target in fx.PRED_TARGETS:
-        last = train[train["year"] == 2021].set_index("countrynewwb")[target] * 100
-        preds[target] = last
+        wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
+        last = wide.get(2021)
+        prev = wide.get(2017)
+        trend = (last - prev).fillna(0.0) if prev is not None else 0.0
+        pred = (last + DAMP * trend).clip(0, 100)
+        preds[target] = pred.fillna(last)
     return preds
 
 
