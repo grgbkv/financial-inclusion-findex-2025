@@ -73,3 +73,13 @@ dev panel; G4/G6. **Keep if:** r ≥ 0.30 stable.
 poorest-40 account share jumped most 2017→2021 saw the largest gap re-widening 2021→2024.
 **Test:** weighted corr of Δpoor40(2017→2021) vs Δgap(2021→2024), dev panel group2; G4/G6.
 **Keep if:** r ≥ 0.30 stable.
+**E4 verdict: DISCARD** (general claim). r=0.825 → 0.014 without top-5: a large-country
+(India-drive) phenomenon, not a cross-country law. Harness-v2 note: G6 should require
+magnitude retention, not just sign stability.
+**E6 verdict: DISCARD.** Clean null (r=0.03).
+
+## P3 — pre-registered (prediction stream)
+**Idea:** saving predictor using only ≤2021 features: 2024_saving = 2021_saving +
+β·mobile_money_2021 + γ·Δmm(2017→2021), β,γ fit by weighted OLS on the 2017→2021
+transition (train-period supervision only, no 2024 leakage in fitting).
+**Keep if:** saving MAE < 8.448 without touching other targets.
