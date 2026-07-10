@@ -29,3 +29,12 @@ only for saved_formally. **Keep if:** saving MAE < 9.767 with account/resilience
 Δ(gap) 2021→2024 correlates negatively with Δmobile_money (dev panel countries, group2 rows).
 **Test:** per-country gap = men − women (account_t_d, group2), Δgap vs Δmm, weighted; G4/G6.
 **Keep if:** |r| ≥ 0.30, sign negative, G6 stable.
+**E3 verdict: DISCARD.** Clean null (r=0.008), verified computation. Gap changes are
+heterogeneous (std 7.4pp) but orthogonal to mobile-money growth in the 2021→2024 window.
+
+## E5 — pre-registered
+**H:** Digital-payment usage is a leading indicator of account-ownership growth: countries
+with high g20_any relative to their account level in 2021 ("usage headroom") grow accounts
+faster 2021→2024. **Test:** weighted corr of (g20_2021 − account_2021 percentile-residual…
+simplified: corr of g20_2021/account_2021 ratio vs Δaccount) on dev panel; G4/G6.
+**Keep if:** |r| ≥ 0.30 and G6 stable.
