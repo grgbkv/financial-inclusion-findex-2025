@@ -38,3 +38,15 @@ with high g20_any relative to their account level in 2021 ("usage headroom") gro
 faster 2021→2024. **Test:** weighted corr of (g20_2021 − account_2021 percentile-residual…
 simplified: corr of g20_2021/account_2021 ratio vs Δaccount) on dev panel; G4/G6.
 **Keep if:** |r| ≥ 0.30 and G6 stable.
+**E5 verdict: DISCARD (direction rejected).** r=−0.59, robust — the reverse of the
+hypothesis. Low-usage countries grew accounts fastest. Suspected confound: plain
+convergence on the account level.
+
+## E5b — pre-registered
+**H:** The negative usage-ratio effect survives controlling for the 2021 account level —
+i.e., among countries at similar account levels, LOWER usage intensity still predicts
+faster account growth (accounts-first expansion pattern).
+**Test:** weighted partial corr of usage_ratio vs Δaccount controlling account_2021
+(residualize both on account_2021, weighted); compare |r_partial| to plain convergence
+r(account_2021, Δaccount). Gates G4/G6 on the partials.
+**Keep if:** |r_partial| ≥ 0.30 with stable sign.
