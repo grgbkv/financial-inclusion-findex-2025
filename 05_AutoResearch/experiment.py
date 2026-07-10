@@ -1,37 +1,48 @@
-"""E5: Is digital-payment usage a leading indicator of account-ownership growth?
+"""E5b: Does the negative usage-ratio effect survive controlling for account level?
 
-"Usage headroom": countries where accounts are used intensively (g20_any close to or
-above account level) should convert usage pressure into new accounts 2021->2024.
-Pre-registered in RESEARCH_LOG.md.
+Weighted partial correlation: residualize usage_ratio and d_acc on account_2021
+(weighted least squares), then correlate the residuals. Pre-registered.
 """
+import numpy as np
+
 from harness import Findex, INDICATORS
+
+
+def wls_residuals(y, x, w):
+    """Residuals of weighted regression y ~ 1 + x."""
+    X = np.column_stack([np.ones(len(x)), x])
+    W = np.diag(w / w.sum())
+    beta = np.linalg.solve(X.T @ W @ X, X.T @ W @ y)
+    return y - X @ beta
 
 
 def run(fx: Findex):
     acc = fx.country_panel(fx.pan_dev, INDICATORS["account"]["headline"], [2021, 2024])
     dp = fx.country_panel(fx.pan_dev, INDICATORS["digital_payment"]["headline"], [2021])
 
-    ratio = (dp[2021] / acc[2021]).rename("usage_ratio")  # usage intensity of the stock
-    d_acc = (acc[2024] - acc[2021]).rename("d_acc")
-    w = acc["pop"]
+    df = acc.rename(columns={2021: "acc21", 2024: "acc24"}).join(
+        dp[2021].rename("dp21")).dropna()
+    df["ratio"] = df["dp21"] / df["acc21"]
+    df["d_acc"] = df["acc24"] - df["acc21"]
 
-    r, n = fx.weighted_corr(ratio, d_acc, w)
+    w = df["pop"].values
+    # plain convergence benchmark
+    r_conv, _ = fx.weighted_corr(df["acc21"], df["d_acc"], df["pop"])
+
+    res_ratio = wls_residuals(df["ratio"].values, df["acc21"].values, w)
+    res_dacc = wls_residuals(df["d_acc"].values, df["acc21"].values, w)
+    import pandas as pd
+    res_ratio = pd.Series(res_ratio, index=df.index)
+    res_dacc = pd.Series(res_dacc, index=df.index)
+    r_partial, n = fx.weighted_corr(res_ratio, res_dacc, df["pop"])
+
     gates = [
-        fx.gate_variant("digital_payment", INDICATORS["digital_payment"]["headline"]),
         fx.gate_coverage(fx.pan_dev, INDICATORS["digital_payment"]["headline"], 2021),
-        fx.gate_jackknife(ratio, d_acc, w),
+        fx.gate_jackknife(res_ratio, res_dacc, df["pop"]),
     ]
 
-    both = ratio.to_frame().join(d_acc).join(w).dropna()
-    both["tercile"] = both["usage_ratio"].rank(pct=True).apply(
-        lambda p: "high" if p > 2 / 3 else ("mid" if p > 1 / 3 else "low"))
-    terciles = {
-        t: round(float((both[both.tercile == t]["d_acc"] * both[both.tercile == t]["pop"]).sum()
-                       / both[both.tercile == t]["pop"].sum()), 1)
-        for t in ["low", "mid", "high"]}
-
-    print(f"weighted r(usage_ratio_2021, d_acc) = {r:.3f}  (n={n})")
-    print("weighted mean d_acc by usage-ratio tercile:", terciles)
+    print(f"convergence benchmark r(acc21, d_acc) = {r_conv:.3f}")
+    print(f"PARTIAL weighted r(ratio, d_acc | acc21) = {r_partial:.3f}  (n={n})")
     for g in gates:
         print(g)
 
