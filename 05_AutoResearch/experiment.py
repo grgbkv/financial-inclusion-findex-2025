@@ -1,48 +1,35 @@
-"""E5b: Does the negative usage-ratio effect survive controlling for account level?
+"""E7: Where formal saving surged, did savings become a bigger source of emergency funds?
 
-Weighted partial correlation: residualize usage_ratio and d_acc on account_2021
-(weighted least squares), then correlate the residuals. Pre-registered.
+fin24sav = would rely on savings to raise emergency funds (share of adults).
+Pre-registered in RESEARCH_LOG.md.
 """
-import numpy as np
-
 from harness import Findex, INDICATORS
 
 
-def wls_residuals(y, x, w):
-    """Residuals of weighted regression y ~ 1 + x."""
-    X = np.column_stack([np.ones(len(x)), x])
-    W = np.diag(w / w.sum())
-    beta = np.linalg.solve(X.T @ W @ X, X.T @ W @ y)
-    return y - X @ beta
-
-
 def run(fx: Findex):
-    acc = fx.country_panel(fx.pan_dev, INDICATORS["account"]["headline"], [2021, 2024])
-    dp = fx.country_panel(fx.pan_dev, INDICATORS["digital_payment"]["headline"], [2021])
+    # availability probe first (fin24sav is not in the INDICATORS registry: declare it)
+    avail = fx.pan_dev.groupby("year")["fin24sav"].count()
+    print("fin24sav non-null country-rows by year:", avail.to_dict())
 
-    df = acc.rename(columns={2021: "acc21", 2024: "acc24"}).join(
-        dp[2021].rename("dp21")).dropna()
-    df["ratio"] = df["dp21"] / df["acc21"]
-    df["d_acc"] = df["acc24"] - df["acc21"]
+    sav_src = fx.country_panel(fx.pan_dev, "fin24sav", [2021, 2024])
+    sav = fx.country_panel(fx.pan_dev, INDICATORS["saved_formally"]["headline"], [2021, 2024])
 
-    w = df["pop"].values
-    # plain convergence benchmark
-    r_conv, _ = fx.weighted_corr(df["acc21"], df["d_acc"], df["pop"])
+    d_src = (sav_src[2024] - sav_src[2021]).rename("d_src")
+    d_sav = (sav[2024] - sav[2021]).rename("d_sav")
+    w = sav["pop"]
 
-    res_ratio = wls_residuals(df["ratio"].values, df["acc21"].values, w)
-    res_dacc = wls_residuals(df["d_acc"].values, df["acc21"].values, w)
-    import pandas as pd
-    res_ratio = pd.Series(res_ratio, index=df.index)
-    res_dacc = pd.Series(res_dacc, index=df.index)
-    r_partial, n = fx.weighted_corr(res_ratio, res_dacc, df["pop"])
-
+    r, n = fx.weighted_corr(d_src, d_sav, w)
     gates = [
-        fx.gate_coverage(fx.pan_dev, INDICATORS["digital_payment"]["headline"], 2021),
-        fx.gate_jackknife(res_ratio, res_dacc, df["pop"]),
+        {"gate": "G3_variant", "ok": True, "concept": "resilience_source_savings",
+         "role": "declared: fin24sav (only variant)"},
+        fx.gate_coverage(fx.pan_dev, "fin24sav", 2024),
+        fx.gate_jackknife(d_src, d_sav, w),
     ]
 
-    print(f"convergence benchmark r(acc21, d_acc) = {r_conv:.3f}")
-    print(f"PARTIAL weighted r(ratio, d_acc | acc21) = {r_partial:.3f}  (n={n})")
+    # headline aggregate shift for context
+    agg = fx.series(fx.pan_dev, "fin24sav", [2021, 2024])
+    print(f"dev aggregate fin24sav: {agg.get(2021):.1f} -> {agg.get(2024):.1f} pp")
+    print(f"weighted r(d_src, d_sav) = {r:.3f}  (n={n})")
     for g in gates:
         print(g)
 
