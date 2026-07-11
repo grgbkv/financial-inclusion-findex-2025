@@ -115,3 +115,21 @@ compared between the mobile-only and bank-only groups, pooled globally (2024 wav
 M2 (cell n>=100 per group).
 **Keep if:** group difference >= 5pp on at least one of the two metrics, in the hypothesized
 direction (mobile-only higher on both youth-share and low-education-share).
+
+**M1 verdict: KEEP.** fin11a rate q1=35.7pp vs q5=25.3pp, diff=10.3pp, monotonic across all
+five quintiles, well clear of threshold. M2 cell-size gate passes for every quintile
+(n=3352-4894). Descriptive, single 2024 cross-section — no trend claim.
+
+**M2 verdict: KEEP.** Mobile-only accountholders skew markedly younger (65.4pp vs 40.6pp
+aged<=35, diff 24.7pp) and somewhat less educated (47.8pp vs 41.1pp primary-only, diff 6.7pp)
+than bank-only accountholders, both above threshold and in the hypothesized direction. M2
+cell-size gate passes (n=10,340 / 24,037). Descriptive, single 2024 cross-section.
+
+## 2026-07-11 wrap-up
+Ran 2 experiments (M1, M2) — first use of the micro stream (Stream 3). Both kept.
+M1: the "not enough money" unbanked-barrier is strongly income-graded (10.3pp gap,
+poorest-vs-richest quintile). M2: mobile-only accountholders are a demographically distinct,
+younger and less-educated population relative to bank-only accountholders (24.7pp and 6.7pp
+gaps). No hypothesis-stream (country-level) or prediction-stream experiments run this cycle;
+prediction champion remains P2 (saving MAE 8.448, account 5.576, resilience 6.682).
+Everything committed on autoresearch/daily.
