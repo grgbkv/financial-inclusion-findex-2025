@@ -59,3 +59,15 @@ cell n ≥ 100 for any subgroup claim) and M3 (micro aggregates must reproduce t
 file within 1pp where an equivalent exists) apply on top of pre-registration. Findings log
 to findings.tsv with stream = `micro`. Micro claims are within-2024 cross-sectional
 descriptions — no trend language (single wave).
+
+## Amendments (2026-07-11, after the first scheduled run)
+
+1. **The peek rule.** Any exploratory look at an outcome ("calibration check") must be logged
+   as an *exploratory* entry BEFORE the formal pre-registration, and a hypothesis whose answer
+   was peeked on the same data cannot be logged as `keep` under pre-registration — mark such
+   findings `keep-exploratory`. Pre-registration only binds when the answer was genuinely
+   unknown at registration time. (Trigger: experiment M1 disclosed a prior calibration peek —
+   honest, but the verdict class must reflect it.)
+2. **Experiment IDs.** Micro-stream experiments use `U<n>` IDs (U for "unit-level") to avoid
+   colliding with the micro gate names M1-M3. Existing rows M1/M2 in findings.tsv are
+   grandfathered; read them as U1/U2.
