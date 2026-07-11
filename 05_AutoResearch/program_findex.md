@@ -47,3 +47,15 @@ improves, revert if not. Log to `results_prediction.tsv`.
 Supervised session: ~2 hours, then distill kept findings into `EXTENSIONS_DRAFT.md`
 (candidate material for a working-paper v2). Within the budget, do not stop to ask
 whether to continue; outside it, stop and summarize.
+
+## Stream 3 — micro lab (added 2026-07-11)
+
+Individual-level Global Findex 2025 (144,090 respondents, 140 economies, 2024 wave) via the
+fixed `micro.py` module. License: research use only, no redistribution — the microdata/
+folder is gitignored; published outputs may contain aggregates and findings, never raw rows.
+
+Rules: all statistics weighted (`wgt`, enforced by the module API); gates M2 (unweighted
+cell n ≥ 100 for any subgroup claim) and M3 (micro aggregates must reproduce the country
+file within 1pp where an equivalent exists) apply on top of pre-registration. Findings log
+to findings.tsv with stream = `micro`. Micro claims are within-2024 cross-sectional
+descriptions — no trend language (single wave).
