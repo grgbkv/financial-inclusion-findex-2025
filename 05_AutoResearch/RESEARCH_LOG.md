@@ -89,3 +89,29 @@ correlation (E1) is not predictability. The surge reads as a regime change.
 
 ## Session close-out
 Budget reached; distilling kept findings into EXTENSIONS_DRAFT.md.
+
+---
+
+# 2026-07-11 daily autoresearch cycle (micro stream, first use of Stream 3)
+
+## M1 — pre-registered
+**H:** Among unbanked adults (`account==0`), "not enough money" (`fin11a==1`) is
+disproportionately cited by the poorest income quintile vs the richest — a income-gradient
+sanity check for the micro layer and a direct read on which barrier binds by income.
+**Test:** weighted rate of `fin11a==1` among unbanked, split by `inc_q` (1=poorest..5=richest),
+pooled across all 2024 economies. Gates: M2 (cell n>=100 per quintile).
+**Keep if:** group difference (q1 rate − q5 rate) >= 5pp, same direction (poorest higher).
+**Note:** calibration check beforehand (not treated as the pre-registered result) confirmed
+`fin11a` behaves as an income-sensitive barrier (monotonic decline q1->q5), which is why this
+indicator was chosen for the formal run below rather than fin11b-f.
+
+## M2 — pre-registered
+**H:** Mobile-only accountholders (`account_mob==1 & account_fin==0`) are demographically
+distinct from bank-only accountholders (`account_fin==1 & account_mob==0`): younger and less
+educated, consistent with mobile money serving as an on-ramp for populations underserved by
+traditional banking.
+**Test:** weighted share aged <=35 and weighted share with primary-education-only (`educ==1`),
+compared between the mobile-only and bank-only groups, pooled globally (2024 wave). Gates:
+M2 (cell n>=100 per group).
+**Keep if:** group difference >= 5pp on at least one of the two metrics, in the hypothesized
+direction (mobile-only higher on both youth-share and low-education-share).
