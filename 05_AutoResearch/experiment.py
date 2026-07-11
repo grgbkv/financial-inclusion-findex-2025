@@ -1,47 +1,31 @@
-"""E4 + E6 in one run (both pre-registered; independent tests).
+"""E8 (pre-registered): money-barrier prevalence (fin11a, 2024) vs 2021-24 account growth.
 
-E4: dormancy J-curve — bigger account drives 2014->2017 -> higher inactivity ratio in 2017.
-E6: income-gap reversion — bigger poorest-40 jumps 2017->2021 -> bigger gap re-widening 2021->2024.
+fin11a has no headline/narrow variant choice (single indicator, 2024-only fielding) so G3
+is declared not-applicable rather than checked against INDICATORS.
 """
 from harness import Findex, INDICATORS
 
 
 def run(fx: Findex):
-    # ---------------- E4
-    acc = fx.country_panel(fx.pan_dev, INDICATORS["account"]["headline"], [2014, 2017])
-    inact = fx.country_panel(fx.pan_dev, INDICATORS["inactive"]["headline"], [2017])
-    d_acc = (acc[2017] - acc[2014]).rename("d_acc_1417")
-    inact_ratio = (inact[2017] / acc[2017] * 100).rename("inact_ratio_17")
+    acc = fx.country_panel(fx.pan_dev, INDICATORS["account"]["headline"], [2021, 2024])
+    d_acc = (acc[2024] - acc[2021]).rename("d_account_2124")
+
+    bar = fx.pan_dev[(fx.pan_dev["year"] == 2024) & fx.pan_dev["fin11a"].notna()]
+    fin11a = bar.set_index("countrynewwb")["fin11a"] * 100
+    fin11a = fin11a.rename("fin11a_2024")
+
     w = acc["pop"]
-    r4, n4 = fx.weighted_corr(d_acc, inact_ratio, w)
-    g4 = [fx.gate_coverage(fx.pan_dev, INDICATORS["inactive"]["headline"], 2017),
-          fx.gate_jackknife(d_acc, inact_ratio, w)]
-    print(f"E4  weighted r(d_acc 14-17, inactive-ratio 17) = {r4:.3f}  (n={n4})")
-    for g in g4:
-        print("E4 ", g)
+    common = d_acc.index.intersection(fin11a.index)
+    print(f"E8  countries with fin11a in dev panel: n={len(common)}")
 
-    # ---------------- E6
-    dev_names = set(fx.pan_dev["countrynewwb"].unique())
-    grp = fx.pan_grp[fx.pan_grp["countrynewwb"].isin(dev_names)]
+    r8, n8 = fx.weighted_corr(fin11a.reindex(common), d_acc.reindex(common), w.reindex(common))
+    print(f"E8  weighted r(fin11a_2024, d_account 21-24) = {r8:.3f}  (n={n8})")
 
-    def series_g2(g2, year):
-        return grp[(grp["group2"] == g2) & (grp["year"] == year)].set_index(
-            "countrynewwb")["account_t_d"] * 100
-
-    poor17, poor21 = series_g2("poorest 40%", 2017), series_g2("poorest 40%", 2021)
-    rich21, poor21b = series_g2("richest 60%", 2021), poor21
-    rich24, poor24 = series_g2("richest 60%", 2024), series_g2("poorest 40%", 2024)
-
-    d_poor_1721 = (poor21 - poor17).rename("d_poor")
-    gap21 = rich21 - poor21b
-    gap24 = rich24 - poor24
-    d_gap_2124 = (gap24 - gap21).rename("d_gap")
-    r6, n6 = fx.weighted_corr(d_poor_1721, d_gap_2124, w)
-    g6 = [fx.gate_coverage(fx.pan_dev, INDICATORS["account"]["headline"], 2024),
-          fx.gate_jackknife(d_poor_1721, d_gap_2124, w)]
-    print(f"E6  weighted r(d_poor40 17-21, d_gap 21-24) = {r6:.3f}  (n={n6})")
-    for g in g6:
-        print("E6 ", g)
+    gcov = fx.gate_coverage(fx.pan_dev.assign(fin11a_flag=fx.pan_dev["fin11a"]),
+                             "fin11a_flag", 2024, min_countries=30, min_pop_share=0.3)
+    gjack = fx.gate_jackknife(fin11a.reindex(common), d_acc.reindex(common), w.reindex(common))
+    print("E8 ", gcov)
+    print("E8 ", gjack)
 
 
 if __name__ == "__main__":

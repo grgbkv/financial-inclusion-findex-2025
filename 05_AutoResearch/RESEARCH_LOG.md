@@ -133,3 +133,39 @@ younger and less-educated population relative to bank-only accountholders (24.7p
 gaps). No hypothesis-stream (country-level) or prediction-stream experiments run this cycle;
 prediction champion remains P2 (saving MAE 8.448, account 5.576, resilience 6.682).
 Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-11 afternoon cycle (second scheduled run same day)
+
+## E8 — pre-registered
+**H:** Countries where "not enough money" (`fin11a`) is a more prevalent stated barrier among
+their unbanked population in 2024 had slower account growth 2021→2024 — barrier depth predicts
+weaker subsequent growth (dev panel, country level). `fin11a` is only fielded in the 2024 wave
+(68 countries total; no variant choice exists for this indicator, so G3 is declared n/a rather
+than checked against `INDICATORS`).
+**Test:** weighted corr of `fin11a` (country-level rate among unbanked, 2024) vs
+Δaccount(2021→2024), restricted to pan_dev ∩ fin11a-availability. Gates: G4 (coverage), G6
+(jackknife drop-top-5), judged with the harness-v2 magnitude-retention lesson (E4): a
+jackknife that keeps sign but loses most magnitude (r_droptop < 0.5 × r_full) is a
+big-country artifact, discard the general claim.
+**Keep if:** |r| ≥ 0.30, sign as hypothesized (negative), G6 sign-stable AND magnitude-retaining.
+
+## U1 — pre-registered (micro stream, first true U-id per the amended protocol)
+**H:** The gender gap in account ownership (male rate − female rate) is wider among the
+poorest income quintile than the richest, pooled globally (2024 wave) — gender and poverty
+barriers compound.
+**Test:** weighted account rate split by female × inc_q, pooled across all 2024 economies;
+gap_q1 = male_q1 − female_q1, gap_q5 = male_q5 − female_q5. Gates: M2 (cell n ≥ 100 for each
+of the four female×quintile cells).
+**Keep if:** (gap_q1 − gap_q5) ≥ 5pp, same direction (gap wider among the poorest). Descriptive,
+single 2024 cross-section — no trend language regardless of outcome.
+
+## P4 — pre-registered (prediction stream)
+**Idea:** logit-space damped trend for `account_t_d` only (resilience has no pre-2021 wave to
+trend from, per the P1–P3 box; saving already uses the P2 damped-trend policy). P1's raw pp-linear
+damped trend overshot for account because growth mechanically decelerates near the 100% ceiling.
+Compute the 2017→2021 trend in logit space (`logit(p)=ln(p/(1-p))`), extrapolate with λ=0.5,
+transform back — this bakes in deceleration near the bounds without any 2024 information.
+**Keep if:** account MAE improves on the persistence baseline (5.576) without touching the
+saving/resilience predictions (per-target policy, consistent with P2's rule).
