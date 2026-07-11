@@ -169,3 +169,32 @@ Compute the 2017→2021 trend in logit space (`logit(p)=ln(p/(1-p))`), extrapola
 transform back — this bakes in deceleration near the bounds without any 2024 information.
 **Keep if:** account MAE improves on the persistence baseline (5.576) without touching the
 saving/resilience predictions (per-target policy, consistent with P2's rule).
+
+**E8 verdict: DISCARD.** r=−0.263 (n=47, dev-panel countries with fin11a in 2024), sign as
+hypothesized, both gates clean (G4: 47 countries/59.7% pop; G6: sign-stable and
+magnitude-retaining, −0.263→−0.255) — but below the |r|≥0.30 threshold. A weak, gate-clean
+null: money-barrier depth among the unbanked is directionally but not materially predictive
+of subsequent account growth.
+
+**U1 verdict: DISCARD.** Clean null: gap_q1=5.2pp, gap_q5=5.7pp, diff=−0.5pp — opposite sign
+from hypothesized and far below threshold. The gender gap in account ownership does not
+compound with poverty in this pooled 2024 cross-section; if anything it is marginally larger
+among the richest quintile, though the difference is negligible. (First run attempt hit a
+data bug — `female` is coded 1=female/2=male in the raw microdata, not 0/1 — caught as an
+n=0 cell-size gate failure before any substantive value was read, so no peek-rule issue.)
+
+**P4 verdict: DISCARD, reverted to P2 champion.** Logit-space damped trend gave account MAE
+5.598 vs persistence's 5.576 — 0.02pp worse. Deceleration near the ownership ceiling is
+already fully captured by flat persistence in the 2021→2024 window; transforming to logit
+space added noise without adding signal. Champion unchanged: account 5.576, resilience
+6.682, saving 8.448 (P2).
+
+## 2026-07-11 afternoon wrap-up
+Second scheduled cycle same day. Ran 3 experiments (E8, U1, P4) — all discarded, all clean
+(no gate failures, no threshold near-misses worth a second look). E8: money-barrier
+prevalence among the unbanked is directionally but not materially linked to subsequent
+account growth (r=−0.263, gate-clean). U1: the gender gap in account ownership does not
+widen among poorer income quintiles — flat across quintiles in the pooled 2024 cross-section
+(diff=−0.5pp, opposite of hypothesized). P4: logit-space transform did not beat persistence
+for account prediction; champion remains P2 (saving MAE 8.448, account 5.576, resilience
+6.682). Everything committed on autoresearch/daily.

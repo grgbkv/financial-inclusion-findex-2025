@@ -6,3 +6,4 @@ commit	target	mae_pp	n	status	description
 3bc74da	fin17a_17a1_d	8.448	81	discard	P1 damped trend: better (baseline 9.767) but bundled with account regression
 691b3df	fin17a_17a1_d	8.448	81	keep	P2 per-target: damped trend for saving only; account/resilience persistence unchanged
 253c7b9	fin17a_17a1_d	9.747	81	discard	P3 MM-informed growth model: worse than P2 champion 8.448 - surge is a regime change, not learnable from the 2017-21 transition
+00185dd	account_t_d	5.598	117	discard	P4 logit-space damped trend (l=0.5): worse than persistence (5.576) by 0.02pp - deceleration near ceiling already well captured by flat persistence in this window; reverted to P2 champion
