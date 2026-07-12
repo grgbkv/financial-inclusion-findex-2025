@@ -1,26 +1,28 @@
-"""U1 (pre-registered): gender gap in account ownership, poorest vs richest income quintile.
+"""U2 (pre-registered): digital payment adoption (anydigpayment) by age band, pooled 2024.
 """
+import pandas as pd
+
 from micro import Micro
+
+BANDS = [(15, 25), (26, 35), (36, 50), (51, 65), (66, 200)]
+LABELS = ["15-25", "26-35", "36-50", "51-65", "65+"]
 
 
 def run(mi: Micro):
-    df = mi.df
+    df = mi.df.copy()
+    df["age_band"] = pd.cut(df["age"], bins=[b[0] - 1 for b in BANDS] + [BANDS[-1][1]],
+                             labels=LABELS)
 
-    # raw questionnaire coding: female==1 -> female, female==2 -> male
     rows = {}
-    for f in (1, 2):
-        for q in (1, 5):
-            sub = df[(df["female"] == f) & (df["inc_q"] == q)]
-            v, n = mi._wavg(sub, "account")
-            rows[(f, q)] = (v * 100 if v == v else float("nan"), n)
-            label = "female" if f == 1 else "male"
-            print(f"U1  {label} inc_q={q}  account rate={rows[(f,q)][0]:.1f}pp  n={n}")
-            print("U1 ", mi.gate_cell_size(n))
+    for label in LABELS:
+        sub = df[df["age_band"] == label]
+        v, n = mi._wavg(sub, "anydigpayment")
+        rows[label] = (v * 100 if v == v else float("nan"), n)
+        print(f"U2  age {label:6s}  anydigpayment rate={rows[label][0]:.1f}pp  n={n}")
+        print("U2 ", mi.gate_cell_size(n))
 
-    gap_q1 = rows[(2, 1)][0] - rows[(1, 1)][0]
-    gap_q5 = rows[(2, 5)][0] - rows[(1, 5)][0]
-    print(f"U1  gender gap (male-female) q1={gap_q1:.1f}pp  q5={gap_q5:.1f}pp")
-    print(f"U1  gap_q1 - gap_q5 = {gap_q1 - gap_q5:.1f}pp")
+    diff = rows["36-50"][0] - rows["65+"][0]
+    print(f"U2  rate_36_50 - rate_65plus = {diff:.1f}pp")
 
 
 if __name__ == "__main__":
