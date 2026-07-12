@@ -198,3 +198,46 @@ widen among poorer income quintiles — flat across quintiles in the pooled 2024
 (diff=−0.5pp, opposite of hypothesized). P4: logit-space transform did not beat persistence
 for account prediction; champion remains P2 (saving MAE 8.448, account 5.576, resilience
 6.682). Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-12 daily autoresearch cycle
+
+## E9 — pre-registered
+**H:** Countries where government transfer payments were more digitalized in 2021
+(`fing2p_acc` — share of all adults receiving a G2P payment paid into an account) had faster
+subsequent account-ownership growth 2021→2024 (dev panel) — testing the "digital G2P as an
+account on-ramp" policy narrative (e.g. India's JAM trinity, Brazil's Bolsa Família digitization).
+Checked `fing2p_acc` is a level (not a delta) at 2021, strictly ≤2021, so no leakage into the
+2021→2024 growth window it's predicting.
+**Test:** weighted corr of `fing2p_acc` (2021, pp of all adults) vs Δ(account_t_d)(2021→2024),
+dev panel restricted to countries with `fing2p_acc` reported in 2021. G3: `fing2p_acc` has no
+headline/narrow variant choice in `INDICATORS` (single indicator) → declared n/a. Gates: G4
+(coverage), G6 (jackknife drop-top-5, judged with the E4 magnitude-retention lesson: sign-stable
+but r_droptop < 0.5×r_full = big-country artifact, discard).
+**Keep if:** |r| ≥ 0.30, sign positive (hypothesized direction), G6 sign-stable AND
+magnitude-retaining.
+
+## U2 — pre-registered (micro stream)
+**H:** Digital payment adoption (`anydigpayment`) is lower among the oldest adults (65+) than
+among prime-working-age adults (36-50), pooled globally, 2024 wave — a life-cycle/digital-divide
+pattern (no prior peek at this outcome).
+**Test:** weighted rate of `anydigpayment` by age band (15-25, 26-35, 36-50, 51-65, 65+), pooled
+across all 2024 economies (raw `wgt`, economy-equal pooling per current micro.py default —
+HARNESS_V2_NOTES caveat #3 applies to exact pooled pp values, not to direction). Gates: M2 (cell
+n ≥ 100 per band).
+**Keep if:** (rate_36_50 − rate_65plus) ≥ 5pp in the hypothesized direction (36-50 higher).
+Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P5 — pre-registered (prediction stream)
+**Idea:** Resilience (`fin24aSD_ND`) is the one target untouched since baseline (P1-P4 all
+targeted account or saving) — still pure persistence, MAE 6.682. Per MODELING SCOPE (n~117 is
+the binding constraint) and HARNESS_V2_NOTES #3 (small-country sampling noise), try shrinking
+each country's 2021 persistence prediction partially toward its region's (`regionwb24_hi`)
+weighted mean: `pred = x_2021 - k*(x_2021 - region_mean_2021)`. To avoid fitting k on 2024
+(prohibited), select k by cross-validating the *same shrinkage mechanic* on the fully-≤2021
+account_t_d 2017→2021 transition (predict 2021 from 2017 + region-shrink, k ∈ {0, 0.1, ..., 0.5},
+minimize MAE there), then apply that fixed k unchanged to resilience 2021→2024. Per-target
+policy (P2's rule): touches resilience only, account/saving predictions unchanged.
+**Keep if:** resilience MAE improves on 6.682 (persistence baseline) without touching the
+account/saving predictions.
