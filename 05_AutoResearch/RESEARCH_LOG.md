@@ -275,3 +275,52 @@ lower among 65+ adults than 36-50 adults pooled globally (2024), inverted-U by a
 26-35. P5 (prediction, keep): region-mean shrinkage (k=0.1, CV-selected on pre-2021 data only)
 improves resilience prediction 6.682->6.625pp; new champion account=5.576, resilience=6.625,
 saving=8.448. Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-12 second cycle (evening run, same day)
+
+## E10 — pre-registered (hypothesis / country level)
+**H:** The 2021→2024 formal-saving surge tracks wage digitalization as a distinct channel
+from E1's mobile-money story: countries where the share of adults receiving private-sector
+wages *into an account* (`fin32_acc`) grew most 2021→2024 also saw the largest gains in formal
+saving (`fin17a_17a1_d`) over the same window (dev panel, population-weighted). Motivation:
+digital wage rails deposit money into accounts that can then be saved — a formal-employment
+channel parallel to, and testable against, E1's mobile-money channel. E1 already established
+r=0.719 for Δmobile-money; a strong E10 would say multiple digitalization channels feed the
+saving surge, a null would sharpen E1's mobile-money-specificity.
+**Test:** weighted corr of Δ(`fin32_acc`)(2021→2024) vs Δ(`fin17a_17a1_d`)(2021→2024), dev
+panel, weight = 2024 adult population. `fin32_acc` has no headline/narrow variant in
+`INDICATORS` (single indicator) → G3 declared n/a. Gates: G4 (coverage), G6 (jackknife
+drop-top-5, judged with the E4 magnitude-retention lesson: sign-stable but r_droptop < 0.5×r_full
+= big-country artifact → discard the general claim).
+**Keep if:** |r| ≥ 0.30, sign positive (hypothesized), G6 sign-stable AND magnitude-retaining.
+All descriptive association language — account growth is a plausible common driver of both
+sides, noted, not controlled; no causal claim.
+
+## U3 — pre-registered (micro stream)
+**H:** Among unbanked adults (`account==0`), the reason "a family member already has an
+account" (`fin11f==1`) is cited more by women than by men, pooled globally (2024 wave) — a
+documented gender pattern in which women's financial access is more often mediated through a
+household member's account. No prior peek at this outcome (only overall `fin11f` value counts
+were inspected, never the gender split).
+**Test:** weighted rate of `fin11f==1` among unbanked adults with `fin11f` answered
+(∈{1,2,3,4}; 3=dk/4=refused treated as not-citing), split by `female` (1=female, 2=male; per
+the U1 coding fix), pooled across all 2024 economies (raw `wgt`, economy-equal pooling per the
+current micro.py default — HARNESS_V2_NOTES caveat #3 applies to exact pooled pp values, not
+direction). Gates: M2 (unweighted cell n ≥ 100 per gender). M3 declared n/a — no country-file
+equivalent for a within-unbanked reason-split.
+**Keep if:** (rate_women − rate_men) ≥ 5pp in the hypothesized direction (women higher).
+Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P6 — pre-registered (prediction stream)
+**Idea:** account_t_d is still pure persistence (champion MAE 5.576; P4's logit damped trend
+lost). But the P5 cross-validation — which selected k by minimizing region-shrinkage MAE on the
+fully-≤2021 account 2017→2021 transition — showed shrinkage *does* help account there
+(7.498→7.217pp at k=0.1). Apply that same fixed k=0.1 region-shrinkage (toward the
+`regionwb24_hi` population-weighted 2021 mean) to the account 2021→2024 prediction. k is not
+re-fit on 2024; it is the identical CV-selected value already justified in P5. Per-target policy
+(P2's rule): touches account only — saving (damped trend) and resilience (k=0.1 shrink, P5)
+predictions must stay byte-identical to the current champion.
+**Keep if:** account MAE improves on 5.576 (persistence) without changing the saving/resilience
+predictions.
