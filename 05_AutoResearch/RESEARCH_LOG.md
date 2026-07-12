@@ -324,3 +324,14 @@ re-fit on 2024; it is the identical CV-selected value already justified in P5. P
 predictions must stay byte-identical to the current champion.
 **Keep if:** account MAE improves on 5.576 (persistence) without changing the saving/resilience
 predictions.
+
+**E10 verdict: KEEP.** r=0.791 (n=71 dev-panel countries with `fin32_acc` in both waves),
+positive as hypothesized, well above the 0.30 threshold. Gates clean: G4 (71 countries, 68.6%
+dev-panel pop); G6 sign-stable AND magnitude-retaining (0.791→0.785 after drop-top-5, barely
+moves — far above the 0.5×r_full=0.396 floor). Terciles of Δwage-digitalization are monotonic
+in mean Δformal-saving: low/mid/high = +3.2/+10.9/+13.6pp. Reading: the 2021→2024 formal-saving
+surge co-moves with wage digitalization just as strongly as with mobile-money growth (E1,
+r=0.719) — the surge is a broad-based digitalization signature across multiple account
+on-ramps (mobile money AND formal wage rails), not mobile-money-specific. Descriptive
+association only; account growth is a plausible common driver of both sides (noted, not
+controlled). Same big-economy caveat class as E1/E7, though here the jackknife barely moves.
