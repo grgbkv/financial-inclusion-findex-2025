@@ -250,3 +250,10 @@ shape as E5's rejected direction: reads as convergence (more room to grow where 
 infrastructure was less built out), not a causal on-ramp effect from digitalized transfers.
 Not pursuing an E5b-style partial-correlation follow-up this cycle (budget; E5b already covers
 this convergence mechanism for the closely related usage-ratio indicator).
+
+**U2 verdict: KEEP.** anydigpayment rate 36-50=56.8pp vs 65+=48.1pp, diff=8.7pp, well clear of
+the 5pp threshold and in the hypothesized direction. M2 cell-size gate passes for every band
+(n=10,216-26,551). Full shape by band (15-25/26-35/36-50/51-65/65+ = 45.0/59.7/56.8/53.5/48.1pp)
+is an inverted-U peaking at 26-35, not a monotonic decline — the pre-registered 36-50-vs-65+
+comparison still clears threshold, but the true peak working-age band is younger than
+pre-registered. Descriptive, single 2024 cross-section.
