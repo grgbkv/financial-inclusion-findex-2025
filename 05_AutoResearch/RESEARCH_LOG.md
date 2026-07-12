@@ -257,3 +257,21 @@ the 5pp threshold and in the hypothesized direction. M2 cell-size gate passes fo
 is an inverted-U peaking at 26-35, not a monotonic decline — the pre-registered 36-50-vs-65+
 comparison still clears threshold, but the true peak working-age band is younger than
 pre-registered. Descriptive, single 2024 cross-section.
+
+**P5 verdict: KEEP, champion updated.** k selected by CV on the <=2021 account 2017->2021
+transition: k=0.1 minimized MAE there (7.498->7.217pp), larger k overshot (k=0.5 gave
+8.879pp) — region-mean is informative but the true country signal dominates, so shrinkage is
+appropriately light. Applied unchanged to resilience: MAE 6.625 (was 6.682, -0.057pp),
+account/saving predictions byte-identical to P2 (5.576 / 8.448) confirming per-target
+isolation. Effect size is modest (<1% relative improvement) — logged as a clean, honest keep
+per the pre-registered rule (improves without touching other targets), not oversold as a
+large gain. Champion: account 5.576, resilience 6.625, saving 8.448.
+
+## 2026-07-12 wrap-up
+Ran 3 experiments (E9, U2, P5). E9 (hypothesis, discard): G2P-payment digitalization in 2021
+predicts 2021-24 account growth with the WRONG sign (r=-0.410, gate-clean) — direction
+rejected, same convergence shape as E5. U2 (micro, keep): digital payment adoption is 8.7pp
+lower among 65+ adults than 36-50 adults pooled globally (2024), inverted-U by age peaking at
+26-35. P5 (prediction, keep): region-mean shrinkage (k=0.1, CV-selected on pre-2021 data only)
+improves resilience prediction 6.682->6.625pp; new champion account=5.576, resilience=6.625,
+saving=8.448. Everything committed on autoresearch/daily.
