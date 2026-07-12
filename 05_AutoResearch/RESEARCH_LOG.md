@@ -335,3 +335,14 @@ r=0.719) — the surge is a broad-based digitalization signature across multiple
 on-ramps (mobile money AND formal wage rails), not mobile-money-specific. Descriptive
 association only; account growth is a plausible common driver of both sides (noted, not
 controlled). Same big-economy caveat class as E1/E7, though here the jackknife barely moves.
+
+**U3 verdict: DISCARD.** rate_women=24.8pp vs rate_men=27.9pp, diff=−3.1pp — opposite of the
+hypothesized direction (women were expected higher) and below the 5pp threshold in magnitude.
+M2 cell-size gate passes for both cells (n=13,026 unbanked women / 7,863 unbanked men).
+Reading: the frequently-cited pattern that women's financial access is disproportionately
+mediated through a household member's account does NOT show up in the pooled 2024 unbanked
+cross-section — if anything unbanked men cite "a family member already has an account"
+marginally more. The classic pattern may be region-specific (e.g. South Asia) and wash out
+under economy-equal pooling (HARNESS_V2_NOTES caveat #3); the pre-registered test used the
+default pooling and returns a clean, slightly-reversed, below-threshold null. Descriptive,
+single 2024 cross-section.
