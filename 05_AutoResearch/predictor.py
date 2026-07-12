@@ -1,14 +1,13 @@
-"""Prediction stream — P5: region-shrinkage for resilience (current champion for that
-target; P2's per-target policy otherwise unchanged).
+"""Prediction stream — P6: extend the P5 region-shrinkage (k=0.1) to account_t_d as well
+as resilience.
 
-Persistence for account (P4's logit-space damped trend lost to persistence by 0.02pp);
-damped trend (lambda=0.5) for saved_formally (P2, structural break in 2024 that plain
-persistence misses); for resilience (fin24aSD_ND), shrink each country's 2021 value
-partially toward its region's (regionwb24_hi) population-weighted mean. Shrinkage
-intensity k is NOT fit on 2024 — it is selected by cross-validating the same shrink
-mechanic on the fully-<=2021 account_t_d 2017->2021 transition (predict 2021 from 2017 +
-region-shrink, minimize MAE there), then applied unchanged to resilience. See
-RESEARCH_LOG.md P5 for the selection run (k=0.1 minimized 2017->2021 account MAE).
+Damped trend (lambda=0.5) for saved_formally (P2, structural break in 2024 that plain
+persistence misses). For resilience (fin24aSD_ND) AND account_t_d, shrink each country's
+2021 value partially toward its region's (regionwb24_hi) population-weighted 2021 mean.
+Shrinkage intensity k is NOT fit on 2024 — it is the same value selected by cross-validating
+the shrink mechanic on the fully-<=2021 account_t_d 2017->2021 transition (k=0.1 minimized
+2017->2021 account MAE, 7.498->7.217; see RESEARCH_LOG.md P5). P6 applies that CV evidence to
+its native target: account. P5 champion for resilience is unchanged (same k, same mechanic).
 """
 import pandas as pd
 
@@ -16,7 +15,7 @@ from harness import Findex
 
 DAMP = 0.5
 SHRINK_K = 0.1
-SHRINK_TARGET = "fin24aSD_ND"
+SHRINK_TARGETS = {"fin24aSD_ND", "account_t_d"}
 
 
 def _region_shrink(train, last, k):
@@ -42,7 +41,7 @@ def predict(fx: Findex) -> dict:
             trend = (last - prev).fillna(0.0) if prev is not None else 0.0
             pred = (last + DAMP * trend).clip(0, 100)
             preds[target] = pred.fillna(last)
-        elif target == SHRINK_TARGET:
+        elif target in SHRINK_TARGETS:
             preds[target] = _region_shrink(train, last, SHRINK_K)
         else:
             preds[target] = last
