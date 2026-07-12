@@ -346,3 +346,30 @@ marginally more. The classic pattern may be region-specific (e.g. South Asia) an
 under economy-equal pooling (HARNESS_V2_NOTES caveat #3); the pre-registered test used the
 default pooling and returns a clean, slightly-reversed, below-threshold null. Descriptive,
 single 2024 cross-section.
+
+**P6 verdict: KEEP, champion updated.** Applying the P5 CV-selected k=0.1 region-shrinkage to
+account_t_d (its native target — the CV that chose k was run on the account 2017→2021
+transition) improves account MAE 5.576→5.156pp (−0.42pp, ~7.5% relative — an order of
+magnitude larger than P5's 0.057pp resilience gain). Resilience (6.625) and saving (8.448)
+predictions print byte-identical to the P5 champion, confirming per-target isolation. No 2024
+leakage: only 2021 account levels and their region (regionwb24_hi) population-weighted means —
+all ≤2021 — feed the shrink; k was fixed pre-2021. The CV evidence (shrinkage helps account
+in-sample, 7.498→7.217 at k=0.1) now confirmed out-of-sample on the 2021→2024 evaluation.
+Reading: light shrinkage toward the regional mean is a genuine improvement for account, whereas
+P4's logit damped trend was not — regional convergence, not ceiling deceleration, is the
+structure flat persistence was missing. New champion: account=5.156, resilience=6.625,
+saving=8.448.
+
+## 2026-07-12 second-cycle wrap-up
+Ran 3 experiments (E10, U3, P6), one per stream. E10 (hypothesis, KEEP): the 2021→2024
+formal-saving surge co-moves with wage-rail digitalization (Δ`fin32_acc`) at r=0.791 (n=71,
+gate-clean, jackknife 0.791→0.785) — as strongly as with mobile money (E1, r=0.719), so the
+surge is a broad-based digitalization signature, not mobile-money-specific. U3 (micro,
+DISCARD): the "family member already has an account" barrier is NOT cited more by unbanked
+women than men in the pooled 2024 cross-section (24.8 vs 27.9pp, −3.1pp, slightly reversed and
+below threshold) — the frequently-cited household-mediation pattern washes out globally. P6
+(prediction, KEEP): extending P5's CV-selected k=0.1 region-shrinkage to account_t_d cuts its
+MAE 5.576→5.156pp (−0.42pp) with resilience/saving byte-identical — regional convergence beats
+flat persistence. New prediction champion: account=5.156, resilience=6.625, saving=8.448.
+EXTENSIONS_DRAFT updated (E10 folded into Extension 1; prediction box refreshed for P5/P6).
+Everything committed on autoresearch/daily.

@@ -16,6 +16,14 @@ countries). Countries in the top tercile of mobile-money growth gained **+14.8 p
 saving; the bottom tercile gained **+2.2 pp**. Proposed use: a geographic decomposition
 subsection following the surge finding, with a Δsaving-vs-Δmm scatter.
 
+**The channel is not mobile-money-specific (E10).** The surge co-moves just as strongly with
+the growth of *digital wage rails*: weighted r = 0.79 between Δsaving and Δ(share of adults
+paid private-sector wages into an account) 2021→2024 (n = 71; jackknife barely moves,
+0.79 → 0.79 without the top-5). Terciles of Δwage-digitalization gain +3.2 / +10.9 / +13.6 pp
+of formal saving. Reading: the surge is a broad-based digitalization signature across multiple
+account on-ramps (mobile money *and* formal wage rails), not one rail — account growth is a
+plausible common driver of both sides (descriptive, not controlled).
+
 ## Extension 2 — resilience composition moves before resilience levels (E7, with E2 as the null)
 
 Headline resilience was flat (54.7 → 54.5 panel), and mobile-money growth shows **no robust
@@ -42,14 +50,19 @@ how *new* the 2024 wave's information is:
 
 | Target | Persistence MAE | Best model MAE | What worked |
 |---|---:|---:|---|
-| Account ownership | 5.58 pp | 5.58 pp | nothing beat persistence (growth decelerates; trend overshoots) |
-| Resilience | 6.68 pp | 6.68 pp | nothing (no 2017 history for the indicator) |
-| Formal saving | 9.77 pp | **8.45 pp** | damped trend (λ=0.5) |
+| Account ownership | 5.58 pp | **5.16 pp** | light region-mean shrinkage, k=0.1 (P6) |
+| Resilience | 6.68 pp | **6.63 pp** | light region-mean shrinkage, k=0.1 (P5) |
+| Formal saving | 9.77 pp | **8.45 pp** | damped trend (λ=0.5) (P2) |
 
 A mobile-money-informed growth model fit on the 2017→2021 transition **failed** (9.75 pp):
 the contemporaneous saving–mobile-money correlation of Extension 1 was not forecastable from
 the previous transition. The surge is genuinely new 2024-wave information — a regime change,
-consistent with the definitional expansion plus post-pandemic saving behavior.
+consistent with the definitional expansion plus post-pandemic saving behavior. What *does*
+help account and resilience is shrinking each country's 2021 value slightly toward its
+regional mean (k = 0.1, selected by cross-validation on the fully pre-2021 account transition,
+never on the 2024 test wave): a mild regional-convergence prior beats flat persistence, while a
+logit-space ceiling-deceleration model (P4) did not — the missing structure is convergence,
+not saturation.
 
 ## Honest nulls worth one sentence each
 
