@@ -241,3 +241,12 @@ minimize MAE there), then apply that fixed k unchanged to resilience 2021→2024
 policy (P2's rule): touches resilience only, account/saving predictions unchanged.
 **Keep if:** resilience MAE improves on 6.682 (persistence baseline) without touching the
 account/saving predictions.
+
+**E9 verdict: DISCARD (direction rejected).** r=−0.410 (n=77, dev panel), both gates clean
+(G4: 77 countries/100% pop; G6: sign-stable and magnitude-retaining, −0.410→−0.483) — but the
+sign is negative, opposite of the hypothesized "digital G2P as on-ramp" direction. Countries
+with LOWER G2P-payment digitalization in 2021 grew accounts faster 2021→2024, not higher. Same
+shape as E5's rejected direction: reads as convergence (more room to grow where account-adjacent
+infrastructure was less built out), not a causal on-ramp effect from digitalized transfers.
+Not pursuing an E5b-style partial-correlation follow-up this cycle (budget; E5b already covers
+this convergence mechanism for the closely related usage-ratio indicator).
