@@ -24,6 +24,13 @@ of formal saving. Reading: the surge is a broad-based digitalization signature a
 account on-ramps (mobile money *and* formal wage rails), not one rail — account growth is a
 plausible common driver of both sides (descriptive, not controlled).
 
+**And the deepening is broad, not saving-specific (E11).** Formal *borrowing* and formal
+*saving* grew together across the panel 2021→2024: weighted r = 0.40 between Δ(formal
+borrowing) and Δ(formal saving) (n = 76; jackknife *strengthens* to 0.47 without the top-5, so
+this is no big-country artifact). Reading: the surge reflects genuine balance-sheet deepening
+on both sides of the household ledger, not a one-sided store-of-value shift — reinforcing the
+digitalization-channel story above.
+
 ## Extension 2 — resilience composition moves before resilience levels (E7, with E2 as the null)
 
 Headline resilience was flat (54.7 → 54.5 panel), and mobile-money growth shows **no robust
@@ -43,6 +50,26 @@ convergence). Caveat: the magnitude concentrates in large economies (−0.11 wit
 top-5, sign stable). Reading: mass account-expansion runs ahead of usage infrastructure —
 the access-vs-depth gap has a visible growth signature, not just a level signature.
 
+## Extension 4 — who the access-vs-depth gap leaves behind (micro layer, 2024 cross-section)
+
+The individual-level 2024 wave (144,090 respondents, 140 economies; all weighted, gated by
+cell-size and country-file reproduction) locates the gap demographically:
+
+- **Access barrier is income-graded (M1).** Among the unbanked, "not enough money" is cited by
+  35.7 pp of the poorest income quintile vs 25.3 pp of the richest — monotonic, 10.3 pp gap.
+- **Depth barrier is education-graded, and steeper (U4).** Formal saving (saving at a financial
+  institution) reaches **46.2 pp** of tertiary-educated adults but only **12.0 pp** of the
+  primary-or-less-educated — a 34.1 pp monotonic gap. The *depth* margin is stratified even more
+  sharply by education than the *access* margin is by income.
+- **Mobile money is the young/underbanked on-ramp (M2).** Mobile-only accountholders are far
+  younger (65 vs 41 pp aged ≤35) and somewhat less educated than bank-only holders.
+- **Digital-payment use falls off with age (U2).** Adoption is an inverted-U by age, peaking at
+  26–35 (59.7 pp) and lowest at 65+ (48.1 pp), 8.7 pp below the prime working-age band.
+
+Reading: the paper's "access without depth" theme has a consistent demographic signature —
+income gates *access*, education gates *depth*, and age gates *digital usage*. All are
+single-wave 2024 cross-sectional descriptions (no trend claims).
+
 ## Prediction box — the surge was a regime change, not a trend (P1–P3)
 
 A fixed forecasting task (predict each country's 2024 value from waves ≤ 2021) quantifies
@@ -50,7 +77,7 @@ how *new* the 2024 wave's information is:
 
 | Target | Persistence MAE | Best model MAE | What worked |
 |---|---:|---:|---|
-| Account ownership | 5.58 pp | **5.16 pp** | light region-mean shrinkage, k=0.1 (P6) |
+| Account ownership | 5.58 pp | **5.14 pp** | light income-group-mean shrinkage, k=0.1 (P7) |
 | Resilience | 6.68 pp | **6.63 pp** | light region-mean shrinkage, k=0.1 (P5) |
 | Formal saving | 9.77 pp | **8.45 pp** | damped trend (λ=0.5) (P2) |
 
@@ -58,11 +85,13 @@ A mobile-money-informed growth model fit on the 2017→2021 transition **failed*
 the contemporaneous saving–mobile-money correlation of Extension 1 was not forecastable from
 the previous transition. The surge is genuinely new 2024-wave information — a regime change,
 consistent with the definitional expansion plus post-pandemic saving behavior. What *does*
-help account and resilience is shrinking each country's 2021 value slightly toward its
-regional mean (k = 0.1, selected by cross-validation on the fully pre-2021 account transition,
-never on the 2024 test wave): a mild regional-convergence prior beats flat persistence, while a
-logit-space ceiling-deceleration model (P4) did not — the missing structure is convergence,
-not saturation.
+help account and resilience is shrinking each country's 2021 value slightly toward a group
+mean (k = 0.1, selected by cross-validation on the fully pre-2021 account transition, never on
+the 2024 test wave): a mild convergence prior beats flat persistence, while a logit-space
+ceiling-deceleration model (P4) did not — the missing structure is convergence, not saturation.
+The convergence basin matters slightly: for account, the same pre-2021 CV prefers the
+*income-group* mean over the *regional* mean (P7, 5.16 → 5.14 pp), while resilience still uses
+the regional mean (P5).
 
 ## Honest nulls worth one sentence each
 

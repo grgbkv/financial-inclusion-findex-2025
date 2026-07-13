@@ -426,3 +426,50 @@ touches account only — saving (damped trend) and resilience (k=0.1 region-shri
 must stay byte-identical to the current champion.
 **Keep if:** the pre-2021 CV prefers income-group shrinkage AND account MAE improves on 5.156
 (P6) on the 2021→2024 evaluation, without changing saving/resilience predictions.
+
+**E11 verdict: KEEP.** r=0.403 (n=76 dev-panel countries with both indicators in 2021 & 2024),
+positive as hypothesized, above the 0.30 threshold. Gates clean: G3 (both are declared headlines
+— `saved_formally`, `borrowed_formally`); G4 (76 countries, 97.4% dev-panel pop); G6 sign-stable
+AND magnitude-retaining — the jackknife actually *grows* (0.403→0.471 after drop-top-5), so this
+is emphatically not a big-country artifact. Δborrowing terciles are broadly monotonic in mean
+Δformal-saving (low/mid/high = +5.8/+17.2/+13.4pp; mid slightly exceeds high, so the shape is
+concave rather than strictly monotonic, but the ordering is clear). Reading: the 2021→2024
+deepening is broad-based across both sides of the household balance sheet — where formal
+borrowing grew, formal saving grew too — so the surge is genuine financial deepening, not a
+saving-only store-of-value shift. Descriptive association only; account growth and common income
+shocks are plausible common drivers of both sides (noted, not controlled); no causal claim.
+
+**U4 verdict: KEEP.** Formal saving (fin17a==1, saving at a financial institution) is 46.2pp
+among tertiary-educated adults vs 12.0pp among primary-or-less-educated adults — a 34.1pp gap,
+far above the 5pp threshold and monotonic across the three education levels (12.0/22.6/46.2pp).
+M2 cell-size gate passes for every group (n=14,103–53,354). M3 declared n/a (the country headline
+`fin17a_17a1_d` bundles institutional with mobile saving, so the micro fin17a-only rate has no
+exact country equivalent; this is a within-education subgroup split besides). Reading: the
+*depth* margin of financial inclusion — actually using an account to save formally — is far less
+reached among the least-educated than the access margin. Complements M1's income gradient on the
+"not enough money" access barrier: education stratifies formal-saving depth even more sharply
+(34pp) than income stratifies the money barrier (10pp). Descriptive, single 2024 cross-section.
+
+**P7 verdict: KEEP, champion updated.** The pre-2021 CV (predict 2021 account from 2017 +
+k=0.1 shrink toward the group 2017 pop-weighted mean) prefers the **income-group** basin
+(`incomegroupwb24`, MAE 6.97) over the incumbent region basin (`regionwb24_hi`, 7.209) — so the
+pre-registered adoption condition is met on ≤2021 data alone. Applied unchanged to the 2021→2024
+account prediction, income-group shrinkage gives account MAE 5.144 vs P6's region-shrinkage 5.156
+(−0.012pp, ~0.2% relative). Resilience (6.625, still region-shrink per P5) and saving (8.448,
+damped trend) print byte-identical to P6, confirming per-target isolation. No 2024 leakage: the
+basin choice was made entirely on the ≤2021 transition, and only 2021 account levels + their
+income-group 2021 means feed the shrink. The gain is small (honestly logged, like P5's 0.057pp),
+but both pre-registered conditions hold — the CV prefers income-group AND it wins out-of-sample —
+so income group is a marginally better convergence basin than region for account. New champion:
+account=5.144, resilience=6.625, saving=8.448.
+
+## 2026-07-13 wrap-up
+Ran 3 experiments (E11, U4, P7), one per stream — all KEEP. E11 (hypothesis): formal borrowing
+and formal saving deepen together 2021→2024 (r=0.403, n=76, gate-clean, jackknife strengthens to
+0.471) — the surge is broad balance-sheet deepening, not saving-specific, alongside E1/E10's
+digitalization channels. U4 (micro): formal saving is sharply education-graded — 46.2pp
+(tertiary) vs 12.0pp (primary-or-less), a 34.1pp monotonic gap — the depth margin is far less
+reached among the least-educated than the access margin (complements M1). P7 (prediction):
+pre-2021 CV prefers income-group over region as the account shrinkage basin; account MAE
+5.156→5.144pp with resilience/saving byte-identical. New prediction champion: account=5.144,
+resilience=6.625, saving=8.448. Everything committed on autoresearch/daily.

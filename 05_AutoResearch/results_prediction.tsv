@@ -9,3 +9,4 @@ commit	target	mae_pp	n	status	description
 00185dd	account_t_d	5.598	117	discard	P4 logit-space damped trend (l=0.5): worse than persistence (5.576) by 0.02pp - deceleration near ceiling already well captured by flat persistence in this window; reverted to P2 champion
 5bb5847	fin24aSD_ND	6.625	81	keep	P5 region-shrinkage (k=0.1, CV-selected on account 2017-21 transition): improves resilience over persistence (baseline 6.682); account/saving unchanged from P2
 d115a34	account_t_d	5.156	117	keep	P6 region-shrinkage (k=0.1, same CV-selected value as P5): beats persistence account champion (5.576); resilience/saving byte-identical to P5
+22b2b85	account_t_d	5.144	117	keep	P7 income-group shrinkage (k=0.1): pre-2021 CV prefers income-group basin (6.97) over region (7.209); beats P6 region-shrink account champion (5.156->5.144); resilience/saving byte-identical
