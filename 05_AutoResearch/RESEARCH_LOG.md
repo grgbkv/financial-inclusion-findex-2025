@@ -373,3 +373,56 @@ MAE 5.576→5.156pp (−0.42pp) with resilience/saving byte-identical — region
 flat persistence. New prediction champion: account=5.156, resilience=6.625, saving=8.448.
 EXTENSIONS_DRAFT updated (E10 folded into Extension 1; prediction box refreshed for P5/P6).
 Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-13 daily autoresearch cycle
+
+## E11 — pre-registered (hypothesis / country level)
+**H:** Financial deepening in the 2021→2024 window is broad, not saving-specific: countries
+where *formal borrowing* grew most (Δ`fin22a_22a1_22g_d`) also saw the largest gains in
+*formal saving* (Δ`fin17a_17a1_d`), dev panel, population-weighted. Motivation: E1/E10 tied the
+saving surge to account on-ramps (mobile money, wage rails); if the surge reflects genuine
+balance-sheet deepening rather than a saving-only phenomenon, the credit side should co-move.
+A strong positive r says "broad deepening"; a null sharpens the surge as saving-specific (a
+store-of-value shift, not a credit-market development).
+**Test:** weighted corr of Δ(`fin22a_22a1_22g_d`)(2021→2024) vs Δ(`fin17a_17a1_d`)(2021→2024),
+dev panel, weight = 2024 adult population. G3: both are the declared `borrowed_formally` and
+`saved_formally` headlines in `INDICATORS` → checked, not n/a. Gates: G4 (coverage), G6
+(jackknife drop-top-5, judged with the E4 magnitude-retention lesson: sign-stable but
+r_droptop < 0.5×r_full = big-country artifact → discard the general claim).
+**Keep if:** |r| ≥ 0.30, sign positive (hypothesized), G6 sign-stable AND magnitude-retaining.
+Descriptive association only — account growth / common income shocks are plausible common
+drivers of both sides (noted, not controlled); no causal claim.
+
+## U4 — pre-registered (micro stream)
+**H:** Formal saving did not reach the least-educated: among all adults in the 2024 wave,
+saving at a financial institution (`fin17a==1`) is markedly less common among primary-or-less-
+educated adults (`educ==1`) than tertiary-educated adults (`educ==3`), pooled globally — an
+education gradient in the *depth* (formal-saving) margin, complementing M1's income gradient on
+the *access* barrier. No prior peek at this outcome (only overall `fin17a`/`educ` value counts
+were inspected for coding, never the cross-tab).
+**Test:** weighted rate of `fin17a==1` (formal saving; coding 1=yes, 2=no, 3=dk, 4=refused → 2/3/4
+treated as not-saving, NaN=not asked dropped) split by `educ` (1=primary-or-less, 2=secondary,
+3=tertiary), pooled across all 2024 economies (raw `wgt`, economy-equal pooling per the current
+micro.py default — HARNESS_V2_NOTES caveat #3 applies to exact pooled pp values, not to
+direction). Gates: M2 (unweighted cell n ≥ 100 per educ group). M3 declared n/a — the country
+headline `fin17a_17a1_d` bundles institutional (`fin17a`) with mobile (`fin17a1`) saving, so the
+micro `fin17a`-only rate has no exact country-file equivalent, and this is a within-education
+subgroup split besides.
+**Keep if:** (rate_tertiary − rate_primary) ≥ 5pp in the hypothesized direction (tertiary
+higher). Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P7 — pre-registered (prediction stream)
+**Idea:** account_t_d currently uses region-shrinkage (regionwb24_hi mean, k=0.1; P6 champion,
+MAE 5.156). Test whether shrinking toward the **income-group** mean (`incomegroupwb24`) instead
+of the region mean does better — income group is another plausible convergence basin. Selection
+is done entirely pre-2021 (no 2024 leakage): cross-validate BOTH shrinkage variants (region vs
+income-group) with the same k=0.1 mechanic on the fully-≤2021 account_t_d 2017→2021 transition
+(predict 2021 from 2017 + shrink); adopt the income-group variant for the 2021→2024 account
+prediction ONLY IF it beats region-shrinkage on that 2017→2021 CV. If the CV prefers region
+(the incumbent), keep P6 unchanged and log P7 as a discard. Per-target policy (P2's rule):
+touches account only — saving (damped trend) and resilience (k=0.1 region-shrink, P5) predictions
+must stay byte-identical to the current champion.
+**Keep if:** the pre-2021 CV prefers income-group shrinkage AND account MAE improves on 5.156
+(P6) on the 2021→2024 evaluation, without changing saving/resilience predictions.

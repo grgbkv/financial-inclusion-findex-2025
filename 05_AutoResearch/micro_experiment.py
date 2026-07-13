@@ -1,9 +1,11 @@
-"""U3 (pre-registered): among unbanked adults (account==0), is the reason "a family member
-already has an account" (fin11f==1) cited more by women than by men? Pooled 2024 wave.
+"""U4 (pre-registered): did formal saving reach the least-educated? Among all adults in the
+2024 wave, is saving at a financial institution (fin17a==1) less common among primary-or-less-
+educated adults (educ==1) than tertiary-educated adults (educ==3)? Pooled 2024 wave.
 
-fin11f coding: 1=yes, 2=no, 3=don't know, 4=refused, NaN=not asked. The barrier battery is
-asked only of the unbanked. We treat 3/4 as not-citing; NaN (not asked) is dropped by the
-weighted-mean routine. female coding: 1=female, 2=male (per the U1 fix).
+fin17a coding: 1=yes, 2=no, 3=don't know, 4=refused, NaN=not asked. Treat 2/3/4 as not-saving;
+NaN (not asked) dropped by the weighted-mean routine. educ coding: 1=primary-or-less,
+2=secondary, 3=tertiary. M3 declared n/a — the country headline fin17a_17a1_d bundles
+institutional (fin17a) and mobile (fin17a1) saving, and this is a within-education subgroup split.
 """
 import numpy as np
 
@@ -12,27 +14,25 @@ from micro import Micro
 
 def run(mi: Micro):
     df = mi.df.copy()
-    # binary "cited fin11f", NaN where the reason battery was not answered
-    df["fin11f_yes"] = np.where(df["fin11f"].isin([1, 2, 3, 4]),
-                                (df["fin11f"] == 1).astype(float), np.nan)
+    # binary "saved at a financial institution", NaN where the question was not asked
+    df["fin17a_yes"] = np.where(df["fin17a"].isin([1, 2, 3, 4]),
+                                (df["fin17a"] == 1).astype(float), np.nan)
 
-    unbanked = df[df["account"] == 0]
+    # overall prevalence, for context
+    v_all, n_all = mi._wavg(df, "fin17a_yes")
+    print(f"U4  formal saving (fin17a) among all adults: {v_all*100:.1f}pp  (n={n_all})")
 
-    # overall prevalence among the unbanked, for context
-    v_all, n_all = mi._wavg(unbanked, "fin11f_yes")
-    print(f"U3  fin11f (family member has account) among all unbanked: "
-          f"{v_all*100:.1f}pp  (n={n_all})")
-
+    labels = {1: "primary-", 2: "secondary", 3: "tertiary"}
     rates = {}
-    for code, label in [(1, "women"), (2, "men")]:
-        sub = unbanked[unbanked["female"] == code]
-        v, n = mi._wavg(sub, "fin11f_yes")
-        rates[label] = (v * 100 if v == v else float("nan"), n)
-        print(f"U3  unbanked {label:5s}: fin11f rate={rates[label][0]:.1f}pp  n={n}")
-        print("U3 ", mi.gate_cell_size(n))
+    for code in [1, 2, 3]:
+        sub = df[df["educ"] == code]
+        v, n = mi._wavg(sub, "fin17a_yes")
+        rates[code] = (v * 100 if v == v else float("nan"), n)
+        print(f"U4  educ={code} ({labels[code]:9s}): fin17a rate={rates[code][0]:.1f}pp  n={n}")
+        print("U4 ", mi.gate_cell_size(n))
 
-    diff = rates["women"][0] - rates["men"][0]
-    print(f"U3  rate_women - rate_men = {diff:+.1f}pp")
+    diff = rates[3][0] - rates[1][0]
+    print(f"U4  rate_tertiary - rate_primary = {diff:+.1f}pp")
 
 
 if __name__ == "__main__":
