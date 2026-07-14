@@ -24,6 +24,12 @@ of formal saving. Reading: the surge is a broad-based digitalization signature a
 account on-ramps (mobile money *and* formal wage rails), not one rail — account growth is a
 plausible common driver of both sides (descriptive, not controlled).
 
+A *third* digitalization channel co-moves too (E12). Δ(any digital payment, `g20_any`) tracks
+Δ(formal saving) 2021→2024 at weighted r = 0.37 (n = 76; jackknife *strengthens* to 0.78
+without the top-5). Terciles of Δdigital-payment gain +2.8 / +16.7 / +14.4 pp of formal
+saving. So the surge co-moves with the broadest usage margin (any digital payment) as well as
+with mobile money and wage rails — three account on-ramps, one signature.
+
 **And the deepening is broad, not saving-specific (E11).** Formal *borrowing* and formal
 *saving* grew together across the panel 2021→2024: weighted r = 0.40 between Δ(formal
 borrowing) and Δ(formal saving) (n = 76; jackknife *strengthens* to 0.47 without the top-5, so

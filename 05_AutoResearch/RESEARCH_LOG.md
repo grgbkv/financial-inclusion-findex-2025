@@ -530,3 +530,50 @@ only — account (income-group shrink, P7) and saving (damped trend, P2) predict
 byte-identical to the current champion.
 **Keep if:** resilience MAE improves on 6.625 (P5 region-shrink champion) without changing the
 account/saving predictions.
+
+**E12 verdict: KEEP.** r=0.370 (n=76 dev-panel countries with both indicators in 2021 & 2024),
+positive as hypothesized, above the 0.30 threshold. Gates clean: G3 (both are declared headlines
+— `digital_payment` = `g20_any`, `saved_formally` = `fin17a_17a1_d`); G4 (76 countries, 97.4%
+dev-panel pop); G6 sign-stable AND magnitude-retaining — the jackknife actually *grows*
+(0.370→0.782 after drop-top-5), so emphatically not a big-country artifact (like E11). Δg20_any
+terciles are broadly monotonic in mean Δformal-saving (low/mid/high = +2.8/+16.7/+14.4pp; mid
+slightly exceeds high, so concave rather than strictly monotonic, but the ordering is clear).
+Reading: digital-payment usage growth is a fourth co-moving channel of the 2021→2024 formal-saving
+surge, alongside mobile money (E1, r=0.719), wage rails (E10, r=0.791) and formal borrowing (E11,
+r=0.403) — consistent with the surge as a broad-based digitalization/deepening signature rather
+than any single mechanism. Distinct from E5 (which used the g20/account ratio at 2021 to predict
+account growth, direction rejected): this is Δg20 vs Δsaving co-movement. Descriptive association
+only; account growth is a plausible common driver of both sides (noted, not controlled); no causal
+claim. Same big-economy caveat class as E1/E7/E10, though here the jackknife strengthens.
+
+**U5 verdict: DISCARD.** rate_rural=36.0pp vs rate_urban=36.8pp, diff=−0.8pp — opposite of the
+hypothesized direction (rural expected higher) and far below the 5pp threshold in magnitude. M2
+cell-size gate passes for both cells (n=12,992 rural / 7,859 urban unbanked). Reading: the
+"financial institutions are too far away" barrier is cited at near-identical rates by rural and
+urban unbanked adults in the pooled 2024 cross-section — physical distance does not read as a
+sharper barrier for rural unbanked once economies are pooled economy-equal. Plausibly a
+within-country rural/urban gap exists in individual economies but washes out under economy-equal
+pooling (HARNESS_V2_NOTES caveat #3), and urban unbanked face their own access frictions. A clean,
+slightly-reversed, below-threshold null. Descriptive, single 2024 cross-section.
+
+**P8 verdict: DISCARD, reverted to P7/P5 champion.** Switching resilience shrinkage from the region
+basin (`regionwb24_hi`, P5) to the income-group basin (`incomegroupwb24`) gave resilience MAE
+6.802 vs the P5 champion 6.625 — 0.177pp *worse*. Account (5.144, income-group shrink) and saving
+(8.448, damped trend) printed byte-identical, confirming per-target isolation. Reading: even though
+the pre-2021 account 2017→2021 CV prefers the income-group basin for *account* (6.97 < 7.209, P7),
+that basin preference does NOT transfer to *resilience* out-of-sample — resilience's convergence
+structure is better captured by the region basin. A useful negative: the CV-selected basin is
+target-specific, not a universal choice. Reverted predictor.py to the P7 champion (region basin for
+resilience). Champion unchanged: account=5.144, resilience=6.625, saving=8.448.
+
+## 2026-07-14 wrap-up
+Ran 3 experiments (E12, U5, P8), one per stream. E12 (hypothesis, KEEP): digital-payment adoption
+growth co-moves with the 2021→2024 formal-saving surge at r=0.370 (n=76, gate-clean, jackknife
+strengthens 0.370→0.782) — a fourth broad-digitalization channel alongside mobile money (E1),
+wage rails (E10) and formal borrowing (E11). U5 (micro, DISCARD): the "too far away" physical-access
+barrier is NOT cited more by rural than urban unbanked in the pooled 2024 cross-section (36.0 vs
+36.8pp, −0.8pp, essentially flat and slightly reversed) — the geographic gradient washes out under
+economy-equal pooling. P8 (prediction, DISCARD): income-group basin does not transfer to resilience
+shrinkage out-of-sample (6.625→6.802pp worse); the CV-preferred basin is target-specific — reverted
+to the region basin for resilience. Prediction champion unchanged: account=5.144, resilience=6.625,
+saving=8.448. Everything committed on autoresearch/daily.
