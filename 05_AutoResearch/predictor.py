@@ -1,11 +1,12 @@
-"""Prediction stream — P7: for account_t_d, test income-group shrinkage vs the incumbent
-region shrinkage (P6). Selection is done entirely pre-2021: cross-validate both variants
-(same k=0.1 mechanic) on the fully-<=2021 account_t_d 2017->2021 transition (predict 2021 from
-2017 + shrink toward the group's 2017 pop-weighted mean), and adopt whichever basin the CV
-prefers. No 2024 information touches the choice.
+"""Prediction stream — P8: switch resilience (fin24aSD_ND) shrinkage from the region basin
+(regionwb24_hi, P5) to the income-group basin (incomegroupwb24). Resilience has no pre-2021
+wave to CV a basin on directly (P1-P3 box), so P5 borrowed the shrink parameters from the
+account 2017->2021 transition CV. P7's CV on that SAME <=2021 account transition preferred the
+income-group basin (6.97) over region (7.209); reuse that already-established pre-2021 choice
+for resilience unchanged. No 2024 information touches the choice; k stays 0.1.
 
-Saving (fin17a_17a1_d) keeps the P2 damped trend; resilience (fin24aSD_ND) keeps the P5
-region-shrinkage (k=0.1). Per-target policy: those two must stay byte-identical to the champion.
+Account (fin17a_17a1_d saving keeps the P2 damped trend; account_t_d keeps P7's income-group
+shrink) — per-target policy: account and saving predictions stay byte-identical to the champion.
 """
 import pandas as pd
 
@@ -13,7 +14,7 @@ from harness import Findex
 
 DAMP = 0.5
 SHRINK_K = 0.1
-# account basin chosen by the pre-2021 CV below; resilience always region-shrinks (P5).
+# account AND resilience both use the CV-preferred basin below (income-group per P7).
 ACCOUNT_BASIN = None  # set by _select_account_basin()
 
 
@@ -44,11 +45,11 @@ def _select_account_basin(fx: Findex):
         mae = float((pred.reindex(common) - truth_2021.reindex(common)).abs().mean())
         out[basin] = round(mae, 3)
     winner = min(out, key=out.get)
-    print(f"P7 pre-2021 CV (account 2017->2021, k={SHRINK_K}): {out}  -> basin={winner}")
+    print(f"P7/P8 pre-2021 CV (account 2017->2021, k={SHRINK_K}): {out}  -> basin={winner}")
     return winner, out
 
 
-def predict(fx: Findex, account_basin: str) -> dict:
+def predict(fx: Findex, basin: str) -> dict:
     train, _ = fx.prediction_task()
     preds = {}
     for target in fx.PRED_TARGETS:
@@ -60,9 +61,9 @@ def predict(fx: Findex, account_basin: str) -> dict:
             pred = (last + DAMP * trend).clip(0, 100)
             preds[target] = pred.fillna(last)
         elif target == "fin24aSD_ND":
-            preds[target] = _shrink(train, last, SHRINK_K, "regionwb24_hi")  # P5 champion, fixed
+            preds[target] = _shrink(train, last, SHRINK_K, basin)  # P8: CV-preferred basin
         elif target == "account_t_d":
-            preds[target] = _shrink(train, last, SHRINK_K, account_basin)
+            preds[target] = _shrink(train, last, SHRINK_K, basin)  # P7: income-group shrink
         else:
             preds[target] = last
     return preds

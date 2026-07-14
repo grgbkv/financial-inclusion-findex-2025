@@ -473,3 +473,60 @@ reached among the least-educated than the access margin (complements M1). P7 (pr
 pre-2021 CV prefers income-group over region as the account shrinkage basin; account MAE
 5.156→5.144pp with resilience/saving byte-identical. New prediction champion: account=5.144,
 resilience=6.625, saving=8.448. Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-14 daily autoresearch cycle
+
+## E12 — pre-registered (hypothesis / country level)
+**H:** Digital-payment adoption is a fourth channel of the 2021→2024 formal-saving surge:
+countries where the share of adults making/receiving *any digital payment* (`g20_any`) grew
+most 2021→2024 also saw the largest gains in formal saving (`fin17a_17a1_d`), dev panel,
+population-weighted. Motivation: E1 (mobile money, r=0.719), E10 (wage rails, r=0.791), and
+E11 (formal borrowing, r=0.403) established the surge as a broad digitalization/deepening
+signature across several account on-ramps. Digital-payment usage growth is the most general
+usage margin and should co-move too if the "broad digitalization" reading is right; a null
+would bound the channel set. Distinct from E5 (which used the g20/account *ratio at 2021* to
+predict *account* growth, direction rejected) — this tests Δg20 vs Δsaving co-movement, never
+before run.
+**Test:** weighted corr of Δ(`g20_any`)(2021→2024) vs Δ(`fin17a_17a1_d`)(2021→2024), dev
+panel, weight = 2024 adult population. G3: `g20_any` is the declared `digital_payment`
+headline in `INDICATORS` and `fin17a_17a1_d` the `saved_formally` headline → checked, not
+n/a. Gates: G4 (coverage), G6 (jackknife drop-top-5, judged with the E4 magnitude-retention
+lesson: sign-stable but r_droptop < 0.5×r_full = big-country artifact → discard the general
+claim).
+**Keep if:** |r| ≥ 0.30, sign positive (hypothesized), G6 sign-stable AND magnitude-retaining.
+Descriptive association only — account growth is a plausible common driver of both sides
+(noted, not controlled); no causal claim.
+
+## U5 — pre-registered (micro stream)
+**H:** Among unbanked adults (`account==0`), the barrier "financial institutions are too far
+away" (`fin11b==1`) is cited more by **rural** adults (`urbanicity==1`) than **urban** adults
+(`urbanicity==2`), pooled globally (2024 wave) — a geographic-access barrier that should bind
+harder where physical branch/agent density is lower. Complements M1 (income gradient on the
+"not enough money" barrier) and U4 (education gradient on formal-saving depth) with a
+geographic gradient on a physical-access barrier. No prior peek at this split (only overall
+`fin11b` value counts and the urbanicity↔account-rate direction were inspected, never the
+fin11b-by-urbanicity cross-tab).
+**Test:** weighted rate of `fin11b==1` among unbanked adults with `fin11b` answered
+(∈{1,2,3,4}; 2=no, 3=dk, 4=refused treated as not-citing), split by `urbanicity`
+(1=rural, 2=urban — confirmed via account-rate direction: rural 66.3pp < urban 76.6pp),
+pooled across all 2024 economies (raw `wgt`, economy-equal pooling per the current micro.py
+default — HARNESS_V2_NOTES caveat #3 applies to exact pooled pp values, not direction).
+Gates: M2 (unweighted cell n ≥ 100 per urbanicity group). M3 declared n/a — no country-file
+equivalent for a within-unbanked reason-split.
+**Keep if:** (rate_rural − rate_urban) ≥ 5pp in the hypothesized direction (rural higher).
+Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P8 — pre-registered (prediction stream)
+**Idea:** resilience (`fin24aSD_ND`) currently uses region-basin shrinkage (`regionwb24_hi`,
+k=0.1; P5 champion, MAE 6.625). Because resilience has no pre-2021 wave to CV a basin on
+directly (P1–P3 box), P5 borrowed the shrink parameters from the account 2017→2021 transition
+CV. P7's CV on that *same* ≤2021 account transition preferred the **income-group** basin
+(`incomegroupwb24`, MAE 6.97) over region (7.209). So switch resilience shrinkage from region
+to income-group, reusing P7's already-established pre-2021 basin choice unchanged — no 2024
+information touches the choice, k stays 0.1. Per-target policy (P2's rule): touches resilience
+only — account (income-group shrink, P7) and saving (damped trend, P2) predictions must stay
+byte-identical to the current champion.
+**Keep if:** resilience MAE improves on 6.625 (P5 region-shrink champion) without changing the
+account/saving predictions.
