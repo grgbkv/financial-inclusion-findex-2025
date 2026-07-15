@@ -630,3 +630,49 @@ that also improves the 2021→2024 account MAE over the P7 champion (5.144). Per
 predictions must stay byte-identical to the current champion.
 **Keep if:** the pre-2021 CV selects a k AND account MAE improves on 5.144 (P7) on the
 2021→2024 evaluation, without changing saving/resilience predictions.
+
+**E13 verdict: KEEP.** r=0.435 (n=59 dev-panel countries with both indicators in 2021 & 2024),
+positive as hypothesized (complements), above the 0.30 threshold. Gates clean: G3 (both are
+declared headlines — `fi_account` = `fiaccount_t_d`, `mobile_money` = `mobileaccount_t_d`); G4
+(62 countries, 71.3% dev-panel pop); G6 sign-stable AND magnitude-retaining (0.435→0.347 after
+drop-top-5, above the 0.5×r_full=0.218 floor). Δfiaccount terciles vs mean Δmobileaccount:
+low/mid/high = −2.8/+14.6/+12.3pp (broadly monotonic, concave — mid slightly exceeds high).
+Reading: institutional-account and mobile-money account growth *co-move* 2021→2024 — countries
+built out both margins together rather than one substituting for the other. This favors the
+broad-digitalization/co-development reading (behind E1/E10/E11/E12) over the "leapfrogging"
+substitution narrative, at least at the country-aggregate level. Descriptive association only;
+mobile and FI accounts are distinct components of the headline `account_t_d`, so this is not
+tautological; no causal claim. Same big-economy caveat class, though the jackknife retains most
+of its magnitude.
+
+**U6 verdict: DISCARD.** rate_men=86.8pp vs rate_women=83.4pp, diff=+3.4pp — in the hypothesized
+direction (men higher) but below the 5pp threshold in magnitude. M2 cell-size gate passes for
+both cells (n=34,249 accountholder women / 32,882 accountholder men). Reading: *conditional on
+already holding an account*, the usage-side gender gap in digital-payment adoption is small
+(3.4pp) and well below the keep threshold — access-margin gaps are where the gender story lives,
+not the usage margin once an account is held. A gate-clean, right-direction, below-threshold
+null. Descriptive, single 2024 cross-section.
+
+**P9 verdict: DISCARD, reverted to P7 champion.** The finer pre-2021 CV grid on the account
+2017→2021 transition (income-group basin) prefers k=0.2 (in-sample MAE 6.743, better than
+k=0.1's 6.97), so the CV-selection half of the keep condition is met. But applied to the
+2021→2024 account prediction, k=0.2 gives MAE 5.186 vs the P7 champion's 5.144 (k=0.1) —
+0.042pp *worse* out-of-sample. The keep condition required BOTH conditions; the second fails, so
+discard. Reading: a larger shrinkage helps in-sample on the 2017→2021 transition but overfits it
+— the 2021→2024 window is better served by lighter k=0.1, so the incumbent k transfers better.
+Same lesson-class as P8: pre-2021 CV optima don't always transfer to the 2021→2024 evaluation.
+Reverted predictor.py to the P7 champion (income-group basin, k=0.1). Champion unchanged:
+account=5.144, resilience=6.625, saving=8.448.
+
+## 2026-07-15 wrap-up
+Ran 3 experiments (E13, U6, P9), one per stream. E13 (hypothesis, KEEP): FI-account and
+mobile-money account growth are *complements* 2021→2024, not substitutes — r=0.435 (n=59,
+gate-clean, jackknife 0.435→0.347) — countries built out both account margins together,
+favoring co-development over "leapfrogging." U6 (micro, DISCARD): conditional on holding an
+account, the usage-side gender gap in digital-payment adoption is only 3.4pp (men 86.8 vs women
+83.4) — right direction but below the 5pp threshold; the gender story is on the access margin,
+not usage-given-access. P9 (prediction, DISCARD): a finer pre-2021 CV picks k=0.2 for the
+account income-group basin (in-sample 6.743<6.97) but it overfits — out-of-sample account MAE
+5.186>5.144, so the incumbent k=0.1 transfers better; reverted to P7. Prediction champion
+unchanged: account=5.144, resilience=6.625, saving=8.448. Everything committed on
+autoresearch/daily.
