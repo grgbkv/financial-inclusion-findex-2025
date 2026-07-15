@@ -1,51 +1,53 @@
-"""E12 (pre-registered): digital-payment adoption as a fourth channel of the saving surge.
-Delta(g20_any) (any digital payment) 2021->2024 vs delta(fin17a_17a1_d) (formal saving)
+"""E13 (pre-registered): are institutional and mobile-money account growth complements or
+substitutes in the 2021->2024 window? Delta(fiaccount_t_d) vs delta(mobileaccount_t_d),
 2021->2024, dev panel, population-weighted.
 
-g20_any is the declared digital_payment headline and fin17a_17a1_d the saved_formally
-headline in INDICATORS, so G3 is checked against the registry (not n/a). A strong positive r
-adds digital-payment usage to E1 (mobile money) / E10 (wage rails) / E11 (borrowing) as a
-broad-digitalization channel of the 2021-24 formal-saving surge; a null bounds the channel set.
+Both fi_account and mobile_money are declared headlines in INDICATORS (G3 checked, not n/a).
+Mobile and FI accounts are distinct components of the headline account_t_d, so a country can
+grow one without the other -- this is not tautological. Positive r = co-development
+(complements, the broad-digitalization reading behind E1/E10/E11/E12); negative r = leapfrogging
+(substitution). Descriptive only.
 """
+import pandas as pd
+
 from harness import Findex, INDICATORS
 
 
 def run(fx: Findex):
-    sav_col = INDICATORS["saved_formally"]["headline"]
-    dig_col = INDICATORS["digital_payment"]["headline"]
+    fi_col = INDICATORS["fi_account"]["headline"]
+    mm_col = INDICATORS["mobile_money"]["headline"]
 
     # G3: declare both variants against the registry
-    print("E12", fx.gate_variant("saved_formally", sav_col))
-    print("E12", fx.gate_variant("digital_payment", dig_col))
+    print("E13", fx.gate_variant("fi_account", fi_col))
+    print("E13", fx.gate_variant("mobile_money", mm_col))
 
-    sav = fx.country_panel(fx.pan_dev, sav_col, [2021, 2024])
-    d_sav = (sav[2024] - sav[2021]).rename("d_saved_formally_2124")
+    fi = fx.country_panel(fx.pan_dev, fi_col, [2021, 2024])
+    d_fi = (fi[2024] - fi[2021]).rename("d_fiaccount_2124")
 
-    dig = fx.country_panel(fx.pan_dev, dig_col, [2021, 2024])
-    d_dig = (dig[2024] - dig[2021]).rename("d_g20_any_2124")
+    mm = fx.country_panel(fx.pan_dev, mm_col, [2021, 2024])
+    d_mm = (mm[2024] - mm[2021]).rename("d_mobileaccount_2124")
 
-    w = sav["pop"]
-    common = d_sav.dropna().index.intersection(d_dig.dropna().index)
-    print(f"E12 dev-panel countries with both indicators in 2021 & 2024: n={len(common)}")
+    w = fi["pop"]
+    common = d_fi.dropna().index.intersection(d_mm.dropna().index)
+    print(f"E13 dev-panel countries with both indicators in 2021 & 2024: n={len(common)}")
 
-    r12, n12 = fx.weighted_corr(d_dig.reindex(common), d_sav.reindex(common), w.reindex(common))
-    print(f"E12 weighted r(d_g20_any, d_saved_formally) 2021-24 = {r12:.3f}  (n={n12})")
+    r13, n13 = fx.weighted_corr(d_fi.reindex(common), d_mm.reindex(common), w.reindex(common))
+    print(f"E13 weighted r(d_fiaccount, d_mobileaccount) 2021-24 = {r13:.3f}  (n={n13})")
 
-    # G4 coverage on the digital-payment change (use 2024 availability)
-    flag = fx.pan_dev.assign(dig_flag=fx.pan_dev[dig_col])
-    gcov = fx.gate_coverage(flag, "dig_flag", 2024, min_countries=30, min_pop_share=0.3)
-    gjack = fx.gate_jackknife(d_dig.reindex(common), d_sav.reindex(common), w.reindex(common))
-    print("E12", gcov)
-    print("E12", gjack)
+    # G4 coverage on the mobile-money change (use 2024 availability)
+    flag = fx.pan_dev.assign(mm_flag=fx.pan_dev[mm_col])
+    gcov = fx.gate_coverage(flag, "mm_flag", 2024, min_countries=30, min_pop_share=0.3)
+    gjack = fx.gate_jackknife(d_fi.reindex(common), d_mm.reindex(common), w.reindex(common))
+    print("E13", gcov)
+    print("E13", gjack)
 
-    # terciles of digital-payment change vs mean saving change (descriptive shape)
-    import pandas as pd
-    dfx = pd.DataFrame({"d_dig": d_dig.reindex(common), "d_sav": d_sav.reindex(common),
+    # terciles of FI-account change vs mean mobile-account change (descriptive shape)
+    dfx = pd.DataFrame({"d_fi": d_fi.reindex(common), "d_mm": d_mm.reindex(common),
                         "pop": w.reindex(common)}).dropna()
-    dfx["ter"] = pd.qcut(dfx["d_dig"], 3, labels=["low", "mid", "high"])
+    dfx["ter"] = pd.qcut(dfx["d_fi"], 3, labels=["low", "mid", "high"])
     for t, g in dfx.groupby("ter", observed=True):
-        wm = (g["d_sav"] * g["pop"]).sum() / g["pop"].sum()
-        print(f"E12  d_g20_any tercile {t:4s}: mean d_saved_formally = {wm:+.1f}pp  (n={len(g)})")
+        wm = (g["d_mm"] * g["pop"]).sum() / g["pop"].sum()
+        print(f"E13  d_fiaccount tercile {t:4s}: mean d_mobileaccount = {wm:+.1f}pp  (n={len(g)})")
 
 
 if __name__ == "__main__":

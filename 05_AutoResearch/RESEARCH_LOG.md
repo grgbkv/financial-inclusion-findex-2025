@@ -577,3 +577,56 @@ economy-equal pooling. P8 (prediction, DISCARD): income-group basin does not tra
 shrinkage out-of-sample (6.625→6.802pp worse); the CV-preferred basin is target-specific — reverted
 to the region basin for resilience. Prediction champion unchanged: account=5.144, resilience=6.625,
 saving=8.448. Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-15 daily autoresearch cycle
+
+## E13 — pre-registered (hypothesis / country level)
+**H:** Institutional (financial-institution) and mobile-money account growth are *complements*,
+not substitutes, in the 2021→2024 window: countries where FI-account ownership
+(`fiaccount_t_d`) grew most also saw the largest growth in mobile-money accounts
+(`mobileaccount_t_d`), dev panel, population-weighted. Motivation: the "leapfrogging"
+narrative predicts substitution (mobile money replacing formal accounts → negative r), while
+the "broad-digitalization" reading behind E1/E10/E11/E12 predicts co-development (positive r).
+Mobile and FI accounts are *distinct* components of the headline `account_t_d`, so a country
+can grow one without the other — this is not tautological. Never run before (E1/E3 used
+mobile-money growth vs saving/gender; this is FI-account vs mobile-account growth).
+**Test:** weighted corr of Δ(`fiaccount_t_d`)(2021→2024) vs Δ(`mobileaccount_t_d`)(2021→2024),
+dev panel, weight = 2024 adult population. G3: both `fi_account` and `mobile_money` are declared
+headlines in `INDICATORS` → checked, not n/a. Gates: G4 (coverage), G6 (jackknife drop-top-5,
+judged with the E4 magnitude-retention lesson: sign-stable but r_droptop < 0.5×r_full =
+big-country artifact → discard the general claim).
+**Keep if:** |r| ≥ 0.30, sign positive (complements/hypothesized), G6 sign-stable AND
+magnitude-retaining. Descriptive association only; a null or negative would support the
+leapfrogging/substitution reading. No causal claim.
+
+## U6 — pre-registered (micro stream)
+**H:** A *usage-side* gender gap conditional on access: among adults who already hold an
+account (`account==1`), digital-payment adoption (`anydigpayment`) is lower among women
+(`female==1`) than men (`female==2`), pooled globally (2024 wave) — access does not
+guarantee equal usage. Complements the access-margin nulls (U1 gender×income on account
+ownership) by moving to the usage margin conditional on having the account. No prior peek at
+this outcome (only overall `anydigpayment` and `account` value counts inspected for coding,
+never the gender split among accountholders).
+**Test:** weighted rate of `anydigpayment` among adults with `account==1`, split by `female`
+(1=female, 2=male; per the U1 coding fix), pooled across all 2024 economies (raw `wgt`,
+economy-equal pooling per the current micro.py default — HARNESS_V2_NOTES caveat #3 applies to
+exact pooled pp values, not direction). Gates: M2 (unweighted cell n ≥ 100 per gender). M3
+declared n/a — this is a within-accountholder usage subgroup split with no exact country-file
+equivalent (the country `g20_any` is over all adults, not conditional on account ownership).
+**Keep if:** (rate_men − rate_women) ≥ 5pp in the hypothesized direction (men higher).
+Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P9 — pre-registered (prediction stream)
+**Idea:** account_t_d currently uses income-group-basin shrinkage with a *fixed* k=0.1 (P7
+champion, MAE 5.144), where k=0.1 was carried over from the coarse P5 CV. Tune k finer for the
+income-group basin: cross-validate k over the grid {0.0, 0.05, 0.1, 0.15, 0.2, 0.3, 0.4, 0.5}
+entirely on the fully-≤2021 account_t_d 2017→2021 transition (predict 2021 from 2017 +
+income-group shrink), pick the CV-min k, and apply that fixed k unchanged to the 2021→2024
+account prediction. No 2024 information touches the selection. Adopt only if the CV picks a k
+that also improves the 2021→2024 account MAE over the P7 champion (5.144). Per-target policy
+(P2's rule): touches account only — saving (damped trend) and resilience (region-shrink k=0.1)
+predictions must stay byte-identical to the current champion.
+**Keep if:** the pre-2021 CV selects a k AND account MAE improves on 5.144 (P7) on the
+2021→2024 evaluation, without changing saving/resilience predictions.
