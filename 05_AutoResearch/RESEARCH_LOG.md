@@ -676,3 +676,57 @@ account income-group basin (in-sample 6.743<6.97) but it overfits — out-of-sam
 5.186>5.144, so the incumbent k=0.1 transfers better; reverted to P7. Prediction champion
 unchanged: account=5.144, resilience=6.625, saving=8.448. Everything committed on
 autoresearch/daily.
+
+---
+
+# 2026-07-16 daily autoresearch cycle
+
+## E14 — pre-registered (hypothesis / country level)
+**H:** The digitalization on-ramps are *bundled*, not independent: countries where mobile-money
+account ownership (`mobileaccount_t_d`) grew most 2021→2024 also saw the largest growth in
+any-digital-payment usage (`g20_any`), dev panel, population-weighted. Motivation: E1 linked
+Δmobile-money to the formal-saving surge (r=0.719) and E12 linked Δdigital-payment to the same
+surge (r=0.370), treating them as separate "channels." If Δmobile-money and Δg20 are themselves
+strongly correlated, the "four distinct channels" framing (E1/E10/E11/E12) is better read as one
+bundled digitalization phenomenon co-moving across access and usage margins. Distinct from E13
+(FI-account vs mobile-account growth) and E5 (g20/account *ratio* at 2021 vs account growth):
+this is Δmobile-money vs Δg20 co-movement, never before run.
+**Test:** weighted corr of Δ(`mobileaccount_t_d`)(2021→2024) vs Δ(`g20_any`)(2021→2024), dev
+panel, weight = 2024 adult population. G3: both `mobile_money` and `digital_payment` are declared
+headlines in `INDICATORS` → checked, not n/a. Gates: G4 (coverage), G6 (jackknife drop-top-5,
+judged with the E4 magnitude-retention lesson: sign-stable but r_droptop < 0.5×r_full =
+big-country artifact → discard the general claim).
+**Keep if:** |r| ≥ 0.30, sign positive (bundled/hypothesized), G6 sign-stable AND
+magnitude-retaining. Descriptive association only — account growth is a plausible common driver
+of both sides (noted, not controlled); no causal claim.
+
+## U7 — pre-registered (micro stream)
+**H:** Education stratifies the *access* margin (account ownership) as well as the depth margin,
+but less sharply: among all adults in the 2024 wave, account ownership (`account==1`) is more
+common among tertiary-educated adults (`educ==3`) than primary-or-less-educated adults
+(`educ==1`), pooled globally — an education gradient on account *access* to sit alongside U4's
+34.1pp education gradient on formal-saving *depth*. No prior peek at this outcome (only overall
+`account`/`educ` value counts were inspected for coding, never the account-by-educ cross-tab).
+**Test:** weighted rate of `account==1` (0/1-coded headline) split by `educ` (1=primary-or-less,
+2=secondary, 3=tertiary), pooled across all 2024 economies (raw `wgt`, economy-equal pooling per
+the current micro.py default — HARNESS_V2_NOTES caveat #3 applies to exact pooled pp values, not
+direction). Gates: M2 (unweighted cell n ≥ 100 per educ group). M3 declared n/a — this is a
+within-education subgroup split; the pooled economy-equal by-group rate has no exact country-file
+equivalent (the country `account_t_d` is a per-country all-adults level, not a global by-educ
+pooled rate).
+**Keep if:** (rate_tertiary − rate_primary) ≥ 5pp in the hypothesized direction (tertiary higher).
+Descriptive, single 2024 cross-section — no trend language regardless of outcome. Secondary
+descriptive note (not a keep condition): compare this access gap to U4's 34.1pp depth gap.
+
+## P10 — pre-registered (prediction stream)
+**Idea:** saving (`fin17a_17a1_d`) uses a *fixed* damped-trend λ=0.5 (P2 champion, MAE 8.448),
+never CV-tuned. Tune λ via a pre-2021 cross-validation on the fully-≤2021 saving history (all
+117 panel countries have 2014/2017/2021 saving): predict 2021 saving = 2017 + λ·(2017−2014),
+grid λ ∈ {0.0, 0.25, 0.5, 0.75, 1.0}, pick the CV-min λ, and apply that fixed λ unchanged to the
+2024 prediction (2024 = 2021 + λ·(2021−2017), clipped [0,100]). No 2024 information touches the
+selection. Adopt only if the CV selects a λ that also improves the 2021→2024 saving MAE over the
+P2 champion (8.448). Per-target policy (P2's rule): touches saving only — account (income-group
+shrink k=0.1, P7) and resilience (region shrink k=0.1, P5) predictions must stay byte-identical
+to the current champion.
+**Keep if:** the pre-2021 CV selects a λ AND saving MAE improves on 8.448 (P2) on the 2021→2024
+evaluation, without changing the account/resilience predictions.
