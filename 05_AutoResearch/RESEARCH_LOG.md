@@ -730,3 +730,58 @@ shrink k=0.1, P7) and resilience (region shrink k=0.1, P5) predictions must stay
 to the current champion.
 **Keep if:** the pre-2021 CV selects a λ AND saving MAE improves on 8.448 (P2) on the 2021→2024
 evaluation, without changing the account/resilience predictions.
+
+**E14 verdict: KEEP.** r=0.600 (n=58 dev-panel countries with both indicators in 2021 & 2024),
+positive as hypothesized (bundled), well above the 0.30 threshold. Gates clean: G3 (both are
+declared headlines — `mobile_money` = `mobileaccount_t_d`, `digital_payment` = `g20_any`); G4 (76
+countries, 97.4% dev-panel pop); G6 sign-stable AND magnitude-retaining — the jackknife actually
+*grows* (0.600→0.775 after drop-top-5), so emphatically not a big-country artifact (like E11/E12).
+Δmobile-money terciles vs mean Δg20: low/mid/high = −6.0/+10.4/+9.7pp (broadly monotonic, concave —
+mid slightly exceeds high). Reading: the digitalization on-ramps are *bundled*, not independent —
+Δmobile-money and Δdigital-payment usage themselves co-move strongly, so E1's "mobile-money channel"
+and E12's "digital-payment channel" of the saving surge are better read as one bundled
+digitalization phenomenon co-moving across the access margin (mobile-money accounts) and the usage
+margin (digital payments), rather than four cleanly separable mechanisms. Descriptive association
+only; account growth is a plausible common driver of both sides (noted, not controlled); no causal
+claim. Same big-economy caveat class, though here the jackknife strengthens.
+
+**U7 verdict: KEEP.** Account ownership (access margin) is 93.4pp among tertiary-educated adults
+vs 51.9pp among primary-or-less-educated adults — a +41.5pp gap, far above the 5pp threshold and
+monotonic across the three education levels (51.9/77.7/93.4pp). M2 cell-size gate passes for every
+group (n=30,480–74,624). M3 declared n/a (within-education subgroup split, no exact country-file
+equivalent). Reading: education stratifies the *access* margin (account ownership) at least as
+sharply as the *depth* margin — the +41.5pp access gap is actually larger in absolute pp than U4's
++34.1pp formal-saving depth gap. NOTE: the pre-registered *secondary* guess ("less sharply") was
+wrong, but it was explicitly not a keep condition, and the base rates differ (account 52–93pp vs
+formal saving 12–46pp), so absolute-pp comparison is apples-to-oranges — the honest reading is that
+education is a strong stratifier on *both* margins. The primary keep condition (tertiary−primary
+≥5pp, tertiary higher) holds decisively. Complements U4 (education→depth) and M1 (income→access
+barrier). Descriptive, single 2024 cross-section.
+
+**P10 verdict: DISCARD, reverted to P2/P7 champion.** The pre-2021 CV (predict 2021 saving = 2017 +
+λ·(2017−2014), n=117) selects **λ=0.0** — pure persistence beat any trend extrapolation on the calm
+2014→2021 window (grid MAE 6.969/7.242/7.656/8.155/8.703 for λ=0.0/0.25/0.5/0.75/1.0), so the
+CV-selection half of the keep condition is met. But applied to the 2021→2024 saving prediction,
+λ=0.0 gives MAE 9.767 vs the P2 champion's 8.448 (λ=0.5) — 1.319pp *worse* out-of-sample. The keep
+condition required BOTH; the second fails, so discard. Account (5.144) and resilience (6.625)
+printed byte-identical, confirming per-target isolation. Reading: the 2021→2024 formal-saving surge
+carries genuine momentum that the fixed λ=0.5 damped trend captures, but that momentum is *absent*
+from the quiescent 2014→2021 saving dynamics the CV trained on — so the CV mis-selects λ=0.0. This
+is the same regime-change lesson as P3 (the surge is not learnable from pre-2021 dynamics) and the
+same non-transfer lesson-class as P8/P9 (pre-2021 CV optima don't always transfer to the 2021→2024
+window). The fixed λ=0.5 (never CV-tuned, adopted in P2) remains the better saving predictor
+precisely because it does not defer to the pre-surge history. Reverted predictor.py to the P7
+champion. Champion unchanged: account=5.144, resilience=6.625, saving=8.448.
+
+## 2026-07-16 wrap-up
+Ran 3 experiments (E14, U7, P10), one per stream. E14 (hypothesis, KEEP): Δmobile-money and
+Δdigital-payment usage themselves co-move strongly 2021→2024 (r=0.600, n=58, gate-clean, jackknife
+grows 0.600→0.775) — the on-ramps are *bundled*, so E1/E12's separate "channels" of the saving
+surge are one digitalization phenomenon across access and usage margins. U7 (micro, KEEP): account
+ownership is strongly education-graded — 93.4pp (tertiary) vs 51.9pp (primary-or-less), a +41.5pp
+monotonic gap, even wider in absolute pp than U4's +34.1pp formal-saving depth gap (bases differ);
+education stratifies both the access and depth margins. P10 (prediction, DISCARD): CV-tuning the
+saving damped-trend λ on the pre-2021 (2014→2021) transition picks λ=0.0 (persistence), but that is
+9.767pp out-of-sample vs 8.448 for the fixed λ=0.5 — the saving surge's momentum is a regime change
+absent from pre-surge dynamics (echoes P3); reverted to the P2/P7 champion. Prediction champion
+unchanged: account=5.144, resilience=6.625, saving=8.448. Everything committed on autoresearch/daily.
