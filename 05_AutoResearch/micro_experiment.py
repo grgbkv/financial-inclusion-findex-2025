@@ -1,35 +1,31 @@
-"""U6 (pre-registered): a usage-side gender gap conditional on access. Among adults who already
-hold an account (account==1), is digital-payment adoption (anydigpayment) lower among women
-(female==1) than men (female==2)? Pooled 2024 wave.
+"""U7 (pre-registered): does education stratify the ACCESS margin (account ownership) as well as
+the depth margin (U4's 34.1pp education gradient on formal saving), but less sharply? Weighted
+rate of account==1 by educ (1=primary-or-less, 2=secondary, 3=tertiary), pooled 2024 wave.
 
-Complements the access-margin gender nulls (U1) by moving to the usage margin conditional on
-having the account. anydigpayment is coded 0/1 in the labelled CSV (BINARY_OUTCOMES). female:
-1=female, 2=male (per the U1 coding fix). M3 declared n/a -- this is a within-accountholder
-usage subgroup split with no exact country-file equivalent (country g20_any is over all adults,
-not conditional on account ownership).
+account is coded 0/1 in the labelled CSV (BINARY_OUTCOMES). M2 cell-size gate per educ group.
+M3 declared n/a -- this is a within-education subgroup split; the pooled economy-equal by-group
+rate has no exact country-file equivalent. Descriptive, single 2024 cross-section.
 """
 from micro import Micro
 
 
 def run(mi: Micro):
-    df = mi.df
-    acc = df[df["account"] == 1]
+    labels = {1: "primary-", 2: "secondary", 3: "tertiary"}
 
-    # overall usage among accountholders, for context
-    v_all, n_all = mi._wavg(acc, "anydigpayment")
-    print(f"U6  anydigpayment among accountholders (all): {v_all*100:.1f}pp  (n={n_all})")
-
-    labels = {1: "women", 2: "men"}
+    tab = mi.rate_by("account", "educ")
+    print("U7  account ownership by education (pooled 2024):")
     rates = {}
-    for code in [1, 2]:
-        sub = acc[acc["female"] == code]
-        v, n = mi._wavg(sub, "anydigpayment")
-        rates[code] = (v * 100 if v == v else float("nan"), n)
-        print(f"U6  female={code} ({labels[code]:5s}): anydigpayment rate={rates[code][0]:.1f}pp  n={n}")
-        print("U6 ", mi.gate_cell_size(n))
+    for _, row in tab.iterrows():
+        code = int(row["educ"])
+        rates[code] = (row["rate_pp"], int(row["n_unweighted"]))
+        print(f"U7  educ={code} ({labels.get(code, '?'):9s}): account rate={row['rate_pp']:.1f}pp"
+              f"  n={int(row['n_unweighted'])}")
+        print("U7 ", mi.gate_cell_size(int(row["n_unweighted"])))
 
-    diff = rates[2][0] - rates[1][0]
-    print(f"U6  rate_men - rate_women = {diff:+.1f}pp")
+    if 3 in rates and 1 in rates:
+        diff = rates[3][0] - rates[1][0]
+        print(f"U7  rate_tertiary - rate_primary = {diff:+.1f}pp")
+        print(f"U7  (compare: U4 depth gradient on formal saving was +34.1pp)")
 
 
 if __name__ == "__main__":
