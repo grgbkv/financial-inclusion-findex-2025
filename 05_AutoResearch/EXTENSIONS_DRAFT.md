@@ -85,7 +85,7 @@ how *new* the 2024 wave's information is:
 |---|---:|---:|---|
 | Account ownership | 5.58 pp | **5.14 pp** | light income-group-mean shrinkage, k=0.1 (P7) |
 | Resilience | 6.68 pp | **6.63 pp** | light region-mean shrinkage, k=0.1 (P5) |
-| Formal saving | 9.77 pp | **8.45 pp** | damped trend (λ=0.5) (P2) |
+| Formal saving | 9.77 pp | **7.96 pp** | damped trend (λ=0.5) + region-mean shrinkage, k=0.1 (P2+P11) |
 
 A mobile-money-informed growth model fit on the 2017→2021 transition **failed** (9.75 pp):
 the contemporaneous saving–mobile-money correlation of Extension 1 was not forecastable from
@@ -97,11 +97,18 @@ the 2024 test wave): a mild convergence prior beats flat persistence, while a lo
 ceiling-deceleration model (P4) did not — the missing structure is convergence, not saturation.
 The convergence basin matters slightly: for account, the same pre-2021 CV prefers the
 *income-group* mean over the *regional* mean (P7, 5.16 → 5.14 pp), while resilience still uses
-the regional mean (P5).
+the regional mean (P5). Saving, too, gains from region-mean shrinkage layered on the damped
+trend (P11, 8.45 → 7.96 pp) — and the contrast with the failed attempts to *re-tune* the
+shrinkage strength or the trend on pre-2021 data (P8–P10) is instructive: shrinkage corrects
+cross-sectional sampling noise, a regime-independent mechanism that transfers across the 2021
+break, whereas anything tuned to pre-2021 *dynamics* does not.
 
 ## Honest nulls worth one sentence each
 
 - Mobile-money growth ⇏ resilience gains within the window (E2).
+- Neither does the saving surge itself: Δresilience is orthogonal to Δformal-saving
+  (r = 0.03, E15) — the composition of emergency funds shifted (E7) before the share who can
+  raise them moved.
 - Gender-gap changes 2021→2024 are large (σ = 7.4 pp) but orthogonal to mobile-money growth (E3).
 - No systematic reversion of the unusually narrow 2021 income gap proportional to the
   earlier poorest-40 jump (E6).
