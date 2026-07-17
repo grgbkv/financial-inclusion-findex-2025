@@ -785,3 +785,63 @@ saving damped-trend λ on the pre-2021 (2014→2021) transition picks λ=0.0 (pe
 9.767pp out-of-sample vs 8.448 for the fixed λ=0.5 — the saving surge's momentum is a regime change
 absent from pre-surge dynamics (echoes P3); reverted to the P2/P7 champion. Prediction champion
 unchanged: account=5.144, resilience=6.625, saving=8.448. Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-17 daily autoresearch cycle
+
+## E15 — pre-registered (hypothesis / country level)
+**H:** The formal-saving surge bought resilience where it landed: countries with the largest
+2021→2024 gains in formal saving (`fin17a_17a1_d`) also saw the largest gains in financial
+resilience (`fin24aSD_ND`), dev panel, population-weighted. Motivation: the working paper's
+headline puzzle is that dev-panel resilience was flat (54.7→54.5pp) while formal saving surged;
+E7 showed the *composition* of emergency funds shifted toward savings where the surge landed,
+and E2 found Δresilience does NOT track Δmobile-money (r=0.189, discard). But the direct test —
+Δresilience vs Δformal-saving — has never been run. A positive keep says the surge does buy
+resilience where it lands (the flat aggregate hides offsetting declines elsewhere); a null
+sharpens the access-vs-depth gap into a saving-vs-resilience gap: even where formal saving
+surged, resilience did not follow within three years.
+**Test:** weighted corr of Δ(`fin24aSD_ND`)(2021→2024) vs Δ(`fin17a_17a1_d`)(2021→2024), dev
+panel, weight = 2024 adult population. G3: both are the declared `resilience` and
+`saved_formally` headlines in `INDICATORS` → checked, not n/a. Gates: G4 (coverage), G6
+(jackknife drop-top-5, judged with the E4 magnitude-retention lesson: sign-stable but
+r_droptop < 0.5×r_full = big-country artifact → discard the general claim).
+**Keep if:** |r| ≥ 0.30, sign positive (hypothesized), G6 sign-stable AND magnitude-retaining.
+Descriptive association only — common income shocks are a plausible common driver of both
+sides (noted, not controlled); no causal claim.
+
+## U8 — pre-registered (micro stream)
+**H:** A *depth-side* gender gap conditional on access: among adults who already hold an
+account (`account==1`), formal saving at a financial institution (`fin17a==1`) is less common
+among women (`female==1`) than men (`female==2`), pooled globally (2024 wave). Motivation: U6
+found the *usage* gender gap conditional on access is small (digital payments, 3.4pp, below
+threshold); this tests whether the *depth* margin (formal saving) shows a larger conditional
+gender gap, or whether gender gaps conditional-on-access are small across the board. No prior
+peek at this outcome (U4 used fin17a by educ over all adults; the fin17a-by-gender-among-
+accountholders cross-tab has never been read).
+**Test:** weighted rate of `fin17a==1` (coding 1=yes, 2=no, 3=dk, 4=refused → 2/3/4 treated as
+not-saving, NaN=not asked dropped) among adults with `account==1`, split by `female` (1=female,
+2=male; per the U1 coding fix), pooled across all 2024 economies (raw `wgt`, economy-equal
+pooling per the current micro.py default — HARNESS_V2_NOTES caveat #3 applies to exact pooled
+pp values, not direction). Gates: M2 (unweighted cell n ≥ 100 per gender). M3 declared n/a —
+within-accountholder subgroup split with no exact country-file equivalent (the country headline
+bundles mobile saving and is over all adults).
+**Keep if:** (rate_men − rate_women) ≥ 5pp in the hypothesized direction (men higher).
+Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P11 — pre-registered (prediction stream)
+**Idea:** saving (`fin17a_17a1_d`) is the weakest target (MAE 8.448, P2 damped trend λ=0.5) and
+the only one without basin shrinkage — yet shrinkage improved both other targets out-of-sample
+(P5 resilience, P6/P7 account). Test adding k=0.1 basin shrinkage ON TOP of the champion damped
+trend for saving. Basin selection entirely pre-2021 (no 2024 leakage): CV on the fully-≤2021
+saving 2017→2021 transition (predict 2021 saving from the 2017 level + k=0.1 shrink toward the
+basin's 2017 pop-weighted mean; persistence base for the CV since P10 showed pre-2021 saving
+dynamics carry no usable trend), comparing {none, regionwb24_hi, incomegroupwb24}. Adopt the
+CV winner ONLY IF it is not "none"; then apply that basin's k=0.1 shrink to the 2021→2024
+damped-trend prediction (shrink the prediction vector toward its basin pop-weighted mean).
+Known risk, accepted: the P8/P9/P10 lesson is that pre-2021 CV choices often fail to transfer
+across the 2021 regime change — a discard here is informative about whether that lesson extends
+to saving shrinkage. Per-target policy (P2's rule): touches saving only — account (income-group
+shrink k=0.1, P7) and resilience (region shrink k=0.1, P5) must stay byte-identical.
+**Keep if:** the pre-2021 CV prefers a non-"none" basin AND saving MAE improves on 8.448 (P2)
+on the 2021→2024 evaluation, without changing the account/resilience predictions.
