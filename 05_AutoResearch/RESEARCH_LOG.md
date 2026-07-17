@@ -845,3 +845,55 @@ to saving shrinkage. Per-target policy (P2's rule): touches saving only — acco
 shrink k=0.1, P7) and resilience (region shrink k=0.1, P5) must stay byte-identical.
 **Keep if:** the pre-2021 CV prefers a non-"none" basin AND saving MAE improves on 8.448 (P2)
 on the 2021→2024 evaluation, without changing the account/resilience predictions.
+
+**E15 verdict: DISCARD (clean null, informative).** r=0.031 (n=76 dev-panel countries with both
+indicators in 2021 & 2024) — far below the 0.30 threshold. Gates otherwise clean: G3 (both
+declared headlines — `resilience` = `fin24aSD_ND`, `saved_formally` = `fin17a_17a1_d`); G4 (76
+countries, 97.4% dev-panel pop); G6 mechanically sign-stable (0.031→0.133) but moot at this
+magnitude. Terciles of Δsaving vs mean Δresilience are non-monotonic (low/mid/high =
+−3.0/+3.9/+0.7pp) — no dose-response shape. Reading: the flat dev-panel resilience aggregate
+(54.7→54.5pp) does NOT hide a positive saving→resilience association at the country level —
+even where formal saving surged most, resilience did not move within the same three-year
+window. Combined with E2 (Δresilience ⊥ Δmobile-money) and E7 (the *composition* of emergency
+funds shifted toward savings where the surge landed), the picture is coherent: the saving surge
+re-routed how the already-resilient would raise emergency funds, without yet expanding the
+share who can. The access-vs-depth gap extends to a saving-vs-resilience gap. Descriptive,
+no causal claim; three years may simply be too short for stock accumulation to move resilience.
+
+**U8 verdict: DISCARD (borderline, right direction).** rate_men=34.5pp vs rate_women=29.5pp
+among accountholders; unrounded diff = +4.96pp — the hypothesized direction, but just below the
+pre-registered ≥5pp keep threshold (the rounded print of +5.0 does not clear an unrounded
+4.955). M2 cell-size gate passes for both cells (n=34,249 women / 32,882 men). Verdict follows
+the threshold, not the rounding. Reading: conditional on holding an account, the *depth-side*
+gender gap in formal saving (~5pp) is larger than the usage-side gap (U6: 3.4pp digital
+payments) but still modest relative to unconditional access-margin gradients (U4/U7:
+34–42pp by education). A consistent pattern across U6/U8: once access is held, within-gender
+usage/depth differences are small in the pooled 2024 cross-section. Descriptive, single wave.
+
+**P11 verdict: KEEP, champion updated.** The pre-2021 CV (predict 2021 saving from 2017 +
+k=0.1 shrink, persistence base, n=117) prefers the **region** basin (`regionwb24_hi`, MAE
+6.584) over both none (6.969) and income-group (6.641) — the adoption condition is met on
+≤2021 data alone. Applied on top of the champion damped trend (λ=0.5), region-shrinking the
+2021→2024 saving prediction vector gives saving MAE 7.963 vs the P2 champion's 8.448
+(−0.485pp, ~5.7% relative — the largest single-target gain since P6). Account (5.144,
+income-group shrink) and resilience (6.625, region shrink) print identical to the P7 champion,
+confirming per-target isolation. No 2024 leakage: basin chosen entirely on the 2017→2021
+transition; only ≤2021 levels feed the prediction. Why this pre-2021 CV choice *transferred*
+when P8/P9/P10's did not: shrinkage corrects cross-sectional sampling noise — a
+regime-independent mechanism — whereas P9/P10 tuned *dynamics* (k-strength interacting with
+convergence speed, trend λ), which the 2021 regime change invalidated. All three targets now
+carry k=0.1 basin shrinkage (account: income-group; resilience & saving: region). New champion:
+account=5.144, resilience=6.625, saving=7.963.
+
+## 2026-07-17 wrap-up
+Ran 3 experiments (E15, U8, P11), one per stream. E15 (hypothesis, DISCARD — informative null):
+Δresilience does not track Δformal-saving 2021→2024 (r=0.031, n=76, gate-clean) — even where
+the saving surge landed, resilience did not move within the window; with E2/E7 this sharpens
+the story to a saving-vs-resilience gap (composition shifted, capacity did not). U8 (micro,
+DISCARD — borderline): among accountholders, men out-save women formally by +4.96pp, the
+hypothesized direction but a hair under the pre-registered 5pp threshold; conditional-on-access
+gender gaps stay small (echoes U6). P11 (prediction, KEEP): k=0.1 region-basin shrinkage on top
+of the saving damped trend — basin CV-selected on the pre-2021 transition — cuts saving MAE
+8.448→7.963 (−0.485pp), the largest gain since P6; shrinkage transfers across the regime change
+where dynamics-tuning (P9/P10) did not. New prediction champion: account=5.144,
+resilience=6.625, saving=7.963. Everything committed on autoresearch/daily.
