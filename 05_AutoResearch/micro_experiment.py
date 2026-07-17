@@ -1,31 +1,43 @@
-"""U7 (pre-registered): does education stratify the ACCESS margin (account ownership) as well as
-the depth margin (U4's 34.1pp education gradient on formal saving), but less sharply? Weighted
-rate of account==1 by educ (1=primary-or-less, 2=secondary, 3=tertiary), pooled 2024 wave.
+"""U8 (pre-registered): depth-side gender gap conditional on access — among accountholders
+(account==1), is formal saving at a financial institution (fin17a==1) less common among women
+than men? Pooled 2024 wave, weighted.
 
-account is coded 0/1 in the labelled CSV (BINARY_OUTCOMES). M2 cell-size gate per educ group.
-M3 declared n/a -- this is a within-education subgroup split; the pooled economy-equal by-group
-rate has no exact country-file equivalent. Descriptive, single 2024 cross-section.
+fin17a coding: 1=yes, 2=no, 3=dk, 4=refused -> 2/3/4 treated as not-saving, NaN (not asked)
+dropped. female coding: 1=female, 2=male (per the U1 coding fix). M2 cell-size gate per gender.
+M3 declared n/a — within-accountholder subgroup split, no exact country-file equivalent (the
+country headline bundles mobile saving and covers all adults). Descriptive, single 2024
+cross-section. Complements U6 (usage-margin gender gap among accountholders: 3.4pp, discard).
 """
+import numpy as np
+import pandas as pd
+
 from micro import Micro
 
 
 def run(mi: Micro):
-    labels = {1: "primary-", 2: "secondary", 3: "tertiary"}
+    df = mi.df
+    fin17a = pd.to_numeric(df["fin17a"], errors="coerce")
+    # binary: 1 -> saves formally; 2/3/4 -> does not; NaN stays NaN (not asked)
+    df = df.assign(fin17a_bin=np.where(fin17a.isin([1, 2, 3, 4]),
+                                       (fin17a == 1).astype(float), np.nan))
 
-    tab = mi.rate_by("account", "educ")
-    print("U7  account ownership by education (pooled 2024):")
+    holders = df[df["account"] == 1]
+    labels = {1: "women", 2: "men"}
     rates = {}
-    for _, row in tab.iterrows():
-        code = int(row["educ"])
-        rates[code] = (row["rate_pp"], int(row["n_unweighted"]))
-        print(f"U7  educ={code} ({labels.get(code, '?'):9s}): account rate={row['rate_pp']:.1f}pp"
-              f"  n={int(row['n_unweighted'])}")
-        print("U7 ", mi.gate_cell_size(int(row["n_unweighted"])))
+    print("U8  formal saving (fin17a==1) among accountholders, by gender (pooled 2024):")
+    for code, grp in holders.groupby("female", dropna=True):
+        sub = grp.dropna(subset=["fin17a_bin", "wgt"])
+        v = float(np.average(sub["fin17a_bin"], weights=sub["wgt"])) * 100
+        n = len(sub)
+        rates[int(code)] = (v, n)
+        print(f"U8  female={int(code)} ({labels.get(int(code), '?'):5s}): "
+              f"fin17a rate={v:.1f}pp  n={n}")
+        print("U8 ", mi.gate_cell_size(n))
 
-    if 3 in rates and 1 in rates:
-        diff = rates[3][0] - rates[1][0]
-        print(f"U7  rate_tertiary - rate_primary = {diff:+.1f}pp")
-        print(f"U7  (compare: U4 depth gradient on formal saving was +34.1pp)")
+    if 1 in rates and 2 in rates:
+        diff = rates[2][0] - rates[1][0]
+        print(f"U8  rate_men - rate_women = {diff:+.1f}pp  (keep threshold: >= +5pp)")
+        print("U8  (compare: U6 usage-margin gap among accountholders was +3.4pp, discard)")
 
 
 if __name__ == "__main__":

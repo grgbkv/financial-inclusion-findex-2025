@@ -1,11 +1,13 @@
-"""Prediction stream — P7: for account_t_d, test income-group shrinkage vs the incumbent
-region shrinkage (P6). Selection is done entirely pre-2021: cross-validate both variants
-(same k=0.1 mechanic) on the fully-<=2021 account_t_d 2017->2021 transition (predict 2021 from
-2017 + shrink toward the group's 2017 pop-weighted mean), and adopt whichever basin the CV
-prefers. No 2024 information touches the choice.
+"""Prediction stream — P11: add k=0.1 basin shrinkage ON TOP of the champion damped trend for
+saving (fin17a_17a1_d), the only target without shrinkage. Basin selection entirely pre-2021:
+CV on the fully-<=2021 saving 2017->2021 transition (predict 2021 saving from the 2017 level +
+k=0.1 shrink toward the basin's 2017 pop-weighted mean; persistence base per P10's finding that
+pre-2021 saving dynamics carry no usable trend), comparing {none, regionwb24_hi,
+incomegroupwb24}. Adopt the CV winner only if not "none"; then shrink the 2021->2024
+damped-trend prediction vector toward its basin pop-weighted mean.
 
-Saving (fin17a_17a1_d) keeps the P2 damped trend; resilience (fin24aSD_ND) keeps the P5
-region-shrinkage (k=0.1). Per-target policy: those two must stay byte-identical to the champion.
+Account keeps the P7 income-group shrink (k=0.1); resilience keeps the P5 region shrink
+(k=0.1). Per-target policy: those two must stay byte-identical to the champion.
 """
 import pandas as pd
 
@@ -13,8 +15,7 @@ from harness import Findex
 
 DAMP = 0.5
 SHRINK_K = 0.1
-# account basin chosen by the pre-2021 CV below; resilience always region-shrinks (P5).
-ACCOUNT_BASIN = None  # set by _select_account_basin()
+ACCOUNT_BASIN = "incomegroupwb24"  # P7 champion, fixed
 
 
 def _shrink(train, last, k, basin_col, at_year=2021):
@@ -31,24 +32,27 @@ def _shrink(train, last, k, basin_col, at_year=2021):
     return shrunk.reindex(last.index).fillna(last)
 
 
-def _select_account_basin(fx: Findex):
-    """Pre-2021 CV: predict 2021 account from 2017 + shrink; pick region vs income group by MAE."""
+def _select_saving_basin(fx: Findex):
+    """Pre-2021 CV: predict 2021 saving from 2017 + k=0.1 shrink (persistence base);
+    compare none vs region vs income-group by MAE."""
     train, _ = fx.prediction_task()
-    wide = train.pivot_table(index="countrynewwb", columns="year", values="account_t_d") * 100
+    wide = train.pivot_table(index="countrynewwb", columns="year",
+                             values="fin17a_17a1_d") * 100
     truth_2021 = wide.get(2021)
     from_2017 = wide.get(2017)
     common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
     out = {}
-    for basin in ["regionwb24_hi", "incomegroupwb24"]:
-        pred = _shrink(train, from_2017, SHRINK_K, basin, at_year=2017)
+    for basin in ["none", "regionwb24_hi", "incomegroupwb24"]:
+        pred = from_2017 if basin == "none" else _shrink(
+            train, from_2017, SHRINK_K, basin, at_year=2017)
         mae = float((pred.reindex(common) - truth_2021.reindex(common)).abs().mean())
         out[basin] = round(mae, 3)
     winner = min(out, key=out.get)
-    print(f"P7 pre-2021 CV (account 2017->2021, k={SHRINK_K}): {out}  -> basin={winner}")
+    print(f"P11 pre-2021 CV (saving 2017->2021, k={SHRINK_K}): {out}  -> basin={winner}")
     return winner, out
 
 
-def predict(fx: Findex, account_basin: str) -> dict:
+def predict(fx: Findex, saving_basin: str) -> dict:
     train, _ = fx.prediction_task()
     preds = {}
     for target in fx.PRED_TARGETS:
@@ -57,12 +61,14 @@ def predict(fx: Findex, account_basin: str) -> dict:
         if target == "fin17a_17a1_d":
             prev = wide.get(2017)
             trend = (last - prev).fillna(0.0) if prev is not None else 0.0
-            pred = (last + DAMP * trend).clip(0, 100)
-            preds[target] = pred.fillna(last)
+            pred = (last + DAMP * trend).clip(0, 100).fillna(last)  # P2 damped trend
+            if saving_basin != "none":  # P11: shrink the prediction vector
+                pred = _shrink(train, pred, SHRINK_K, saving_basin)
+            preds[target] = pred
         elif target == "fin24aSD_ND":
-            preds[target] = _shrink(train, last, SHRINK_K, "regionwb24_hi")  # P5 champion, fixed
+            preds[target] = _shrink(train, last, SHRINK_K, "regionwb24_hi")  # P5, fixed
         elif target == "account_t_d":
-            preds[target] = _shrink(train, last, SHRINK_K, account_basin)
+            preds[target] = _shrink(train, last, SHRINK_K, ACCOUNT_BASIN)  # P7, fixed
         else:
             preds[target] = last
     return preds
@@ -70,7 +76,7 @@ def predict(fx: Findex, account_basin: str) -> dict:
 
 if __name__ == "__main__":
     fx = Findex()
-    basin, cv = _select_account_basin(fx)
+    basin, cv = _select_saving_basin(fx)
     result = fx.evaluate_predictions(predict(fx, basin))
     for t, r in result.items():
         print(f"{t:20s} MAE = {r['mae']} pp  (n={r['n']})")

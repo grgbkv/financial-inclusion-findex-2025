@@ -1,12 +1,12 @@
-"""E14 (pre-registered): are the digitalization on-ramps bundled? Delta(mobileaccount_t_d) vs
-delta(g20_any), 2021->2024, dev panel, population-weighted.
+"""E15 (pre-registered): did the formal-saving surge buy resilience where it landed?
+Delta(fin24aSD_ND) vs delta(fin17a_17a1_d), 2021->2024, dev panel, population-weighted.
 
-E1 linked Delta(mobile-money) to the saving surge (r=0.719); E12 linked Delta(digital-payment)
-to the same surge (r=0.370), treating them as separate channels. If Delta(mobile-money) and
-Delta(g20) are themselves strongly correlated, the "four distinct channels" framing is better
-read as one bundled digitalization phenomenon. Both mobile_money and digital_payment are declared
-headlines in INDICATORS (G3 checked). Distinct from E13 (FI vs mobile) and E5 (g20/account ratio).
-Descriptive only; account growth is a plausible common driver of both sides.
+The paper's headline puzzle: dev-panel resilience flat (54.7->54.5pp) while formal saving
+surged. E7 showed the composition of emergency funds shifted toward savings where the surge
+landed; E2 found d_resilience does NOT track d_mobile-money (r=0.189, discard). The direct
+d_resilience ~ d_saving test has never been run. Both resilience and saved_formally are
+declared headlines in INDICATORS (G3 checked). Descriptive only; common income shocks are a
+plausible common driver of both sides.
 """
 import pandas as pd
 
@@ -14,40 +14,39 @@ from harness import Findex, INDICATORS
 
 
 def run(fx: Findex):
-    mm_col = INDICATORS["mobile_money"]["headline"]
-    g20_col = INDICATORS["digital_payment"]["headline"]
+    res_col = INDICATORS["resilience"]["headline"]
+    sav_col = INDICATORS["saved_formally"]["headline"]
 
     # G3: declare both variants against the registry
-    print("E14", fx.gate_variant("mobile_money", mm_col))
-    print("E14", fx.gate_variant("digital_payment", g20_col))
+    print("E15", fx.gate_variant("resilience", res_col))
+    print("E15", fx.gate_variant("saved_formally", sav_col))
 
-    mm = fx.country_panel(fx.pan_dev, mm_col, [2021, 2024])
-    d_mm = (mm[2024] - mm[2021]).rename("d_mobileaccount_2124")
+    res = fx.country_panel(fx.pan_dev, res_col, [2021, 2024])
+    d_res = (res[2024] - res[2021]).rename("d_resilience_2124")
 
-    g20 = fx.country_panel(fx.pan_dev, g20_col, [2021, 2024])
-    d_g20 = (g20[2024] - g20[2021]).rename("d_g20_2124")
+    sav = fx.country_panel(fx.pan_dev, sav_col, [2021, 2024])
+    d_sav = (sav[2024] - sav[2021]).rename("d_saving_2124")
 
-    w = mm["pop"]
-    common = d_mm.dropna().index.intersection(d_g20.dropna().index)
-    print(f"E14 dev-panel countries with both indicators in 2021 & 2024: n={len(common)}")
+    w = sav["pop"]
+    common = d_res.dropna().index.intersection(d_sav.dropna().index)
+    print(f"E15 dev-panel countries with both indicators in 2021 & 2024: n={len(common)}")
 
-    r14, n14 = fx.weighted_corr(d_mm.reindex(common), d_g20.reindex(common), w.reindex(common))
-    print(f"E14 weighted r(d_mobileaccount, d_g20) 2021-24 = {r14:.3f}  (n={n14})")
+    r15, n15 = fx.weighted_corr(d_sav.reindex(common), d_res.reindex(common), w.reindex(common))
+    print(f"E15 weighted r(d_saving, d_resilience) 2021-24 = {r15:.3f}  (n={n15})")
 
-    # G4 coverage on g20 (2024 availability)
-    flag = fx.pan_dev.assign(g20_flag=fx.pan_dev[g20_col])
-    gcov = fx.gate_coverage(flag, "g20_flag", 2024, min_countries=30, min_pop_share=0.3)
-    gjack = fx.gate_jackknife(d_mm.reindex(common), d_g20.reindex(common), w.reindex(common))
-    print("E14", gcov)
-    print("E14", gjack)
+    # G4 coverage on resilience (2024 availability)
+    gcov = fx.gate_coverage(fx.pan_dev, res_col, 2024, min_countries=30, min_pop_share=0.3)
+    gjack = fx.gate_jackknife(d_sav.reindex(common), d_res.reindex(common), w.reindex(common))
+    print("E15", gcov)
+    print("E15", gjack)
 
-    # terciles of mobile-money change vs mean digital-payment change (descriptive shape)
-    dfx = pd.DataFrame({"d_mm": d_mm.reindex(common), "d_g20": d_g20.reindex(common),
+    # terciles of saving change vs mean resilience change (descriptive shape)
+    dfx = pd.DataFrame({"d_sav": d_sav.reindex(common), "d_res": d_res.reindex(common),
                         "pop": w.reindex(common)}).dropna()
-    dfx["ter"] = pd.qcut(dfx["d_mm"], 3, labels=["low", "mid", "high"])
+    dfx["ter"] = pd.qcut(dfx["d_sav"], 3, labels=["low", "mid", "high"])
     for t, g in dfx.groupby("ter", observed=True):
-        wm = (g["d_g20"] * g["pop"]).sum() / g["pop"].sum()
-        print(f"E14  d_mobileaccount tercile {t:4s}: mean d_g20 = {wm:+.1f}pp  (n={len(g)})")
+        wm = (g["d_res"] * g["pop"]).sum() / g["pop"].sum()
+        print(f"E15  d_saving tercile {t:4s}: mean d_resilience = {wm:+.1f}pp  (n={len(g)})")
 
 
 if __name__ == "__main__":
