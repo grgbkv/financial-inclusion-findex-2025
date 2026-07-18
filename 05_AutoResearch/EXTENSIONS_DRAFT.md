@@ -71,6 +71,10 @@ cell-size and country-file reproduction) locates the gap demographically:
   younger (65 vs 41 pp aged ≤35) and somewhat less educated than bank-only holders.
 - **Digital-payment use falls off with age (U2).** Adoption is an inverted-U by age, peaking at
   26–35 (59.7 pp) and lowest at 65+ (48.1 pp), 8.7 pp below the prime working-age band.
+- **The documentation barrier is education-graded (U9).** Among the unbanked, "lack of necessary
+  documentation" is cited by **54.2 pp** of the primary-or-less-educated vs **46.0 pp** of the
+  tertiary-educated — monotonic, 8.2 pp gap — the natural stratifier for a formal-paperwork
+  barrier, mirroring M1's income gradient on the money barrier.
 
 Reading: the paper's "access without depth" theme has a consistent demographic signature —
 income gates *access*, education gates *depth*, and age gates *digital usage*. All are
@@ -85,7 +89,7 @@ how *new* the 2024 wave's information is:
 |---|---:|---:|---|
 | Account ownership | 5.58 pp | **5.14 pp** | light income-group-mean shrinkage, k=0.1 (P7) |
 | Resilience | 6.68 pp | **6.63 pp** | light region-mean shrinkage, k=0.1 (P5) |
-| Formal saving | 9.77 pp | **7.96 pp** | damped trend (λ=0.5) + region-mean shrinkage, k=0.1 (P2+P11) |
+| Formal saving | 9.77 pp | **7.36 pp** | damped trend (λ=0.5) + two-stage region→income-group shrinkage, k=0.1 each (P2+P11+P12) |
 
 A mobile-money-informed growth model fit on the 2017→2021 transition **failed** (9.75 pp):
 the contemporaneous saving–mobile-money correlation of Extension 1 was not forecastable from
@@ -97,11 +101,14 @@ the 2024 test wave): a mild convergence prior beats flat persistence, while a lo
 ceiling-deceleration model (P4) did not — the missing structure is convergence, not saturation.
 The convergence basin matters slightly: for account, the same pre-2021 CV prefers the
 *income-group* mean over the *regional* mean (P7, 5.16 → 5.14 pp), while resilience still uses
-the regional mean (P5). Saving, too, gains from region-mean shrinkage layered on the damped
-trend (P11, 8.45 → 7.96 pp) — and the contrast with the failed attempts to *re-tune* the
-shrinkage strength or the trend on pre-2021 data (P8–P10) is instructive: shrinkage corrects
-cross-sectional sampling noise, a regime-independent mechanism that transfers across the 2021
-break, whereas anything tuned to pre-2021 *dynamics* does not.
+the regional mean (P5). Saving, too, gains from shrinkage layered on the damped
+trend, and here the effect *stacks*: a first region-mean shrink (P11, 8.45 → 7.96 pp) and then
+a second, orthogonal income-group-mean shrink (P12, 7.96 → 7.36 pp) each help, because the two
+convergence basins capture partly-independent cross-sectional structure. The contrast with the
+failed attempts to *re-tune* the shrinkage strength or the trend on pre-2021 data (P8–P10) is
+instructive: shrinkage corrects cross-sectional sampling noise, a regime-independent mechanism
+that transfers across the 2021 break (and compounds across orthogonal basins), whereas anything
+tuned to pre-2021 *dynamics* does not.
 
 ## Honest nulls worth one sentence each
 
@@ -114,6 +121,10 @@ break, whereas anything tuned to pre-2021 *dynamics* does not.
   earlier poorest-40 jump (E6).
 - The dormancy "J-curve" after account drives is real population-weighted but is a
   large-country (India-drive) phenomenon, not a cross-country regularity (E4).
+- The saving surge is *not* just account expansion: Δaccount and Δformal-saving are only weakly
+  aligned at the population-weighted level (r = 0.20, E16), and the largest account-growth
+  economies are precisely where saving surged least (drop-top-5 flips r to 0.74) — the depth
+  margin deepened somewhat independently of who newly got an account.
 
 ## Methods note for v2
 
