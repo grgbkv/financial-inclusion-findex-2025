@@ -956,3 +956,51 @@ k=0.1, P7) and resilience (region shrink k=0.1, P5) must stay byte-identical.
 Known risk, accepted: a second shrink may over-smooth (P9's finer-k overfit lesson); a discard
 is informative about whether stacking orthogonal basins helps or the first shrink already
 captures the denoisable structure.
+
+**E16 verdict: DISCARD (informative — the "common driver" caveat partly relieved).** Weighted
+r(Δaccount, Δsaving) 2021→2024 = 0.198 (n=76 dev-panel), below the 0.30 threshold. G3 clean
+(both declared headlines); G4 clean (77c, 100% pop). The striking detail: G6 drop-top-5 makes
+the correlation JUMP to 0.741 — i.e. the largest-population economies (which had the most
+account growth) are precisely where formal saving surged *least*, dragging the pop-weighted
+correlation down. Terciles of Δaccount vs mean Δsaving are non-monotonic (low/mid/high =
++15.4/+9.6/+14.3pp). Reading: the saving surge is not, to first order, just raw account
+expansion — the depth margin deepened somewhat independently of who newly got an account, and
+most sharply *outside* the big account-growth economies. This partly relieves the standing
+"account growth a plausible common driver" caveat carried by E1/E10/E11/E12/E13/E14: at the
+population-weighted level account growth and the saving surge are only weakly aligned. (Note:
+the drop-top-5 r=0.741 is itself a big-country-story-in-reverse and not a general claim; the
+headline is the sub-threshold full-sample r.) Descriptive, no causal claim.
+
+**U9 verdict: KEEP.** Documentation barrier (fin11d==1) among unbanked adults, by education:
+primary-or-less=54.2pp, secondary=48.6pp, tertiary=46.0pp — monotonic, primary−tertiary=+8.2pp,
+clearing the pre-registered ≥5pp threshold in the hypothesized direction. M2 passes for every
+group (n=9714/9995/1086, all ≫100). M3 declared n/a. Reading: the documentation barrier has a
+high base rate (~half of all unbanked cite it) and education grades it modestly (+8.2pp) — the
+natural stratifier for a formal-paperwork barrier, echoing M1's income gradient on the money
+barrier (+10.3pp) and standing in contrast to the U3/U5 nulls (gender/urbanicity do not grade
+the family/distance barriers). Descriptive, single 2024 cross-section.
+
+**P12 verdict: KEEP, champion updated.** Pre-2021 CV (saving 2017→2021, persistence base)
+prefers the two-stage region→income-group shrink (MAE 6.505) over the single region shrink
+(6.584) — the adoption condition is met on ≤2021 data alone. Applied out-of-sample, stacking a
+second k=0.1 income-group-basin shrink on top of the P11 region shrink cuts saving MAE
+7.963→7.359 (−0.604pp, *larger* than P11's own −0.485pp gain). Account (5.144) and resilience
+(6.625) print byte-identical, confirming per-target isolation. No 2024 leakage: both basins and
+k chosen on ≤2021 transitions only. Why it transferred: region and income-group capture
+partly-orthogonal cross-sectional structure (P7), so the two noise-correction shrinks compound
+rather than redundantly overlap — and shrinkage, being regime-independent, stacks across the
+2021 surge where dynamics-tuning (P9/P10) did not. New champion: account=5.144,
+resilience=6.625, saving=7.359.
+
+## 2026-07-18 wrap-up
+Ran 3 experiments (E16, U9, P12), one per stream. E16 (hypothesis, DISCARD — informative):
+Δaccount ⊥ Δsaving 2021→2024 at the pop-weighted level (r=0.198, n=76); drop-top-5 flips it to
+0.741, meaning the biggest account-growth economies are where saving surged *least* — the
+surge is a depth phenomenon not reducible to raw account expansion, partly relieving the
+"account growth common driver" caveat on the E1/E10-E14 bundle. U9 (micro, KEEP): the
+documentation barrier among the unbanked is education-graded, primary 54.2pp vs tertiary
+46.0pp (+8.2pp, monotonic), the natural stratifier for a formal-paperwork barrier (cf. M1's
+income gradient). P12 (prediction, KEEP): stacking a second orthogonal income-group shrink on
+the P11 region shrink cuts saving MAE 7.963→7.359 (−0.604pp) — orthogonal noise-correction
+basins compound, extending the P11 shrinkage-transfers lesson. New prediction champion:
+account=5.144, resilience=6.625, saving=7.359. Everything committed on autoresearch/daily.
