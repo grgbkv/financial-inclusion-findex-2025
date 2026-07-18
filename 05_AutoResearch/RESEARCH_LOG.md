@@ -897,3 +897,62 @@ of the saving damped trend — basin CV-selected on the pre-2021 transition — 
 8.448→7.963 (−0.485pp), the largest gain since P6; shrinkage transfers across the regime change
 where dynamics-tuning (P9/P10) did not. New prediction champion: account=5.144,
 resilience=6.625, saving=7.963. Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-18 daily autoresearch cycle
+
+## E16 — pre-registered (hypothesis / country level)
+**H:** The 2021→2024 formal-saving surge co-moves with account-ownership growth itself, dev
+panel, population-weighted. Motivation: every kept digitalization-bundle finding (E1 mobile
+money, E10 wage digitalization, E11 formal borrowing, E12 digital payments, E13 fi↔mm, E14
+mm↔g20) carries the standing caveat "account growth a plausible common driver (noted, not
+controlled)." That common driver has never been tested directly. A strong positive says the
+saving surge is, to first order, part of broad account expansion (the channels are riding the
+same access wave); a null/weak result says formal-saving depth deepened somewhat independently
+of who newly got an account.
+**Test:** weighted corr of Δ(`account_t_d`)(2021→2024) vs Δ(`fin17a_17a1_d`)(2021→2024), dev
+panel, weight = 2024 adult population; descriptive terciles of Δaccount vs mean Δsaving. G3:
+both are declared `INDICATORS` headlines (`account` = `account_t_d`, `saved_formally` =
+`fin17a_17a1_d`) → checked. Gates: G4 (coverage), G6 (jackknife drop-top-5, judged with the E4
+magnitude-retention lesson: sign-stable but r_droptop < 0.5×r_full = big-country artifact →
+discard the general claim).
+**Keep if:** |r| ≥ 0.30, sign positive (hypothesized), G6 sign-stable AND magnitude-retaining
+(r_droptop ≥ 0.5×r_full). Descriptive association only — account growth and saving depth share
+income-shock and digitalization drivers (noted, not controlled); no causal claim.
+
+## U9 — pre-registered (micro stream)
+**H:** Among unbanked adults (`account==0`), the "lack of necessary documentation" barrier
+(`fin11d==1`) is cited more by the least-educated (`educ==1`, primary-or-less) than by the
+most-educated (`educ==3`, tertiary), pooled 2024 wave, weighted. Motivation: prior barrier
+splits found income grades the money barrier (M1: fin11a, +10.3pp q1→q5) but gender/urbanicity
+do not grade distance/family barriers (U3, U5 nulls). Documentation is the barrier most
+plausibly tied to formal-paperwork familiarity, so education is its natural stratifier. No
+prior peek: the fin11d-by-educ cross-tab has never been read.
+**Test:** weighted rate of `fin11d==1` (coding 1=yes, 2=no, 3=dk, 4=refused → 2/3/4 = not
+citing, NaN=not asked dropped) among `account==0`, split by `educ` (1=primary-/2=secondary/
+3=tertiary), pooled across all 2024 economies (raw `wgt`, economy-equal pooling per micro.py
+default — HARNESS_V2_NOTES caveat #3 applies to exact pooled pp, not direction). Gates: M2
+(unweighted cell n ≥ 100 per education group). M3 declared n/a — barrier-among-unbanked
+subgroup split, no exact country-file equivalent.
+**Keep if:** (rate_primary − rate_tertiary) ≥ 5pp in the hypothesized direction (least-educated
+higher). Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P12 — pre-registered (prediction stream)
+**Idea:** saving (`fin17a_17a1_d`) is the weakest target (MAE 7.963, P11 = damped trend λ=0.5 +
+k=0.1 region-basin shrink). Test whether a SECOND, orthogonal light shrink toward the
+income-group basin mean (k2=0.1) further denoises saving. Motivation: P7 found income-group is
+the best single basin for account and region for resilience/saving — the two basins capture
+partly-orthogonal cross-sectional structure, so a nested region-then-income-group shrink may
+correct residual noise the region shrink leaves. This is the transfer-tested shrinkage
+mechanism (noise correction, regime-independent — the reason P11 transferred where P9/P10
+dynamics-tuning did not), applied a second time, not a new dynamics knob. Selection entirely
+pre-2021: CV on the fully-≤2021 saving 2017→2021 transition (persistence base per P10) must
+prefer the two-stage (region→income-group) shrink over the single region shrink before
+adoption. Per-target policy (P2's rule): touches saving only — account (income-group shrink
+k=0.1, P7) and resilience (region shrink k=0.1, P5) must stay byte-identical.
+**Keep if:** the pre-2021 CV prefers two-stage over single-stage AND saving MAE improves on
+7.963 (P11) on the 2021→2024 evaluation, without changing the account/resilience predictions.
+Known risk, accepted: a second shrink may over-smooth (P9's finer-k overfit lesson); a discard
+is informative about whether stacking orthogonal basins helps or the first shrink already
+captures the denoisable structure.
