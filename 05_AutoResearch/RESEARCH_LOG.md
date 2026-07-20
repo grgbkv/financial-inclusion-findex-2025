@@ -1004,3 +1004,69 @@ income gradient). P12 (prediction, KEEP): stacking a second orthogonal income-gr
 the P11 region shrink cuts saving MAE 7.963→7.359 (−0.604pp) — orthogonal noise-correction
 basins compound, extending the P11 shrinkage-transfers lesson. New prediction champion:
 account=5.144, resilience=6.625, saving=7.359. Everything committed on autoresearch/daily.
+
+---
+
+# 2026-07-20 daily autoresearch cycle
+
+## E17 — pre-registered (hypothesis / country level)
+**H:** The 2021→2024 formal-saving surge is a *catch-up* phenomenon: economies with a LOWER
+2021 formal-saving level had LARGER 2021→2024 gains, dev panel, population-weighted.
+Motivation: three independent strands now point at basin-convergence structure in saving.
+E16 found the biggest account-growth economies are where saving surged *least* (drop-top-5
+r jumps to 0.741), and the prediction stream's two biggest wins (P11 region shrink −0.485pp,
+P12 stacked income-group shrink −0.604pp) both work by pulling countries toward group means —
+i.e. the 2021 levels contain reversible noise/room-to-grow. Never tested directly at the
+hypothesis-stream level. E5/E9 found the same catch-up shape on *account* growth (both
+pre-registered directions rejected in favour of convergence), so the standing question is
+whether the depth margin behaves like the access margin.
+**Test:** weighted corr of `fin17a_17a1_d`(2021) level vs Δ(`fin17a_17a1_d`)(2021→2024), dev
+panel, weight = 2024 adult population; descriptive terciles of the 2021 level vs mean Δsaving.
+Reported alongside the same test on `account_t_d` as a comparison benchmark (does the depth
+margin converge more or less than the access margin?). G3: `saved_formally` =
+`fin17a_17a1_d` and `account` = `account_t_d`, both declared headlines → checked. Gates: G4
+(coverage), G6 (jackknife drop-top-5, judged with the E4 magnitude-retention lesson:
+r_droptop ≥ 0.5×r_full required).
+**Keep if:** |r| ≥ 0.30 with NEGATIVE sign (hypothesized catch-up), G6 sign-stable AND
+magnitude-retaining. Known confound, declared in advance and not controlled: any level-vs-change
+regression mechanically inherits regression-to-the-mean from survey sampling error in the 2021
+level, so a negative r is an upper bound on true catch-up; the account benchmark is included
+precisely so the two margins can be compared on the same mechanical footing. Descriptive
+association, no causal claim.
+
+## U10 — pre-registered (micro stream)
+**H:** Conditional on holding an account, digital-payment usage (`anydigpayment`) is
+education-graded: tertiary-educated accountholders use digital payments more than
+primary-or-less accountholders, pooled 2024 wave, weighted. Motivation: the conditional-on-access
+results so far are all *gender* splits and all came back small (U6 usage-side 3.4pp, U8
+depth-side 4.96pp — both below threshold), while the *unconditional* education gradients are
+the largest effects in the micro stream (U7 account 41.5pp, U4 formal saving 34.1pp). Open
+question: is "conditional on access, gaps are small" a general property of the access margin
+having done the sorting, or is it specific to gender? Education is the sharpest available test.
+No prior peek: the anydigpayment-by-educ cross-tab among accountholders has never been read.
+**Test:** weighted rate of `anydigpayment==1` among `account==1`, split by `educ`
+(1=primary-or-less / 2=secondary / 3=tertiary), pooled across all 2024 economies (raw `wgt`,
+economy-equal pooling per micro.py default — HARNESS_V2_NOTES caveat #3 applies to exact pooled
+pp, not direction). Gates: M2 (unweighted cell n ≥ 100 per education group). M3 declared n/a —
+within-accountholder subgroup split, no exact country-file equivalent.
+**Keep if:** (rate_tertiary − rate_primary) ≥ 5pp in the hypothesized direction. Descriptive,
+single 2024 cross-section — no trend language regardless of outcome.
+
+## P13 — pre-registered (prediction stream)
+**Idea:** generalize P12's two-stage shrink to the other two targets. Saving now uses
+region→income-group stacked shrinks (MAE 7.359); account uses a single income-group shrink
+(P7, 5.144) and resilience a single region shrink (P5, 6.625). If orthogonal basins compound
+as a general noise-correction mechanism (P12's lesson) rather than a saving-specific accident,
+adding the *other* basin as a second stage should help both. Test per target: account
+income-group→region, resilience region→income-group, k=0.1 each. Counter-evidence on record:
+P8 showed the income-group basin does NOT transfer to resilience when used *alone* — this tests
+it as a second stage on top of region, which is a different claim.
+**Adoption rule (entirely pre-2021, no 2024 anywhere):** for each target independently, CV on
+the fully-≤2021 2017→2021 transition (persistence base, per P10/P12) must prefer the two-stage
+shrink over that target's current single shrink. Adopt per target only where the CV prefers it;
+saving stays byte-identical to the P12 champion either way.
+**Keep if:** any target adopted by the pre-2021 CV also improves its champion MAE
+out-of-sample (account < 5.144 and/or resilience < 6.625), with untouched targets printing
+byte-identical. Known risk, accepted: P9's finer-k overfit lesson and P8's non-transfer both
+warn that what the pre-2021 CV likes need not transfer; a split verdict (CV adopts, MAE worsens)
+is itself informative about the limits of the P12 stacking lesson.
