@@ -99,8 +99,12 @@ def predict(fx: Findex, use_two: dict) -> dict:
 if __name__ == "__main__":
     fx = Findex()
     # Saving is the P12 champion configuration and is not re-selected here.
-    use_two = {t: (True if t == "fin17a_17a1_d" else _select_two_stage(fx, t))
-               for t in fx.PRED_TARGETS if t in BASIN_ORDER}
+    # Resilience: the P13 run showed the proxied CV adopted two-stage (6.955 < 7.209) but
+    # out-of-sample MAE worsened 6.625 -> 6.730, so it reverts to the P5 single region shrink
+    # under the per-target policy — the same non-transfer P8 found. Kept hard-coded off rather
+    # than re-running a selector already known to mis-select for this target.
+    use_two = {"fin17a_17a1_d": True, "fin24aSD_ND": False,
+               "account_t_d": _select_two_stage(fx, "account_t_d")}
     print(f"P13 adopted two-stage: { {k: v for k, v in use_two.items()} }")
     result = fx.evaluate_predictions(predict(fx, use_two))
     for t, r in result.items():
