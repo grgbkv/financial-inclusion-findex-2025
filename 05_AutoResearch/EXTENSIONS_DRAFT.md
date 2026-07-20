@@ -103,12 +103,22 @@ The convergence basin matters slightly: for account, the same pre-2021 CV prefer
 *income-group* mean over the *regional* mean (P7, 5.16 → 5.14 pp), while resilience still uses
 the regional mean (P5). Saving, too, gains from shrinkage layered on the damped
 trend, and here the effect *stacks*: a first region-mean shrink (P11, 8.45 → 7.96 pp) and then
-a second, orthogonal income-group-mean shrink (P12, 7.96 → 7.36 pp) each help, because the two
+a second, orthogonal income-group-mean shrink (P12, 7.96 → 7.36 pp; the same second stage helps account only marginally, 5.144 → 5.105, and fails outright on resilience, P13) each help, because the two
 convergence basins capture partly-independent cross-sectional structure. The contrast with the
 failed attempts to *re-tune* the shrinkage strength or the trend on pre-2021 data (P8–P10) is
 instructive: shrinkage corrects cross-sectional sampling noise, a regime-independent mechanism
 that transfers across the 2021 break (and compounds across orthogonal basins), whereas anything
 tuned to pre-2021 *dynamics* does not.
+
+### Education stratifies use, not only access (U4, U7, U10)
+
+Education is the sharpest stratifier in the 2024 micro cross-section, and it does not stop at
+the account door. Unconditionally the digital-payment gap between tertiary and primary-educated
+adults is 46.7 pp (37.3 → 84.0). Conditioning on holding an account absorbs about two-thirds of
+it, but 16.8 pp remains (77.3 / 87.7 / 94.1, monotonic) — a genuine within-accountholder usage
+gradient (U10). That contrasts sharply with gender, where conditioning on access leaves almost
+nothing (3.4 pp usage-side, 5.0 pp depth-side; U6, U8). "Access does the sorting" is a
+gender-specific finding, not a general one: for education, both margins bind.
 
 ## Honest nulls worth one sentence each
 
@@ -125,6 +135,13 @@ tuned to pre-2021 *dynamics* does not.
   aligned at the population-weighted level (r = 0.20, E16), and the largest account-growth
   economies are precisely where saving surged least (drop-top-5 flips r to 0.74) — the depth
   margin deepened somewhat independently of who newly got an account.
+- Convergence is a property of the *access* margin only: 2021 account level predicts
+  2021→2024 account growth at r = −0.30 with the jackknife growing (gate-clean catch-up,
+  reconfirming E5/E9), while the same test on formal saving gives r = +0.48 — the wrong sign for
+  catch-up, and one that flips to −0.14 without the five largest economies, so no general claim
+  in either direction survives (E17). Depth does not converge the way access does. Note this
+  sits alongside, not against, the prediction stream's shrinkage gains: shrinkage is correcting
+  cross-sectional noise, not exploiting mean reversion in levels.
 
 ## Methods note for v2
 
