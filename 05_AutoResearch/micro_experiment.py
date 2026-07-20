@@ -1,43 +1,50 @@
-"""U9 (pre-registered): among unbanked adults (account==0), is the "lack of necessary
-documentation" barrier (fin11d==1) cited more by the least-educated (educ==1) than by the
-most-educated (educ==3)? Pooled 2024 wave, weighted.
+"""U10 (pre-registered): conditional on holding an account, is digital-payment usage
+(anydigpayment) education-graded? Weighted rate of anydigpayment==1 among account==1, split by
+educ (1=primary-or-less / 2=secondary / 3=tertiary), pooled 2024 wave.
 
-fin11d coding: 1=yes, 2=no, 3=dk, 4=refused -> 2/3/4 = not citing, NaN (not asked) dropped.
-educ coding: 1=primary-or-less, 2=secondary, 3=tertiary. M2 cell-size gate per education
-group. M3 declared n/a — barrier-among-unbanked subgroup split, no country-file equivalent.
-Descriptive, single 2024 cross-section. Complements M1 (income grades the money barrier fin11a,
-+10.3pp) and the U3/U5 barrier nulls.
+Motivation: every conditional-on-access result so far is a gender split and all came back small
+(U6 usage-side 3.4pp, U8 depth-side 4.96pp), while the unconditional education gradients are the
+largest effects in the micro stream (U7 account 41.5pp, U4 formal saving 34.1pp). This tests
+whether "conditional on access, gaps are small" is a general property of the access margin
+having done the sorting, or is specific to gender.
+
+M2 cell-size gate per education group. M3 declared n/a -- within-accountholder subgroup split,
+no exact country-file equivalent. Descriptive, single 2024 cross-section.
 """
 import numpy as np
-import pandas as pd
 
 from micro import Micro
 
 
 def run(mi: Micro):
     df = mi.df
-    fin11d = pd.to_numeric(df["fin11d"], errors="coerce")
-    df = df.assign(fin11d_bin=np.where(fin11d.isin([1, 2, 3, 4]),
-                                       (fin11d == 1).astype(float), np.nan))
+    holders = df[df["account"] == 1]
 
-    unbanked = df[df["account"] == 0]
     labels = {1: "primary-", 2: "secondary", 3: "tertiary"}
     rates = {}
-    print("U9  documentation barrier (fin11d==1) among unbanked, by education (pooled 2024):")
-    for code, grp in unbanked.groupby("educ", dropna=True):
-        sub = grp.dropna(subset=["fin11d_bin", "wgt"])
-        v = float(np.average(sub["fin11d_bin"], weights=sub["wgt"])) * 100
+    print("U10 anydigpayment among accountholders, by education (pooled 2024):")
+    for code, grp in holders.groupby("educ", dropna=True):
+        sub = grp.dropna(subset=["anydigpayment", "wgt"])
+        v = float(np.average(sub["anydigpayment"], weights=sub["wgt"])) * 100
         n = len(sub)
         rates[int(code)] = (v, n)
-        print(f"U9  educ={int(code)} ({labels.get(int(code), '?'):9s}): "
-              f"fin11d rate={v:.1f}pp  n={n}")
-        print("U9 ", mi.gate_cell_size(n))
+        print(f"U10 educ={int(code)} ({labels.get(int(code), '?'):9s}): "
+              f"anydigpayment={v:.1f}pp  n={n}")
+        print("U10 ", mi.gate_cell_size(n))
 
     if 1 in rates and 3 in rates:
-        diff = rates[1][0] - rates[3][0]
-        print(f"U9  rate_primary - rate_tertiary = {diff:+.1f}pp  (keep threshold: >= +5pp)")
-        mono = rates[1][0] >= rates[2][0] >= rates[3][0] if 2 in rates else None
-        print(f"U9  monotonic (primary>=secondary>=tertiary): {mono}")
+        diff = rates[3][0] - rates[1][0]
+        print(f"U10 rate_tertiary - rate_primary = {diff:+.1f}pp  (keep threshold: >= +5pp)")
+        mono = rates[3][0] >= rates[2][0] >= rates[1][0] if 2 in rates else None
+        print(f"U10 monotonic (tertiary>=secondary>=primary): {mono}")
+
+    # Context for the comparison the hypothesis is about: the same gradient unconditionally.
+    print("\nU10 context (unconditional, all adults) -- not the pre-registered test:")
+    for code, grp in df.groupby("educ", dropna=True):
+        sub = grp.dropna(subset=["anydigpayment", "wgt"])
+        v = float(np.average(sub["anydigpayment"], weights=sub["wgt"])) * 100
+        print(f"U10 educ={int(code)} ({labels.get(int(code), '?'):9s}): "
+              f"anydigpayment={v:.1f}pp  n={len(sub)}")
 
 
 if __name__ == "__main__":
