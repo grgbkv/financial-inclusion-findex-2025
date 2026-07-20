@@ -1,14 +1,16 @@
-"""Prediction stream — P12: test a SECOND, orthogonal light shrink for saving. The P11 champion
-is damped trend (lambda=0.5) + k=0.1 region-basin shrink. P12 adds a nested income-group-basin
-shrink (k2=0.1) on top, motivated by P7's finding that region and income-group basins capture
-partly-orthogonal cross-sectional structure. Selection is entirely pre-2021: CV on the
-fully-<=2021 saving 2017->2021 transition (persistence base per P10) must prefer the two-stage
-(region -> income-group) shrink over the single region shrink before adoption.
+"""Prediction stream — P13: does P12's two-stage (orthogonal-basin) shrink generalize to the
+other two targets? The champion is saving = damped trend + region -> income-group shrink
+(7.359), account = single income-group shrink (P7, 5.144), resilience = single region shrink
+(P5, 6.625). If orthogonal basins compound as a general noise-correction mechanism rather than
+a saving-specific accident, adding the OTHER basin as a second stage should help both:
+account income-group -> region, resilience region -> income-group, k=0.1 each.
 
-Account keeps the P7 income-group shrink (k=0.1); resilience keeps the P5 region shrink
-(k=0.1). Per-target policy: those two stay byte-identical to the champion. This is the
-transfer-tested shrinkage mechanism (noise correction) applied a second time, not a dynamics
-knob (the P9/P10 lesson).
+Counter-evidence on record: P8 showed the income-group basin does not transfer to resilience
+when used ALONE; this tests it as a second stage on top of region, a different claim.
+
+Adoption rule (entirely pre-2021, no 2024 anywhere): per target independently, CV on the
+fully-<=2021 2017->2021 transition (persistence base, per P10/P12) must prefer the two-stage
+shrink over that target's current single shrink. Saving stays byte-identical to P12 either way.
 """
 import pandas as pd
 
@@ -16,8 +18,15 @@ from harness import Findex
 
 DAMP = 0.5
 SHRINK_K = 0.1
-ACCOUNT_BASIN = "incomegroupwb24"  # P7 champion, fixed
-SAVING_BASIN1 = "regionwb24_hi"    # P11 champion first-stage basin, fixed
+INCOME_BASIN = "incomegroupwb24"   # P7 champion basin for account
+REGION_BASIN = "regionwb24_hi"     # P5/P11 champion basin for resilience & saving stage 1
+
+# Per-target basin order: (stage-1 basin, candidate stage-2 basin)
+BASIN_ORDER = {
+    "account_t_d": (INCOME_BASIN, REGION_BASIN),
+    "fin24aSD_ND": (REGION_BASIN, INCOME_BASIN),
+    "fin17a_17a1_d": (REGION_BASIN, INCOME_BASIN),  # P12, fixed
+}
 
 
 def _shrink(train, last, k, basin_col, at_year=2021):
@@ -34,53 +43,53 @@ def _shrink(train, last, k, basin_col, at_year=2021):
     return shrunk.reindex(last.index).fillna(last)
 
 
-def _select_two_stage(fx: Findex):
-    """Pre-2021 CV: predict 2021 saving from 2017 (persistence base), compare single region
-    shrink vs two-stage (region -> income-group) shrink by MAE. Adopt two-stage only if it
-    wins on the <=2021 window."""
+def _select_two_stage(fx: Findex, target: str):
+    """Pre-2021 CV: predict 2021 from 2017 (persistence base), compare that target's current
+    single shrink vs the two-stage version. Adopt two-stage only if it wins on <=2021 data."""
     train, _ = fx.prediction_task()
-    wide = train.pivot_table(index="countrynewwb", columns="year",
-                             values="fin17a_17a1_d") * 100
-    truth_2021 = wide.get(2021)
-    from_2017 = wide.get(2017)
+    wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
+    truth_2021, from_2017 = wide.get(2021), wide.get(2017)
     common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
 
-    single = _shrink(train, from_2017, SHRINK_K, SAVING_BASIN1, at_year=2017)
-    two_stage = _shrink(train, single, SHRINK_K, ACCOUNT_BASIN, at_year=2017)
+    b1, b2 = BASIN_ORDER[target]
+    single = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
+    two_stage = _shrink(train, single, SHRINK_K, b2, at_year=2017)
     mae_single = float((single.reindex(common) - truth_2021.reindex(common)).abs().mean())
     mae_two = float((two_stage.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    out = {"single_region": round(mae_single, 3), "two_stage": round(mae_two, 3)}
     use_two = mae_two < mae_single
-    print(f"P12 pre-2021 CV (saving 2017->2021): {out}  -> two_stage={use_two}")
-    return use_two, out
+    print(f"P13 pre-2021 CV {target:16s} (2017->2021): single={mae_single:.3f} "
+          f"two_stage={mae_two:.3f}  -> two_stage={use_two}  (n={len(common)})")
+    return use_two
 
 
-def predict(fx: Findex, use_two_stage: bool) -> dict:
+def predict(fx: Findex, use_two: dict) -> dict:
     train, _ = fx.prediction_task()
     preds = {}
     for target in fx.PRED_TARGETS:
         wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
         last = wide.get(2021)
+        b1, b2 = BASIN_ORDER[target]
+
         if target == "fin17a_17a1_d":
             prev = wide.get(2017)
             trend = (last - prev).fillna(0.0) if prev is not None else 0.0
             pred = (last + DAMP * trend).clip(0, 100).fillna(last)  # P2 damped trend
-            pred = _shrink(train, pred, SHRINK_K, SAVING_BASIN1)     # P11 region shrink
-            if use_two_stage:                                        # P12 second stage
-                pred = _shrink(train, pred, SHRINK_K, ACCOUNT_BASIN)
-            preds[target] = pred
-        elif target == "fin24aSD_ND":
-            preds[target] = _shrink(train, last, SHRINK_K, "regionwb24_hi")  # P5, fixed
-        elif target == "account_t_d":
-            preds[target] = _shrink(train, last, SHRINK_K, ACCOUNT_BASIN)  # P7, fixed
         else:
-            preds[target] = last
+            pred = last
+
+        pred = _shrink(train, pred, SHRINK_K, b1)          # stage 1 (champion basin)
+        if use_two.get(target):                            # stage 2 (orthogonal basin)
+            pred = _shrink(train, pred, SHRINK_K, b2)
+        preds[target] = pred
     return preds
 
 
 if __name__ == "__main__":
     fx = Findex()
-    use_two, cv = _select_two_stage(fx)
+    # Saving is the P12 champion configuration and is not re-selected here.
+    use_two = {t: (True if t == "fin17a_17a1_d" else _select_two_stage(fx, t))
+               for t in fx.PRED_TARGETS if t in BASIN_ORDER}
+    print(f"P13 adopted two-stage: { {k: v for k, v in use_two.items()} }")
     result = fx.evaluate_predictions(predict(fx, use_two))
     for t, r in result.items():
         print(f"{t:20s} MAE = {r['mae']} pp  (n={r['n']})")
