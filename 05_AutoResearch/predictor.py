@@ -45,9 +45,21 @@ def _shrink(train, last, k, basin_col, at_year=2021):
 
 def _select_two_stage(fx: Findex, target: str):
     """Pre-2021 CV: predict 2021 from 2017 (persistence base), compare that target's current
-    single shrink vs the two-stage version. Adopt two-stage only if it wins on <=2021 data."""
+    single shrink vs the two-stage version. Adopt two-stage only if it wins on <=2021 data.
+
+    Deviation from the P13 pre-registration, disclosed: fin24aSD_ND exists only in 2021, so it
+    has no pre-2021 transition to CV on — the registered per-target rule is infeasible for it.
+    Fallback follows the P5 precedent (which picked k=0.1 for resilience off the account
+    transition): run the CV on account_t_d while keeping resilience's own basin ORDER
+    (region -> income-group). Still no 2024 anywhere. P8 is on record that account-CV basin
+    preferences need not transfer to resilience, so this selector is known-weak.
+    """
     train, _ = fx.prediction_task()
-    wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
+    cv_target = "account_t_d" if target == "fin24aSD_ND" else target
+    if cv_target != target:
+        print(f"P13 note: {target} has no pre-2021 history; CV proxied on {cv_target} "
+              f"with {target}'s basin order (P5 precedent, disclosed deviation)")
+    wide = train.pivot_table(index="countrynewwb", columns="year", values=cv_target) * 100
     truth_2021, from_2017 = wide.get(2021), wide.get(2017)
     common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
 
