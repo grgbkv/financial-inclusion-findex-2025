@@ -1070,3 +1070,61 @@ out-of-sample (account < 5.144 and/or resilience < 6.625), with untouched target
 byte-identical. Known risk, accepted: P9's finer-k overfit lesson and P8's non-transfer both
 warn that what the pre-2021 CV likes need not transfer; a split verdict (CV adopts, MAE worsens)
 is itself informative about the limits of the P12 stacking lesson.
+
+**E17 verdict: DISCARD (double rejection — but the benchmark is the informative part).** The
+pre-registered catch-up direction is rejected outright: weighted r(saving level 2021,
+Δsaving 21-24) = **+0.480** (n=76), i.e. *divergence* — formal saving deepened fastest where it
+was already deepest (2021-level terciles low/mid/high → +8.5/+13.0/+15.8pp, monotonic). But
+that opposite association does not survive G6 either: drop-top-5 flips it to −0.135
+(retention −0.281, far under the 0.5 floor), so it is a big-country artifact and no general
+divergence claim can be made. G3/G4 clean. The pre-registered account benchmark is what
+survives: r=−0.301 with the jackknife *growing* to −0.457 — gate-clean catch-up on the access
+margin, reconfirming E5/E9 from a third angle. Reading: the two margins behave oppositely on
+level-vs-change. Access converges (poor-access economies catch up); depth does not — at the
+population-weighted level the saving surge went to already-deep economies, and even that is
+top-5-driven. The declared regression-to-the-mean confound biases *toward* negative r and so
+cannot manufacture the positive saving coefficient. Note the tension with P11/P12: basin
+shrinkage helps saving prediction, yet saving shows no gate-clean convergence in levels —
+shrinkage is correcting cross-sectional noise, not exploiting mean reversion. Descriptive.
+
+**U10 verdict: KEEP.** Digital-payment usage among accountholders, by education:
+primary-or-less=77.3pp, secondary=87.7pp, tertiary=94.1pp — monotonic, tertiary−primary=
+**+16.8pp**, well clear of the ≥5pp threshold in the hypothesized direction. M2 passes for
+every group (n=17067/37350/12478). M3 n/a. This answers the question U6/U8 left open: "gaps
+shrink to near-nothing conditional on access" is a property of *gender* (3.4pp usage-side,
+4.96pp depth-side), not a general property of conditioning on access. Education still grades
+usage by 16.8pp among accountholders — though the access margin does most of the sorting: the
+unconditional gap is 46.7pp (37.3/60.4/84.0), so ~64% of it is absorbed by who holds an account
+at all, leaving a third that is a genuine within-accountholder usage gradient. Descriptive,
+single 2024 cross-section.
+
+**P13 verdict: SPLIT — account KEEP (new champion), resilience DISCARD.** Generalizing P12's
+two-stage orthogonal-basin shrink to the other targets gives a split result. *Account*
+(income-group→region): pre-2021 CV prefers two-stage 6.958 vs 6.970 — a very thin margin — and
+out-of-sample MAE improves 5.144→**5.105** (−0.039pp). Adopted, but the gain is ~15× smaller
+than saving's own second-stage gain (−0.604pp), consistent with account already being the
+best-predicted target with least denoisable residual. *Resilience* (region→income-group):
+DISCARDED, MAE worsened 6.625→6.730, reverted to the P5 single region shrink under the
+per-target policy. **Disclosed deviation from the P13 pre-registration:** `fin24aSD_ND` exists
+only in the 2021 wave, so it has no pre-2021 transition and the registered per-target CV was
+infeasible — I proxied it on the account 2017→2021 transition (the P5 precedent that picked
+k=0.1 for this target), keeping resilience's own basin order and no 2024 data anywhere. That
+proxy adopted two-stage (6.955 vs 7.209) and was wrong out-of-sample: an exact replay of P8,
+where account-transition basin preferences also failed to transfer to resilience. The standing
+lesson is now twice-confirmed — resilience cannot be model-selected off account's history, and
+lacking any pre-2021 history of its own it may simply not be honestly tunable in this design.
+Saving byte-identical at 7.359. New champion: account=**5.105**, resilience=6.625, saving=7.359.
+
+## 2026-07-20 wrap-up
+Ran 3 experiments (E17, U10, P13), one per stream. E17 (hypothesis, DISCARD): the saving surge
+is not catch-up — the sign is reversed (r=+0.480, divergence) and that reversal fails G6
+(→−0.135), so neither direction generalizes; the pre-registered account benchmark, however, is
+gate-clean catch-up (r=−0.301, jackknife grows), so access converges while depth does not.
+U10 (micro, KEEP): conditional on holding an account, digital-payment usage is education-graded
++16.8pp (77.3/87.7/94.1, monotonic) — the "conditional-on-access gaps are small" pattern is
+gender-specific (U6/U8 3-5pp), not general, though access absorbs ~64% of the unconditional
+46.7pp gap. P13 (prediction, SPLIT): two-stage orthogonal-basin shrinkage generalizes to
+account (5.144→5.105, thin) but not resilience (6.625→6.730, reverted) — a second confirmation
+of P8's non-transfer, with a disclosed CV-proxy deviation since resilience has no pre-2021
+history. New prediction champion: account=5.105, resilience=6.625, saving=7.359. Everything
+committed on autoresearch/daily.
