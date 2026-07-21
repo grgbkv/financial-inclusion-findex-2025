@@ -1171,6 +1171,63 @@ discard is informative about whether stage order matters for stacked shrinkage.
 **Keep if:** the pre-2021 CV prefers income-group→region AND saving MAE improves on 7.359 (P12)
 on the 2021→2024 evaluation, without changing the account/resilience predictions.
 
+**E18 verdict: DISCARD (clean informative null).** Weighted r(Δfin24bor, Δsaving) 2021→2024 =
+**+0.069** (n=76 dev-panel) — near-zero and the *wrong* sign (positive, not the hypothesized
+negative), far below the 0.30 threshold; G6 flips it to −0.021 (moot at this magnitude). Terciles
+of Δsaving vs mean Δborrow are non-monotonic and if anything rising in the high tercile
+(+1.0/−0.3/+4.0pp). G3 declared n/a (fin24bor is a composition indicator with no variant choice,
+same as E7's fin24sav; fin17a headline ok); G4 clean (76c, 97.4% pop). Reading: **borrowing was
+NOT the emergency-fund source the saving surge displaced** — the mirror of E7 (savings became a
+*bigger* source where the surge landed, r=0.541) does not run through the credit side. The
+descriptive context is the informative part: the two sources that *co-declined* with the surge
+were **selling assets** (Δfin24sell vs Δsaving r=−0.372) and **extra work/income** (Δfin24work
+r=−0.489), while family transfers were flat (r=+0.067). But neither of the two negatives survives
+G6 magnitude-retention (retention 0.41 and 0.28, both < 0.5) — they are big-country artifacts, so
+no general claim can be made about which source gave way either. Declared compositional-
+complementarity caveat applies (shares roughly sum, so some source must fall on average). The
+honest conclusion: where formal saving surged, self-insurance did not visibly displace debt at
+the population-weighted country level; any displacement of asset-sales/extra-work is top-5-driven.
+Descriptive, no causal claim.
+
+**U11 verdict: DISCARD (informative — the M2 on-ramp story does not extend to income).**
+Mobile-only accountholders' share in the poorest two income quintiles = **33.8pp** vs bank-only
+**38.8pp**, diff = **−5.0pp** — the *opposite* of the hypothesized direction (mobile-only was
+expected higher). M2 cell-size gate passes for both groups (n=10,340 mobile-only / 24,037
+bank-only). Full quintile profiles: mobile-only q1–q5 = 15/19/22/22/20, bank-only = 19/20/20/20/20
+— bank-only is marginally *more* concentrated in the poorest quintile (q1 19 vs 15). Reading: M2's
+"mobile money as an on-ramp for the underserved" holds on the **age** and **education** margins
+(younger, less-educated — M2 KEEP) but **not on income** — mobile-only accountholders are, if
+anything, slightly less poor than bank-only in the pooled 2024 cross-section. Caveat: `inc_q` is a
+*within-economy* relative quintile, so economy-equal pooling mixes economies (bank-only dominates
+high-income economies where almost everyone is bank-only); a within-country income comparison
+could differ (HARNESS_V2_NOTES caveat #3). The pre-registered pooled test returns a clean,
+reversed, threshold-magnitude null. Descriptive, single 2024 cross-section.
+
+**P14 verdict: DISCARD, predictor.py reverted to the P13 champion (1bda919).** The pre-2021 CV
+(saving 2017→2021, persistence base, n=117) prefers the **incumbent** region→income-group order
+(MAE 6.505) over the challenger income→region (6.511) by a razor-thin **0.006pp** — so the
+pre-registered adoption condition fails at its first gate (CV must prefer the challenger). The
+incumbent order stays; predictions print byte-identical to the P13 champion (account 5.105,
+resilience 6.625, saving 7.359). Reading: **stage order is practically irrelevant for stacked
+orthogonal-basin shrinkage** — the region and income-group shrinks nearly commute (a 0.006pp CV
+gap), so P12's arbitrary region-first choice was fine and there is no free gain in flipping it.
+This tidily complements P12/P13's "orthogonal basins compound" lesson: the two basins capture
+partly-orthogonal structure that adds up regardless of application order. A clean, low-cost
+confirmation-by-null. Champion unchanged: account=5.105, resilience=6.625, saving=7.359.
+
+## 2026-07-21 wrap-up
+Ran 3 experiments (E18, U11, P14), one per stream — all DISCARD, all clean. E18 (hypothesis):
+borrowing was NOT the emergency-fund source displaced by the 2021→2024 saving surge (r=+0.069,
+wrong sign) — the E7 mirror does not run through the credit side; descriptively selling-assets
+(−0.372) and extra-work (−0.489) co-declined but both are top-5 artifacts (G6 retention 0.41/0.28),
+so no general claim about which source gave way. U11 (micro): M2's "mobile money reaches the
+underserved" holds on age/education but NOT income — mobile-only accountholders' poorest-40 share
+is 33.8pp vs bank-only 38.8pp (−5.0pp, reversed), i.e. marginally *less* poor (caveat: within-
+economy quintiles under economy-equal pooling). P14 (prediction): saving two-stage shrink stage
+order is practically irrelevant — pre-2021 CV prefers the incumbent region→income-group by 0.006pp
+over the reverse, adoption condition fails, reverted to P13 champion. Prediction champion unchanged:
+account=5.105, resilience=6.625, saving=7.359. Everything committed on autoresearch/daily.
+
 ## 2026-07-20 wrap-up
 Ran 3 experiments (E17, U10, P13), one per stream. E17 (hypothesis, DISCARD): the saving surge
 is not catch-up — the sign is reversed (r=+0.480, divergence) and that reversal fails G6
