@@ -1,16 +1,14 @@
-"""Prediction stream — P13: does P12's two-stage (orthogonal-basin) shrink generalize to the
-other two targets? The champion is saving = damped trend + region -> income-group shrink
-(7.359), account = single income-group shrink (P7, 5.144), resilience = single region shrink
-(P5, 6.625). If orthogonal basins compound as a general noise-correction mechanism rather than
-a saving-specific accident, adding the OTHER basin as a second stage should help both:
-account income-group -> region, resilience region -> income-group, k=0.1 each.
+"""Prediction stream — P14: does the STAGE ORDER of saving's two-stage shrink matter? The P12/P13
+champion fixes saving at region -> income-group (MAE 7.359), an arbitrary order. Because each
+stage shrinks values already modified by the previous stage toward that stage's basin mean, the
+two orders are not identical. Test the reverse order (income-group -> region) for saving.
 
-Counter-evidence on record: P8 showed the income-group basin does not transfer to resilience
-when used ALONE; this tests it as a second stage on top of region, a different claim.
+Selection entirely pre-2021 (no 2024 anywhere): CV on the fully-<=2021 saving 2017->2021
+transition (persistence base, per P10/P12) must prefer income-group -> region over the incumbent
+region -> income-group before adoption; then apply that order unchanged to 2021->2024.
 
-Adoption rule (entirely pre-2021, no 2024 anywhere): per target independently, CV on the
-fully-<=2021 2017->2021 transition (persistence base, per P10/P12) must prefer the two-stage
-shrink over that target's current single shrink. Saving stays byte-identical to P12 either way.
+Per-target policy (P2's rule): touches saving only. Account (income-group -> region two-stage,
+P13) and resilience (region single shrink, P5) stay byte-identical to the current champion.
 """
 import pandas as pd
 
@@ -25,7 +23,7 @@ REGION_BASIN = "regionwb24_hi"     # P5/P11 champion basin for resilience & savi
 BASIN_ORDER = {
     "account_t_d": (INCOME_BASIN, REGION_BASIN),
     "fin24aSD_ND": (REGION_BASIN, INCOME_BASIN),
-    "fin17a_17a1_d": (REGION_BASIN, INCOME_BASIN),  # P12, fixed
+    "fin17a_17a1_d": (REGION_BASIN, INCOME_BASIN),  # P12 incumbent order; P14 may flip it
 }
 
 
@@ -44,43 +42,55 @@ def _shrink(train, last, k, basin_col, at_year=2021):
 
 
 def _select_two_stage(fx: Findex, target: str):
-    """Pre-2021 CV: predict 2021 from 2017 (persistence base), compare that target's current
-    single shrink vs the two-stage version. Adopt two-stage only if it wins on <=2021 data.
-
-    Deviation from the P13 pre-registration, disclosed: fin24aSD_ND exists only in 2021, so it
-    has no pre-2021 transition to CV on — the registered per-target rule is infeasible for it.
-    Fallback follows the P5 precedent (which picked k=0.1 for resilience off the account
-    transition): run the CV on account_t_d while keeping resilience's own basin ORDER
-    (region -> income-group). Still no 2024 anywhere. P8 is on record that account-CV basin
-    preferences need not transfer to resilience, so this selector is known-weak.
-    """
+    """Pre-2021 CV (predict 2021 from 2017, persistence base): current single shrink vs two-stage.
+    Unchanged from P13; used for account (and, via proxy, resilience is hard-coded off in main)."""
     train, _ = fx.prediction_task()
     cv_target = "account_t_d" if target == "fin24aSD_ND" else target
-    if cv_target != target:
-        print(f"P13 note: {target} has no pre-2021 history; CV proxied on {cv_target} "
-              f"with {target}'s basin order (P5 precedent, disclosed deviation)")
     wide = train.pivot_table(index="countrynewwb", columns="year", values=cv_target) * 100
     truth_2021, from_2017 = wide.get(2021), wide.get(2017)
     common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
-
     b1, b2 = BASIN_ORDER[target]
     single = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
     two_stage = _shrink(train, single, SHRINK_K, b2, at_year=2017)
     mae_single = float((single.reindex(common) - truth_2021.reindex(common)).abs().mean())
     mae_two = float((two_stage.reindex(common) - truth_2021.reindex(common)).abs().mean())
     use_two = mae_two < mae_single
-    print(f"P13 pre-2021 CV {target:16s} (2017->2021): single={mae_single:.3f} "
+    print(f"P14 pre-2021 CV {target:16s} (2017->2021): single={mae_single:.3f} "
           f"two_stage={mae_two:.3f}  -> two_stage={use_two}  (n={len(common)})")
     return use_two
 
 
-def predict(fx: Findex, use_two: dict) -> dict:
+def _select_saving_order(fx: Findex):
+    """P14 pre-2021 CV: for saving's two-stage shrink, compare the two stage orders on the
+    <=2021 saving 2017->2021 transition (persistence base). Return the (b1, b2) order to use."""
+    train, _ = fx.prediction_task()
+    wide = train.pivot_table(index="countrynewwb", columns="year", values="fin17a_17a1_d") * 100
+    truth_2021, from_2017 = wide.get(2021), wide.get(2017)
+    common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
+
+    orders = {"region->income": (REGION_BASIN, INCOME_BASIN),
+              "income->region": (INCOME_BASIN, REGION_BASIN)}
+    maes = {}
+    for name, (b1, b2) in orders.items():
+        s1 = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
+        s2 = _shrink(train, s1, SHRINK_K, b2, at_year=2017)
+        maes[name] = float((s2.reindex(common) - truth_2021.reindex(common)).abs().mean())
+    incumbent = "region->income"
+    challenger = "income->region"
+    chosen = challenger if maes[challenger] < maes[incumbent] else incumbent
+    print(f"P14 pre-2021 CV saving stage-order (2017->2021): "
+          f"region->income={maes[incumbent]:.3f} income->region={maes[challenger]:.3f} "
+          f"-> chosen={chosen}  (n={len(common)})")
+    return orders[chosen], chosen
+
+
+def predict(fx: Findex, use_two: dict, saving_order) -> dict:
     train, _ = fx.prediction_task()
     preds = {}
     for target in fx.PRED_TARGETS:
         wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
         last = wide.get(2021)
-        b1, b2 = BASIN_ORDER[target]
+        b1, b2 = saving_order if target == "fin17a_17a1_d" else BASIN_ORDER[target]
 
         if target == "fin17a_17a1_d":
             prev = wide.get(2017)
@@ -89,7 +99,7 @@ def predict(fx: Findex, use_two: dict) -> dict:
         else:
             pred = last
 
-        pred = _shrink(train, pred, SHRINK_K, b1)          # stage 1 (champion basin)
+        pred = _shrink(train, pred, SHRINK_K, b1)          # stage 1
         if use_two.get(target):                            # stage 2 (orthogonal basin)
             pred = _shrink(train, pred, SHRINK_K, b2)
         preds[target] = pred
@@ -98,14 +108,13 @@ def predict(fx: Findex, use_two: dict) -> dict:
 
 if __name__ == "__main__":
     fx = Findex()
-    # Saving is the P12 champion configuration and is not re-selected here.
-    # Resilience: the P13 run showed the proxied CV adopted two-stage (6.955 < 7.209) but
-    # out-of-sample MAE worsened 6.625 -> 6.730, so it reverts to the P5 single region shrink
-    # under the per-target policy — the same non-transfer P8 found. Kept hard-coded off rather
-    # than re-running a selector already known to mis-select for this target.
+    saving_order, chosen = _select_saving_order(fx)
+    # Saving always uses both stages (P12); P14 only chooses the order via pre-2021 CV.
+    # Account: two-stage selected on its own pre-2021 CV (P13). Resilience: single region shrink
+    # (P5) — the P13 proxied CV mis-selects two-stage for it, so kept hard-coded off (P8/P13).
     use_two = {"fin17a_17a1_d": True, "fin24aSD_ND": False,
                "account_t_d": _select_two_stage(fx, "account_t_d")}
-    print(f"P13 adopted two-stage: { {k: v for k, v in use_two.items()} }")
-    result = fx.evaluate_predictions(predict(fx, use_two))
+    print(f"P14 saving order adopted: {chosen}")
+    result = fx.evaluate_predictions(predict(fx, use_two, saving_order))
     for t, r in result.items():
         print(f"{t:20s} MAE = {r['mae']} pp  (n={r['n']})")
