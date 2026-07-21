@@ -1115,6 +1115,62 @@ lesson is now twice-confirmed — resilience cannot be model-selected off accoun
 lacking any pre-2021 history of its own it may simply not be honestly tunable in this design.
 Saving byte-identical at 7.359. New champion: account=**5.105**, resilience=6.625, saving=7.359.
 
+## 2026-07-21 daily autoresearch cycle
+
+## E18 — pre-registered (hypothesis / country level)
+**H:** The 2021→2024 formal-saving surge displaced *borrowing* as an emergency-funds source:
+countries with the largest gains in formal saving (`fin17a_17a1_d`) saw the largest *declines*
+in the share citing borrowing to raise emergency funds (`fin24bor`), dev panel,
+population-weighted. Motivation: E7 (KEEP, r=0.541) found savings became a bigger emergency-funds
+source (`fin24sav`) where the surge landed; the natural mirror is *which* source gave way. A
+strong negative Δ`fin24bor` vs Δsaving reads as self-insurance displacing debt (a policy-desirable
+substitution); a null for borrowing would say the surge displaced some other source (family,
+selling assets) instead — reported descriptively alongside. Never run before (E7 used `fin24sav`,
+the positive side; this is `fin24bor`, a distinct composition source).
+**Test:** weighted corr of Δ(`fin24bor`)(2021→2024) vs Δ(`fin17a_17a1_d`)(2021→2024), dev panel,
+weight = 2024 adult population; descriptive terciles of Δsaving vs mean Δfin24bor. G3: `fin24bor`
+is an emergency-fund composition indicator with no headline/narrow variant choice in `INDICATORS`
+→ declared n/a (same treatment as E7's `fin24sav`); `fin17a_17a1_d` is the declared
+`saved_formally` headline. Gates: G4 (coverage), G6 (jackknife drop-top-5, judged with the E4
+magnitude-retention lesson: sign-stable but r_droptop < 0.5×r_full = big-country artifact →
+discard the general claim).
+**Keep if:** |r| ≥ 0.30 with NEGATIVE sign (borrowing recedes where saving surges), G6 sign-stable
+AND magnitude-retaining. Declared caveat, not controlled: emergency-fund composition shares are
+roughly complementary, so *some* source must fall on average where savings rises — the empirical
+content is whether *borrowing specifically* is the displaced source and how strong that is.
+Descriptive association only; no causal claim.
+
+## U11 — pre-registered (micro stream)
+**H:** Mobile money reaches the poor: among accountholders, mobile-only accountholders
+(`account_mob==1 & account_fin==0`) are drawn more from the poorest two income quintiles
+(`inc_q ∈ {1,2}`) than bank-only accountholders (`account_fin==1 & account_mob==0`), pooled 2024
+wave, weighted. Motivation: M2 (KEEP) found mobile-only accountholders are younger and less
+educated than bank-only — an on-ramp for the underserved on the age/education margins. The income
+margin was never tested and is the sharpest test of the "mobile money reaches the poor" policy
+claim. No prior peek: the mobile-only/bank-only × income-quintile cross-tab has never been read.
+**Test:** derive a binary `poor2 = inc_q ∈ {1,2}`; weighted rate of `poor2` among the mobile-only
+group vs the bank-only group, pooled across all 2024 economies (raw `wgt`, economy-equal pooling
+per micro.py default — HARNESS_V2_NOTES caveat #3 applies to exact pooled pp, not direction).
+Gates: M2 (unweighted cell n ≥ 100 per group). M3 declared n/a — within-accountholder subgroup
+composition split, no exact country-file equivalent.
+**Keep if:** (poor2_share_mobile-only − poor2_share_bank-only) ≥ 5pp, mobile-only higher.
+Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P14 — pre-registered (prediction stream)
+**Idea:** saving (`fin17a_17a1_d`, champion MAE 7.359) uses a two-stage shrink with the stage
+order fixed arbitrarily at region→income-group (P12). Test whether the reverse order
+(income-group→region) does better. Because each stage shrinks values already modified by the
+previous stage toward that stage's basin mean, the two orders are not identical. Selection
+entirely pre-2021 (no 2024 leakage): CV on the fully-≤2021 saving 2017→2021 transition
+(persistence base, per P10/P12) must prefer income-group→region over the incumbent
+region→income-group before adoption; then apply that order unchanged to the 2021→2024 prediction.
+Per-target policy (P2's rule): touches saving only — account (income-group→region two-stage, P13)
+and resilience (region shrink k=0.1, P5) must stay byte-identical to the current champion. Known
+risk, accepted: the orders may be near-equivalent (a thin CV margin like P13's account) and a
+discard is informative about whether stage order matters for stacked shrinkage.
+**Keep if:** the pre-2021 CV prefers income-group→region AND saving MAE improves on 7.359 (P12)
+on the 2021→2024 evaluation, without changing the account/resilience predictions.
+
 ## 2026-07-20 wrap-up
 Ran 3 experiments (E17, U10, P13), one per stream. E17 (hypothesis, DISCARD): the saving surge
 is not catch-up — the sign is reversed (r=+0.480, divergence) and that reversal fails G6
