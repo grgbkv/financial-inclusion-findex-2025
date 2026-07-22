@@ -1,50 +1,41 @@
-"""Prediction stream — P15: a multi-indicator weighted RIDGE for account_t_d.
+"""Prediction stream — P13: does P12's two-stage (orthogonal-basin) shrink generalize to the
+other two targets? The champion is saving = damped trend + region -> income-group shrink
+(7.359), account = single income-group shrink (P7, 5.144), resilience = single region shrink
+(P5, 6.625). If orthogonal basins compound as a general noise-correction mechanism rather than
+a saving-specific accident, adding the OTHER basin as a second stage should help both:
+account income-group -> region, resilience region -> income-group, k=0.1 each.
 
-Every prior experiment (P1-P14) used persistence, damped trend, or basin shrinkage of a single
-indicator's own history. P15 tests whether cross-indicator structure helps account: a weighted
-ridge on the 2021 levels of three full-coverage features -- account_t_d, g20_any (digital
-payment), fin17a_17a1_d (formal saving), all 117/117 panel coverage (mobile money dropped, only
-~62/117).
+Counter-evidence on record: P8 showed the income-group basin does not transfer to resilience
+when used ALONE; this tests it as a second stage on top of region, a different claim.
 
-Adoption rule (entirely <=2021, no 2024 anywhere): fit the ridge to predict account_2021 from the
-SAME three features at 2017, weighted by 2021 adult population; select alpha by leave-one-out CV
-(weighted MAE) on that 2017->2021 transition. Adopt the ridge for account ONLY IF it beats the
-incumbent (persistence + two-stage income-group->region shrink, P13) on that <=2021 CV. Then apply
-the fitted model to the 2021 feature levels to predict 2024.
-
-Per-target policy (P2's rule): touches account only -- saving (damped trend + two-stage
-region->income-group shrink, P12) and resilience (single region shrink, P5) stay byte-identical to
-the P13 champion. Known risk: the P8/P9/P10/P13 lesson is that <=2021 model choices often fail to
-transfer across the 2021 regime change, and a multi-feature fit has more parameters to overfit on
-n~117.
+Adoption rule (entirely pre-2021, no 2024 anywhere): per target independently, CV on the
+fully-<=2021 2017->2021 transition (persistence base, per P10/P12) must prefer the two-stage
+shrink over that target's current single shrink. Saving stays byte-identical to P12 either way.
 """
-import numpy as np
 import pandas as pd
-from sklearn.linear_model import Ridge
 
 from harness import Findex
 
 DAMP = 0.5
 SHRINK_K = 0.1
-INCOME_BASIN = "incomegroupwb24"
-REGION_BASIN = "regionwb24_hi"
+INCOME_BASIN = "incomegroupwb24"   # P7 champion basin for account
+REGION_BASIN = "regionwb24_hi"     # P5/P11 champion basin for resilience & saving stage 1
 
-# P13 champion two-stage basin orders (stage-1, stage-2)
+# Per-target basin order: (stage-1 basin, candidate stage-2 basin)
 BASIN_ORDER = {
-    "account_t_d": (INCOME_BASIN, REGION_BASIN),   # account: two-stage adopted in P13
-    "fin24aSD_ND": (REGION_BASIN, INCOME_BASIN),   # resilience: single region (stage-2 off)
-    "fin17a_17a1_d": (REGION_BASIN, INCOME_BASIN), # saving: two-stage adopted in P12
+    "account_t_d": (INCOME_BASIN, REGION_BASIN),
+    "fin24aSD_ND": (REGION_BASIN, INCOME_BASIN),
+    "fin17a_17a1_d": (REGION_BASIN, INCOME_BASIN),  # P12, fixed
 }
-USE_TWO = {"account_t_d": True, "fin24aSD_ND": False, "fin17a_17a1_d": True}
-
-RIDGE_FEATURES = ["account_t_d", "g20_any", "fin17a_17a1_d"]
-ALPHA_GRID = [0.0, 0.3, 1.0, 3.0, 10.0, 30.0, 100.0, 300.0]
 
 
 def _shrink(train, last, k, basin_col, at_year=2021):
+    """Shrink `last` toward its group's (basin_col) pop-weighted mean at `at_year`."""
     ref = train[train["year"] == at_year].set_index("countrynewwb")
-    basin, pop = ref[basin_col], ref["pop_adult"]
-    d = pd.DataFrame({"last": last, "basin": basin, "pop": pop}).dropna(subset=["last", "basin"])
+    basin = ref[basin_col]
+    pop = ref["pop_adult"]
+    d = pd.DataFrame({"last": last, "basin": basin, "pop": pop}).dropna(
+        subset=["last", "basin"])
     grp_mean = d.groupby("basin").apply(
         lambda g: (g["last"] * g["pop"]).sum() / g["pop"].sum(), include_groups=False)
     d["grp_mean"] = d["basin"].map(grp_mean)
@@ -52,97 +43,54 @@ def _shrink(train, last, k, basin_col, at_year=2021):
     return shrunk.reindex(last.index).fillna(last)
 
 
-def _incumbent_account(train, at_year=2021):
-    """P13 champion account predictor at `at_year` -> next wave: persistence + two-stage
-    income-group->region shrink."""
-    wide = train.pivot_table(index="countrynewwb", columns="year", values="account_t_d") * 100
-    last = wide.get(at_year)
-    b1, b2 = BASIN_ORDER["account_t_d"]
-    pred = _shrink(train, last, SHRINK_K, b1, at_year=at_year)
-    pred = _shrink(train, pred, SHRINK_K, b2, at_year=at_year)
-    return pred
+def _select_two_stage(fx: Findex, target: str):
+    """Pre-2021 CV: predict 2021 from 2017 (persistence base), compare that target's current
+    single shrink vs the two-stage version. Adopt two-stage only if it wins on <=2021 data.
 
-
-def _feature_matrix(train, year):
-    """Wide feature levels (pp) at `year` for the three ridge features, indexed by country."""
-    cols = {}
-    for f in RIDGE_FEATURES:
-        wide = train.pivot_table(index="countrynewwb", columns="year", values=f) * 100
-        cols[f] = wide.get(year)
-    return pd.DataFrame(cols)
-
-
-def _loo_cv_mae_ridge(X, y, w, alpha):
-    """Leave-one-out weighted MAE for a ridge at fixed alpha (no standardization; features are
-    all in pp on a common scale)."""
-    idx = X.index.to_list()
-    errs, wts = [], []
-    Xv, yv, wv = X.values, y.values, w.values
-    for i in range(len(idx)):
-        tr = [j for j in range(len(idx)) if j != i]
-        m = Ridge(alpha=alpha)
-        m.fit(Xv[tr], yv[tr], sample_weight=wv[tr])
-        pred_i = m.predict(Xv[i:i + 1])[0]
-        errs.append(abs(pred_i - yv[i]))
-        wts.append(wv[i])
-    return float(np.average(errs, weights=wts))
-
-
-def _ridge_account(fx: Findex):
-    """Fit/select the account ridge on <=2021 only; return (cv_ridge, cv_incumbent, pred_2024,
-    best_alpha)."""
+    Deviation from the P13 pre-registration, disclosed: fin24aSD_ND exists only in 2021, so it
+    has no pre-2021 transition to CV on — the registered per-target rule is infeasible for it.
+    Fallback follows the P5 precedent (which picked k=0.1 for resilience off the account
+    transition): run the CV on account_t_d while keeping resilience's own basin ORDER
+    (region -> income-group). Still no 2024 anywhere. P8 is on record that account-CV basin
+    preferences need not transfer to resilience, so this selector is known-weak.
+    """
     train, _ = fx.prediction_task()
-    pop2021 = train[train["year"] == 2021].set_index("countrynewwb")["pop_adult"]
+    cv_target = "account_t_d" if target == "fin24aSD_ND" else target
+    if cv_target != target:
+        print(f"P13 note: {target} has no pre-2021 history; CV proxied on {cv_target} "
+              f"with {target}'s basin order (P5 precedent, disclosed deviation)")
+    wide = train.pivot_table(index="countrynewwb", columns="year", values=cv_target) * 100
+    truth_2021, from_2017 = wide.get(2021), wide.get(2017)
+    common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
 
-    # --- <=2021 CV: predict account_2021 from 2017 features ---
-    X17 = _feature_matrix(train, 2017)
-    y21 = (train.pivot_table(index="countrynewwb", columns="year", values="account_t_d") * 100
-           ).get(2021)
-    common = X17.dropna().index.intersection(y21.dropna().index).intersection(pop2021.dropna().index)
-    X, y, w = X17.loc[common], y21.loc[common], pop2021.loc[common]
-
-    cv = {a: _loo_cv_mae_ridge(X, y, w, a) for a in ALPHA_GRID}
-    best_alpha = min(cv, key=cv.get)
-    cv_ridge = cv[best_alpha]
-
-    # incumbent (P13) CV on the same 2017->2021 transition, same countries
-    inc_pred21 = _incumbent_account(train, at_year=2017).reindex(common)
-    cv_incumbent = float(np.average((inc_pred21 - y).abs().values, weights=w.values))
-
-    print("P15 <=2021 LOO-CV weighted MAE by alpha:",
-          {a: round(v, 3) for a, v in cv.items()})
-    print(f"P15 ridge best alpha={best_alpha} (CV {cv_ridge:.3f})  vs  incumbent two-stage "
-          f"shrink (CV {cv_incumbent:.3f})  -> ridge_preferred={cv_ridge < cv_incumbent}")
-
-    # --- fit on full <=2021 data, apply to 2021 features for 2024 prediction ---
-    model = Ridge(alpha=best_alpha)
-    model.fit(X.values, y.values, sample_weight=w.values)
-    print("P15 fitted coefs", dict(zip(RIDGE_FEATURES, np.round(model.coef_, 3))),
-          "intercept", round(float(model.intercept_), 3))
-    X21 = _feature_matrix(train, 2021)
-    Xpred = X21.dropna()
-    pred_2024 = pd.Series(model.predict(Xpred.values), index=Xpred.index).clip(0, 100)
-    return cv_ridge, cv_incumbent, pred_2024, best_alpha
+    b1, b2 = BASIN_ORDER[target]
+    single = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
+    two_stage = _shrink(train, single, SHRINK_K, b2, at_year=2017)
+    mae_single = float((single.reindex(common) - truth_2021.reindex(common)).abs().mean())
+    mae_two = float((two_stage.reindex(common) - truth_2021.reindex(common)).abs().mean())
+    use_two = mae_two < mae_single
+    print(f"P13 pre-2021 CV {target:16s} (2017->2021): single={mae_single:.3f} "
+          f"two_stage={mae_two:.3f}  -> two_stage={use_two}  (n={len(common)})")
+    return use_two
 
 
-def predict(fx: Findex, account_pred: pd.Series) -> dict:
+def predict(fx: Findex, use_two: dict) -> dict:
     train, _ = fx.prediction_task()
     preds = {}
     for target in fx.PRED_TARGETS:
-        if target == "account_t_d":
-            preds[target] = account_pred
-            continue
         wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
         last = wide.get(2021)
         b1, b2 = BASIN_ORDER[target]
+
         if target == "fin17a_17a1_d":
             prev = wide.get(2017)
             trend = (last - prev).fillna(0.0) if prev is not None else 0.0
             pred = (last + DAMP * trend).clip(0, 100).fillna(last)  # P2 damped trend
         else:
             pred = last
-        pred = _shrink(train, pred, SHRINK_K, b1)          # stage 1
-        if USE_TWO.get(target):                            # stage 2 (orthogonal basin)
+
+        pred = _shrink(train, pred, SHRINK_K, b1)          # stage 1 (champion basin)
+        if use_two.get(target):                            # stage 2 (orthogonal basin)
             pred = _shrink(train, pred, SHRINK_K, b2)
         preds[target] = pred
     return preds
@@ -150,17 +98,14 @@ def predict(fx: Findex, account_pred: pd.Series) -> dict:
 
 if __name__ == "__main__":
     fx = Findex()
-    cv_ridge, cv_incumbent, ridge_pred, best_alpha = _ridge_account(fx)
-
-    # Adoption is decided entirely on the <=2021 CV (no 2024). If the ridge does not beat the
-    # incumbent there, account stays byte-identical to the P13 champion.
-    if cv_ridge < cv_incumbent:
-        account_pred = ridge_pred
-        print(f"P15 adopting RIDGE for account (alpha={best_alpha})")
-    else:
-        account_pred = _incumbent_account(fx.prediction_task()[0], at_year=2021)
-        print("P15 CV does NOT prefer ridge -> account stays P13 incumbent (byte-identical)")
-
-    result = fx.evaluate_predictions(predict(fx, account_pred))
+    # Saving is the P12 champion configuration and is not re-selected here.
+    # Resilience: the P13 run showed the proxied CV adopted two-stage (6.955 < 7.209) but
+    # out-of-sample MAE worsened 6.625 -> 6.730, so it reverts to the P5 single region shrink
+    # under the per-target policy — the same non-transfer P8 found. Kept hard-coded off rather
+    # than re-running a selector already known to mis-select for this target.
+    use_two = {"fin17a_17a1_d": True, "fin24aSD_ND": False,
+               "account_t_d": _select_two_stage(fx, "account_t_d")}
+    print(f"P13 adopted two-stage: { {k: v for k, v in use_two.items()} }")
+    result = fx.evaluate_predictions(predict(fx, use_two))
     for t, r in result.items():
         print(f"{t:20s} MAE = {r['mae']} pp  (n={r['n']})")

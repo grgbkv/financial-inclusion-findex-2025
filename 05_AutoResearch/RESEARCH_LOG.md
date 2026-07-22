@@ -1299,6 +1299,65 @@ whether cross-indicator structure adds anything over own-history shrinkage for a
 **Keep if:** the ≤2021 CV prefers the ridge over the incumbent AND account MAE improves on 5.105
 (P13) on the 2021→2024 evaluation, without changing the saving/resilience predictions.
 
+**E19 verdict: DISCARD (wrong sign at full sample; the drop-top-5 flip is the informative part).**
+Weighted r(Δinactive, Δsaving) 2021→2024 = **+0.160** (n=76 dev-panel) — the *wrong* sign
+(positive, hypothesized negative) and below the 0.30 threshold, so the pre-registered keep
+condition fails outright. But G6 flips it hard: drop-top-5 → **−0.379** (retention −2.37), and the
+Δsaving terciles show a clean monotonic dose-response in the hypothesized direction (mean Δinactive
+low/mid/high = +0.5/−1.7/−4.1pp). G3 clean (both declared headlines — `inactive` = `inactive_t_d`,
+`saved_formally` = `fin17a_17a1_d`); G4 clean (76c, 97.4% pop). Reading: this is the *mirror of
+E16* — the largest-population economies (which had the most account growth and where formal saving
+surged *least*) drag the pop-weighted correlation positive; drop them and the hypothesized
+"activation" link appears (falling account inactivity where the saving surge landed, r=−0.379,
+terciles monotonic). But per the E16/E17 treatment, the drop-top-5 sign is a big-country-story-in-
+reverse, not a general population-weighted claim, and the headline full-sample r is wrong-signed
+and sub-threshold. So no keep either way. The honest conclusion: outside the top-5 economies the
+saving surge does co-move with dormant accounts being put to use, but this is not a gate-clean
+general regularity. Descriptive, no causal claim.
+
+**U12 verdict: DISCARD (clean informative null).** The "accounts are too expensive" barrier
+(fin11c==1) among unbanked adults is **flat across income**: q1=23.7, q2=22.8, q3=24.1, q4=23.1,
+q5=23.3pp — q1−q5 = **+0.4pp**, far below the 5pp threshold and essentially no gradient. M2 passes
+for every quintile (n=3352–4894). M3 n/a. Reading: unlike the "not enough money" barrier (M1, which
+is steeply income-graded at +10.3pp q1→q5), the *cost-of-service* barrier (fees/minimum balances)
+is cited at a near-constant ~23% by unbanked adults across the entire income distribution. This
+makes sense — cost is a fixed feature of the *product*, salient regardless of the respondent's own
+income, whereas "not enough money" is a statement about the respondent's own means. Adds a clean
+contrast to the barrier map: income grades the money barrier (M1) and education grades the
+documentation barrier (U9), but income does NOT grade the cost barrier (U12), just as gender/
+urbanicity do not grade the family/distance barriers (U3/U5). Descriptive, single 2024 cross-section.
+
+**P15 verdict: DISCARD, predictor.py reverted to the P13 champion (1bda919).** The multi-indicator
+weighted ridge for account (features: 2021 levels of account, g20_any, fin17a_17a1_d) fails the
+adoption condition at its first gate. On the ≤2021 LOO-CV (predict account_2021 from the same three
+features at 2017, weighted), the ridge's best MAE is **8.655pp** (flat across the whole alpha grid
+0.0–300) — far *worse* than the incumbent persistence + two-stage income-group→region shrink's CV
+MAE of **6.412pp**. So the CV does not prefer the ridge, and the predictor keeps the P13 incumbent
+byte-identical (account 5.105, resilience 6.625, saving 7.359 all reproduced). Reading: cross-
+indicator structure adds nothing over own-history shrinkage for account — a linear map from 2017
+account/payment/saving levels to the 2021 account level (fitted coefs 0.845/0.265/−0.228, intercept
+8.17) predicts the level far worse than simply carrying the 2017 account forward with light basin
+shrinkage. The account level is overwhelmingly its own lagged value plus reversible cross-sectional
+noise (which shrinkage corrects); the other indicators' levels are near-redundant with it and only
+add fitting variance on n≈117. This is the P8/P9/P10/P13 non-transfer lesson in a new guise: a
+richer ≤2021 model does not beat the parsimonious shrinkage even *in-sample* on the CV, let alone
+out-of-sample. Reverted predictor.py to the champion. Champion unchanged: account=5.105,
+resilience=6.625, saving=7.359.
+
+## 2026-07-22 wrap-up
+Ran 3 experiments (E19, U12, P15), one per stream — all DISCARD, all clean. E19 (hypothesis): the
+saving surge co-moving with *falling account inactivity* is wrong-signed at the pop-weighted full
+sample (r=+0.160) but flips to −0.379 dropping the top-5 with a clean monotonic tercile dose-
+response (+0.5/−1.7/−4.1pp) — the exact mirror of E16, so activation shows up only *outside* the
+biggest economies and is not a gate-clean general claim. U12 (micro): the "too expensive" cost
+barrier among the unbanked is flat across income (~23pp at every quintile, q1−q5=+0.4pp) — unlike
+M1's steeply income-graded money barrier, cost is a fixed product feature cited regardless of the
+respondent's own means. P15 (prediction): a multi-indicator weighted ridge for account fails at the
+first gate — its ≤2021 CV MAE (8.655) is far worse than the incumbent shrinkage (6.412), so
+cross-indicator structure adds nothing over own-history shrinkage; reverted to the P13 champion.
+Prediction champion unchanged: account=5.105, resilience=6.625, saving=7.359. Everything committed
+on autoresearch/daily.
+
 ## 2026-07-20 wrap-up
 Ran 3 experiments (E17, U10, P13), one per stream. E17 (hypothesis, DISCARD): the saving surge
 is not catch-up — the sign is reversed (r=+0.480, divergence) and that reversal fails G6
