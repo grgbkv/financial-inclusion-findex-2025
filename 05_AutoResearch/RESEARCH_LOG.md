@@ -1228,6 +1228,77 @@ order is practically irrelevant — pre-2021 CV prefers the incumbent region→i
 over the reverse, adoption condition fails, reverted to P13 champion. Prediction champion unchanged:
 account=5.105, resilience=6.625, saving=7.359. Everything committed on autoresearch/daily.
 
+---
+
+# 2026-07-22 daily autoresearch cycle
+
+## E19 — pre-registered (hypothesis / country level)
+**H:** The 2021→2024 formal-saving surge shows up as *account activation*, not just new
+accounts: countries with the largest gains in formal saving (`fin17a_17a1_d`) saw the largest
+*declines* in account inactivity (`inactive_t_d` — adults with an account but no recent
+activity), dev panel, population-weighted. Motivation: E16 (DISCARD) found Δaccount ⊥ Δsaving
+at the pop-weighted level (the surge is not reducible to raw account expansion, and is sharpest
+*outside* the big account-growth economies). If the surge is a depth phenomenon riding on
+*existing* accounts, it should manifest as dormant accounts being put to use — a negative
+Δinactive where Δsaving is large. A strong negative reads as "the surge activated idle
+accounts"; a null says formal-saving depth and account dormancy move independently. Never run
+before (E4 used inactivity as a *lagged consequence of account drives*; this is Δinactive vs
+Δsaving co-movement).
+**Test:** weighted corr of Δ(`inactive_t_d`)(2021→2024) vs Δ(`fin17a_17a1_d`)(2021→2024), dev
+panel, weight = 2024 adult population; descriptive terciles of Δsaving vs mean Δinactive. G3:
+`inactive` = `inactive_t_d` and `saved_formally` = `fin17a_17a1_d`, both declared `INDICATORS`
+headlines → checked. Gates: G4 (coverage), G6 (jackknife drop-top-5, judged with the E4
+magnitude-retention lesson: sign-stable but r_droptop < 0.5×r_full = big-country artifact →
+discard the general claim).
+**Keep if:** |r| ≥ 0.30 with NEGATIVE sign (saving surge co-moves with falling inactivity),
+G6 sign-stable AND magnitude-retaining. Declared caveat, not controlled: account growth and
+common income shocks plausibly drive both sides; a mechanical link (saving requires an active
+account) is possible but not tautological (inactivity is measured over *all* accountholders,
+most of whom do not save formally). Descriptive association only; no causal claim.
+
+## U12 — pre-registered (micro stream)
+**H:** Among unbanked adults (`account==0`), the "accounts are too expensive" barrier
+(`fin11c==1`) is cited more by the poorest income quintile (`inc_q==1`) than the richest
+(`inc_q==5`), pooled 2024 wave, weighted — a cost barrier that should bind hardest on the poor.
+Motivation: M1 (KEEP) found the "not enough money" barrier is income-graded (+10.3pp q1→q5);
+this tests whether the distinct *cost-of-service* barrier (fees/minimum balances, not the
+person's own lack of funds) is similarly income-graded, or whether cost salience is flatter
+across income (the near-poor who considered opening an account may cite fees as much as the
+poorest). Complements the barrier map: M1 (money/income), U9 (documentation/education), U3
+(family/gender null), U5 (distance/urbanicity null). No prior peek: the fin11c-by-income
+cross-tab has never been read (only overall fin11c value counts inspected for coding —
+1=yes/2=no/3=dk/4=refused, asked of unbanked only).
+**Test:** weighted rate of `fin11c==1` (coding 1=yes, 2=no, 3=dk, 4=refused → 2/3/4 = not
+citing, NaN=not asked dropped) among `account==0`, split by `inc_q` (1=poorest…5=richest),
+pooled across all 2024 economies (raw `wgt`, economy-equal pooling per micro.py default —
+HARNESS_V2_NOTES caveat #3 applies to exact pooled pp, not direction). Gates: M2 (unweighted
+cell n ≥ 100 per quintile). M3 declared n/a — barrier-among-unbanked subgroup split, no exact
+country-file equivalent.
+**Keep if:** (rate_q1 − rate_q5) ≥ 5pp in the hypothesized direction (poorest higher).
+Descriptive, single 2024 cross-section — no trend language regardless of outcome.
+
+## P15 — pre-registered (prediction stream)
+**Idea:** every prior prediction experiment (P1–P14) used persistence, damped trend, or basin
+shrinkage of a single indicator's own history — none used a *multi-indicator regression*. Per
+MODELING SCOPE (weighted ridge is appropriate; n≈117 is the binding constraint), test a weighted
+**ridge** for `account_t_d` using three full-coverage 2021 features — the 2021 levels of account
+(`account_t_d`), digital payment (`g20_any`), and formal saving (`fin17a_17a1_d`), all with
+117/117 panel coverage (mobile money dropped — only ~62/117). Fit and select the ridge penalty
+`alpha` entirely on the ≤2021 window: predict `account_2021` from the same three features at
+2017, weighted by 2021 adult population, choosing alpha by leave-one-out CV over a fixed grid
+(minimizing weighted MAE on the 2017→2021 transition). Then apply the fitted model to the 2021
+feature levels to predict 2024. No 2024 information touches fitting or selection. Adopt for
+account ONLY IF (a) on the ≤2021 CV the ridge beats the incumbent (persistence + two-stage
+income-group→region shrink, P13) AND (b) it improves account MAE on 5.105 out-of-sample on the
+2021→2024 evaluation. Per-target policy (P2's rule): touches account only — saving (damped
+trend + two-stage region→income-group shrink, P12) and resilience (region shrink, P5) must stay
+byte-identical to the P13 champion. Known risk, accepted: the P8/P9/P10/P13 lesson is that
+pre-2021 model choices often fail to transfer across the 2021 regime change, and a
+multi-feature fit has more parameters to overfit on n≈117 — a discard is informative about
+whether cross-indicator structure adds anything over own-history shrinkage for account.
+**Keep if:** the ≤2021 CV prefers the ridge over the incumbent AND account MAE improves on 5.105
+(P13) on the 2021→2024 evaluation, without changing the saving/resilience predictions.
+
 ## 2026-07-20 wrap-up
 Ran 3 experiments (E17, U10, P13), one per stream. E17 (hypothesis, DISCARD): the saving surge
 is not catch-up — the sign is reversed (r=+0.480, divergence) and that reversal fails G6

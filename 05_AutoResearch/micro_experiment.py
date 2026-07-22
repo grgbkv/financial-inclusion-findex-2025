@@ -1,49 +1,39 @@
-"""U11 (pre-registered): does mobile money reach the poor? Among accountholders, are mobile-only
-accountholders (account_mob==1 & account_fin==0) drawn more from the poorest two income quintiles
-(inc_q in {1,2}) than bank-only accountholders (account_fin==1 & account_mob==0)? Pooled 2024
-wave, weighted.
+"""U12 (pre-registered): is the "accounts are too expensive" barrier (fin11c) income-graded?
+Among unbanked adults (account==0), weighted rate of fin11c==1 by income quintile (inc_q),
+poorest (q1) vs richest (q5). Pooled 2024 wave, weighted. Hypothesis: q1 higher (the
+cost-of-service barrier binds hardest on the poor).
 
-Motivation: M2 (KEEP) found mobile-only accountholders are younger and less educated than
-bank-only -- an on-ramp for the underserved on the age/education margins. The income margin was
-never tested and is the sharpest test of the "mobile money reaches the poor" policy claim.
+Motivation: M1 (KEEP) found the "not enough money" barrier is income-graded (+10.3pp q1->q5).
+This tests whether the distinct cost-of-service barrier (fees/minimum balances, not the person's
+own lack of funds) is similarly income-graded. Complements the barrier map: M1 (money/income),
+U9 (documentation/education), U3 (family/gender null), U5 (distance/urbanicity null).
 
-M2 cell-size gate per group. M3 declared n/a -- within-accountholder composition split, no exact
-country-file equivalent. Descriptive, single 2024 cross-section -- no trend language.
+fin11c coding 1=yes/2=no/3=dk/4=refused (asked of unbanked only; 2/3/4 = not citing, NaN dropped).
+M2 cell-size gate per quintile. M3 declared n/a -- barrier-among-unbanked split, no country-file
+equivalent. Descriptive, single 2024 cross-section -- no trend language.
 """
 from micro import Micro
 
 
 def run(mi: Micro):
     df = mi.df
-    # Derived binary: bottom-two income quintiles (poorest 40%). In-memory only; micro.py fixed.
-    df["poor2"] = (df["inc_q"].isin([1, 2])).astype(float)
+    # Derived binary: cites "too expensive" (fin11c==1). In-memory only; micro.py fixed.
+    df["cites_cost"] = (df["fin11c"] == 1).astype(float)
+    # Restrict to unbanked who were asked the barrier (fin11c in {1,2,3,4}).
+    unbanked_asked = (df["account"] == 0) & (df["fin11c"].isin([1, 2, 3, 4]))
 
-    groups = {
-        "mobile-only": (df["account_mob"] == 1) & (df["account_fin"] == 0),
-        "bank-only": (df["account_fin"] == 1) & (df["account_mob"] == 0),
-    }
-
+    print("U12 'too expensive' barrier (fin11c==1) among unbanked, by income quintile "
+          "(pooled 2024):")
     rates = {}
-    print("U11 share in poorest-two income quintiles, by accountholder type (pooled 2024):")
-    for label, mask in groups.items():
-        v, n = mi.rate("poor2", where=mask)
-        rates[label] = (v, n)
-        print(f"U11 {label:12s}: poor2_share = {v:.1f}pp   n={n}")
-        print("U11 ", mi.gate_cell_size(n))
+    for q in [1, 2, 3, 4, 5]:
+        mask = unbanked_asked & (df["inc_q"] == q)
+        v, n = mi.rate("cites_cost", where=mask)
+        rates[q] = (v, n)
+        print(f"U12 inc_q={q}: rate = {v:.1f}pp   n={n}   {mi.gate_cell_size(n)}")
 
-    diff = rates["mobile-only"][0] - rates["bank-only"][0]
-    print(f"\nU11 mobile-only - bank-only = {diff:+.1f}pp  (keep threshold: >= +5pp, "
-          f"mobile-only higher)")
-
-    # Full quintile profile for context (not a keep condition).
-    print("\nU11 context -- full income-quintile profile of each group (weighted share):")
-    for label, mask in groups.items():
-        parts = []
-        for q in [1, 2, 3, 4, 5]:
-            df["_q"] = (df["inc_q"] == q).astype(float)
-            v, _ = mi.rate("_q", where=mask)
-            parts.append(f"q{q}={v:.0f}")
-        print(f"U11 {label:12s}: " + " ".join(parts))
+    diff = rates[1][0] - rates[5][0]
+    print(f"\nU12 q1 - q5 = {diff:+.1f}pp  (keep threshold: >= +5pp, poorest higher)")
+    print("U12 M3 declared n/a (barrier-among-unbanked split, no country-file equivalent)")
 
 
 if __name__ == "__main__":
