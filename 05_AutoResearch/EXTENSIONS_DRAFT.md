@@ -75,10 +75,17 @@ cell-size and country-file reproduction) locates the gap demographically:
   documentation" is cited by **54.2 pp** of the primary-or-less-educated vs **46.0 pp** of the
   tertiary-educated — monotonic, 8.2 pp gap — the natural stratifier for a formal-paperwork
   barrier, mirroring M1's income gradient on the money barrier.
+- **Labour-force attachment gates both margins (U13).** Adults in the workforce hold accounts at
+  **76.7 pp** vs **61.7 pp** for adults out of it — a 15.0 pp access gap — and, unusually, the gap
+  barely narrows once access is held constant: among *accountholders*, formal saving is 34.2 pp
+  for the in-workforce vs 20.9 pp for the out-of-workforce (13.3 pp). Compositional caveat: "out
+  of workforce" pools students, retirees, homemakers and discouraged workers and correlates with
+  age, gender and education, so this is an association, not an employment effect.
 
 Reading: the paper's "access without depth" theme has a consistent demographic signature —
-income gates *access*, education gates *depth*, and age gates *digital usage*. All are
-single-wave 2024 cross-sectional descriptions (no trend claims).
+income gates *access*, education gates *depth*, age gates *digital usage*, and labour-force
+attachment gates both margins at once. All are single-wave 2024 cross-sectional descriptions
+(no trend claims).
 
 ## Prediction box — the surge was a regime change, not a trend (P1–P3)
 
@@ -89,7 +96,7 @@ how *new* the 2024 wave's information is:
 |---|---:|---:|---|
 | Account ownership | 5.58 pp | **5.14 pp** | light income-group-mean shrinkage, k=0.1 (P7) |
 | Resilience | 6.68 pp | **6.63 pp** | light region-mean shrinkage, k=0.1 (P5) |
-| Formal saving | 9.77 pp | **7.36 pp** | damped trend (λ=0.5) + two-stage region→income-group shrinkage, k=0.1 each (P2+P11+P12) |
+| Formal saving | 9.77 pp | **7.08 pp** | damped trend (λ=0.5) + three-stage region→income-group→account-tercile shrinkage, k=0.1 each (P2+P11+P12+P16) |
 
 A mobile-money-informed growth model fit on the 2017→2021 transition **failed** (9.75 pp):
 the contemporaneous saving–mobile-money correlation of Extension 1 was not forecastable from
@@ -104,7 +111,11 @@ The convergence basin matters slightly: for account, the same pre-2021 CV prefer
 the regional mean (P5). Saving, too, gains from shrinkage layered on the damped
 trend, and here the effect *stacks*: a first region-mean shrink (P11, 8.45 → 7.96 pp) and then
 a second, orthogonal income-group-mean shrink (P12, 7.96 → 7.36 pp; the same second stage helps account only marginally, 5.144 → 5.105, and fails outright on resilience, P13) each help, because the two
-convergence basins capture partly-independent cross-sectional structure. The contrast with the
+convergence basins capture partly-independent cross-sectional structure. A *third* stage
+compounds too, and it need not be a geographic or administrative grouping: shrinking toward the
+mean of the country's **2021 account-level tercile** — a "digitalization stage" basin that cuts
+across region and income group — takes saving from 7.36 to **7.08 pp** (P16), with diminishing
+increments across the three stages (−0.49 / −0.60 / −0.28). The contrast with the
 failed attempts to *re-tune* the shrinkage strength or the trend on pre-2021 data (P8–P10) is
 instructive: shrinkage corrects cross-sectional sampling noise, a regime-independent mechanism
 that transfers across the 2021 break (and compounds across orthogonal basins), whereas anything
@@ -142,6 +153,14 @@ gender-specific finding, not a general one: for education, both margins bind.
   in either direction survives (E17). Depth does not converge the way access does. Note this
   sits alongside, not against, the prediction stream's shrinkage gains: shrinkage is correcting
   cross-sectional noise, not exploiting mean reversion in levels.
+- The saving surge did *not* disequalize in proportion to its size: countries with the largest
+  surges did not widen their internal income gap in saving the most (r = +0.18, terciles
+  non-monotonic, E20). The *level* picture is nonetheless one-directional and worth a sentence
+  in its own right — pop-weighted across 55 developing panel economies, formal saving rose
+  +10.8 pp for the poorest 40 % and +16.9 pp for the richest 60 %, widening the gap from 14.4 to
+  20.5 pp. Two uncontrolled confounds (identical proportional gains from a lower base widen a pp
+  gap; account growth moves both series) mean this level fact needs its own pre-registration,
+  ideally in ratio or log-odds form, before it carries weight.
 
 ## Methods note for v2
 
