@@ -1455,3 +1455,66 @@ improves on 7.359 on the 2021→2024 evaluation. Known risk, accepted: three sta
 approaches over-shrinkage (each stage pulls toward a mean, and the basins are only partly
 orthogonal — account-level terciles correlate with income group), so a discard is informative
 about where the compounding stops.
+
+**E20 verdict: DISCARD (pre-registered dose-response fails; the level fact is the informative
+part).** Weighted r(Δsaving, Δgap) 2021→2024 = **+0.179** (n=55 dev panel with both income
+slices in both waves) — the hypothesized *sign* but well below the 0.30 threshold, so the keep
+condition fails. G6 is clean and in fact the jackknife *grows* (+0.179 → +0.359 drop-top-5,
+retention 2.01, the E12/E14/E16 pattern), G3 clean (headline `fin17a_17a1_d` for all three
+series), G4 clean (70 countries, 96.2% of dev-panel population on the income-slice frame),
+G5 n/a. The Δsaving terciles are non-monotonic (mean Δgap low/mid/high = +1.2/+8.5/+5.5pp):
+countries with the *biggest* surges did not widen their internal gaps the most, so the
+"proportional disequalization" claim is rejected.
+What the experiment did establish — pre-registered as descriptive context, not as the keep
+statistic — is a large and one-directional **level** fact: pop-weighted across the same 55
+economies, formal saving rose **+10.8pp for the poorest 40%** (18.4 → 29.2) and **+16.9pp for
+the richest 60%** (32.8 → 49.7), so the within-country income gap in formal saving widened from
+**14.4 to 20.5pp (+6.1pp)**. The surge reached both halves of the distribution — it is not a
+rich-only phenomenon — but roughly 1.6× more of it accrued to the richer 60%. Two declared,
+uncontrolled confounds apply: identical *proportional* gains from a lower base mechanically
+widen a pp gap, and account growth/income shocks move both series. Because this is a level
+claim that was registered only as context, it is logged as context and left as a candidate for
+its own pre-registration (where the low-base arithmetic would have to be addressed directly,
+e.g. by a ratio or log-odds formulation). Descriptive association only, no causal claim.
+
+**U13 verdict: KEEP.** Account ownership is strongly graded by labour-force status in the
+pooled 2024 cross-section: **in workforce 76.7pp vs out of workforce 61.7pp, diff = +15.0pp**,
+comfortably above the 5pp threshold and in the hypothesized direction. M2 passes with room to
+spare (n = 83,865 / 56,205). M3 n/a. Secondary and descriptive only: among *accountholders*,
+formal saving is 34.2pp for in-workforce vs 20.9pp for out-of-workforce (+13.3pp) — so unlike
+gender (U6 3.4pp, U8 4.96pp), the labour-force gap does **not** collapse once access is held
+constant; it stays nearly as wide on the depth margin. Placing it on the gradient map: 15.0pp
+is large but far below education on the same access margin (U7, 41.5pp) and above the
+income-barrier gradients (M1, 10.3pp). Declared caveat, as pre-registered: "out of workforce"
+is compositionally heterogeneous (students, retirees, homemakers, discouraged workers) and
+correlates with age, gender and education, so this is a descriptive association, not an
+employment effect. Single 2024 cross-section — no trend language.
+
+**P16 verdict: KEEP — new saving champion 7.080 (was 7.359).** Both adoption conditions pass.
+On the ≤2021 CV (saving 2017→2021, persistence base, every basin built at 2017) the three-stage
+shrink beats the incumbent two-stage: **6.408 vs 6.505**. Out-of-sample on the 2021→2024
+evaluation, saving MAE improves **7.359 → 7.080 (−0.279pp)**, with account (5.105) and
+resilience (6.625) byte-identical under the per-target policy. Reading: orthogonal-basin
+shrinkage compounds a **third** time (8.448 → 7.963 → 7.359 → 7.080, with diminishing
+increments −0.485 / −0.604 / −0.279), and the third basin is **data-driven** — terciles of the
+2021 account level, a "digitalization stage" cut that crosses region and income group — so the
+mechanism is not tied to geographic or administrative groupings. This sharpens the standing
+lesson: what transfers across the 2021 regime change is *noise correction* (shrinking reversible
+cross-sectional deviations toward any reasonable basin mean), not *dynamics* (P9/P10) and not
+*cross-indicator structure* (P15). Prediction champion now: account = 5.105, resilience = 6.625,
+saving = 7.080.
+
+## 2026-07-23 wrap-up
+Ran 3 experiments (E20, U13, P16), one per stream — one discard, two keeps. E20 (hypothesis,
+DISCARD): the saving surge's *proportional* disequalization fails — r(Δsaving, Δgap) = +0.179
+(sub-threshold, terciles non-monotonic) — but the first-ever use of the income slices shows a
+large level fact in context: the pop-weighted dev gap in formal saving widened 14.4 → 20.5pp
+(poorest 40% +10.8pp vs richest 60% +16.9pp), left as a candidate for its own pre-registration.
+U13 (micro, KEEP): account ownership is graded by labour-force status by +15.0pp (76.7 vs
+61.7), and unlike gender the gap barely shrinks conditional on access (formal saving among
+accountholders 34.2 vs 20.9pp) — first use of `emp_in`, the last untouched demographic.
+P16 (prediction, KEEP): orthogonal-basin shrinkage compounds a third time using a *data-driven*
+basin (account-level terciles), saving MAE 7.359 → 7.080 with account/resilience unchanged —
+noise correction keeps transferring where dynamics-tuning and cross-indicator fits did not.
+New prediction champion: account = 5.105, resilience = 6.625, saving = 7.080. Everything
+committed on autoresearch/daily.
