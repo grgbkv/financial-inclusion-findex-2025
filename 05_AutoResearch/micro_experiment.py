@@ -1,39 +1,55 @@
-"""U12 (pre-registered): is the "accounts are too expensive" barrier (fin11c) income-graded?
-Among unbanked adults (account==0), weighted rate of fin11c==1 by income quintile (inc_q),
-poorest (q1) vs richest (q5). Pooled 2024 wave, weighted. Hypothesis: q1 higher (the
-cost-of-service barrier binds hardest on the poor).
+"""U13 (pre-registered): is account ownership labour-force-status-graded?
+Weighted rate of account==1 by emp_in (1=in workforce, 2=out of workforce), pooled 2024 wave.
+Hypothesis: in-workforce adults hold accounts at a higher rate (wage receipt is a first-order
+account on-ramp).
 
-Motivation: M1 (KEEP) found the "not enough money" barrier is income-graded (+10.3pp q1->q5).
-This tests whether the distinct cost-of-service barrier (fees/minimum balances, not the person's
-own lack of funds) is similarly income-graded. Complements the barrier map: M1 (money/income),
-U9 (documentation/education), U3 (family/gender null), U5 (distance/urbanicity null).
+Motivation: emp_in is the one demographic in micro.py's DEMOGRAPHICS list no experiment has
+used. The gradient map so far runs on income (M1 +10.3pp money barrier; U12 flat cost barrier),
+education (U4 saving +34.1pp, U7 account +41.5pp, U9 documentation +8.2pp, U10 digital payment
+| account +16.8pp), gender (U1/U3/U6/U8, small or null) and urbanicity (U5, null). Labour-force
+attachment is the natural remaining stratifier and its size relative to education is unknown.
 
-fin11c coding 1=yes/2=no/3=dk/4=refused (asked of unbanked only; 2/3/4 = not citing, NaN dropped).
-M2 cell-size gate per quintile. M3 declared n/a -- barrier-among-unbanked split, no country-file
-equivalent. Descriptive, single 2024 cross-section -- no trend language.
+Secondary, descriptive only (not the pre-registered test): formal saving (fin17a==1) among
+accountholders by emp_in -- the depth margin.
+
+emp_in coding 1=in workforce / 2=out of workforce (NaN dropped). M2 cell-size gate per group.
+M3 declared n/a for the split (the country file carries `group == "laborforce"` slices, but a
+country-level version of this split is a different experiment). Declared caveat: "out of
+workforce" is compositionally heterogeneous (students, retirees, homemakers, discouraged
+workers) and correlates with age, gender and education -- descriptive association, not an
+employment effect. Single 2024 cross-section -- no trend language.
 """
 from micro import Micro
+
+LABEL = {1: "in workforce   ", 2: "out of workforce"}
 
 
 def run(mi: Micro):
     df = mi.df
-    # Derived binary: cites "too expensive" (fin11c==1). In-memory only; micro.py fixed.
-    df["cites_cost"] = (df["fin11c"] == 1).astype(float)
-    # Restrict to unbanked who were asked the barrier (fin11c in {1,2,3,4}).
-    unbanked_asked = (df["account"] == 0) & (df["fin11c"].isin([1, 2, 3, 4]))
+    # Derived binary: saves formally (fin17a==1). In-memory only; micro.py fixed.
+    df["saves_formally"] = (df["fin17a"] == 1).astype(float)
 
-    print("U12 'too expensive' barrier (fin11c==1) among unbanked, by income quintile "
-          "(pooled 2024):")
+    print("U13 account ownership by labour-force status (pooled 2024):")
     rates = {}
-    for q in [1, 2, 3, 4, 5]:
-        mask = unbanked_asked & (df["inc_q"] == q)
-        v, n = mi.rate("cites_cost", where=mask)
-        rates[q] = (v, n)
-        print(f"U12 inc_q={q}: rate = {v:.1f}pp   n={n}   {mi.gate_cell_size(n)}")
+    for e in [1, 2]:
+        mask = df["emp_in"] == e
+        v, n = mi.rate("account", where=mask)
+        rates[e] = (v, n)
+        print(f"U13 emp_in={e} ({LABEL[e]}): rate = {v:.1f}pp   n={n}   {mi.gate_cell_size(n)}")
 
-    diff = rates[1][0] - rates[5][0]
-    print(f"\nU12 q1 - q5 = {diff:+.1f}pp  (keep threshold: >= +5pp, poorest higher)")
-    print("U12 M3 declared n/a (barrier-among-unbanked split, no country-file equivalent)")
+    diff = rates[1][0] - rates[2][0]
+    print(f"\nU13 in-workforce - out-of-workforce = {diff:+.1f}pp  "
+          f"(keep threshold: >= +5pp, in-workforce higher)")
+
+    print("\nU13 secondary (descriptive only): formal saving (fin17a==1) among ACCOUNTHOLDERS "
+          "by labour-force status:")
+    for e in [1, 2]:
+        mask = (df["emp_in"] == e) & (df["account"] == 1) & (df["fin17a"].isin([1, 2, 3, 4]))
+        v, n = mi.rate("saves_formally", where=mask)
+        print(f"U13 emp_in={e} ({LABEL[e]}): rate = {v:.1f}pp   n={n}   {mi.gate_cell_size(n)}")
+
+    print("\nU13 M3 declared n/a (within-emp_in subgroup split, no country-file equivalent "
+          "at this granularity)")
 
 
 if __name__ == "__main__":

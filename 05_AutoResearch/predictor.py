@@ -1,16 +1,22 @@
-"""Prediction stream — P13: does P12's two-stage (orthogonal-basin) shrink generalize to the
-other two targets? The champion is saving = damped trend + region -> income-group shrink
-(7.359), account = single income-group shrink (P7, 5.144), resilience = single region shrink
-(P5, 6.625). If orthogonal basins compound as a general noise-correction mechanism rather than
-a saving-specific accident, adding the OTHER basin as a second stage should help both:
-account income-group -> region, resilience region -> income-group, k=0.1 each.
+"""Prediction stream — P16: does orthogonal-basin shrinkage compound a THIRD time for saving,
+and does a DATA-DRIVEN basin work as well as the geographic/administrative ones?
 
-Counter-evidence on record: P8 showed the income-group basin does not transfer to resilience
-when used ALONE; this tests it as a second stage on top of region, a different claim.
+Champion (P13): saving = damped trend (l=0.5) + region -> income-group shrink (7.359),
+account = persistence + income-group -> region shrink (5.105), resilience = persistence +
+region shrink (6.625).
 
-Adoption rule (entirely pre-2021, no 2024 anywhere): per target independently, CV on the
-fully-<=2021 2017->2021 transition (persistence base, per P10/P12) must prefer the two-stage
-shrink over that target's current single shrink. Saving stays byte-identical to P12 either way.
+P11/P12 established the one mechanism that transfers across the 2021 regime change: shrinkage
+toward basin means is noise correction, and it compounds across ORTHOGONAL basins (saving
+8.448 -> 7.963 -> 7.359). Dynamics-tuning on the pre-2021 window (P9/P10) and cross-indicator
+fits (P15) do not transfer. Untested: a THIRD stage, using a basin that is not geographic or
+administrative — terciles of the 2021 ACCOUNT LEVEL ("digitalization stage"), which cut across
+both region and income group.
+
+Adoption rule (entirely <=2021, no 2024 anywhere in features, fitting or selection): CV on the
+saving 2017->2021 transition with a persistence base (P10/P12/P13 protocol), every basin —
+including the account terciles — built from the 2017 cross-section; adopt the third stage only
+if it beats the incumbent two-stage there. Per-target policy (P2): touches saving only; account
+and resilience stay byte-identical to the P13 champion.
 """
 import pandas as pd
 
@@ -29,12 +35,22 @@ BASIN_ORDER = {
 }
 
 
-def _shrink(train, last, k, basin_col, at_year=2021):
-    """Shrink `last` toward its group's (basin_col) pop-weighted mean at `at_year`."""
+def _account_tercile_basin(train, at_year):
+    """P16 stage-3 basin: terciles of the account level at `at_year` ("digitalization stage").
+    Built from <=2021 data only; cuts across region and income group."""
+    ref = train[train["year"] == at_year].set_index("countrynewwb")["account_t_d"].dropna()
+    if len(ref) < 9:
+        return pd.Series(dtype=object)
+    return pd.qcut(ref, 3, labels=["acc_low", "acc_mid", "acc_high"]).astype(object)
+
+
+def _shrink(train, last, k, basin, at_year=2021):
+    """Shrink `last` toward its basin's pop-weighted mean at `at_year`.
+    `basin` is either a column name in the train frame or a ready country-indexed Series."""
     ref = train[train["year"] == at_year].set_index("countrynewwb")
-    basin = ref[basin_col]
+    basin_s = ref[basin] if isinstance(basin, str) else basin.reindex(ref.index)
     pop = ref["pop_adult"]
-    d = pd.DataFrame({"last": last, "basin": basin, "pop": pop}).dropna(
+    d = pd.DataFrame({"last": last, "basin": basin_s, "pop": pop}).dropna(
         subset=["last", "basin"])
     grp_mean = d.groupby("basin").apply(
         lambda g: (g["last"] * g["pop"]).sum() / g["pop"].sum(), include_groups=False)
@@ -74,8 +90,31 @@ def _select_two_stage(fx: Findex, target: str):
     return use_two
 
 
-def predict(fx: Findex, use_two: dict) -> dict:
+def _select_third_stage(fx: Findex, target="fin17a_17a1_d"):
+    """P16 pre-2021 CV: predict saving 2021 from 2017 (persistence base, P12 protocol), all
+    basins built at 2017. Adopt the account-tercile third stage only if it beats the incumbent
+    two-stage on this <=2021 window."""
     train, _ = fx.prediction_task()
+    wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
+    truth_2021, from_2017 = wide.get(2021), wide.get(2017)
+    common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
+
+    b1, b2 = BASIN_ORDER[target]
+    b3 = _account_tercile_basin(train, 2017)
+    s1 = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
+    s2 = _shrink(train, s1, SHRINK_K, b2, at_year=2017)
+    s3 = _shrink(train, s2, SHRINK_K, b3, at_year=2017)
+    mae_two = float((s2.reindex(common) - truth_2021.reindex(common)).abs().mean())
+    mae_three = float((s3.reindex(common) - truth_2021.reindex(common)).abs().mean())
+    use_three = mae_three < mae_two
+    print(f"P16 pre-2021 CV {target:16s} (2017->2021): two_stage={mae_two:.3f} "
+          f"three_stage={mae_three:.3f}  -> three_stage={use_three}  (n={len(common)})")
+    return use_three
+
+
+def predict(fx: Findex, use_two: dict, use_three: bool) -> dict:
+    train, _ = fx.prediction_task()
+    acc_basin_2021 = _account_tercile_basin(train, 2021)
     preds = {}
     for target in fx.PRED_TARGETS:
         wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
@@ -92,20 +131,23 @@ def predict(fx: Findex, use_two: dict) -> dict:
         pred = _shrink(train, pred, SHRINK_K, b1)          # stage 1 (champion basin)
         if use_two.get(target):                            # stage 2 (orthogonal basin)
             pred = _shrink(train, pred, SHRINK_K, b2)
+        if target == "fin17a_17a1_d" and use_three:        # stage 3 (P16, account terciles)
+            pred = _shrink(train, pred, SHRINK_K, acc_basin_2021)
         preds[target] = pred
     return preds
 
 
 if __name__ == "__main__":
     fx = Findex()
-    # Saving is the P12 champion configuration and is not re-selected here.
     # Resilience: the P13 run showed the proxied CV adopted two-stage (6.955 < 7.209) but
     # out-of-sample MAE worsened 6.625 -> 6.730, so it reverts to the P5 single region shrink
     # under the per-target policy — the same non-transfer P8 found. Kept hard-coded off rather
     # than re-running a selector already known to mis-select for this target.
     use_two = {"fin17a_17a1_d": True, "fin24aSD_ND": False,
                "account_t_d": _select_two_stage(fx, "account_t_d")}
-    print(f"P13 adopted two-stage: { {k: v for k, v in use_two.items()} }")
-    result = fx.evaluate_predictions(predict(fx, use_two))
+    use_three = _select_third_stage(fx)   # P16, saving only (per-target policy)
+    print(f"P16 adopted two-stage: { {k: v for k, v in use_two.items()} } | "
+          f"saving three-stage: {use_three}")
+    result = fx.evaluate_predictions(predict(fx, use_two, use_three))
     for t, r in result.items():
         print(f"{t:20s} MAE = {r['mae']} pp  (n={r['n']})")

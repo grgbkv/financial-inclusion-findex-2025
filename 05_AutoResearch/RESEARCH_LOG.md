@@ -1371,3 +1371,87 @@ account (5.144→5.105, thin) but not resilience (6.625→6.730, reverted) — a
 of P8's non-transfer, with a disclosed CV-proxy deviation since resilience has no pre-2021
 history. New prediction champion: account=5.105, resilience=6.625, saving=7.359. Everything
 committed on autoresearch/daily.
+
+## 2026-07-23 daily autoresearch cycle
+
+## E20 — pre-registered (hypothesis / country level)
+**H:** The 2021→2024 formal-saving surge was **disequalizing within countries**: it widened the
+income gap in formal saving (richest 60% minus poorest 40%), and countries with the biggest
+overall surges widened that gap the most. Motivation: E1/E10/E12/E14 established *which channels*
+the surge rode on (mobile money, wage digitalization, digital payments — one bundled
+digitalization phenomenon); E16/E17 established its *level dynamics* (a depth phenomenon,
+diverging rather than converging across countries). Its **within-country distributional
+incidence** has never been tested. U4 (micro, KEEP) shows formal saving is steeply
+education-graded in the 2024 cross-section (12.0/22.6/46.2pp), which makes a disequalizing
+country-level surge plausible but not implied — the surge could equally have reached the
+poorest 40% first from a low base. Never run before: no experiment has used the country file's
+`group == "income"` slices (`richest 60%` / `poorest 40%`).
+**Test:** dev panel (117-country balanced panel, non-high-income). For each country take
+`fin17a_17a1_d` for `group2 == "richest 60%"` and `group2 == "poorest 40%"` in 2021 and 2024
+(harness `pan_grp`, wave-merge applied). Define `gap_y = rich60_y − poor40_y` (pp) and
+`Δgap = gap_2024 − gap_2021`; take `Δsaving` (overall, `group == "all"`) from `pan_dev`.
+Primary statistic: pop-weighted (2024 adult population) correlation r(Δsaving, Δgap), plus
+Δsaving terciles → mean Δgap (dose-response). Reported descriptively alongside: dev-aggregate
+poor40 / rich60 saving levels in 2021 and 2024 and the aggregate gap change.
+Gates: G3 (`saved_formally` headline `fin17a_17a1_d` declared for all three series),
+G4 coverage on the income-slice frame in 2024, G6 jackknife (drop top-5 population) with the
+E4 magnitude rule (r_droptop ≥ 0.5 × r_full). G5 n/a — no official aggregate for a
+within-country gap series.
+**Keep if:** r(Δsaving, Δgap) ≥ +0.30 AND G6 sign-stable and magnitude-retaining. A
+negative-signed result of comparable size would be an equally interesting *equalizing*
+finding but is NOT the pre-registered claim — per the E5/E9/E17 precedent it would be logged
+as a direction rejection, reported descriptively, not converted into a keep. Descriptive
+association only; no causal claim (account growth, income shocks and the mechanical
+low-base arithmetic of the poorest-40 series are declared, uncontrolled confounds).
+
+## U13 — pre-registered (micro stream)
+**H:** Account ownership is **labour-force-status-graded**: adults in the workforce
+(`emp_in == 1`) hold accounts at a higher rate than adults out of the workforce
+(`emp_in == 2`), pooled 2024 wave, weighted. Motivation: `emp_in` is the one demographic in
+`micro.py`'s DEMOGRAPHICS list never used by any experiment. The barrier/gradient map so far
+is built on income (M1 money barrier +10.3pp; U12 cost barrier flat), education (U4 saving
++34.1pp, U7 account +41.5pp, U9 documentation +8.2pp, U10 digital payment | account +16.8pp),
+gender (U1/U3/U6/U8, all small or null) and urbanicity (U5, null). Labour-force attachment is
+the natural remaining stratifier — wage receipt is a first-order account on-ramp — and its
+size relative to the education gradient is unknown. No prior peek: the account-by-`emp_in`
+cross-tab has never been read (only `emp_in` value counts inspected for coding —
+1=in workforce 83,865 / 2=out 56,205 / NaN 4,020).
+**Test:** weighted rate of `account == 1` (already 0/1 in the labelled file) split by `emp_in`,
+pooled across all 2024 economies (raw `wgt`, economy-equal pooling per `micro.py` default —
+HARNESS_V2_NOTES caveat #3 applies to exact pooled pp, not to direction). Secondary, reported
+descriptively only: formal saving (`fin17a == 1`) among accountholders by `emp_in` — the depth
+margin — to see whether labour-force status stratifies depth as well as access.
+Gates: M2 (unweighted cell n ≥ 100 per group). M3 declared n/a for the split itself
+(within-`emp_in` subgroup, no country-file equivalent at that granularity); note the country
+file does carry `group == "laborforce"` slices, so a country-level version of this split is
+possible in principle but is a different (country-level) experiment.
+**Keep if:** (rate_in − rate_out) ≥ 5pp in the hypothesized direction (in-workforce higher).
+Declared caveat regardless of outcome: "out of workforce" is compositionally heterogeneous
+(students, retirees, homemakers, discouraged workers) and correlates with age, gender and
+education, so any gap is a descriptive association, not an employment effect. Single 2024
+cross-section — no trend language.
+
+## P16 — pre-registered (prediction stream)
+**Idea:** P11/P12 established the one mechanism that transfers across the 2021 regime change:
+**shrinkage toward basin means is noise correction and it compounds across orthogonal basins**
+(saving 8.448 → 7.963 with one region stage → 7.359 with a second income-group stage), whereas
+dynamics-tuning on the pre-2021 window (P9/P10) and richer cross-indicator fits (P15) do not
+transfer. P13 showed the stacking generalizes weakly to account and not at all to resilience.
+The untested question: does a **third** orthogonal basin add a third increment for saving —
+and specifically a *data-driven* basin rather than a geographic/administrative one. Test a
+**"digitalization-stage" basin**: terciles of the **2021 account level** (`account_t_d`,
+117/117 panel coverage), which cuts across both region and income group. Stack it as stage 3
+on the P12 champion for saving (damped trend λ=0.5 → region shrink → income-group shrink →
+account-tercile shrink, k=0.1 at every stage, unchanged).
+Selection, entirely ≤2021 (no 2024 anywhere in features, fitting or selection): CV on the
+saving 2017→2021 transition with a persistence base (the P10/P12/P13 protocol), with every
+basin — including the account terciles — constructed from the **2017** cross-section, comparing
+the incumbent two-stage against the three-stage candidate.
+Per-target policy (P2's rule): touches saving only — account (persistence + two-stage
+income-group→region shrink) and resilience (persistence + region shrink) must stay
+byte-identical to the P13 champion (5.105 / 6.625).
+**Keep if:** the ≤2021 CV prefers three-stage over the incumbent two-stage AND saving MAE
+improves on 7.359 on the 2021→2024 evaluation. Known risk, accepted: three stages at k=0.1
+approaches over-shrinkage (each stage pulls toward a mean, and the basins are only partly
+orthogonal — account-level terciles correlate with income group), so a discard is informative
+about where the compounding stops.
