@@ -94,7 +94,7 @@ how *new* the 2024 wave's information is:
 
 | Target | Persistence MAE | Best model MAE | What worked |
 |---|---:|---:|---|
-| Account ownership | 5.58 pp | **5.14 pp** | light income-group-mean shrinkage, k=0.1 (P7) |
+| Account ownership | 5.58 pp | **5.01 pp** | three-stage income-group→region→digital-payment-tercile shrinkage, k=0.1 each (P7+P13+P17) |
 | Resilience | 6.68 pp | **6.63 pp** | light region-mean shrinkage, k=0.1 (P5) |
 | Formal saving | 9.77 pp | **7.08 pp** | damped trend (λ=0.5) + three-stage region→income-group→account-tercile shrinkage, k=0.1 each (P2+P11+P12+P16) |
 
@@ -115,7 +115,17 @@ convergence basins capture partly-independent cross-sectional structure. A *thir
 compounds too, and it need not be a geographic or administrative grouping: shrinking toward the
 mean of the country's **2021 account-level tercile** — a "digitalization stage" basin that cuts
 across region and income group — takes saving from 7.36 to **7.08 pp** (P16), with diminishing
-increments across the three stages (−0.49 / −0.60 / −0.28). The contrast with the
+increments across the three stages (−0.49 / −0.60 / −0.28). That data-driven third stage is not
+saving-specific: the same construction applied to account ownership, shrinking toward the mean of
+the country's 2021 **digital-payment-adoption tercile**, improves it from 5.11 to **5.01 pp**
+(P17) — and it buys more than twice what account's second, purely administrative stage did
+(−0.091 vs −0.039 pp). A basin drawn from a *different* indicator's cross-section evidently
+carries more independent signal than a second geographic or administrative cut. Notably, the same
+cross-indicator information fails when it enters as fitted coefficients instead: a weighted ridge
+on 2021 levels of account, digital payments and saving loses outright to own-history shrinkage on
+the pre-2021 CV (P15). Cross-indicator structure helps as a *basin*, not as a regressor — which is
+what one expects if the mechanism is noise correction rather than signal extraction. The contrast
+with the
 failed attempts to *re-tune* the shrinkage strength or the trend on pre-2021 data (P8–P10) is
 instructive: shrinkage corrects cross-sectional sampling noise, a regime-independent mechanism
 that transfers across the 2021 break (and compounds across orthogonal basins), whereas anything
@@ -130,6 +140,17 @@ it, but 16.8 pp remains (77.3 / 87.7 / 94.1, monotonic) — a genuine within-acc
 gradient (U10). That contrasts sharply with gender, where conditioning on access leaves almost
 nothing (3.4 pp usage-side, 5.0 pp depth-side; U6, U8). "Access does the sorting" is a
 gender-specific finding, not a general one: for education, both margins bind.
+
+The margin where access equalizes *least* is the one the adult does not control. Among adults who
+already hold an account and receive wages, the share whose wages arrive **in** that account is
+56.6 / 80.6 / 91.9 pp across primary / secondary / tertiary education — a **35.3 pp** gradient
+that survives conditioning on access almost intact: the unconditional gap is 51.0 pp, so access
+absorbs only **31 %** of it, against ~64 % for digital payments (U14 vs U10). A natural reading,
+though not one this design can test, is that wage-receipt mode is set by the **employer**, so the
+education gradient here proxies formal-versus-informal sector composition rather than anything the
+individual chooses. This is the individual-level counterpart of the country-level finding that
+wage digitalization co-moves with the saving surge (E10, r = 0.79), and it locates the binding
+constraint on the employer's side of the transaction rather than the household's.
 
 ## Honest nulls worth one sentence each
 
@@ -153,14 +174,21 @@ gender-specific finding, not a general one: for education, both margins bind.
   in either direction survives (E17). Depth does not converge the way access does. Note this
   sits alongside, not against, the prediction stream's shrinkage gains: shrinkage is correcting
   cross-sectional noise, not exploiting mean reversion in levels.
-- The saving surge did *not* disequalize in proportion to its size: countries with the largest
-  surges did not widen their internal income gap in saving the most (r = +0.18, terciles
-  non-monotonic, E20). The *level* picture is nonetheless one-directional and worth a sentence
-  in its own right — pop-weighted across 55 developing panel economies, formal saving rose
-  +10.8 pp for the poorest 40 % and +16.9 pp for the richest 60 %, widening the gap from 14.4 to
-  20.5 pp. Two uncontrolled confounds (identical proportional gains from a lower base widen a pp
-  gap; account growth moves both series) mean this level fact needs its own pre-registration,
-  ideally in ratio or log-odds form, before it carries weight.
+- **The saving surge was distributionally broad — the apparent widening is an artifact of scale
+  (E20 + E21).** Two related claims were tested and both fail. The surge did not disequalize in
+  proportion to its size: countries with the largest surges did not widen their internal income
+  gap in saving the most (r = +0.18, terciles non-monotonic, E20). And the widening itself does
+  not survive a change of scale. On the percentage-point scale the gap between the richest 60 %
+  and poorest 40 % grew from 14.4 to 20.5 pp (formal saving +10.8 pp for the poorest 40 %,
+  +16.9 pp for the richest 60 %, pop-weighted across 55 developing panel economies) — but E21,
+  pre-registered specifically to address the low-base confound, finds the pop-weighted mean
+  change in the **log-odds** gap is only +0.109, **flips sign to −0.115** when the five largest
+  economies are dropped, and is shared by **fewer than half** (47.3 %) of economies. In
+  proportional terms the poorest 40 % in fact gained *faster* (×1.59 vs ×1.52). The pp widening
+  is therefore largely the arithmetic of a lower base, and the level fact should **not** be
+  written up as the rich pulling away. Methodologically this is the cleanest example in the loop
+  of why a pp gap between two groups at very different bases needs a scale-free companion
+  statistic before it carries any weight.
 
 ## Methods note for v2
 
