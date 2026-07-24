@@ -1518,3 +1518,103 @@ basin (account-level terciles), saving MAE 7.359 → 7.080 with account/resilien
 noise correction keeps transferring where dynamics-tuning and cross-indicator fits did not.
 New prediction champion: account = 5.105, resilience = 6.625, saving = 7.080. Everything
 committed on autoresearch/daily.
+
+## 2026-07-24 daily autoresearch cycle
+
+## E21 — pre-registered (hypothesis / country level), with a DISCLOSED PARTIAL PEEK
+**Disclosure first (amendment #1, the peek rule).** E20 logged the dev-aggregate levels of formal
+saving for both income slices (poorest 40% 18.4 → 29.2pp; richest 60% 32.8 → 49.7pp). Those two
+pairs make the *aggregate ratio* comparison derivable by arithmetic without touching the data
+(×1.59 vs ×1.52), so the aggregate-scale direction is NOT unknown to me at registration time.
+Consequently: the aggregate ratio statement is logged as **exploratory context**, and if the
+pre-registered primary below returns a keep it is recorded as **keep-exploratory**, never as a
+clean pre-registered keep. What is genuinely unknown at registration time is the *country-level
+distribution* — the pop-weighted mean of the within-country log-odds gap change, its sign share
+across economies, and its dose-response against the overall surge. Those are the registered
+statistics.
+**H:** The within-country income gap in formal saving widened 2021→2024 in a **scale-free** sense,
+i.e. the widening E20 found on the pp scale (14.4 → 20.5pp) is genuine disequalization rather than
+the mechanical arithmetic of a lower poorest-40 base. E20 explicitly left this as "a candidate for
+its own pre-registration (where the low-base arithmetic would have to be addressed directly, e.g.
+by a ratio or log-odds formulation)" — this is that experiment.
+**Test:** dev panel, same construction as E20 (harness `pan_grp`, `group == "income"`,
+`group2 ∈ {richest 60%, poorest 40%}`, non-high-income, wave-merge applied, 2021 and 2024). For
+each country and wave form the log-odds gap `L_y = logit(rich60_y) − logit(poor40_y)`, with rates
+clipped to [0.5pp, 99.5pp] as a declared continuity correction (logit is undefined at 0/1), and
+`ΔL = L_2024 − L_2021`. **Primary:** pop-weighted (2024 adult population) mean ΔL across countries.
+**Secondary (association, G6 applies):** weighted r(Δsaving_overall, ΔL) — the scale-free version
+of the dose-response E20 rejected on the pp scale (r=+0.179). Reported descriptively alongside:
+the aggregate ratio decomposition (exploratory per the disclosure above), the share of countries
+with ΔL > 0, and a level jackknife of the primary (recompute the pop-weighted mean ΔL after
+dropping the 5 largest-population economies).
+Gates: G3 (`saved_formally` headline `fin17a_17a1_d` for all series), G4 coverage on the
+income-slice frame in 2024, G6 jackknife on the secondary correlation with the E4 magnitude rule
+(r_droptop ≥ 0.5 × r_full). G5 n/a — no official within-country gap series exists. The primary is
+a level claim, so it gets the declared level-jackknife analogue rather than G6 proper.
+**Keep if:** pop-weighted mean ΔL ≥ **+0.20** log-odds (an odds-ratio widening of ≥1.22×) AND the
+level jackknife keeps the sign AND ≥60% of economies share that sign. Secondary keeps separately
+if r ≥ +0.30 with G6 clean. Per the E5/E9/E17 precedent, a materially *negative* mean ΔL is a
+direction rejection reported descriptively — it would say the pp widening is a low-base artifact
+and the surge was scale-free *equalizing* — and is NOT converted into a keep.
+Declared caveats: log-odds is scale-free but not confound-free (account growth and common income
+shocks still move both slices); the poorest-40/richest-60 cut is coarse; the continuity clip
+affects only degenerate cells. Descriptive association only, never causal.
+
+## U14 — pre-registered (micro stream)
+**Coding disclosure (not an outcome peek).** `receive_wages` and `receive_transfers` sit in
+`micro.py`'s BINARY_OUTCOMES list but are NOT 0/1 — they are 5-code categoricals, and no codebook
+ships with the microdata zip, so I inferred the coding structurally before registering: code 1 =
+received into an account (anydigpayment = 1.00 and account_fin = 0.93 within that cell, i.e. true
+by construction), code 2 = received in cash (account_fin 0.36, no better than non-receivers),
+code 3 = other/in-kind (n=833), code 4 = did not receive (n=63,640), code 5 = DK/refused (n=202).
+This check also killed the obvious design: `receive_transfers == 1` implies `account == 1` in
+7,184/7,184 cases, so any wage/transfer-receipt → account-ownership test is circular by
+construction. The registered outcome below — the education gradient — remains unknown.
+**H:** Among adults who **already hold an account** and receive wages, the share whose wages
+arrive **in the account** rather than in cash is **education-graded**: the "last mile" of wage
+digitalization is not equalized by access. Motivation: this is the individual-level counterpart of
+E10 (country-level wage digitalization co-moves with the saving surge, r=0.791, KEEP), and it
+extends the strongest thread in the micro stream — conditional on access, gender gaps collapse
+(U6 3.4pp, U8 4.96pp) but education gaps do not (U10, digital payment | account, +16.8pp). Whether
+that asymmetry also holds on the *wage-receipt* margin — where the employer, not the adult, picks
+the payment mode — is unknown and is the point of the test. First use of `receive_wages`.
+**Test:** restrict to `account == 1` AND `receive_wages ∈ {1, 2, 3}` (wage receivers, excluding
+"did not receive" and DK). Weighted rate of `receive_wages == 1` (digital receipt), split by
+`educ` (1 = primary or less / 2 = secondary / 3 = tertiary), pooled across all 2024 economies
+(raw `wgt`, economy-equal pooling per `micro.py` default; HARNESS_V2_NOTES caveat #3 applies to
+the exact pooled pp, not to direction). Secondary, descriptive only: the same split
+*unconditional* on account holding, to quantify how much of the gradient access already absorbs
+(the U10 decomposition).
+Gates: M2 (unweighted cell n ≥ 100 per education cell). M3 declared n/a — no country-file
+equivalent at this conditional granularity.
+**Keep if:** (rate_tertiary − rate_primary) ≥ 5pp in the hypothesized direction.
+Declared caveats: wage-receipt mode is largely an employer/sector attribute, so this is a
+descriptive association with education, not an individual choice or an education effect; the
+account-holding restriction conditions on a post-treatment variable; sectoral composition
+(formal vs informal employment) is an obvious uncontrolled confound. Single 2024 cross-section —
+no trend language.
+
+## P17 — pre-registered (prediction stream)
+**Idea:** P16 established that orthogonal-basin shrinkage compounds a **third** time for saving
+and that the third basin can be **data-driven** (terciles of the account level) rather than
+geographic or administrative — saving 8.448 → 7.963 → 7.359 → 7.080. P13 had already shown the
+two-stage stacking generalizes weakly to account (5.144 → 5.105) and not at all to resilience
+(P8/P13, two independent non-transfers). The untested question: does the *third*, data-driven
+stage also generalize to **account** — the target where the second stage bought almost nothing?
+Test a **digital-usage basin**: terciles of `g20_any` (digital-payment adoption, 117/117 panel
+coverage at 2014/2017/2021), stacked as stage 3 on the P13 account champion (persistence →
+income-group shrink → region shrink → g20 shrink, k=0.1 at every stage, unchanged). `g20_any` is
+deliberately a **different indicator** from the target, unlike P16's account-tercile basin for
+saving — shrinking account toward means of account-level bins would be near-degenerate.
+Selection, entirely ≤2021 (no 2024 in features, fitting or selection): CV on the account
+2017→2021 transition with a persistence base (the P10/P12/P13/P16 protocol), every basin —
+including the g20 terciles — built from the **2017** cross-section, comparing the incumbent
+two-stage against the three-stage candidate.
+Per-target policy (P2's rule): touches account only — saving (7.080, damped trend + three-stage
+shrink) and resilience (6.625, persistence + region shrink) must stay byte-identical to the P16
+champion.
+**Keep if:** the ≤2021 CV prefers three-stage over the incumbent two-stage AND account MAE
+improves on 5.105 on the 2021→2024 evaluation. Known risk, accepted: account's two-stage gain was
+already an order of magnitude smaller than saving's (−0.039pp vs −0.604pp), and account is close
+to a ceiling in many panel countries, so there may simply be little reversible cross-sectional
+noise left to correct — a discard would localize where the compounding mechanism stops.
