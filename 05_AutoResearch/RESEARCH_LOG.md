@@ -1618,3 +1618,78 @@ improves on 5.105 on the 2021→2024 evaluation. Known risk, accepted: account's
 already an order of magnitude smaller than saving's (−0.039pp vs −0.604pp), and account is close
 to a ceiling in many panel countries, so there may simply be little reversible cross-sectional
 noise left to correct — a discard would localize where the compounding mechanism stops.
+
+**E21 verdict: DISCARD (all three pre-registered conditions fail — and the discard is the
+substantive result).** The primary pop-weighted mean change in the within-country log-odds gap is
+**+0.109** (odds ratio ×1.115), below the +0.20 threshold; the level jackknife **flips sign** to
+**−0.115** when the 5 largest-population economies are dropped; and only **47.3%** of the 55
+economies widened at all, far short of the registered 60% sign share. The secondary scale-free
+dose-response fails identically to its pp-scale predecessor: r(Δsaving, ΔL) = **+0.176** (below
+0.30) with **G6 FAIL** (+0.176 → −0.149 drop-top-5, retention −0.85), the same big-country
+artifact pattern as E16/E19. G3 clean, G4 clean (70 countries, 96.2% of dev-panel population),
+G5 n/a.
+What this settles: **E20's headline level fact is largely low-base arithmetic.** The pp gap did
+widen 14.4 → 20.5pp, but on a scale-free measure the poorest 40% actually gained *proportionally
+faster* (×1.589 vs ×1.516 — the exploratory, peek-disclosed aggregate ratio), the pop-weighted
+log-odds gap barely moved, under half of economies widened, and the aggregate sign is carried
+entirely by the largest economies. The 2021→2024 formal-saving surge was therefore
+**distributionally broad**, and E20's context fact should *not* be read as the rich pulling away.
+The peek disclosure is moot in the event — the aggregate ratio direction was derivable from E20's
+logged levels, so a keep would have been recorded as keep-exploratory, but nothing kept. The
+tercile shape (−0.050/+0.130/+0.140) is monotone-ish but at magnitudes far too small to claim.
+Logit clip [0.5, 99.5]pp as declared. Descriptive only, never causal.
+
+**U14 verdict: KEEP — the largest conditional-on-access gradient found in the micro stream.**
+Among adults who already hold an account *and* receive wages, the share whose wages arrive **in
+the account** is steeply education-graded: **primary-or-less 56.6pp / secondary 80.6pp / tertiary
+91.9pp, tertiary − primary = +35.3pp**, monotonic and far above the 5pp threshold. M2 passes with
+room (n = 3,729 / 13,759 / 5,901); M3 n/a. Base rate: 63.6pp of all wage receivers are paid into
+an account.
+The decomposition is the interesting part. Unconditionally the gradient is +51.0pp (36.9 / 68.9 /
+87.9), so **access absorbs only 31%** of it — against **~64%** for digital payments in U10
+(46.7 → 16.8pp). Wage receipt is thus the **least access-equalized margin tested so far**: holding
+an account is close to sufficient for a tertiary-educated wage earner to be paid into it (91.9pp)
+and nowhere near sufficient for a primary-educated one (56.6pp). A plausible reading, consistent
+with the declared caveat, is that the payment mode is chosen by the **employer**, not the adult —
+so the education gradient here proxies formal-vs-informal sector composition rather than anything
+the individual controls. That makes it the individual-level counterpart of E10 (country-level wage
+digitalization co-moves with the saving surge, r=0.791, KEEP) and sharpens the standing thread:
+conditional on access, **gender** gaps collapse (U6 3.4pp, U8 4.96pp) but **education** gaps
+persist, and they persist most where a third party sets the terms. First use of `receive_wages`;
+coding inferred structurally as disclosed, and the same check ruled out the circular
+transfer→account design. Single 2024 cross-section — no trend language.
+
+**P17 verdict: KEEP — new account champion 5.014 (was 5.105).** Both adoption conditions pass. On
+the ≤2021 CV (account 2017→2021, persistence base, every basin built at 2017) the three-stage
+shrink beats the incumbent two-stage **6.710 vs 6.958** — a comfortable margin, unlike the razor-
+thin 6.958 vs 6.970 that adopted stage 2. Out-of-sample, account MAE improves **5.105 → 5.014
+(−0.091pp)**, with saving (7.080) and resilience (6.625) byte-identical under the per-target
+policy.
+Two things generalize here. First, the **data-driven third stage transfers to a second target** —
+P16's result was not saving-specific. Second, and more informative: for account the third stage
+(**−0.091pp**, basin = terciles of `g20_any`, a *different* indicator) bought **more than twice**
+what the second, purely administrative stage bought (−0.039pp, region). A basin drawn from another
+indicator's cross-section evidently carries more independent signal than a second
+geographic/administrative cut — which is why the P17 basin was deliberately specified on `g20_any`
+rather than on account's own level. Standing lesson intact and strengthened: what transfers across
+the 2021 regime change is **noise correction** (shrinking reversible cross-sectional deviations
+toward any reasonable basin mean), not **dynamics** (P9/P10) and not **fitted cross-indicator
+structure** (P15 ridge) — though cross-indicator information does help when it enters as a *basin*
+rather than as fitted coefficients. Prediction champion now: account = **5.014**,
+resilience = 6.625, saving = 7.080.
+
+## 2026-07-24 wrap-up
+Ran 3 experiments (E21, U14, P17), one per stream — one discard, two keeps. E21 (hypothesis,
+DISCARD, all three conditions failed): the scale-free re-test E20 explicitly left open settles it —
+the +6.1pp widening of the within-country income gap in formal saving is **largely low-base
+arithmetic**, since mean Δ(log-odds gap) is only +0.109, flips to −0.115 without the top-5
+economies, and under half of economies widened; the poorest 40% in fact gained proportionally
+faster (×1.589 vs ×1.516). The 2021→2024 saving surge was distributionally broad.
+U14 (micro, KEEP): among accountholding wage receivers, digital wage receipt is education-graded
+by **+35.3pp** (56.6/80.6/91.9), and access absorbs only **31%** of the unconditional +51.0pp
+gradient versus ~64% in U10 — the least access-equalized margin tested, plausibly because the
+employer sets the payment mode. P17 (prediction, KEEP): the data-driven third shrink stage
+generalizes from saving to account using a *cross-indicator* basin (g20_any terciles), account MAE
+**5.105 → 5.014**, and that third stage bought more than twice the second administrative stage did.
+New prediction champion: account = 5.014, resilience = 6.625, saving = 7.080. Everything committed
+on autoresearch/daily.
