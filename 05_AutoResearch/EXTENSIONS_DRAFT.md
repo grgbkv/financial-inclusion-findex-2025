@@ -16,6 +16,18 @@ countries). Countries in the top tercile of mobile-money growth gained **+14.8 p
 saving; the bottom tercile gained **+2.2 pp**. Proposed use: a geographic decomposition
 subsection following the surge finding, with a Δsaving-vs-Δmm scatter.
 
+**And it is not a Sub-Saharan Africa story (E22).** Because mobile money is SSA-concentrated, the
+obvious alternative reading of E1 is that it describes one region which population weighting then
+carries — an alternative the jackknife gate cannot address, since dropping the five largest
+*countries* leaves a region intact. Splitting the developing panel and re-running E1's exact
+construction inside each half: within SSA, r = **0.92** (n = 25, jackknife 0.88), with Δmobile-money
+terciles gaining −0.2 / +10.5 / **+21.1 pp** of formal saving; within the five other developing
+regions pooled, r = **0.68** (n = 33, jackknife *grows* to 0.71), terciles +3.0 / +9.1 / **+12.5 pp**.
+The association is materially stronger and steeper inside SSA, but it is unambiguously present
+outside it and survives a drop-top-5 jackknife on only 33 economies — a stiffer test than the
+pooled sample faced. E1 should therefore be written up as a general developing-world regularity
+with a declared SSA intensity gradient, not as a regional finding.
+
 **The channel is not mobile-money-specific (E10).** The surge co-moves just as strongly with
 the growth of *digital wage rails*: weighted r = 0.79 between Δsaving and Δ(share of adults
 paid private-sector wages into an account) 2021→2024 (n = 71; jackknife barely moves,
@@ -96,7 +108,7 @@ how *new* the 2024 wave's information is:
 |---|---:|---:|---|
 | Account ownership | 5.58 pp | **5.01 pp** | three-stage income-group→region→digital-payment-tercile shrinkage, k=0.1 each (P7+P13+P17) |
 | Resilience | 6.68 pp | **6.63 pp** | light region-mean shrinkage, k=0.1 (P5) |
-| Formal saving | 9.77 pp | **7.08 pp** | damped trend (λ=0.5) + three-stage region→income-group→account-tercile shrinkage, k=0.1 each (P2+P11+P12+P16) |
+| Formal saving | 9.77 pp | **6.83 pp** | damped trend (λ=0.5) + four-stage region→income-group→account-tercile→digital-payment-tercile shrinkage, k=0.1 each (P2+P11+P12+P16+P18) |
 
 A mobile-money-informed growth model fit on the 2017→2021 transition **failed** (9.75 pp):
 the contemporaneous saving–mobile-money correlation of Extension 1 was not forecastable from
@@ -120,7 +132,13 @@ saving-specific: the same construction applied to account ownership, shrinking t
 the country's 2021 **digital-payment-adoption tercile**, improves it from 5.11 to **5.01 pp**
 (P17) — and it buys more than twice what account's second, purely administrative stage did
 (−0.091 vs −0.039 pp). A basin drawn from a *different* indicator's cross-section evidently
-carries more independent signal than a second geographic or administrative cut. Notably, the same
+carries more independent signal than a second geographic or administrative cut. And the stacking
+does not stop at three: a **fourth** stage for saving, shrinking toward the mean of the country's
+2021 digital-payment tercile on top of the account-tercile stage, takes it from 7.08 to
+**6.83 pp** (P18), with the increment barely decaying (−0.28 then −0.25) even though both
+data-driven basins are digitalization cuts that might have been near-collinear. Over the whole
+sequence, shrinkage alone has bought saving −1.62 pp against the damped trend's −1.32 pp — the
+noise correction is now the larger half of the model. Notably, the same
 cross-indicator information fails when it enters as fitted coefficients instead: a weighted ridge
 on 2021 levels of account, digital payments and saving loses outright to own-history shrinkage on
 the pre-2021 CV (P15). Cross-indicator structure helps as a *basin*, not as a regressor — which is
@@ -131,7 +149,7 @@ instructive: shrinkage corrects cross-sectional sampling noise, a regime-indepen
 that transfers across the 2021 break (and compounds across orthogonal basins), whereas anything
 tuned to pre-2021 *dynamics* does not.
 
-### Education stratifies use, not only access (U4, U7, U10)
+### What access equalizes, and what it does not (U4, U7, U10, U14, U15)
 
 Education is the sharpest stratifier in the 2024 micro cross-section, and it does not stop at
 the account door. Unconditionally the digital-payment gap between tertiary and primary-educated
@@ -151,6 +169,20 @@ education gradient here proxies formal-versus-informal sector composition rather
 individual chooses. This is the individual-level counterpart of the country-level finding that
 wage digitalization co-moves with the saving surge (E10, r = 0.79), and it locates the binding
 constraint on the employer's side of the transaction rather than the household's.
+
+**A clean ordering emerges (U15).** Running the same conditioning step — the digital-payment rate
+unconditionally, then among accountholders only — across all three demographics on one outcome
+gives how much of each gap access explains: **gender ≈ all of it** (the residual is 3.4 pp, U6),
+**education ≈ two-thirds** (46.7 → 16.8 pp, U10), **age ≈ none** (11.6 → 10.3 pp between the 26-35
+peak and the 65+ band, U15). Among accountholders the age profile runs 86.9 / 88.2 / 84.9 / 82.6 /
+77.8 pp across the five bands. Older adults *are* less banked, but that is not why they pay less
+digitally: age is almost purely a usage gradient, where gender is almost purely an access one. A
+second, descriptive detail points the same way — the unconditional inverted-U (a dip among 15-25s,
+peak at 26-35) flattens into a near-monotone decline once accounts are held, so the young-adult dip
+is an access story and the old-age dip is not. Policy-relevant reading, offered as description
+only: opening accounts closes the gender gap in digital payments and much of the education gap,
+and does close to nothing for the age gap. All caveats of a single cross-section apply, and age
+correlates with education, employment and account tenure, none of which is controlled here.
 
 ## Honest nulls worth one sentence each
 

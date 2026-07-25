@@ -1769,3 +1769,70 @@ improves on 7.080 on the 2021→2024 evaluation. Known risk, accepted: each adde
 less than the last on account, and by stage 4 the basins may be close to collinear (g20 terciles
 and account terciles are both digitalization cuts) — a CV rejection or an out-of-sample loss would
 localize where compounding stops, which is the point of running it.
+
+**E22 verdict: KEEP — E1 is a general developing-world regularity, not a Sub-Saharan Africa
+story.** Both subsamples clear every pre-registered condition. Inside **SSA**: r = **+0.923**
+(n = 25), G6 clean (0.923 → 0.878, retention 0.95), Δmobile-money terciles −0.2 / +10.5 / +21.1pp
+of Δsaving. Inside the **five other developing regions pooled**: r = **+0.676** (n = 33), G6 clean
+and *growing* (0.676 → 0.706, retention 1.04), terciles +3.0 / +9.1 / +12.5pp. The full-panel
+replication reproduces E1 exactly (r = +0.719, n = 58), confirming the split is a partition of the
+same estimation sample and not a re-specification. G3 clean, G4 clean per subsample under the
+declared `min_countries=15` deviation (SSA 25 economies / 99.5% of regional population; rest 37 /
+67.6%), G5 n/a.
+What this settles: the one-*region* alternative that G6 — a one-*country* guard — structurally
+could not address. The association is materially stronger inside SSA (0.92 vs 0.68) and the SSA
+dose-response is steeper (+21.1pp in the top tercile vs +12.5pp outside), so mobile money is
+plainly the more dominant rail there; but outside SSA the co-movement is still strong, monotone
+in terciles, and survives a drop-top-5 jackknife on only 33 economies — a stiffer test than the
+pooled sample faced. E1 therefore generalises, with a declared intensity gradient. Same caveats as
+E1: account growth and common income shocks uncontrolled in both subsamples; descriptive
+association, never causal. First regional-split test in the ledger; the same design is now
+available for E5b and E7.
+
+**U15 verdict: KEEP — and the age gradient is the *least* access-equalized margin tested.** Among
+accountholders, digital-payment use runs **86.9 / 88.2 / 84.9 / 82.6 / 77.8pp** across 15-25 /
+26-35 / 36-50 / 51-65 / 65+, so the registered (26-35) − (65+) statistic is **+10.3pp**, twice the
+threshold. M2 passes with room (n = 6,525–18,436 per band); M3 n/a. The unconditional profile
+recomputed here reproduces U2 exactly (45.0 / 59.7 / 56.8 / 53.5 / 48.1, gap +11.6pp), so the two
+sides of the decomposition are constructed identically.
+That decomposition is the result: **access absorbs only 10%** of the age gradient (11.6 → 10.3pp).
+Ranking the three demographics on one outcome and one conditioning step now gives a clean ordering
+— **gender collapses** (U6, 3.4pp residual), **education shrinks by ~64%** but stays large (U10,
+46.7 → 16.8pp), and **age barely moves at all**. Age is thus almost entirely a *usage* gradient
+rather than an access artifact: older adults are less banked, but that is not why they pay less
+digitally. Secondary observation, descriptive: the unconditional inverted-U (peak 26-35, low
+15-25) flattens into a near-monotone decline once accounts are held — the young-adult dip is an
+access story, the old-age dip is not. Declared caveats stand: age correlates with education,
+employment and account tenure, none controlled, and the conditioning is on a post-treatment
+variable — association, not an age effect. Single 2024 cross-section, no trend language.
+
+**P18 verdict: KEEP — new saving champion 6.831 (was 7.080). Compounding does not stop at three
+stages.** Both adoption conditions pass: the ≤2021 CV (saving 2017→2021, persistence base, every
+basin built at 2017) prefers four-stage **6.370 vs 6.408**, and out-of-sample saving MAE improves
+**7.080 → 6.831 (−0.249pp)**, with account (5.014) and resilience (6.625) byte-identical under the
+per-target policy.
+The informative part is how little the gain decayed: stage 3 bought −0.279pp and stage 4 bought
+−0.249pp, despite the two data-driven basins (account terciles, `g20_any` terciles) both being
+digitalization cuts that might plausibly have been near-collinear. Whatever the fourth basin
+partitions, it is not already covered by region, income group and account level. Saving's full
+trajectory is now 9.767 (persistence) → 8.448 (damped trend) → 7.963 → 7.359 → 7.080 → **6.831**,
+i.e. **shrinkage alone has bought −1.617pp**, more than the damped trend's −1.319pp. Standing
+lesson unchanged and now four stages deep: what transfers across the 2021 regime change is
+**noise correction** toward any reasonable basin mean, not **dynamics** (P9/P10) and not **fitted
+cross-indicator structure** (P15). Prediction champion now: account = 5.014, resilience = 6.625,
+saving = **6.831**. Open and untested: whether a fifth stage still pays, and whether the
+diminishing-returns curve differs by target (account's stages went −0.039 / −0.091).
+
+## 2026-07-25 wrap-up
+Ran 3 experiments (E22, U15, P18), one per stream — **three keeps, no discards**, the first such
+cycle in the ledger. E22 (hypothesis, KEEP): the first regional-split test closes the standing
+one-region alternative to E1 — the mobile-money ↔ saving-surge co-movement holds inside SSA
+(r = +0.923, n = 25) *and* outside it (r = +0.676, n = 33), both G6-clean with monotone terciles,
+so E1 generalises with a declared SSA intensity gradient rather than being an SSA story.
+U15 (micro, KEEP): conditional on holding an account, digital-payment use is still age-graded by
+**+10.3pp** (26-35 vs 65+), and access absorbs only **10%** of the unconditional gap — completing
+the triad, gender collapses (U6), education shrinks ~64% (U10), age barely moves. Age is a usage
+gradient, not an access artifact. P18 (prediction, KEEP): a fourth shrink stage for saving on a
+second cross-indicator basin (`g20_any` terciles) improves MAE **7.080 → 6.831**, with the gain
+barely decaying from stage 3 (−0.249 vs −0.279pp). New prediction champion: account = 5.014,
+resilience = 6.625, saving = **6.831**. Everything committed on autoresearch/daily.
