@@ -1693,3 +1693,79 @@ generalizes from saving to account using a *cross-indicator* basin (g20_any terc
 **5.105 → 5.014**, and that third stage bought more than twice the second administrative stage did.
 New prediction champion: account = 5.014, resilience = 6.625, saving = 7.080. Everything committed
 on autoresearch/daily.
+
+## 2026-07-25 daily autoresearch cycle
+
+## E22 — pre-registered (hypothesis / country level)
+**Hypothesis:** E1 — the strongest kept country-level finding (the 2021→2024 formal-saving surge
+co-moves with mobile-money growth, weighted r = 0.719, n = 58 dev-panel economies) — is a
+**general developing-world regularity, not a Sub-Saharan Africa story**. Mobile money is heavily
+SSA-concentrated, so an obvious alternative reading of E1 is that it describes one region and the
+population weighting carries it. E1's jackknife (G6, drop the 5 largest-population economies)
+guards against *one-country* stories but not against a *one-region* story; the backlog lists
+"regional heterogeneity of kept findings E1/E5b/E7" for exactly this reason. This is the first
+regional-split test in the ledger.
+**Test:** partition the developing balanced panel by `regionwb24_hi` into **Sub-Saharan Africa
+(excluding high income)** vs **rest of the developing panel** (the five other regions pooled).
+Within each subsample, weighted (pop_adult) corr of Δ`mobileaccount_t_d` against
+Δ`fin17a_17a1_d` over 2021→2024 — the identical construction to E1 — plus Δ(mobile money)
+terciles with mean Δ(saving) per tercile, reported for both subsamples.
+Gates: G3 (both headline indicators, registered concepts `mobile_money` / `saved_formally`);
+G4 coverage run **per subsample** with `min_countries=15` — a disclosed deviation from the
+default 30, unavoidable for any regional split since SSA has only 26 dev-panel economies, and the
+pooled E1 sample already passed G4 at the default; G5 n/a (no official regional Δ-correlation
+series); G6 jackknife per subsample at the standard `drop_top=5`, which with n ≈ 20–35 is a
+**stiffer** test than for the full sample — noted, not relaxed.
+**Keep if:** |r| ≥ 0.30 **in both subsamples** with the same (positive) sign, and G6 sign-stable
+with magnitude retention ≥ 0.5 × r_full in both. If it holds only in SSA, the general claim is
+**discarded** and E1 is re-logged as region-specific — that outcome is the informative one and is
+registered as such in advance. Descriptive association only, never causal; account growth and
+common income shocks remain uncontrolled confounds in both subsamples, as in E1.
+
+## U15 — pre-registered (micro stream)
+**Hypothesis:** conditional on holding an account, the **age** gradient in digital-payment use
+**persists** (behaves like education, not like gender). The strongest micro thread is an
+asymmetry in what access equalizes: conditional on an account, gender gaps collapse (U6 3.4pp,
+U8 4.96pp) while education gaps persist (U10 +16.8pp, ~64% of the unconditional gap absorbed;
+U14 +35.3pp, only 31% absorbed). U2 established the *unconditional* age profile of
+`anydigpayment` (15-25 = 45.0 / 26-35 = 59.7 / 36-50 = 56.8 / 51-65 = 53.5 / 65+ = 48.1pp,
+inverted-U peaking at 26-35). Whether that gradient is an access artifact — older adults simply
+being less banked — or survives conditioning is unknown and completes the gender/education/age
+triad on one common outcome.
+**Test:** weighted rate of `anydigpayment == 1` among `account == 1`, split by the same five age
+bands as U2 (15-25 / 26-35 / 36-50 / 51-65 / 65+), pooled across all 2024 economies (raw `wgt`,
+economy-equal pooling per `micro.py`; HARNESS_V2_NOTES caveat #3 applies to the exact pooled pp,
+not to direction). Primary statistic: **(26-35) − (65+)**, conditional on account — the peak band
+U2 identified against the same low band. Secondary, descriptive: the U10-style absorption
+decomposition against U2's unconditional 11.6pp gap for the same pair.
+Gates: M2 (unweighted cell n ≥ 100 per band). M3 declared n/a (within-accountholder split, no
+country-file equivalent).
+**Keep if:** (rate_26-35 − rate_65+ | accountholder) ≥ 5pp.
+Declared caveats: age correlates with education, employment and account tenure, none controlled —
+this is a descriptive association, not an age effect; conditioning on account holding conditions
+on a post-treatment variable (same caveat as U6/U8/U10/U14). Single 2024 cross-section — no trend
+language.
+
+## P18 — pre-registered (prediction stream)
+**Idea:** does orthogonal-basin shrinkage compound a **fourth** time? The mechanism has now stacked
+three stages on saving (P11 → P12 → P16: 8.448 → 7.963 → 7.359 → 7.080) and three on account
+(P7 → P13 → P17: 5.144 → 5.105 → 5.014), and P17 delivered the sharper lesson: a **cross-indicator**
+basin (terciles of `g20_any`) bought account more than twice what a second administrative cut did
+(−0.091pp vs −0.039pp). Saving's stage 3 is already cross-indicator (account terciles). The
+untested question is whether a *second* data-driven, cross-indicator basin still carries
+independent signal once region, income group and account terciles have each had a pass.
+**Test:** add stage 4 to **saving** — terciles of `g20_any` (digital-payment adoption, 117/117
+panel coverage at 2014/2017/2021), stacked on the P16 champion (damped trend λ=0.5 → region →
+income-group → account-tercile), k = 0.1 at every stage, unchanged. `g20_any` is a different
+indicator from both the target and stage 3's basin column.
+Selection, entirely ≤2021 (no 2024 in features, fitting or selection): CV on the saving 2017→2021
+transition with a persistence base (the P10/P12/P13/P16/P17 protocol), every basin — including
+both tercile basins — built from the **2017** cross-section, comparing the incumbent three-stage
+against the four-stage candidate.
+Per-target policy (P2's rule): touches saving only — account (5.014) and resilience (6.625) must
+stay byte-identical to the P17 champion.
+**Keep if:** the ≤2021 CV prefers four-stage over the incumbent three-stage **AND** saving MAE
+improves on 7.080 on the 2021→2024 evaluation. Known risk, accepted: each added stage has bought
+less than the last on account, and by stage 4 the basins may be close to collinear (g20 terciles
+and account terciles are both digitalization cuts) — a CV rejection or an out-of-sample loss would
+localize where compounding stops, which is the point of running it.
