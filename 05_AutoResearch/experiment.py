@@ -1,131 +1,91 @@
-"""E21 (pre-registered, with a disclosed partial peek): was the 2021->2024 widening of the
-within-country income gap in formal saving GENUINE disequalization, or the mechanical arithmetic
-of a lower poorest-40 base?
+"""E22 (pre-registered): is E1 — the strongest kept country-level finding — a GENERAL
+developing-world regularity, or a Sub-Saharan Africa story?
 
-E20 found the pp gap widened 14.4 -> 20.5pp (poorest 40% +10.8pp, richest 60% +16.9pp) but logged
-that as descriptive context, not a keep, precisely because "identical proportional gains from a
-lower base mechanically widen a pp gap" — and left the scale-free re-test as an explicit candidate
-for its own pre-registration. This is that experiment.
+E1: the 2021->2024 formal-saving surge co-moves with mobile-money growth, weighted r = 0.719
+(n = 58 dev-panel economies), G6-clean (0.72 -> 0.80 drop-top-5). Mobile money is heavily
+SSA-concentrated, so an obvious alternative reading is that E1 describes one region and the
+population weighting carries it. G6 guards against one-COUNTRY stories, not one-REGION stories.
+This is the first regional-split test in the ledger (backlog: "regional heterogeneity of kept
+findings E1/E5b/E7").
 
-PEEK DISCLOSURE (amendment #1): E20's logged aggregate levels make the AGGREGATE ratio comparison
-derivable by arithmetic (x1.59 vs x1.52) without touching the data, so the aggregate-scale
-direction was not unknown at registration. The aggregate ratio is therefore reported as
-exploratory context and any keep here is recorded as keep-exploratory. The registered statistics
-are country-level and were genuinely unknown: the pop-weighted mean within-country change in the
-LOG-ODDS gap, its sign share, and its dose-response against the overall surge.
+Test: partition the developing balanced panel into SSA vs the five other developing regions
+pooled; run E1's identical construction inside each; report terciles for both.
+Keep the GENERAL claim only if |r| >= 0.30 with the same positive sign in BOTH subsamples and G6
+is sign-stable with magnitude retention >= 0.5 x r_full in both. If it holds only in SSA, the
+general claim is discarded and E1 is re-logged as region-specific — registered in advance as the
+informative outcome.
 
-Primary   : pop-weighted mean dL, where L_y = logit(rich60_y) - logit(poor40_y); keep if >= +0.20
-            log-odds, level-jackknife sign-stable, and >= 60% of economies sharing the sign.
-Secondary : weighted r(d_saving_overall, dL) — the scale-free version of the dose-response E20
-            rejected on the pp scale (r=+0.179); keeps separately if r >= +0.30 with G6 clean.
-
-Declared caveats: log-odds is scale-free but not confound-free (account growth and common income
-shocks move both slices); the poor40/rich60 cut is coarse; rates are clipped to [0.5, 99.5]pp as a
-continuity correction since logit is undefined at 0/1. Descriptive only, never causal.
+Declared: G4 is run per subsample with min_countries=15 (deviation from the default 30, forced by
+SSA having only 26 dev-panel economies; the pooled E1 sample passed at the default). G6 uses the
+standard drop_top=5, which at n ~ 20-35 is a stiffer test than for the full sample — noted, not
+relaxed. Descriptive association only, never causal; account growth and common income shocks are
+uncontrolled in both subsamples, exactly as in E1.
 """
-import numpy as np
 import pandas as pd
 
 from harness import Findex, INDICATORS
 
-RICH, POOR = "richest 60%", "poorest 40%"
-CLIP_LO, CLIP_HI = 0.5, 99.5   # pp, declared continuity correction for the logit
+SSA = "Sub-Saharan Africa (excluding high income)"
+YEARS = [2021, 2024]
 
 
-def _slice_panel(fx: Findex, col: str, group2: str, years):
-    """Wide per-country table (pp) of `col` for one within-country income slice,
-    restricted to the developing balanced panel. Identical construction to E20."""
-    g = fx.pan_grp
-    sub = g[(g["group"] == "income") & (g["group2"] == group2)
-            & (g["incomegroupwb24"] != "High income") & (g["year"].isin(years))]
-    return sub.pivot_table(index="countrynewwb", columns="year", values=col) * 100
+def _subsample(fx: Findex, in_ssa: bool):
+    d = fx.pan_dev
+    return d[(d["regionwb24_hi"] == SSA) if in_ssa else (d["regionwb24_hi"] != SSA)]
 
 
-def _logit_pp(s: pd.Series) -> pd.Series:
-    """logit of a rate given in pp, with the declared clip."""
-    p = s.clip(CLIP_LO, CLIP_HI) / 100.0
-    return np.log(p / (1 - p))
+def _run_one(fx: Findex, frame, label, mm, sav):
+    print(f"--- E22 {label} " + "-" * (46 - len(label)))
+    print("E22 G4:", fx.gate_coverage(frame, mm, 2024, min_countries=15, min_pop_share=0.3))
+
+    m = fx.country_panel(frame, mm, YEARS)
+    s = fx.country_panel(frame, sav, YEARS)
+    d_mm = (m[2024] - m[2021]).rename("d_mm")
+    d_sav = (s[2024] - s[2021]).rename("d_sav")
+    w = m["pop"]
+    common = (d_mm.dropna().index.intersection(d_sav.dropna().index)
+              .intersection(w.dropna().index))
+    x, y, pop = d_mm.reindex(common), d_sav.reindex(common), w.reindex(common)
+
+    r, n = fx.weighted_corr(x, y, pop)
+    gj = fx.gate_jackknife(x, y, pop)
+    ret = (gj["r_droptop"] / gj["r_full"]) if gj.get("r_full") else float("nan")
+    print(f"E22 r(d_mobile_money, d_saving) = {r:+.3f}  (n={n} economies)")
+    print(f"E22 G6: {gj}  retention={ret:+.2f}")
+
+    df = pd.DataFrame({"d_mm": x, "d_sav": y, "pop": pop}).dropna()
+    df["ter"] = pd.qcut(df["d_mm"], 3, labels=["low", "mid", "high"])
+    for t, g in df.groupby("ter", observed=True):
+        wm = (g["d_sav"] * g["pop"]).sum() / g["pop"].sum()
+        mm_m = (g["d_mm"] * g["pop"]).sum() / g["pop"].sum()
+        print(f"E22   d_mm tercile {t:4s} (mean d_mm {mm_m:+5.1f}pp): "
+              f"mean d_saving = {wm:+5.1f}pp  (n={len(g)})")
+    print()
+    return {"label": label, "r": r, "n": n, "ret": ret,
+            "sign_ok": bool(gj["ok"]), "r_jack": gj["r_droptop"]}
 
 
 def run(fx: Findex):
-    sav = INDICATORS["saved_formally"]["headline"]  # fin17a_17a1_d
-    print("E21 G3:", fx.gate_variant("saved_formally", sav))
+    mm = INDICATORS["mobile_money"]["headline"]      # mobileaccount_t_d
+    sav = INDICATORS["saved_formally"]["headline"]   # fin17a_17a1_d
+    print("E22 G3:", fx.gate_variant("mobile_money", mm), fx.gate_variant("saved_formally", sav))
+    print("E22 G5: n/a -- no official regional Delta-correlation series exists")
+    print("E22 G4 declared deviation: min_countries=15 per subsample (SSA has 26 dev-panel "
+          "economies); the pooled E1 sample passed G4 at the default 30\n")
 
-    inc_frame = fx.pan_grp[(fx.pan_grp["group"] == "income")
-                           & (fx.pan_grp["incomegroupwb24"] != "High income")]
-    print("E21 G4 (income-slice frame, 2024):",
-          fx.gate_coverage(inc_frame, sav, 2024, min_countries=30, min_pop_share=0.3))
-    print("E21 G5: n/a -- no official aggregate exists for a within-country gap series")
-    print()
+    res = [_run_one(fx, _subsample(fx, True), "Sub-Saharan Africa", mm, sav),
+           _run_one(fx, _subsample(fx, False), "rest of developing panel", mm, sav)]
 
-    years = [2021, 2024]
-    rich = _slice_panel(fx, sav, RICH, years)
-    poor = _slice_panel(fx, sav, POOR, years)
-    overall = fx.country_panel(fx.pan_dev, sav, years)
+    # full-sample replication of E1 for context (same construction, no split)
+    full = _run_one(fx, fx.pan_dev, "FULL dev panel (E1 replication)", mm, sav)
 
-    L21 = (_logit_pp(rich[2021]) - _logit_pp(poor[2021])).rename("L21")
-    L24 = (_logit_pp(rich[2024]) - _logit_pp(poor[2024])).rename("L24")
-    dL = (L24 - L21).rename("dL")
-    d_sav = (overall[2024] - overall[2021]).rename("d_sav")
-    w = overall["pop"]
-
-    common = (dL.dropna().index
-              .intersection(d_sav.dropna().index)
-              .intersection(w.dropna().index))
-    pop = w.reindex(common)
-    print(f"E21 estimation sample: n={len(common)} dev-panel economies with both income "
-          f"slices in 2021 and 2024 (E20 used the same construction, n=55)")
-    print()
-
-    # ---- exploratory context (peek-disclosed): aggregate levels and the RATIO scale
-    for label, tab in (("poorest 40%", poor), ("richest 60%", rich)):
-        v21 = (tab[2021].reindex(common) * pop).sum() / pop.sum()
-        v24 = (tab[2024].reindex(common) * pop).sum() / pop.sum()
-        print(f"E21 [exploratory] dev aggregate saving, {label:12s}: {v21:5.1f} -> {v24:5.1f}pp "
-              f"({v24 - v21:+.1f}pp, ratio x{v24 / v21:.3f})")
-    print("E21 [exploratory] the ratio comparison above was derivable from E20's logged "
-          "aggregates -> context only, cannot support a clean pre-registered keep")
-    print()
-
-    # ---- PRIMARY: pop-weighted mean change in the log-odds gap
-    mean_dL = float((dL.reindex(common) * pop).sum() / pop.sum())
-    agg_L21 = float((L21.reindex(common) * pop).sum() / pop.sum())
-    agg_L24 = float((L24.reindex(common) * pop).sum() / pop.sum())
-    share_pos = float((dL.reindex(common) > 0).mean() * 100)
-
-    keep_idx = pop.sort_values(ascending=False).index[5:]   # level-jackknife: drop top-5 pop
-    pop_j = pop.reindex(keep_idx)
-    mean_dL_jack = float((dL.reindex(keep_idx) * pop_j).sum() / pop_j.sum())
-
-    print(f"E21 PRIMARY pop-weighted log-odds gap: {agg_L21:+.3f} -> {agg_L24:+.3f}  "
-          f"mean dL = {mean_dL:+.3f} (odds ratio x{np.exp(mean_dL):.3f})")
-    print(f"E21 level jackknife (drop top-5 pop): mean dL = {mean_dL_jack:+.3f}  "
-          f"(sign-stable: {np.sign(mean_dL_jack) == np.sign(mean_dL)})")
-    print(f"E21 share of economies with dL > 0: {share_pos:.1f}%  (n={len(common)})")
-    print("E21 primary keep condition: mean dL >= +0.20 AND jackknife sign-stable AND "
-          "share sharing sign >= 60%")
-    print()
-
-    # ---- SECONDARY: scale-free dose-response (association -> G6 applies)
-    r, n = fx.weighted_corr(d_sav.reindex(common), dL.reindex(common), pop)
-    gjack = fx.gate_jackknife(d_sav.reindex(common), dL.reindex(common), pop)
-    ret = (gjack["r_droptop"] / gjack["r_full"]) if gjack.get("r_full") else float("nan")
-    print(f"E21 SECONDARY r(d_saving, dL) = {r:+.3f} (n={n})  "
-          f"jack {gjack['r_full']:+.3f}->{gjack['r_droptop']:+.3f} (retention {ret:.2f})")
-    print("E21 G6:", gjack)
-    print("E21 secondary keep condition: r >= +0.30 AND jackknife sign-stable + "
-          "magnitude-retaining (r_droptop >= 0.5 x r_full)")
-    print()
-
-    # ---- descriptive: terciles of the overall surge vs mean dL (scale-free dose-response)
-    dfx = pd.DataFrame({"d_sav": d_sav.reindex(common), "dL": dL.reindex(common),
-                        "pop": pop}).dropna()
-    dfx["ter"] = pd.qcut(dfx["d_sav"], 3, labels=["low", "mid", "high"])
-    for t, g in dfx.groupby("ter", observed=True):
-        wm = (g["dL"] * g["pop"]).sum() / g["pop"].sum()
-        sm = (g["d_sav"] * g["pop"]).sum() / g["pop"].sum()
-        print(f"E21 d_saving tercile {t:4s} (mean d_sav {sm:+5.1f}pp): "
-              f"mean dL = {wm:+.3f}  (n={len(g)})")
+    print("E22 keep condition: |r| >= 0.30, same positive sign, G6 sign-stable AND "
+          "retention >= 0.50 -- in BOTH subsamples")
+    for d in res:
+        ok = (d["r"] >= 0.30) and d["sign_ok"] and (d["ret"] >= 0.50)
+        print(f"E22   {d['label']:26s} r={d['r']:+.3f} n={d['n']:3d} "
+              f"jack={d['r_jack']:+.3f} ret={d['ret']:+.2f}  -> passes: {ok}")
+    print(f"E22   [context] {full['label']}: r={full['r']:+.3f} (E1 logged 0.719, n=58)")
 
 
 if __name__ == "__main__":

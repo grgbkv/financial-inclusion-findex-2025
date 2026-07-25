@@ -1,76 +1,70 @@
-"""U14 (pre-registered): among adults who ALREADY HOLD AN ACCOUNT and receive wages, is the share
-whose wages arrive IN the account (rather than in cash) education-graded?
+"""U15 (pre-registered): conditional on holding an account, does the AGE gradient in
+digital-payment use persist (like education) or collapse (like gender)?
 
-The individual-level counterpart of E10 (country-level wage digitalization co-moves with the
-formal-saving surge, r=0.791, KEEP), and an extension of the strongest micro thread: conditional
-on access, gender gaps collapse (U6 3.4pp, U8 4.96pp) but education gaps do not (U10, digital
-payment | account, +16.8pp). Whether that asymmetry survives on the WAGE-RECEIPT margin — where
-the employer, not the adult, picks the payment mode — is the open question. First use of
-`receive_wages`.
+The strongest micro thread is an asymmetry in what access equalizes. Conditional on an account,
+gender gaps collapse (U6 3.4pp, U8 4.96pp) while education gaps persist (U10 +16.8pp, ~64% of the
+unconditional gap absorbed; U14 +35.3pp, only 31% absorbed). U2 established the UNCONDITIONAL age
+profile of `anydigpayment` (45.0 / 59.7 / 56.8 / 53.5 / 48.1pp across 15-25 / 26-35 / 36-50 /
+51-65 / 65+, inverted-U peaking at 26-35). Whether that gradient is an access artifact — older
+adults simply being less banked — or survives conditioning is unknown, and answering it completes
+the gender / education / age triad on one common outcome.
 
-CODING DISCLOSURE (structural inference, not an outcome peek). `receive_wages` sits in micro.py's
-BINARY_OUTCOMES but is a 5-code categorical, and no codebook ships with the microdata zip, so the
-coding was inferred before registration:
-    1 = received into an account (anydigpayment = 1.00, account_fin = 0.93 within the cell)
-    2 = received in cash        (account_fin = 0.36, no better than non-receivers)
-    3 = other / in-kind (n=833)   4 = did not receive (n=63,640)   5 = DK/refused (n=202)
-The same check killed the obvious design: `receive_transfers == 1` implies `account == 1` in
-7,184/7,184 cases, so any wage/transfer-receipt -> account-ownership test is circular by
-construction. The registered outcome — the education gradient — was unknown at registration.
+Primary  : weighted rate of anydigpayment == 1 among account == 1, by the five U2 age bands;
+           statistic = (26-35) - (65+). Keep if >= +5pp.
+Secondary: the U10-style absorption decomposition against U2's unconditional 11.6pp gap for the
+           same pair (recomputed here unconditionally so both sides use identical construction).
 
-Declared caveats: wage-receipt mode is largely an employer/sector attribute, so this is a
-descriptive association with education, not an individual choice or an education effect; the
-account-holding restriction conditions on a post-treatment variable; formal-vs-informal sectoral
-composition is an obvious uncontrolled confound. Single 2024 cross-section — no trend language.
+Declared caveats: age correlates with education, employment and account tenure, none controlled —
+descriptive association, not an age effect; conditioning on account holding conditions on a
+post-treatment variable (as in U6/U8/U10/U14); economy-equal pooling per micro.py
+(HARNESS_V2_NOTES caveat #3) affects the exact pooled pp, not the direction. Single 2024
+cross-section — no trend language.
 """
+import pandas as pd
+
 from micro import Micro
 
-EDUC_LABEL = {1: "primary or less", 2: "secondary      ", 3: "tertiary       "}
-WAGE_RECEIVERS = [1, 2, 3]   # excludes 4 (did not receive) and 5 (DK/refused)
+BANDS = [("15-25", 15, 25), ("26-35", 26, 35), ("36-50", 36, 50),
+         ("51-65", 51, 65), ("65+", 66, 200)]
+PEAK, LOW = "26-35", "65+"          # U2's peak band vs its low band
 
 
-def _gradient(mi: Micro, base_mask, title):
-    """Weighted rate of digital wage receipt by education over `base_mask`."""
+def _profile(mi: Micro, base_mask, title):
+    """Weighted anydigpayment rate by age band over `base_mask`."""
     print(title)
     rates = {}
-    for e in [1, 2, 3]:
-        mask = base_mask & (mi.df["educ"] == e)
-        v, n = mi.rate("wage_digital", where=mask)
-        rates[e] = v
-        print(f"U14   educ={e} ({EDUC_LABEL[e]}): rate = {v:5.1f}pp   n={n:6d}   "
-              f"{mi.gate_cell_size(n)}")
-    diff = rates[3] - rates[1]
-    print(f"U14   tertiary - primary = {diff:+.1f}pp")
-    return diff
+    for name, lo, hi in BANDS:
+        mask = base_mask & (mi.df["age"] >= lo) & (mi.df["age"] <= hi)
+        v, n = mi.rate("anydigpayment", where=mask)
+        rates[name] = v
+        print(f"U15   age {name:6s}: rate = {v:5.1f}pp   n={n:6d}   {mi.gate_cell_size(n)}")
+    diff = rates[PEAK] - rates[LOW]
+    print(f"U15   ({PEAK}) - ({LOW}) = {diff:+.1f}pp")
+    return diff, rates
 
 
 def run(mi: Micro):
     df = mi.df
-    # Derived binary: wages arrive in an account rather than cash/in-kind.
-    # In-memory only; micro.py is fixed.
-    df["wage_digital"] = (df["receive_wages"] == 1).astype(float)
+    age_ok = pd.to_numeric(df["age"], errors="coerce").notna()
+    df["age"] = pd.to_numeric(df["age"], errors="coerce")
 
-    receivers = df["receive_wages"].isin(WAGE_RECEIVERS)
-    v_all, n_all = mi.rate("wage_digital", where=receivers)
-    print(f"U14 base rate: among wage receivers (codes 1/2/3, n={n_all}), "
-          f"{v_all:.1f}pp receive wages into an account\n")
-
-    diff_cond = _gradient(
-        mi, receivers & (df["account"] == 1),
-        "U14 PRIMARY — digital wage receipt by education, among ACCOUNTHOLDING wage receivers:")
+    diff_cond, rates_cond = _profile(
+        mi, age_ok & (df["account"] == 1),
+        "U15 PRIMARY -- digital-payment use by age band, among ACCOUNTHOLDERS:")
 
     print()
-    diff_uncond = _gradient(
-        mi, receivers,
-        "U14 secondary (descriptive only) — same split, UNCONDITIONAL on account holding:")
+    diff_uncond, rates_uncond = _profile(
+        mi, age_ok,
+        "U15 secondary (descriptive) -- same split, UNCONDITIONAL on account holding:")
 
     absorbed = (1 - diff_cond / diff_uncond) * 100 if diff_uncond else float("nan")
-    print(f"\nU14 access absorbs {absorbed:.0f}% of the unconditional education gradient "
-          f"({diff_uncond:+.1f}pp -> {diff_cond:+.1f}pp)   [U10 comparison: 46.7 -> 16.8pp, ~64%]")
-    print(f"U14 keep condition: (tertiary - primary | accountholder) >= +5pp  -> "
+    print(f"\nU15 access absorbs {absorbed:.0f}% of the unconditional age gradient "
+          f"({diff_uncond:+.1f}pp -> {diff_cond:+.1f}pp)")
+    print("U15 comparisons: gender collapses (U6 3.4pp), education persists "
+          "(U10 +16.8pp | account, ~64% absorbed; U14 +35.3pp, 31% absorbed)")
+    print(f"U15 keep condition: ({PEAK} - {LOW} | accountholder) >= +5pp  -> "
           f"observed {diff_cond:+.1f}pp")
-    print("U14 M3 declared n/a (conditional within-accountholder wage-receipt split, no "
-          "country-file equivalent at this granularity)")
+    print("U15 M3 declared n/a (within-accountholder split, no country-file equivalent)")
 
 
 if __name__ == "__main__":
