@@ -1,91 +1,114 @@
-"""E22 (pre-registered): is E1 — the strongest kept country-level finding — a GENERAL
-developing-world regularity, or a Sub-Saharan Africa story?
+"""E23 (pre-registered): is E1 a SEPARATE RAIL into the saving surge, or the SSA-flavoured face
+of one common digitalization factor?
 
-E1: the 2021->2024 formal-saving surge co-moves with mobile-money growth, weighted r = 0.719
-(n = 58 dev-panel economies), G6-clean (0.72 -> 0.80 drop-top-5). Mobile money is heavily
-SSA-concentrated, so an obvious alternative reading is that E1 describes one region and the
-population weighting carries it. G6 guards against one-COUNTRY stories, not one-REGION stories.
-This is the first regional-split test in the ledger (backlog: "regional heterogeneity of kept
-findings E1/E5b/E7").
+Every country-level association in the ledger is bivariate, and the digitalization indicators are
+demonstrably collinear: d_mm ~ d_saving r = +0.719 (E1), d_g20 ~ d_saving r = +0.370 (E12),
+d_fin32_acc ~ d_saving r = +0.791 (E10), d_mm ~ d_g20 r = +0.600 (E14). E22 closed the
+one-REGION alternative to E1; E23 tests the one-FACTOR alternative.
 
-Test: partition the developing balanced panel into SSA vs the five other developing regions
-pooled; run E1's identical construction inside each; report terciles for both.
-Keep the GENERAL claim only if |r| >= 0.30 with the same positive sign in BOTH subsamples and G6
-is sign-stable with magnitude retention >= 0.5 x r_full in both. If it holds only in SSA, the
-general claim is discarded and E1 is re-logged as region-specific — registered in advance as the
-informative outcome.
+Test: weighted PARTIAL correlation of d(mobileaccount_t_d) with d(fin17a_17a1_d), 2021->2024,
+controlling d(g20_any), on the developing balanced panel. Construction follows E5b: pop-weighted
+least-squares residualization of both variables on the control, then weighted_corr of the
+residuals; gate_jackknife on the residual pair.
 
-Declared: G4 is run per subsample with min_countries=15 (deviation from the default 30, forced by
-SSA having only 26 dev-panel economies; the pooled E1 sample passed at the default). G6 uses the
-standard drop_top=5, which at n ~ 20-35 is a stiffer test than for the full sample — noted, not
-relaxed. Descriptive association only, never causal; account growth and common income shocks are
-uncontrolled in both subsamples, exactly as in E1.
+Keep if partial r >= +0.30, same positive sign as E1, and G6 sign-stable with retention >= 0.5.
+Registered alternative outcome: a collapse below 0.30 means E1 and E12 are two readings of one
+digitalization factor, and E1 is re-logged with that caveat.
+
+Declared: partialling a CONTEMPORANEOUS delta is not a control for confounding -- d_g20 is itself
+an outcome of the same period, so this decomposes co-movement, it does not identify anything.
+Descriptive association only, never causal.
 """
 import pandas as pd
 
 from harness import Findex, INDICATORS
 
-SSA = "Sub-Saharan Africa (excluding high income)"
 YEARS = [2021, 2024]
 
 
-def _subsample(fx: Findex, in_ssa: bool):
-    d = fx.pan_dev
-    return d[(d["regionwb24_hi"] == SSA) if in_ssa else (d["regionwb24_hi"] != SSA)]
+def _wresid(y, x, w):
+    """Residuals of a pop-weighted least-squares fit of y on x (E5b construction)."""
+    xm = (x * w).sum() / w.sum()
+    ym = (y * w).sum() / w.sum()
+    b = (w * (x - xm) * (y - ym)).sum() / (w * (x - xm) ** 2).sum()
+    return y - (ym - b * xm) - b * x
 
 
-def _run_one(fx: Findex, frame, label, mm, sav):
-    print(f"--- E22 {label} " + "-" * (46 - len(label)))
-    print("E22 G4:", fx.gate_coverage(frame, mm, 2024, min_countries=15, min_pop_share=0.3))
+def _deltas(fx: Findex, cols):
+    """Wide 2021->2024 deltas (pp) for each requested column, plus pop weights."""
+    out = {}
+    pop = None
+    for name, col in cols.items():
+        t = fx.country_panel(fx.pan_dev, col, YEARS)
+        out[name] = (t[2024] - t[2021]).rename(name)
+        if pop is None:
+            pop = t["pop"]
+        else:
+            pop = pop.fillna(t["pop"])
+    return out, pop
 
-    m = fx.country_panel(frame, mm, YEARS)
-    s = fx.country_panel(frame, sav, YEARS)
-    d_mm = (m[2024] - m[2021]).rename("d_mm")
-    d_sav = (s[2024] - s[2021]).rename("d_sav")
-    w = m["pop"]
-    common = (d_mm.dropna().index.intersection(d_sav.dropna().index)
-              .intersection(w.dropna().index))
-    x, y, pop = d_mm.reindex(common), d_sav.reindex(common), w.reindex(common)
 
-    r, n = fx.weighted_corr(x, y, pop)
-    gj = fx.gate_jackknife(x, y, pop)
+def _partial(df, focus, ctrl, label, jack=True, fx=None):
+    """Weighted partial corr of `focus` with d_sav given `ctrl`, on the frame's common sample."""
+    w = df["pop"]
+    ry = _wresid(df["d_sav"], df[ctrl], w)
+    rx = _wresid(df[focus], df[ctrl], w)
+    r, n = fx.weighted_corr(rx, ry, w)
+    print(f"E23 partial r({focus}, d_sav | {ctrl}) = {r:+.3f}  (n={n} economies)   [{label}]")
+    if not jack:
+        return {"r": r, "n": n}
+    gj = fx.gate_jackknife(rx, ry, w)
     ret = (gj["r_droptop"] / gj["r_full"]) if gj.get("r_full") else float("nan")
-    print(f"E22 r(d_mobile_money, d_saving) = {r:+.3f}  (n={n} economies)")
-    print(f"E22 G6: {gj}  retention={ret:+.2f}")
-
-    df = pd.DataFrame({"d_mm": x, "d_sav": y, "pop": pop}).dropna()
-    df["ter"] = pd.qcut(df["d_mm"], 3, labels=["low", "mid", "high"])
-    for t, g in df.groupby("ter", observed=True):
-        wm = (g["d_sav"] * g["pop"]).sum() / g["pop"].sum()
-        mm_m = (g["d_mm"] * g["pop"]).sum() / g["pop"].sum()
-        print(f"E22   d_mm tercile {t:4s} (mean d_mm {mm_m:+5.1f}pp): "
-              f"mean d_saving = {wm:+5.1f}pp  (n={len(g)})")
-    print()
-    return {"label": label, "r": r, "n": n, "ret": ret,
-            "sign_ok": bool(gj["ok"]), "r_jack": gj["r_droptop"]}
+    print(f"E23   G6 on the residual pair: {gj}  retention={ret:+.2f}")
+    return {"r": r, "n": n, "sign_ok": bool(gj["ok"]), "ret": ret, "r_jack": gj["r_droptop"]}
 
 
 def run(fx: Findex):
     mm = INDICATORS["mobile_money"]["headline"]      # mobileaccount_t_d
     sav = INDICATORS["saved_formally"]["headline"]   # fin17a_17a1_d
-    print("E22 G3:", fx.gate_variant("mobile_money", mm), fx.gate_variant("saved_formally", sav))
-    print("E22 G5: n/a -- no official regional Delta-correlation series exists")
-    print("E22 G4 declared deviation: min_countries=15 per subsample (SSA has 26 dev-panel "
-          "economies); the pooled E1 sample passed G4 at the default 30\n")
+    g20 = INDICATORS["digital_payment"]["headline"]  # g20_any
+    wage = "fin32_acc"                               # E10's wage-digitalization column
 
-    res = [_run_one(fx, _subsample(fx, True), "Sub-Saharan Africa", mm, sav),
-           _run_one(fx, _subsample(fx, False), "rest of developing panel", mm, sav)]
+    print("E23 G3:", fx.gate_variant("mobile_money", mm), fx.gate_variant("saved_formally", sav),
+          fx.gate_variant("digital_payment", g20))
+    print("E23 G3 note: fin32_acc has no variant choice (E10 precedent)")
+    print("E23 G5: n/a -- no official partial-correlation series exists\n")
 
-    # full-sample replication of E1 for context (same construction, no split)
-    full = _run_one(fx, fx.pan_dev, "FULL dev panel (E1 replication)", mm, sav)
+    d, pop = _deltas(fx, {"d_mm": mm, "d_sav": sav, "d_g20": g20, "d_wage": wage})
+    base = pd.DataFrame({**d, "pop": pop})
 
-    print("E22 keep condition: |r| >= 0.30, same positive sign, G6 sign-stable AND "
-          "retention >= 0.50 -- in BOTH subsamples")
-    for d in res:
-        ok = (d["r"] >= 0.30) and d["sign_ok"] and (d["ret"] >= 0.50)
-        print(f"E22   {d['label']:26s} r={d['r']:+.3f} n={d['n']:3d} "
-              f"jack={d['r_jack']:+.3f} ret={d['ret']:+.2f}  -> passes: {ok}")
-    print(f"E22   [context] {full['label']}: r={full['r']:+.3f} (E1 logged 0.719, n=58)")
+    # ---- primary: control = d_g20 (full dev-panel coverage, keeps E1's estimation sample) ----
+    main = base[["d_mm", "d_sav", "d_g20", "pop"]].dropna()
+    print("E23 G4 (primary estimation sample):",
+          fx.gate_coverage(fx.pan_dev[fx.pan_dev["countrynewwb"].isin(main.index)], mm, 2024,
+                           min_countries=30, min_pop_share=0.3))
+    print(f"E23 primary sample: n={len(main)} economies\n")
+
+    print("E23 bivariate benchmarks recomputed on the SAME common sample:")
+    for a, b, tag in [("d_mm", "d_sav", "E1 logged r=+0.719"),
+                      ("d_g20", "d_sav", "E12 logged r=+0.370"),
+                      ("d_mm", "d_g20", "E14 logged r=+0.600")]:
+        r, n = fx.weighted_corr(main[a], main[b], main["pop"])
+        print(f"E23   r({a}, {b}) = {r:+.3f}  (n={n})   [{tag}]")
+    print()
+
+    res = _partial(main, "d_mm", "d_g20", "PRIMARY", fx=fx)
+    print()
+    rev = _partial(main, "d_g20", "d_mm", "symmetric reverse, descriptive", fx=fx)
+
+    # ---- secondary: control = d_wage (E10's strongest bivariate competitor, smaller sample) ----
+    print()
+    alt = base[["d_mm", "d_sav", "d_wage", "pop"]].dropna()
+    print(f"E23 secondary sample (wage-digitalization control): n={len(alt)} economies")
+    sec = _partial(alt, "d_mm", "d_wage", "secondary, descriptive", jack=False, fx=fx)
+
+    ok = (res["r"] >= 0.30) and res["sign_ok"] and (res["ret"] >= 0.50)
+    print("\nE23 keep condition: partial r >= +0.30 (same positive sign as E1) AND G6 sign-stable "
+          "AND retention >= 0.50")
+    print(f"E23   observed partial r={res['r']:+.3f}  jack={res['r_jack']:+.3f} "
+          f"ret={res['ret']:+.2f}  -> passes: {ok}")
+    print(f"E23   [context] reverse partial (d_g20 | d_mm) = {rev['r']:+.3f}; "
+          f"wage-control partial = {sec['r']:+.3f} (n={sec['n']})")
 
 
 if __name__ == "__main__":
