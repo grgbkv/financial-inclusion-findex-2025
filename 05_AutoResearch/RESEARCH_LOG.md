@@ -1978,3 +1978,23 @@ of the panel), so there is simply less basin-correctable noise left in it, while
 mid-regime-change — keeps yielding. Standing lesson holds and is now sharpened: shrinkage buys
 **noise correction**, and it stops paying when the noise is gone, target by target, not stage by
 stage. Prediction champion unchanged: account = 5.014, resilience = 6.625, saving = 6.831.
+
+## 2026-07-26 wrap-up
+Ran 3 experiments (E23, U16, P19), one per stream — **one keep, two informative discards**.
+E23 (hypothesis, KEEP): the first partial-correlation test since E5b closes the standing
+one-*factor* alternative to E1. Mobile money keeps **r = +0.509** with the saving surge after
+partialling out digital-payment growth (G6-clean, ret 0.81), and the symmetric partial leaves
+digital payments at **+0.574** — neither rail absorbs the other, each surrendering about a quarter
+of its bivariate association to the shared digitalization factor. With E22 (region) and E23
+(factor), both deflationary readings of E1 are now closed. Recorded caveat: E12's bivariate is
++0.751 on this mobile-money-reporting subsample versus +0.370 on the full panel.
+U16 (micro, DISCARD on the registered claim, informative on its opposite): the rural–urban gap in
+digital-payment use is **+3.7pp** among accountholders — below threshold — against **+11.0pp**
+unconditionally and a **+10.3pp** access gap, so access absorbs 66%. Urbanicity joins gender on the
+equalized side; the four-axis ruler now reads *where you live and what sex you are gate the
+account, how educated and how old you are gate the usage.*
+P19 (prediction, DISCARD): the ≤2021 CV rejects a fourth shrink stage for account **decisively**
+(6.710 → 7.133, 70× P14's margin), so the candidate never reached the holdout and predictor.py
+reverted. The compounding curve is **target-specific**: saving took four stages, account stops at
+three. Prediction champion unchanged: account = 5.014, resilience = 6.625, saving = 6.831.
+EXTENSIONS_DRAFT updated with E22/E23 (Extension 1) and U16 (the access-equalization section).

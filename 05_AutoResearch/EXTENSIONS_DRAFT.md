@@ -42,6 +42,29 @@ without the top-5). Terciles of Δdigital-payment gain +2.8 / +16.7 / +14.4 pp o
 saving. So the surge co-moves with the broadest usage margin (any digital payment) as well as
 with mobile money and wage rails — three account on-ramps, one signature.
 
+**But they are genuinely separate rails, not one factor read three ways (E23).** The obvious
+deflationary reading of E1/E10/E12 is collinearity: the digitalization indicators move together
+(Δmobile money ~ Δdigital payment, r = 0.60, E14), so three correlations may be one. They are not.
+Partialling Δ(any digital payment) out of the mobile-money association leaves weighted **r = 0.51**
+(n = 58, jackknife 0.51 → 0.41), and the symmetric partial — digital payments net of mobile money —
+leaves **r = 0.57** (→ 0.37 without the top-5). Each rail surrenders roughly a quarter of its
+bivariate association to the shared factor and keeps the rest; neither absorbs the other. The
+wage-rail control points the same way (Δmobile money net of Δwage digitalization, r = 0.34,
+n = 56). Together with the regional split below, this closes both deflationary readings of E1: it
+is neither one region (E22) nor one factor (E23). One caveat to record alongside E12: on this
+mobile-money-reporting subsample the Δdigital-payment ~ Δsaving bivariate is 0.75 rather than the
+0.37 estimated on the full panel, so that channel is markedly stronger where mobile money is
+reported. Partialling a *contemporaneous* Δ decomposes co-movement; it controls nothing and
+identifies nothing.
+
+**And E1 is not a Sub-Saharan Africa story (E22).** Splitting the developing panel by region and
+re-running E1's construction inside each gives r = **0.92** within SSA (n = 25, jackknife 0.92 →
+0.88; Δmobile-money terciles gain −0.2 / +10.5 / +21.1 pp of saving) and r = **0.68** across the
+five other developing regions pooled (n = 33, jackknife *grows* to 0.71; terciles +3.0 / +9.1 /
++12.5 pp). The association is materially stronger and steeper inside SSA — mobile money is plainly
+the dominant rail there — but it holds outside it too, on a stiffer test than the pooled sample
+faced. G6 guards against one-*country* stories; this is the guard against one-*region* stories.
+
 **And the deepening is broad, not saving-specific (E11).** Formal *borrowing* and formal
 *saving* grew together across the panel 2021→2024: weighted r = 0.40 between Δ(formal
 borrowing) and Δ(formal saving) (n = 76; jackknife *strengthens* to 0.47 without the top-5, so
@@ -183,6 +206,18 @@ is an access story and the old-age dip is not. Policy-relevant reading, offered 
 only: opening accounts closes the gender gap in digital payments and much of the education gap,
 and does close to nothing for the age gap. All caveats of a single cross-section apply, and age
 correlates with education, employment and account tenure, none of which is controlled here.
+
+**A fourth axis completes the ruler, and it sits on the access side (U16).** Where a person lives
+behaves like sex, not like schooling: the rural–urban gap in digital payments is 11.0 pp
+unconditionally (48.3 rural / 59.3 urban) but only **3.7 pp** among accountholders (83.5 / 87.2) —
+access absorbs **66 %** of it, and the residual is essentially gender's (3.4 pp). The access margin
+itself is the whole story: account ownership runs 66.3 pp rural against 76.6 pp urban, a 10.3 pp
+gap. The four axes therefore sort cleanly into two pairs: **where you live and what sex you are
+gate the account; how educated and how old you are gate the usage.** One tension worth flagging
+rather than resolving — among the unbanked, the self-reported "too far away" barrier is *flat*
+across rural and urban (36.0 / 36.8 pp, U5), so the rural access deficit is not explained by stated
+physical distance, and what does explain it is untested here. Urbanicity correlates with education,
+income and employment, none controlled; single cross-section throughout.
 
 ## Honest nulls worth one sentence each
 
