@@ -1958,3 +1958,23 @@ gap is not explained by stated physical distance, and what does explain it is un
 Declared caveats stand: urbanicity correlates with education, income and employment, none
 controlled; conditioning on account holding conditions on a post-treatment variable. Single 2024
 cross-section, no trend language.
+
+**P19 verdict: DISCARD — the compounding curve is target-specific. Account stops at three stages.**
+The ≤2021 CV (account 2017→2021, persistence base, every basin built at 2017) rejects the fourth
+stage **decisively**: three-stage **6.710** vs four-stage **7.133**, i.e. the candidate basin makes
+the pre-2021 prediction **0.423pp worse**. The adoption condition fails at the first gate, so under
+the P14/P15 protocol no 2024 evaluation was run — the candidate never earned a look at the holdout
+— and `predictor.py` reverted to the P18 champion. All three MAEs stay byte-identical: account
+**5.014**, resilience **6.625**, saving **6.831**.
+The magnitude is what makes this informative rather than a null. P14's rejection was a razor-thin
+0.006pp; this is 70× that, so it is not a coin-flip that landed the wrong way — terciles of the
+formal-saving level actively *mis*-partition account levels once income group, region and
+`g20_any` terciles have each had a pass. Compare the same design on saving, where the identical
+move (a second cross-indicator basin) was CV-preferred and bought −0.249pp out of sample.
+So the registered question is answered: the flatter account curve (−0.039 / −0.091 / stop) is a
+property of the **target**, not of the basins tried. A plausible reading, untested here: account is
+the most saturated and best-predicted target (persistence 5.576 → 5.014, near the ceiling for much
+of the panel), so there is simply less basin-correctable noise left in it, while saving — still
+mid-regime-change — keeps yielding. Standing lesson holds and is now sharpened: shrinkage buys
+**noise correction**, and it stops paying when the noise is gone, target by target, not stage by
+stage. Prediction champion unchanged: account = 5.014, resilience = 6.625, saving = 6.831.
