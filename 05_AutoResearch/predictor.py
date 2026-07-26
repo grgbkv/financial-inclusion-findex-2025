@@ -1,26 +1,25 @@
-"""Prediction stream — P18: does orthogonal-basin shrinkage compound a FOURTH time?
+"""Prediction stream — P19: does the shrinkage-compounding curve DIFFER BY TARGET?
 
-Champion (P17): saving = damped trend (l=0.5) + region -> income-group -> account-tercile shrink
-(7.080), account = persistence + income-group -> region -> g20-tercile shrink (5.014), resilience =
-persistence + region shrink (6.625).
+Champion (P18): saving = damped trend (l=0.5) + region -> income-group -> account-tercile ->
+g20-tercile shrink (6.831), account = persistence + income-group -> region -> g20-tercile shrink
+(5.014), resilience = persistence + region shrink (6.625).
 
-The mechanism has now stacked three stages on saving (P11 -> P12 -> P16: 8.448 -> 7.963 -> 7.359
--> 7.080) and three on account (P7 -> P13 -> P17: 5.144 -> 5.105 -> 5.014), and P17 delivered the
-sharper lesson: a CROSS-INDICATOR basin (terciles of `g20_any`) bought account more than twice
-what a second administrative cut did (-0.091pp vs -0.039pp). Saving's stage 3 is already
-cross-indicator (account terciles). Untested: whether a SECOND data-driven, cross-indicator basin
-still carries independent signal once region, income group and account terciles have each had a
-pass.
+P18 closed the "does stage 4 pay for saving" question (7.080 -> 6.831, -0.249pp, barely decayed
+from stage 3's -0.279pp). Account's stages have bought far less (-0.039pp for the second
+administrative cut, -0.091pp for the first cross-indicator basin) and it now sits at three stages.
+The registered open question from the P18 verdict is whether that flatter curve is a property of
+the TARGET or just of the BASINS tried.
 
-P18 stage-4 basin for saving: terciles of `g20_any` (digital-payment adoption, 117/117 panel
-coverage at 2014/2017/2021) — a different indicator from both the target and stage 3's basin
-column.
+P19 stage-4 basin for account, mirroring P18's design exactly: a SECOND cross-indicator
+data-driven basin, terciles of `fin17a_17a1_d` (formal saving level, 117/117 panel coverage at
+2014/2017/2021), distinct from both the target and stage-3's basin column (`g20_any`), k = 0.1
+unchanged, stacked on the P17 champion.
 
 Adoption rule (entirely <=2021, no 2024 anywhere in features, fitting or selection): CV on the
-saving 2017->2021 transition with a persistence base (the P10/P12/P13/P16/P17 protocol), every
-basin — including both tercile basins — built from the 2017 cross-section; adopt the fourth stage
-only if it beats the incumbent three-stage there. Per-target policy (P2): touches saving only;
-account (5.014) and resilience (6.625) stay byte-identical to the P17 champion.
+account 2017->2021 transition with a persistence base (the P10/P12/P13/P16/P17/P18 protocol),
+every basin — including both tercile basins — built from the 2017 cross-section; adopt the fourth
+stage only if it beats the incumbent three-stage there. Per-target policy (P2): touches account
+only; saving (6.831) and resilience (6.625) stay byte-identical to the P18 champion.
 """
 import pandas as pd
 
@@ -46,10 +45,12 @@ THIRD_BASIN_COL = {
     "account_t_d": "g20_any",
 }
 
-# Per-target stage-4 DATA-DRIVEN basin (P18 candidate): a SECOND cross-indicator basin, distinct
-# from the target and from the stage-3 basin column. saving -> g20_any level.
+# Per-target stage-4 DATA-DRIVEN basin: a SECOND cross-indicator basin, distinct from the target
+# and from the stage-3 basin column. saving -> g20_any level (P18, fixed);
+# account -> fin17a_17a1_d level (P19 candidate).
 FOURTH_BASIN_COL = {
     "fin17a_17a1_d": "g20_any",
+    "account_t_d": "fin17a_17a1_d",
 }
 
 
@@ -151,7 +152,8 @@ def _select_fourth_stage(fx: Findex, target: str):
     mae_three = float((s3.reindex(common) - truth_2021.reindex(common)).abs().mean())
     mae_four = float((s4.reindex(common) - truth_2021.reindex(common)).abs().mean())
     use_four = mae_four < mae_three
-    print(f"P18 pre-2021 CV {target:16s} (2017->2021, stage-4 basin = "
+    tag = "P18" if target == "fin17a_17a1_d" else "P19"
+    print(f"{tag} pre-2021 CV {target:16s} (2017->2021, stage-4 basin = "
           f"{FOURTH_BASIN_COL[target]} terciles): three_stage={mae_three:.3f} "
           f"four_stage={mae_four:.3f}  -> four_stage={use_four}  (n={len(common)})")
     return use_four
@@ -198,9 +200,10 @@ if __name__ == "__main__":
     # Stage 3: saving is the P16 champion (fixed); account is the P17 candidate under test.
     use_three = {"fin17a_17a1_d": _select_third_stage(fx, "fin17a_17a1_d"),
                  "account_t_d": _select_third_stage(fx, "account_t_d")}
-    # Stage 4: the P18 candidate, saving only (per-target policy).
-    use_four = {"fin17a_17a1_d": _select_fourth_stage(fx, "fin17a_17a1_d")}
-    print(f"P18 adopted two-stage: {use_two} | three-stage: {use_three} | "
+    # Stage 4: saving is the P18 champion (fixed); account is the P19 candidate under test.
+    use_four = {"fin17a_17a1_d": _select_fourth_stage(fx, "fin17a_17a1_d"),
+                "account_t_d": _select_fourth_stage(fx, "account_t_d")}
+    print(f"P19 adopted two-stage: {use_two} | three-stage: {use_three} | "
           f"four-stage: {use_four}")
     result = fx.evaluate_predictions(predict(fx, use_two, use_three, use_four))
     for t, r in result.items():
