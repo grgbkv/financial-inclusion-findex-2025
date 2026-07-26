@@ -1915,3 +1915,26 @@ improves on 5.014 on the 2021→2024 evaluation. Known risk, accepted: account i
 best-predicted target (persistence 5.576 → 5.014) and has the least headroom, so a null here is
 plausible and would itself localize the compounding curve as target-specific rather than
 mechanism-general.
+
+**E23 verdict: KEEP — mobile money and digital payments are two separate rails into the saving
+surge, not one digitalization factor.** The partial correlation of Δmobile money with Δformal
+saving, controlling Δg20_any, is **+0.509** (n = 58), well past the +0.30 threshold, and G6 is
+clean with high retention (0.509 → 0.410, ret 0.81). G3 clean (three headlines declared), G4 clean
+(58 economies, 100% of the estimation sample's population), G5 n/a.
+The **symmetric** result is the substantive one: the reverse partial — Δg20_any with Δsaving,
+controlling Δmobile money — is **+0.574** (G6 clean, ret 0.64). Neither channel absorbs the other.
+Conditioning costs mobile money 0.719 → 0.509 and digital payments 0.751 → 0.574, i.e. each rail
+gives up roughly a quarter of its bivariate association to the shared factor and keeps the rest.
+The secondary control corroborates it on a different indicator: partialling E10's wage
+digitalization (`fin32_acc`) leaves Δmobile money at **+0.337** (n = 56), still over threshold.
+One sample-composition note, recorded rather than smoothed over: E12's Δg20_any ~ Δsaving was
+logged at r = +0.370 on n = 76, but on this mobile-money-restricted n = 58 subsample the *same*
+bivariate is **+0.751**. The digital-payment ↔ saving co-movement is therefore far stronger inside
+the mobile-money-reporting economies than across the full developing panel — consistent with E22's
+SSA intensity gradient, and a caveat that now attaches to E12.
+What this settles: E1 is not the SSA-flavoured face of a single digitalization factor. E22 closed
+the one-region alternative, E23 closes the one-factor alternative, and E1 survives both. Declared
+caveats stand: partialling a *contemporaneous* Δ decomposes co-movement, it does not control
+confounding (Δg20_any is an outcome of the same period), and account growth and common income
+shocks remain uncontrolled. Descriptive association, never causal. First partial-correlation test
+in the ledger since E5b; the same design is now available for E10 and E14.
