@@ -1836,3 +1836,82 @@ gradient, not an access artifact. P18 (prediction, KEEP): a fourth shrink stage 
 second cross-indicator basin (`g20_any` terciles) improves MAE **7.080 → 6.831**, with the gain
 barely decaying from stage 3 (−0.249 vs −0.279pp). New prediction champion: account = 5.014,
 resilience = 6.625, saving = **6.831**. Everything committed on autoresearch/daily.
+
+## 2026-07-26 daily autoresearch cycle
+
+## E23 — pre-registered (hypothesis / country level)
+**Hypothesis:** the E1 mobile-money ↔ saving-surge co-movement is **distinct from the general
+digitalization bundle**, i.e. it survives conditioning on digital-payment adoption growth. Every
+country-level association in the ledger so far is bivariate, and the digitalization indicators are
+demonstrably collinear: Δmobile money ~ Δsaving r = +0.719 (E1), Δg20_any ~ Δsaving r = +0.370
+(E12), Δwage-digitalization ~ Δsaving r = +0.791 (E10), and Δmobile money ~ Δg20_any r = +0.600
+(E14). So it is genuinely unknown whether mobile money is a *separate rail* into the saving surge
+or just the SSA-flavoured face of one common digitalization factor. E22 closed the one-region
+alternative to E1; this closes the one-*factor* alternative.
+**Test:** weighted **partial** correlation of Δ(`mobileaccount_t_d`) with Δ(`fin17a_17a1_d`),
+2021→2024, controlling Δ(`g20_any`), on the developing balanced panel. Construction follows E5b:
+pop-weighted least-squares residualization of both variables on the control, then `weighted_corr`
+of the residuals; `gate_jackknife` on the residual pair. `g20_any` is the primary control because
+it has full dev-panel coverage (77/76), so the estimation sample stays E1's (mobile money binds at
+n ≈ 58). Reported alongside, descriptively: the two bivariate benchmarks recomputed on the *same*
+common sample; the **symmetric reverse** partial (Δg20_any ~ Δsaving | Δmobile money), which says
+which rail carries the association; and a secondary partial using Δ(`fin32_acc`) — E10's wage
+digitalization, the strongest bivariate competitor — as an alternative control on its smaller
+sample.
+Gates: G3 (all three concepts declared), G4 on the estimation sample, G6 jackknife on the residual
+pair. G5 n/a (no official partial-correlation series exists).
+**Keep if:** partial r ≥ **+0.30** with the same positive sign as E1, **and** G6 sign-stable with
+magnitude retention ≥ 0.5 × r_partial. If the partial collapses below 0.30, the informative
+outcome — registered in advance — is that E1 and E12 are two readings of one digitalization factor
+rather than two independent rails, and E1 is re-logged with that caveat.
+Declared caveats: partialling a *contemporaneous* Δ is not a control for confounding — Δg20_any is
+itself an outcome of the same period, so this is a decomposition of co-movement, not an
+identification strategy. Descriptive association only, never causal.
+
+## U16 — pre-registered (micro stream)
+**Hypothesis:** the **rural–urban** gradient in digital-payment use behaves like education
+(persists conditional on access) rather than like gender (collapses). U15 completed a
+gender/education/age triad on one outcome and one conditioning step: gender collapses (U6, 3.4pp
+residual), education shrinks ~64% but stays large (U10, 46.7 → 16.8pp), age barely moves at all
+(U15, 11.6 → 10.3pp, 10% absorbed). Urbanicity is the one major demographic axis not yet placed on
+that ruler, and U5 supplies a real prior tension: the "too far away" barrier among the unbanked was
+*flat* across rural/urban (36.0 vs 36.8pp), which would predict a small access gap — but says
+nothing about the usage margin.
+**Test:** weighted rate of `anydigpayment == 1` among `account == 1`, split by `urbanicity`
+(1 = rural / 2 = urban), pooled across all 2024 economies (raw `wgt`, economy-equal pooling per
+`micro.py`). Primary statistic: **urban − rural, conditional on account**. Secondary, descriptive:
+the same split unconditional on account (for the U10/U15-style absorption decomposition), and the
+access margin itself — `account == 1` rate by urbanicity — so the decomposition's two sides are
+both reported.
+Gates: M2 (unweighted cell n ≥ 100 per cell). M3 declared n/a (within-accountholder split; no
+country-file equivalent).
+**Keep if:** (urban − rural | accountholder) ≥ **5pp**. A residual below 5pp is the informative
+opposite outcome and is registered as such: urbanicity would then join gender as an axis that
+access equalizes, against the education/age pattern.
+Declared caveats: urbanicity correlates with education, income and employment, none controlled —
+descriptive association, not a place effect; conditioning on account holding conditions on a
+post-treatment variable (as in U6/U8/U10/U14/U15); `urbanicity` is missing for some economies, so
+the pooled sample is the subset where it is coded. Single 2024 cross-section — no trend language.
+
+## P19 — pre-registered (prediction stream)
+**Idea:** does the shrinkage-compounding curve **differ by target**? P18 closed the "does stage 4
+pay for saving" question (yes: 7.080 → 6.831, −0.249pp, barely decayed from stage 3's −0.279pp).
+Account's stages have bought far less (−0.039 for the second administrative cut, −0.091 for the
+first cross-indicator basin), and it now sits at three stages (income-group → region → `g20_any`
+terciles, 5.014). The registered open question from the P18 verdict is whether that flatter curve
+is a property of the *target* or just of the *basins tried*.
+**Test:** add stage 4 to **account**, exactly mirroring P18's design — a **second cross-indicator
+data-driven basin**, terciles of `fin17a_17a1_d` (formal saving level, 117/117 panel coverage at
+2014/2017/2021), distinct from both the target and stage-3's basin column, k = 0.1 unchanged,
+stacked on the P17 champion.
+Selection, entirely ≤2021 (no 2024 in features, fitting or selection): CV on the account 2017→2021
+transition with a persistence base (the P10/P12/P13/P16/P17/P18 protocol), every basin — including
+both tercile basins — built from the **2017** cross-section, comparing the incumbent three-stage
+against the four-stage candidate.
+Per-target policy (P2's rule): touches account only — saving (6.831) and resilience (6.625) must
+stay byte-identical to the P18 champion.
+**Keep if:** the ≤2021 CV prefers four-stage over the incumbent three-stage **AND** account MAE
+improves on 5.014 on the 2021→2024 evaluation. Known risk, accepted: account is already the
+best-predicted target (persistence 5.576 → 5.014) and has the least headroom, so a null here is
+plausible and would itself localize the compounding curve as target-specific rather than
+mechanism-general.
