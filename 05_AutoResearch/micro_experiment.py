@@ -1,70 +1,73 @@
-"""U15 (pre-registered): conditional on holding an account, does the AGE gradient in
-digital-payment use persist (like education) or collapse (like gender)?
+"""U16 (pre-registered): does the RURAL-URBAN gradient in digital-payment use persist conditional
+on access (like education/age), or collapse (like gender)?
 
-The strongest micro thread is an asymmetry in what access equalizes. Conditional on an account,
-gender gaps collapse (U6 3.4pp, U8 4.96pp) while education gaps persist (U10 +16.8pp, ~64% of the
-unconditional gap absorbed; U14 +35.3pp, only 31% absorbed). U2 established the UNCONDITIONAL age
-profile of `anydigpayment` (45.0 / 59.7 / 56.8 / 53.5 / 48.1pp across 15-25 / 26-35 / 36-50 /
-51-65 / 65+, inverted-U peaking at 26-35). Whether that gradient is an access artifact — older
-adults simply being less banked — or survives conditioning is unknown, and answering it completes
-the gender / education / age triad on one common outcome.
+U15 completed a gender / education / age triad on one outcome and one conditioning step: gender
+collapses (U6, 3.4pp residual), education shrinks ~64% but stays large (U10, 46.7 -> 16.8pp), age
+barely moves (U15, 11.6 -> 10.3pp, 10% absorbed). Urbanicity is the one major demographic axis not
+yet on that ruler, and U5 supplies a real prior tension: the "too far away" barrier among the
+unbanked was FLAT across rural/urban (36.0 vs 36.8pp), which would predict a small access gap --
+but says nothing about the usage margin.
 
-Primary  : weighted rate of anydigpayment == 1 among account == 1, by the five U2 age bands;
-           statistic = (26-35) - (65+). Keep if >= +5pp.
-Secondary: the U10-style absorption decomposition against U2's unconditional 11.6pp gap for the
-           same pair (recomputed here unconditionally so both sides use identical construction).
+Primary  : weighted rate of anydigpayment == 1 among account == 1, by urbanicity (1=rural/2=urban);
+           statistic = urban - rural. Keep if >= +5pp.
+Secondary: same split unconditional (absorption decomposition, U10/U15 style), and the access
+           margin itself (account == 1 rate by urbanicity), so both sides are reported.
 
-Declared caveats: age correlates with education, employment and account tenure, none controlled —
-descriptive association, not an age effect; conditioning on account holding conditions on a
-post-treatment variable (as in U6/U8/U10/U14); economy-equal pooling per micro.py
+Declared caveats: urbanicity correlates with education, income and employment, none controlled --
+descriptive association, not a place effect; conditioning on account holding conditions on a
+post-treatment variable (as in U6/U8/U10/U14/U15); urbanicity is missing for some economies, so the
+pooled sample is the subset where it is coded; economy-equal pooling per micro.py
 (HARNESS_V2_NOTES caveat #3) affects the exact pooled pp, not the direction. Single 2024
-cross-section — no trend language.
+cross-section -- no trend language.
 """
-import pandas as pd
-
 from micro import Micro
 
-BANDS = [("15-25", 15, 25), ("26-35", 26, 35), ("36-50", 36, 50),
-         ("51-65", 51, 65), ("65+", 66, 200)]
-PEAK, LOW = "26-35", "65+"          # U2's peak band vs its low band
+GROUPS = [("rural", 1), ("urban", 2)]
 
 
-def _profile(mi: Micro, base_mask, title):
-    """Weighted anydigpayment rate by age band over `base_mask`."""
+def _split(mi: Micro, outcome, base_mask, title):
+    """Weighted rate of `outcome` by urbanicity over `base_mask`."""
     print(title)
     rates = {}
-    for name, lo, hi in BANDS:
-        mask = base_mask & (mi.df["age"] >= lo) & (mi.df["age"] <= hi)
-        v, n = mi.rate("anydigpayment", where=mask)
+    for name, code in GROUPS:
+        mask = base_mask & (mi.df["urbanicity"] == code)
+        v, n = mi.rate(outcome, where=mask)
         rates[name] = v
-        print(f"U15   age {name:6s}: rate = {v:5.1f}pp   n={n:6d}   {mi.gate_cell_size(n)}")
-    diff = rates[PEAK] - rates[LOW]
-    print(f"U15   ({PEAK}) - ({LOW}) = {diff:+.1f}pp")
+        print(f"U16   {name:6s}: rate = {v:5.1f}pp   n={n:6d}   {mi.gate_cell_size(n)}")
+    diff = rates["urban"] - rates["rural"]
+    print(f"U16   urban - rural = {diff:+.1f}pp")
     return diff, rates
 
 
 def run(mi: Micro):
     df = mi.df
-    age_ok = pd.to_numeric(df["age"], errors="coerce").notna()
-    df["age"] = pd.to_numeric(df["age"], errors="coerce")
+    urb_ok = df["urbanicity"].isin([1, 2])
+    print(f"U16 pooled sample with urbanicity coded: n={int(urb_ok.sum())} of {len(df)} "
+          f"respondents ({int(df.loc[urb_ok, 'economy'].nunique())} economies)\n")
 
-    diff_cond, rates_cond = _profile(
-        mi, age_ok & (df["account"] == 1),
-        "U15 PRIMARY -- digital-payment use by age band, among ACCOUNTHOLDERS:")
+    diff_cond, _ = _split(
+        mi, "anydigpayment", urb_ok & (df["account"] == 1),
+        "U16 PRIMARY -- digital-payment use by urbanicity, among ACCOUNTHOLDERS:")
 
     print()
-    diff_uncond, rates_uncond = _profile(
-        mi, age_ok,
-        "U15 secondary (descriptive) -- same split, UNCONDITIONAL on account holding:")
+    diff_uncond, _ = _split(
+        mi, "anydigpayment", urb_ok,
+        "U16 secondary (descriptive) -- same split, UNCONDITIONAL on account holding:")
+
+    print()
+    diff_access, _ = _split(
+        mi, "account", urb_ok,
+        "U16 secondary (descriptive) -- the ACCESS margin itself, account rate by urbanicity:")
 
     absorbed = (1 - diff_cond / diff_uncond) * 100 if diff_uncond else float("nan")
-    print(f"\nU15 access absorbs {absorbed:.0f}% of the unconditional age gradient "
-          f"({diff_uncond:+.1f}pp -> {diff_cond:+.1f}pp)")
-    print("U15 comparisons: gender collapses (U6 3.4pp), education persists "
-          "(U10 +16.8pp | account, ~64% absorbed; U14 +35.3pp, 31% absorbed)")
-    print(f"U15 keep condition: ({PEAK} - {LOW} | accountholder) >= +5pp  -> "
+    print(f"\nU16 access absorbs {absorbed:.0f}% of the unconditional rural-urban gradient "
+          f"({diff_uncond:+.1f}pp -> {diff_cond:+.1f}pp); access margin itself "
+          f"{diff_access:+.1f}pp")
+    print("U16 ruler: gender collapses (U6 3.4pp | account), education persists (U10 +16.8pp, "
+          "~64% absorbed), age barely moves (U15 +10.3pp, 10% absorbed)")
+    print(f"U16 keep condition: (urban - rural | accountholder) >= +5pp  -> "
           f"observed {diff_cond:+.1f}pp")
-    print("U15 M3 declared n/a (within-accountholder split, no country-file equivalent)")
+    print("U16 M3 declared n/a (within-accountholder split, no country-file equivalent)")
 
 
 if __name__ == "__main__":
