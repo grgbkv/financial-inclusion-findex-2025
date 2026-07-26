@@ -1938,3 +1938,23 @@ caveats stand: partialling a *contemporaneous* Δ decomposes co-movement, it doe
 confounding (Δg20_any is an outcome of the same period), and account growth and common income
 shocks remain uncontrolled. Descriptive association, never causal. First partial-correlation test
 in the ledger since E5b; the same design is now available for E10 and E14.
+
+**U16 verdict: DISCARD on the pre-registered claim — and the registered opposite outcome is the
+finding: urbanicity is an ACCESS gap, not a usage gap.** Among accountholders, digital-payment use
+is **87.2pp urban vs 83.5pp rural**, a residual of **+3.7pp** — below the 5pp threshold, so the
+"persists like education" hypothesis is rejected. M2 passes with very large cells (28,836 urban /
+37,701 rural accountholders); M3 n/a. The pooled sample is 141,564 of 144,090 respondents across
+140 economies, so urbanicity coding costs almost nothing.
+The decomposition is where the content is. Unconditionally the gap is **+11.0pp** (59.3 vs 48.3),
+and the **access margin itself is +10.3pp** (account ownership 76.6pp urban vs 66.3pp rural), so
+**access absorbs 66%** of the digital-payment gradient. Placed on the U6/U10/U15 ruler, urbanicity
+sits with **gender**: residual 3.7pp against gender's 3.4pp, versus education's 16.8pp (~64%
+absorbed) and age's 10.3pp (10% absorbed). The four-axis ordering is now clean — **where you live
+and what sex you are gate the account; how educated and how old you are gate the usage.**
+One cross-reference worth recording: U5 found the self-reported "too far away" barrier among the
+unbanked *flat* across rural and urban (36.0 vs 36.8pp). The rural access deficit is real and
+10.3pp wide, but rural unbanked adults do not name distance more often than urban ones — so the
+gap is not explained by stated physical distance, and what does explain it is untested here.
+Declared caveats stand: urbanicity correlates with education, income and employment, none
+controlled; conditioning on account holding conditions on a post-treatment variable. Single 2024
+cross-section, no trend language.
