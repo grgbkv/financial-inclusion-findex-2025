@@ -2178,3 +2178,23 @@ the noise is gone (target-specific, P19) **and** it only pays when the basin par
 along a dimension the target actually varies on (basin-specific, P20). Both dynamics-tuning (P9/P10)
 and cross-indicator ridge (P15) remain non-transfers across the 2021 regime change.
 Prediction champion unchanged: account = **5.014**, resilience = **6.625**, saving = **6.831**.
+
+## 2026-07-28 wrap-up
+Ran 3 experiments (E24, U17, P20), one per stream — **two keeps, one informative discard**.
+E24 (hypothesis, KEEP): wage digitalization is a **third separate rail** into the saving surge —
+partial r = **+0.583** net of digital payments (n = 71) with the ledger's cleanest jackknife
+(0.583 → 0.582, retention 1.00). The new step is the first **two-control** partial: holding each
+rail against the other two on n = 56 gives wage **+0.433** > digital payments **+0.379** > mobile
+money **+0.298**, so the three-rail structure survives joint conditioning while the *bivariate*
+ordering inverts — mobile money has the largest raw and smallest independent association.
+U17 (micro, KEEP): income completes the five-axis absorption ruler and sits with education —
+**+11.5 pp** conditional on account (monotone across quintiles), 58 % absorbed, and uniquely large
+on both margins (access gap +19.4 pp). Method lesson recorded: the absorption *share* does not sort
+the axes (income 58 % vs urbanicity 66 %, residuals 11.5 vs 3.7 pp) — the residual in pp does.
+P20 (prediction, DISCARD): the ≤2021 CV rejects a fifth shrink stage for saving on a
+**non-digitalization** basin (formal-borrowing terciles, 6.370 → 6.644), so it never reached the
+holdout and predictor.py reverted. Sharper than a null: every basin that has ever paid is a
+digitalization cut, so **orthogonality alone is not what buys a stage — the basin has to track the
+phenomenon.** Prediction champion unchanged: account = 5.014, resilience = 6.625, saving = 6.831.
+EXTENSIONS_DRAFT updated with E24 (Extension 1, three-rail decomposition) and U17 (the
+access-equalization section, now five axes).

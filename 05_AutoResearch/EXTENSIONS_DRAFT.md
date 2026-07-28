@@ -57,6 +57,19 @@ mobile-money-reporting subsample the Δdigital-payment ~ Δsaving bivariate is 0
 reported. Partialling a *contemporaneous* Δ decomposes co-movement; it controls nothing and
 identifies nothing.
 
+**The wage rail is the strongest and steadiest of the three (E24).** Applying the same partial to
+E10's wage-digitalization channel: Δ(wages into accounts) keeps weighted **r = 0.58** with Δ(formal
+saving) after Δ(any digital payment) is partialled out (n = 71), and the jackknife is the cleanest
+in the ledger — 0.583 → 0.582, i.e. dropping the five largest economies moves it by a thousandth.
+The symmetric partial leaves digital payments at 0.43. Pushing the design one step further than
+E23, all three rails can be held against each other **at once**: on the common sample (n = 56) the
+partial of each channel net of the *other two* is **wage 0.43 > digital payments 0.38 > mobile
+money 0.30**, the last just at the threshold. So the three-rail structure survives joint
+conditioning, but the ordering inverts the bivariate one: mobile money has the largest raw
+association with the surge (0.72) and the smallest independent one. Stated as description, with the
+standing caveat that partialling contemporaneous Δs decomposes co-movement rather than identifying
+anything, and that `fin32_acc` is an employer-side attribute of how wages are paid.
+
 **And E1 is not a Sub-Saharan Africa story (E22).** Splitting the developing panel by region and
 re-running E1's construction inside each gives r = **0.92** within SSA (n = 25, jackknife 0.92 →
 0.88; Δmobile-money terciles gain −0.2 / +10.5 / +21.1 pp of saving) and r = **0.68** across the
@@ -218,6 +231,21 @@ rather than resolving — among the unbanked, the self-reported "too far away" b
 across rural and urban (36.0 / 36.8 pp, U5), so the rural access deficit is not explained by stated
 physical distance, and what does explain it is untested here. Urbanicity correlates with education,
 income and employment, none controlled; single cross-section throughout.
+
+**The fifth axis is the one that binds on both margins (U17).** Income quintile — the last major
+demographic not yet on the ruler — behaves like education, not like sex or place. Digital-payment
+use among accountholders runs 78.3 / 82.9 / 84.8 / 87.0 / 89.8 pp from the poorest to the richest
+within-economy quintile, a **+11.5 pp** residual (strictly monotone) against a +27.3 pp
+unconditional gap, so access absorbs 58 %. What distinguishes income is that it is large on *both*
+sides of the decomposition: the access margin itself is +19.4 pp (61.1 → 80.6 pp account ownership).
+Gender and place are access-only, age is usage-only, income is both.
+One methodological point earned here and worth carrying into v2: **the absorption percentage does
+not sort these axes; the residual in pp does.** Income absorbs 58 % and urbanicity 66 % — nearly the
+same share — yet they leave 11.5 pp and 3.7 pp respectively, because income's unconditional gradient
+is 2.5× wider. Ranked by what access actually fails to close: education 16.8 > income 11.5 > age
+10.3 ≫ urbanicity 3.7 ≈ gender 3.4 pp. Note also that `inc_q` is a *within-economy relative* rank,
+not an absolute income level, so under economy-equal pooling it does not carry quite the same
+meaning across economies as education or age do — a caveat specific to this axis.
 
 ## Honest nulls worth one sentence each
 
