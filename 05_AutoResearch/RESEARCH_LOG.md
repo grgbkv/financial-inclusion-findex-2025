@@ -2119,3 +2119,35 @@ the other digitalization indicators — the caveat now attaches to E12 twice ove
 Declared caveats stand: partialling a contemporaneous Δ decomposes co-movement, it does not control
 confounding; `fin32_acc` is an employer-side attribute (U14's caveat at country level); account
 growth and common income shocks uncontrolled. Descriptive association, never causal.
+
+**U17 verdict: KEEP — income persists conditional on access, and the five-axis ruler is now
+complete.** Among accountholders, digital-payment use runs **78.3 / 82.9 / 84.8 / 87.0 / 89.8pp**
+from the poorest to the richest quintile — **q5 − q1 = +11.5pp**, strictly monotone, well past the
+5pp threshold. M2 passes with very large cells (9,026–19,712 per conditional cell); M3 n/a. The
+pooled sample is 143,070 of 144,090 respondents across 139 economies.
+The decomposition: unconditionally the gradient is **+27.3pp** (39.3 → 66.6), the **access margin
+itself is +19.4pp** (61.1 → 80.6), so **access absorbs 58%**. Both secondary splits are also
+strictly monotone across all five quintiles.
+Placed on the ruler, income joins the *persists* side with education and age:
+| axis | unconditional | access margin | conditional residual | absorbed |
+|---|---|---|---|---|
+| education (U10) | 46.7pp | — | **16.8pp** | ~64% |
+| **income (U17)** | **27.3pp** | 19.4pp | **11.5pp** | **58%** |
+| age (U15) | 11.6pp | — | **10.3pp** | 10% |
+| urbanicity (U16) | 11.0pp | 10.3pp | 3.7pp | 66% |
+| gender (U6) | — | — | 3.4pp | — |
+The methodological point worth recording: **the absorption *share* does not sort the axes.** Income
+and urbanicity absorb almost the same fraction (58% vs 66%) yet leave 11.5pp versus 3.7pp, purely
+because income's unconditional gradient is 2.5× wider. Ranking axes by "how much does access
+equalize this" needs the residual in pp, not the percentage — U16's 66% and U17's 58% would have
+put them side by side, and they belong on opposite sides of the ruler. Earlier entries reported the
+percentage first; the residual is the statistic that matters.
+Substantively the ruler now reads: **where you live and what sex you are gate the account; how much
+you earn, how educated you are and how old you are also gate what you do with it.** Income is the
+only axis that is large on *both* margins (19.4pp access, 11.5pp usage) — gender and urbanicity are
+access-only, age is usage-only, and education is large on both but has no access figure logged here.
+Declared caveats stand, and one deserves emphasis: `inc_q` is a **within-economy relative** quintile,
+so this is a relative-rank axis, not an absolute-income axis — unlike education or age it does not
+carry the same meaning across economies under economy-equal pooling (caveat #3). Income correlates
+with education, employment and urbanicity, none controlled; conditioning on account holding
+conditions on a post-treatment variable. Single 2024 cross-section, no trend language.
