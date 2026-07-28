@@ -1998,3 +1998,95 @@ P19 (prediction, DISCARD): the ≤2021 CV rejects a fourth shrink stage for acco
 reverted. The compounding curve is **target-specific**: saving took four stages, account stops at
 three. Prediction champion unchanged: account = 5.014, resilience = 6.625, saving = 6.831.
 EXTENSIONS_DRAFT updated with E22/E23 (Extension 1) and U16 (the access-equalization section).
+
+## 2026-07-28 daily autoresearch cycle
+
+## E24 — pre-registered (hypothesis / country level)
+**Hypothesis:** **wage digitalization is a third separate rail** into the 2021-24 formal-saving
+surge — Δ(`fin32_acc`) keeps a ≥ +0.30 association with Δ(`fin17a_17a1_d`) after the digital-payment
+rail is partialled out, and after *both* digitalization rails (digital payments **and** mobile
+money) are partialled out together. E23 closed the one-factor alternative for mobile money and
+explicitly left the same design "available for E10 and E14". E10's bivariate (r = +0.791, n = 71) is
+the *strongest* single co-movement in the ledger, but it is also the one most plausibly a proxy for
+the common bundle: wages paid into accounts is mechanically an account-usage indicator. It is
+genuinely unknown whether it survives conditioning, and — the new step beyond E23 — whether any rail
+survives conditioning on **two** controls at once.
+**Test:** weighted **partial** correlation of Δ(`fin32_acc`) with Δ(`fin17a_17a1_d`), 2021→2024, on
+the developing balanced panel, following the E5b/E23 construction (pop-weighted least-squares
+residualization of both variables on the control set, then `weighted_corr` of the residuals;
+`gate_jackknife` on the residual pair).
+- **Primary:** single control Δ(`g20_any`) — full dev-panel coverage, so the estimation sample is
+  E10's (n ≈ 71).
+- **Secondary A (the new design step):** **two** controls simultaneously, Δ(`g20_any`) **and**
+  Δ(`mobileaccount_t_d`), via multivariate pop-weighted LS residualization (n ≈ 56, mobile money
+  binds). Reported descriptively alongside the primary.
+- **Secondary B (descriptive):** the symmetric reverse partial Δ(`g20_any`) ~ Δsaving | Δ(`fin32_acc`),
+  which says which rail carries the association; plus all bivariate benchmarks recomputed on each
+  common sample (E23 established that sample composition moves these a lot).
+Gates: G3 (three headline concepts declared; `fin32_acc` has no variant choice — E10 precedent),
+G4 on each estimation sample, G6 jackknife on the primary residual pair. G5 n/a (no official
+partial-correlation series).
+**Keep if:** primary partial r ≥ **+0.30** with E10's positive sign **AND** G6 sign-stable with
+magnitude retention ≥ 0.5 × r_partial. Registered alternative outcome: if the primary collapses
+below 0.30, wage digitalization is *not* an independent rail but the account-usage face of the
+digital-payment channel, and E10 is re-logged with that caveat. Secondary A is descriptive context
+either way — it cannot rescue a failed primary, and a two-control collapse with a surviving primary
+would itself be registered as "the rails are separable pairwise but not jointly".
+Declared caveats (identical to E23): partialling a *contemporaneous* Δ decomposes co-movement, it
+does not control confounding — every control is an outcome of the same 2021-24 period. Account
+growth and common income shocks uncontrolled. `fin32_acc` is an employer-side attribute of wage
+payment, not an individual choice (U14's caveat, at country level). Descriptive, never causal.
+
+## U17 — pre-registered (micro stream)
+**Hypothesis:** **income** behaves like education on the access-absorption ruler — the digital-payment
+gradient by income quintile **persists conditional on holding an account** (≥ 5pp residual). Four
+axes are now on that ruler for one outcome (`anydigpayment`) and one conditioning step: gender
+collapses (U6, 3.4pp), urbanicity collapses (U16, 3.7pp, 66% absorbed), education persists large
+(U10, 16.8pp, ~64% absorbed), age barely moves (U15, 10.3pp, 10% absorbed). **Income quintile is
+the one major demographic axis never placed on it** — which is conspicuous, because income is the
+axis with the strongest prior evidence on the *barrier* side (M1: the money barrier among the
+unbanked is income-graded by +10.3pp) and a genuinely ambiguous prior on the usage side (U11 found
+mobile-only holders are *not* poorer than bank-only; U12 found the cost barrier flat across income).
+**Test:** weighted rate of `anydigpayment == 1` among `account == 1`, split by `inc_q` (1 = poorest
+… 5 = richest), pooled across all 2024 economies (raw `wgt`, economy-equal pooling per `micro.py`).
+Primary statistic: **q5 − q1, conditional on account**. Secondary, descriptive: the same split
+unconditional on account, and the access margin itself (`account == 1` rate by `inc_q`), giving the
+U10/U15/U16-style absorption decomposition; the full five-band shape is reported for monotonicity.
+Gates: M2 (unweighted cell n ≥ 100 per cell). M3 declared n/a (within-accountholder split; no
+country-file equivalent).
+**Keep if:** (q5 − q1 | accountholder) ≥ **5pp**. A residual below 5pp is the registered opposite
+outcome: income would then join gender and urbanicity on the access-equalized side, and the ruler
+would read "money and place and sex gate the *account*; education and age gate the *usage*".
+Declared caveats: `inc_q` is a **within-economy relative** quintile, so economy-equal pooling mixes
+economies (HARNESS_V2_NOTES caveat #3) — it is a relative-rank axis, not an absolute-income axis,
+which distinguishes it from education/age; income correlates with education, employment and
+urbanicity, none controlled; conditioning on account holding conditions on a post-treatment
+variable (U6/U8/U10/U14/U15/U16). Single 2024 cross-section — no trend language.
+
+## P20 — pre-registered (prediction stream)
+**Idea:** P19 established that the shrinkage-compounding curve is **target-specific** (account
+stops at three stages, CV rejecting stage 4 by 0.423pp). The open question it leaves for the other
+side is whether **saving**'s curve keeps paying past four, and whether the basin has to be a
+*digitalization* cut. Saving's stages 3 and 4 are both digitalization indicators (`account_t_d`
+terciles, `g20_any` terciles) and both paid (−0.279, −0.249pp). A fifth stage on a **non-digital**
+cross-indicator basin tests two things at once: whether compounding continues, and whether the
+independent signal comes from *any* orthogonal partition or specifically from digitalization cuts.
+**Test:** add stage 5 to **saving**, basin = terciles of `fin22a_22a1_22g_d` (formal-borrowing
+level — 117/117 panel coverage at 2017 and 2021, verified before registration; a feature-coverage
+check only, no outcome peeked), distinct from the target and from both existing tercile basins,
+k = 0.1 unchanged, stacked on the P18 champion (damped trend + region → income-group →
+account-tercile → g20-tercile).
+Selection, entirely ≤2021 (no 2024 in features, fitting or selection): CV on the saving 2017→2021
+transition with a persistence base (the P10/P12/P13/P16/P17/P18/P19 protocol), every basin —
+including all three tercile basins — built from the **2017** cross-section, comparing the incumbent
+four-stage against the five-stage candidate. Per the P14/P15/P19 protocol, if the CV does not
+prefer the candidate, no 2024 evaluation is run and `predictor.py` reverts to the P18 champion.
+Per-target policy (P2's rule): touches saving only — account (5.014) and resilience (6.625) must
+stay byte-identical.
+**Keep if:** the ≤2021 CV prefers five-stage over four-stage **AND** saving MAE improves on 6.831
+on the 2021→2024 evaluation. Registered alternative outcome: a CV rejection localizes saving's
+curve at four stages and — read against P18's two *digitalization* basins both paying — would
+suggest the independent signal is specific to digitalization partitions rather than to orthogonality
+per se. Known risk, accepted: E11 logged Δborrowing ~ Δsaving at r = +0.403, so the borrowing level
+is not orthogonal to the saving *change*; whether that helps (relevant signal) or hurts
+(mis-partition, as in P19) is exactly the unknown.
