@@ -2090,3 +2090,32 @@ suggest the independent signal is specific to digitalization partitions rather t
 per se. Known risk, accepted: E11 logged Δborrowing ~ Δsaving at r = +0.403, so the borrowing level
 is not orthogonal to the saving *change*; whether that helps (relevant signal) or hurts
 (mis-partition, as in P19) is exactly the unknown.
+
+**E24 verdict: KEEP — wage digitalization is a third separate rail, and it is the strongest and
+most stable one in the ledger.** The primary partial correlation of Δ(`fin32_acc`) with Δformal
+saving, controlling Δ(`g20_any`), is **+0.583** (n = 71), well past the +0.30 threshold, and G6 is
+the cleanest yet recorded: **0.583 → 0.582**, retention **1.00** — dropping the five largest
+economies moves it by one thousandth. G3 clean (three headlines declared, `fin32_acc` no variant
+per E10), G4 clean (71 economies, 100% of the estimation sample's population), G5 n/a.
+The registered alternative — that wages-into-accounts is just the account-usage face of the
+digital-payment channel — is rejected, and not narrowly: conditioning costs wage digitalization
+0.791 → 0.583, while the symmetric reverse leaves digital payments at **+0.431** (ret 0.89). As in
+E23, each rail surrenders roughly a quarter to the shared factor and keeps the rest.
+**Secondary A is the new result and it is more interesting than the primary.** No rail in the
+ledger had previously been asked to survive **two simultaneous controls**. On the common n = 56
+sample the three-way decomposition reads: wage digitalization **+0.433** (G6 ret 1.30, jackknife
+grows), digital payments **+0.379**, mobile money **+0.298**. So the three rails do *not* collapse
+into one factor even jointly — but the ordering inverts the ledger's bivariate ordering, and mobile
+money, the rail E1/E22/E23 were built to defend, lands **just under the 0.30 bar** when both other
+rails are held at once. Recorded precisely: E23's pairwise finding stands (mobile money vs digital
+payments, +0.509), and what is new is that mobile money's independent contribution is the *smallest*
+of the three once wage digitalization is also in the control set. That is context, not a demotion of
+E1 — it is a descriptive partial on n = 56 with a contemporaneous control, and it was registered as
+descriptive before the run.
+Sample-composition note, recorded as in E23: E12's Δg20 ~ Δsaving is logged at +0.370 on n = 76 but
+is **+0.734** on this n = 71 wage-reporting subsample and +0.747 on the n = 56 one. The
+digital-payment ↔ saving co-movement is systematically stronger inside the economies that report
+the other digitalization indicators — the caveat now attaches to E12 twice over.
+Declared caveats stand: partialling a contemporaneous Δ decomposes co-movement, it does not control
+confounding; `fin32_acc` is an employer-side attribute (U14's caveat at country level); account
+growth and common income shocks uncontrolled. Descriptive association, never causal.
