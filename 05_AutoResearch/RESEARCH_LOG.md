@@ -2151,3 +2151,30 @@ so this is a relative-rank axis, not an absolute-income axis — unlike educatio
 carry the same meaning across economies under economy-equal pooling (caveat #3). Income correlates
 with education, employment and urbanicity, none controlled; conditioning on account holding
 conditions on a post-treatment variable. Single 2024 cross-section, no trend language.
+
+**P20 verdict: DISCARD — saving stops at four stages, and the basin *material* matters more than
+its orthogonality.** The ≤2021 CV (saving 2017→2021, persistence base, all basins built at 2017)
+rejects the fifth stage: four-stage **6.370** vs five-stage **6.644**, i.e. the formal-borrowing
+tercile basin makes the pre-2021 prediction **0.274pp worse**. Adoption fails at the first gate, so
+under the P14/P15/P19 protocol no 2024 evaluation was run and `predictor.py` reverted to the P18
+champion. All three MAEs byte-identical: account **5.014**, resilience **6.625**, saving **6.831**.
+The registered question had two halves and this answers both. (1) Saving's compounding curve does
+not extend past four — the same shape P19 found for account at three, two stages later. (2) The
+sharper half: **the basin has to track the phenomenon, not merely be orthogonal to the existing
+ones.** Every data-driven basin that has *paid* — account terciles for saving (−0.279pp), `g20_any`
+terciles for saving (−0.249pp), `g20_any` terciles for account (−0.091pp) — is a **digitalization**
+cut. The first **non**-digitalization basin tried is not merely neutral, it is actively harmful, and
+by a margin (0.274pp) of the same order as P19's rejection (0.423pp) and 46× P14's coin-flip 0.006pp.
+Orthogonality was the working explanation since P12 ("orthogonal basins compound"); it is now
+demonstrably insufficient.
+The failure is also a small vindication of the registered risk rather than a surprise. E11 logged
+Δborrowing ~ Δsaving at r = +0.403, and the registered worry was that a correlated basin might
+either help or mis-partition. It mis-partitions — because the co-movement E11 found is between
+*changes*, while the basin is built from *levels*, and formal-borrowing levels cut the panel along
+an axis (credit-market depth) that does not align with where formal saving sits. Shrinking toward a
+credit-depth group mean pulls countries toward the wrong neighbours.
+Standing lesson, now in its final form: shrinkage buys **noise correction**; it stops paying when
+the noise is gone (target-specific, P19) **and** it only pays when the basin partitions the panel
+along a dimension the target actually varies on (basin-specific, P20). Both dynamics-tuning (P9/P10)
+and cross-indicator ridge (P15) remain non-transfers across the 2021 regime change.
+Prediction champion unchanged: account = **5.014**, resilience = **6.625**, saving = **6.831**.

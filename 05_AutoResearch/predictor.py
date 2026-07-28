@@ -1,30 +1,26 @@
-"""Prediction stream — P20: does saving's compounding continue past FOUR stages, and does the
-basin have to be a DIGITALIZATION cut?
+"""Prediction stream — P18: does orthogonal-basin shrinkage compound a FOURTH time?
 
-Champion (P18): saving = damped trend (l=0.5) + region -> income-group -> account-tercile ->
-g20-tercile shrink (6.831), account = persistence + income-group -> region -> g20-tercile shrink
-(5.014), resilience = persistence + region shrink (6.625).
+Champion (P17): saving = damped trend (l=0.5) + region -> income-group -> account-tercile shrink
+(7.080), account = persistence + income-group -> region -> g20-tercile shrink (5.014), resilience =
+persistence + region shrink (6.625).
 
-P19 established that the compounding curve is TARGET-SPECIFIC: a fourth stage for account was
-rejected by the <=2021 CV decisively (6.710 -> 7.133), so account stops at three while saving took
-four. The open question on saving's side is whether its curve keeps paying — and, sharper, whether
-the independent signal comes from ANY orthogonal partition or specifically from digitalization
-cuts. Saving's stages 3 and 4 are both digitalization indicators (`account_t_d` terciles, `g20_any`
-terciles) and both paid (-0.279, -0.249pp).
+The mechanism has now stacked three stages on saving (P11 -> P12 -> P16: 8.448 -> 7.963 -> 7.359
+-> 7.080) and three on account (P7 -> P13 -> P17: 5.144 -> 5.105 -> 5.014), and P17 delivered the
+sharper lesson: a CROSS-INDICATOR basin (terciles of `g20_any`) bought account more than twice
+what a second administrative cut did (-0.091pp vs -0.039pp). Saving's stage 3 is already
+cross-indicator (account terciles). Untested: whether a SECOND data-driven, cross-indicator basin
+still carries independent signal once region, income group and account terciles have each had a
+pass.
 
-P20 stage-5 basin for saving: terciles of `fin22a_22a1_22g_d` (formal-borrowing level, 117/117
-panel coverage at 2017 and 2021, verified before pre-registration) — a NON-digitalization
-cross-indicator, distinct from the target and from both existing tercile basins. Known risk,
-registered: E11 logged d_borrow ~ d_saving at r = +0.403, so the borrowing level is not orthogonal
-to the saving change; whether that helps (relevant signal) or hurts (mis-partition, as in P19) is
-the unknown.
+P18 stage-4 basin for saving: terciles of `g20_any` (digital-payment adoption, 117/117 panel
+coverage at 2014/2017/2021) — a different indicator from both the target and stage 3's basin
+column.
 
 Adoption rule (entirely <=2021, no 2024 anywhere in features, fitting or selection): CV on the
-saving 2017->2021 transition with a persistence base (the P10/P12/P13/P16/P17/P18/P19 protocol),
-every basin — including all three tercile basins — built from the 2017 cross-section; adopt the
-fifth stage only if it beats the incumbent four-stage there. Per the P14/P15/P19 protocol, a CV
-rejection means no 2024 evaluation is run. Per-target policy (P2): touches saving only; account
-(5.014) and resilience (6.625) stay byte-identical to the P18 champion.
+saving 2017->2021 transition with a persistence base (the P10/P12/P13/P16/P17 protocol), every
+basin — including both tercile basins — built from the 2017 cross-section; adopt the fourth stage
+only if it beats the incumbent three-stage there. Per-target policy (P2): touches saving only;
+account (5.014) and resilience (6.625) stay byte-identical to the P17 champion.
 """
 import pandas as pd
 
@@ -54,12 +50,6 @@ THIRD_BASIN_COL = {
 # from the target and from the stage-3 basin column. saving -> g20_any level.
 FOURTH_BASIN_COL = {
     "fin17a_17a1_d": "g20_any",
-}
-
-# Per-target stage-5 DATA-DRIVEN basin (P20 candidate): a NON-digitalization cross-indicator basin.
-# saving -> formal-borrowing level.
-FIFTH_BASIN_COL = {
-    "fin17a_17a1_d": "fin22a_22a1_22g_d",
 }
 
 
@@ -167,41 +157,12 @@ def _select_fourth_stage(fx: Findex, target: str):
     return use_four
 
 
-def _select_fifth_stage(fx: Findex, target: str):
-    """P20 pre-2021 CV: predict `target` 2021 from 2017 (persistence base, P12 protocol), all
-    basins — including all three data-driven tercile basins — built at 2017. Adopt the fifth stage
-    only if it beats the incumbent four-stage on this <=2021 window."""
-    train, _ = fx.prediction_task()
-    wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
-    truth_2021, from_2017 = wide.get(2021), wide.get(2017)
-    common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
-
-    b1, b2 = BASIN_ORDER[target]
-    b3 = _tercile_basin(train, THIRD_BASIN_COL[target], 2017)
-    b4 = _tercile_basin(train, FOURTH_BASIN_COL[target], 2017)
-    b5 = _tercile_basin(train, FIFTH_BASIN_COL[target], 2017)
-    s1 = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
-    s2 = _shrink(train, s1, SHRINK_K, b2, at_year=2017)
-    s3 = _shrink(train, s2, SHRINK_K, b3, at_year=2017)
-    s4 = _shrink(train, s3, SHRINK_K, b4, at_year=2017)
-    s5 = _shrink(train, s4, SHRINK_K, b5, at_year=2017)
-    mae_four = float((s4.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    mae_five = float((s5.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    use_five = mae_five < mae_four
-    print(f"P20 pre-2021 CV {target:16s} (2017->2021, stage-5 basin = "
-          f"{FIFTH_BASIN_COL[target]} terciles): four_stage={mae_four:.3f} "
-          f"five_stage={mae_five:.3f}  -> five_stage={use_five}  (n={len(common)})")
-    return use_five
-
-
-def predict(fx: Findex, use_two: dict, use_three: dict, use_four: dict, use_five: dict) -> dict:
+def predict(fx: Findex, use_two: dict, use_three: dict, use_four: dict) -> dict:
     train, _ = fx.prediction_task()
     third_basin_2021 = {t: _tercile_basin(train, col, 2021)
                         for t, col in THIRD_BASIN_COL.items()}
     fourth_basin_2021 = {t: _tercile_basin(train, col, 2021)
                          for t, col in FOURTH_BASIN_COL.items()}
-    fifth_basin_2021 = {t: _tercile_basin(train, col, 2021)
-                        for t, col in FIFTH_BASIN_COL.items()}
     preds = {}
     for target in fx.PRED_TARGETS:
         wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
@@ -222,8 +183,6 @@ def predict(fx: Findex, use_two: dict, use_three: dict, use_four: dict, use_five
             pred = _shrink(train, pred, SHRINK_K, third_basin_2021[target])
         if use_four.get(target):                           # stage 4 (2nd data-driven basin)
             pred = _shrink(train, pred, SHRINK_K, fourth_basin_2021[target])
-        if use_five.get(target):                           # stage 5 (non-digitalization basin)
-            pred = _shrink(train, pred, SHRINK_K, fifth_basin_2021[target])
         preds[target] = pred
     return preds
 
@@ -239,16 +198,10 @@ if __name__ == "__main__":
     # Stage 3: saving is the P16 champion (fixed); account is the P17 candidate under test.
     use_three = {"fin17a_17a1_d": _select_third_stage(fx, "fin17a_17a1_d"),
                  "account_t_d": _select_third_stage(fx, "account_t_d")}
-    # Stage 4: the P18 champion, saving only (per-target policy).
+    # Stage 4: the P18 candidate, saving only (per-target policy).
     use_four = {"fin17a_17a1_d": _select_fourth_stage(fx, "fin17a_17a1_d")}
-    # Stage 5: the P20 candidate, saving only. Per the P14/P15/P19 protocol a CV rejection means
-    # the candidate never reaches the holdout.
-    use_five = {"fin17a_17a1_d": _select_fifth_stage(fx, "fin17a_17a1_d")}
-    print(f"P20 adopted two-stage: {use_two} | three-stage: {use_three} | "
-          f"four-stage: {use_four} | five-stage: {use_five}")
-    if not use_five["fin17a_17a1_d"]:
-        print("P20: <=2021 CV does NOT prefer the fifth stage -> no 2024 evaluation of the "
-              "candidate (P14/P15/P19 protocol); reporting the P18 champion unchanged.")
-    result = fx.evaluate_predictions(predict(fx, use_two, use_three, use_four, use_five))
+    print(f"P18 adopted two-stage: {use_two} | three-stage: {use_three} | "
+          f"four-stage: {use_four}")
+    result = fx.evaluate_predictions(predict(fx, use_two, use_three, use_four))
     for t, r in result.items():
         print(f"{t:20s} MAE = {r['mae']} pp  (n={r['n']})")
