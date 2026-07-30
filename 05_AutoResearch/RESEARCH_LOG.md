@@ -2292,3 +2292,114 @@ would **overturn P19's target-specific reading** in favour of P20's basin-materi
 does not stop at three; it stopped at the wrong basin); a second rejection with a digitalization
 basin would **confirm P19** — account's curve really is exhausted at three stages, and the two
 lessons are independent rather than competing.
+
+**E25 verdict: KEEP — the rails are not saving-specific; they reach the credit margin too, and net
+of saving.** The primary weighted correlation of Δ`fin32_acc` with Δformal borrowing is **+0.605**
+(n = 71), twice the threshold, and G6 is sign-stable with **retention 0.83** (0.605 → 0.501). G3
+clean (four headlines declared, `fin32_acc` no variant per E10), G4 clean (71 economies, 100% of the
+estimation sample's population), G5 n/a.
+The registered alternative — that digitalization moved *where money is stored* but not *where
+credit came from* — is rejected. Secondary A is the reason it is rejected cleanly: the partial
+correlation **net of the saving channel is +0.419** (retention 0.54, above the E4 bar but the
+weakest link in this entry), so roughly two-thirds of the raw wage-rail↔borrowing association
+survives removing everything borrowing shares with the saving surge.
+Secondary B produces the entry's most striking number. On the three-rail common sample (n = 56) the
+rails rank against **borrowing**: wage **+0.649** > mobile money **+0.543** > digital payments
+**+0.512** — and E11's own Δsaving ~ Δborrowing benchmark on that same sample is **+0.511**. Every
+rail is at least as strongly associated with the borrowing deepening as *formal saving itself* is.
+The natural reading is not that digitalization caused credit, but that Δborrowing and Δsaving are
+both surfaces of one digital-deepening episode, and E11's saving↔borrowing co-movement is largely
+the shadow of the rails they share.
+Two asymmetries recorded for v2. (1) **Saving is the stronger destination**: on the identical n = 56
+sample the same three rails give 0.804 / 0.713 / 0.747 against saving versus 0.649 / 0.543 / 0.512
+against borrowing. The rails point at both margins, and lean toward saving. (2) The **rail ordering
+flips by destination**: against saving on this sample the order is wage > digital payments > mobile
+money, against borrowing it is wage > mobile money > digital payments. Wage digitalization leads
+both — its third consecutive appearance as the ledger's most stable rail (E10, E24, E25).
+This also puts a boundary on P20's prediction-side lesson. P20 found formal-borrowing *levels*
+mis-partition the saving panel; E25 finds borrowing *changes* co-move strongly with the same rails
+as saving changes. Both can hold, and together they say the level-vs-change distinction is doing
+real work: credit **depth** is a different axis from digital deepening, credit **growth** is part of
+the same episode.
+Declared caveats stand: contemporaneous Δ-on-Δ co-movement decomposes an episode, it does not
+control confounding; the borrowing headline mixes formal-institution and credit-card borrowing;
+sample composition moves every benchmark (E11's own +0.403 on n = 76 reads +0.480 on n = 71 and
++0.511 on n = 56 — the same subsample inflation E23/E24 logged for E12). Descriptive association,
+never causal.
+
+**U18 verdict: KEEP — employment gates usage as well as access; the ruler is now six axes.** Among
+accountholders, digital-payment use is **87.9pp in the workforce vs 78.3pp out of it — +9.6pp**,
+past the 5pp threshold. M2 passes with very large cells (21,800–41,772 conditional). M3 n/a. The
+pooled sample is 140,070 of 144,090 respondents across 139 economies.
+The decomposition: unconditionally **+20.8pp** (60.0 vs 39.2), access margin **+15.0pp** (76.7 vs
+61.7) — reproducing U13's logged figure to the decimal, which is a clean internal consistency check
+on the pooling — so **access absorbs 54%**.
+The six-axis ruler, in residual pp conditional on holding an account:
+| axis | unconditional | access margin | conditional residual | absorbed |
+|---|---|---|---|---|
+| education (U10) | 46.7pp | — | **16.8pp** | ~64% |
+| income (U17) | 27.3pp | 19.4pp | **11.5pp** | 58% |
+| age (U15) | 11.6pp | — | **10.3pp** | 10% |
+| **employment (U18)** | **20.8pp** | **15.0pp** | **9.6pp** | **54%** |
+| urbanicity (U16) | 11.0pp | 10.3pp | 3.7pp | 66% |
+| gender (U6) | — | — | 3.4pp | — |
+Employment lands fourth — clearly on the usage-gating side with education, income and age, not with
+gender and urbanicity. It also confirms U17's method lesson from the other direction: employment
+(54%) and urbanicity (66%) and income (58%) absorb comparable *fractions* while leaving 9.6, 3.7 and
+11.5pp respectively. **The absorption share still does not sort the axes; the residual in pp does.**
+Substantively, employment is the second axis (after income) that is large on *both* margins: having
+a job is associated with holding an account (+15.0pp) and, among those who hold one, with using it
+digitally (+9.6pp). Read alongside U14 (digital wage receipt is steeply education-graded) and E24
+(wage digitalization is the strongest country-level rail), the wage channel keeps appearing on both
+sides of the micro/macro boundary.
+Declared caveats stand: `emp_in` is a coarse binary pooling students, homemakers, pensioners and the
+unemployed into "out of workforce", so the residual mixes very different groups; employment
+correlates with age, education and income, none controlled; conditioning on account holding
+conditions on a post-treatment variable. Single 2024 cross-section — no trend language.
+
+**P21 verdict: DISCARD — P19's target-specific reading survives, but the rejection margin shrank
+6×.** The ≤2021 CV (account 2017→2021, persistence base, all basins built at 2017) rejects the
+fourth stage even with the best available digitalization basin: three-stage **6.710** vs four-stage
+**6.780**, i.e. `fin32_acc` terciles make the pre-2021 prediction **0.070pp worse**. Adoption fails
+at the first gate, so under the P14/P15/P19/P20 protocol no 2024 evaluation was run and
+`predictor.py` reverted to the P18 champion. All three MAEs byte-identical: account **5.014**,
+resilience **6.625**, saving **6.831**.
+The registered question was whether P19 and P20 were competing readings of the same shape. The
+answer is **no — they are complementary, and both hold.** Account's curve really is exhausted at
+three stages: swapping P19's depth basin (formal-saving terciles) for a genuine digitalization cut,
+and specifically the rail E24 certified as the strongest of the three, does not revive it. So
+**target-specific exhaustion (P19) sets *whether* another stage is available.**
+But the margins say basin material is still doing work *inside* the rejection: −0.070pp for a
+digitalization basin here, versus −0.423pp for the depth basin on the same target (P19) and
+−0.274pp for the borrowing basin on saving (P20). A digitalization cut is very nearly neutral where
+non-digitalization cuts are clearly harmful. So **basin material (P20) sets how much a wrong stage
+costs**, and the two lessons stack rather than compete. The consolidated rule: shrinkage buys noise
+correction; it stops paying when the target's noise is gone, and when it stops paying, a basin that
+tracks the phenomenon does no harm while one that does not actively hurts.
+Worth recording as a limit of the method: five consecutive prediction experiments (P19–P21 plus
+P14/P15) have now failed to move the champion, three of them at the CV gate without ever reaching
+the holdout. The shrinkage-stacking seam looks mined out at four stages for saving and three for
+account.
+Prediction champion unchanged: account = **5.014**, resilience = **6.625**, saving = **6.831**.
+
+## 2026-07-30 wrap-up
+Ran 3 experiments (E25, U18, P21), one per stream — **two keeps, one CV-gate discard**.
+E25 (hypothesis, KEEP): the digitalization rails are **not saving-specific** — Δwage digitalization
+~ Δformal borrowing is **+0.605** (n = 71, G6 retention 0.83) and **+0.419 net of the saving
+channel**. On the three-rail common sample every rail correlates with borrowing (+0.649 wage /
++0.543 mobile money / +0.512 digital payments) at least as strongly as **formal saving itself** does
+(E11's benchmark, +0.511 there) — so saving and borrowing look like two surfaces of one
+digital-deepening episode, with saving the stronger destination (0.71–0.80 vs 0.51–0.65) and the
+rail ordering flipping between the two.
+U18 (micro, KEEP): labour-force status is the **sixth axis** on the access-absorption ruler and
+lands on the usage-gating side — **+9.6pp** conditional on account, 54% absorbed, access margin
++15.0pp reproducing U13 exactly. Ruler in residual pp: education 16.8 > income 11.5 > age 10.3 >
+employment 9.6 > urbanicity 3.7 > gender 3.4.
+P21 (prediction, DISCARD): the ≤2021 CV rejects account's fourth shrink stage **even on a
+digitalization basin** (wage-digitalization terciles, 6.710 → 6.780), so P19's target-specific
+reading stands. The new information is the **6× smaller margin** (−0.070pp vs P19's −0.423pp): basin
+material governs how much a wrong stage costs, target-specific exhaustion governs whether a stage is
+available at all — complementary lessons, not competing ones. Champion unchanged: account = 5.014,
+resilience = 6.625, saving = 6.831.
+EXTENSIONS_DRAFT updated with E25 (Extension 1, the rails reach both deepening margins) and U18
+(the access-equalization section, now six axes).

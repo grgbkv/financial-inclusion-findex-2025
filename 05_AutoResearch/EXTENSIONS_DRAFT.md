@@ -85,6 +85,25 @@ this is no big-country artifact). Reading: the surge reflects genuine balance-sh
 on both sides of the household ledger, not a one-sided store-of-value shift — reinforcing the
 digitalization-channel story above.
 
+**And the rails reach that second margin too — they are not saving-specific (E25).** The three-rail
+structure was built entirely around one destination; pointed at formal *borrowing* instead, it still
+holds. Δ(wages into accounts) co-moves with Δ(formal borrowing) at weighted **r = 0.61** (n = 71,
+jackknife 0.61 → 0.50), and **0.42 net of the saving channel** — most of the association survives
+partialling out everything borrowing shares with the saving surge. On the three-rail common sample
+(n = 56) every rail is associated with the borrowing deepening — wage **0.65** > mobile money
+**0.54** > digital payments **0.51** — and E11's own Δsaving ~ Δborrowing correlation on that same
+sample is **0.51**, i.e. *no weaker than the rails themselves*. The reading offered for v2 is not
+that digitalization caused credit, but that the saving and borrowing margins are two surfaces of one
+digital-deepening episode, and E11's co-movement is largely the shadow of the rails they share.
+Two asymmetries are worth a sentence: saving is the **stronger** destination (0.80 / 0.71 / 0.75
+against saving versus 0.65 / 0.54 / 0.51 against borrowing, identical sample), and the rail
+**ordering flips** between destinations (wage > digital payments > mobile money for saving; wage >
+mobile money > digital payments for borrowing). Wage digitalization leads both — its third
+appearance as the steadiest rail in the ledger (E10, E24, E25). Standing caveats: contemporaneous
+Δ-on-Δ decomposition, not identification; the borrowing headline mixes formal-institution and
+credit-card borrowing; subsample composition inflates every benchmark (E11's 0.40 on n = 76 reads
+0.48 on n = 71 and 0.51 on n = 56).
+
 ## Extension 2 — resilience composition moves before resilience levels (E7, with E2 as the null)
 
 Headline resilience was flat (54.7 → 54.5 panel), and mobile-money growth shows **no robust
@@ -246,6 +265,21 @@ is 2.5× wider. Ranked by what access actually fails to close: education 16.8 > 
 10.3 ≫ urbanicity 3.7 ≈ gender 3.4 pp. Note also that `inc_q` is a *within-economy relative* rank,
 not an absolute income level, so under economy-equal pooling it does not carry quite the same
 meaning across economies as education or age do — a caveat specific to this axis.
+
+**The sixth axis is a job (U18).** Labour-force status behaves like income: large on both margins.
+Digital-payment use among accountholders is 87.9 pp for adults in the workforce against 78.3 pp for
+those out of it — a **+9.6 pp** residual against a +20.8 pp unconditional gap, so access absorbs
+54 %; the access margin itself is +15.0 pp (76.7 / 61.7 pp account ownership), reproducing U13's
+figure to the decimal. Employment therefore joins education, income and age on the usage-gating side
+rather than gender and urbanicity on the access-only side. It also re-makes the ruler's methodological
+point from the opposite direction: employment (54 %), income (58 %) and urbanicity (66 %) absorb
+comparable *shares* while leaving 9.6, 11.5 and 3.7 pp — the residual is what sorts them. The full
+ranking by what access fails to close: **education 16.8 > income 11.5 > age 10.3 > employment 9.6 ≫
+urbanicity 3.7 ≈ gender 3.4 pp.** Read with U14 (digital wage receipt steeply education-graded) and
+E24/E25 (wage digitalization the steadiest country-level rail), the wage channel keeps surfacing on
+both sides of the micro/macro boundary. Caveat specific to this axis: `emp_in` is a coarse binary
+that pools students, homemakers, pensioners and the unemployed, so the residual mixes very different
+groups; employment correlates with age, education and income, none controlled.
 
 ## Honest nulls worth one sentence each
 
