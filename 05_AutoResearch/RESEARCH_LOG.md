@@ -2198,3 +2198,97 @@ digitalization cut, so **orthogonality alone is not what buys a stage — the ba
 phenomenon.** Prediction champion unchanged: account = 5.014, resilience = 6.625, saving = 6.831.
 EXTENSIONS_DRAFT updated with E24 (Extension 1, three-rail decomposition) and U17 (the
 access-equalization section, now five axes).
+
+## 2026-07-30 daily autoresearch cycle
+
+## E25 — pre-registered (hypothesis / country level)
+**Idea:** the three-rail structure (mobile money E1/E22, digital payments E12/E23, wage
+digitalization E10/E24) was built entirely around **one destination**: the 2021-24 formal-saving
+surge. Nothing in the ledger says the rails are *saving-specific*. E11 logged the other deepening
+margin — formal borrowing rose alongside formal saving (Δborrow ~ Δsav, r = +0.403, n = 76) — but
+no rail has ever been pointed at borrowing. P20 sharpened the question from the prediction side:
+formal-borrowing *levels* mis-partition the saving panel, which suggests credit sits on a different
+axis from the digitalization cuts. If the rails are a general "digital financial deepening" force,
+Δwage digitalization should co-move with Δborrowing too; if the rails are saving-specific, it should
+not, and the E11 co-movement must come from somewhere else.
+**Test:** developing panel, 2021→2024 deltas. **Primary:** weighted correlation of Δ`fin32_acc`
+(wage digitalization, the strongest and most jackknife-stable rail, E24) with Δ`fin22a_22a1_22g_d`
+(formal borrowing, headline). Weights = 2024 adult population; gates G3 (headline declared;
+`fin32_acc` has no variant, E10 precedent), G4 (coverage), G6 (jackknife, drop top-5 population),
+G5 n/a (no official Δ-correlation series). Feature coverage verified before registration (no
+outcome peeked): Δborrow available for 76 dev-panel economies, Δwage for 71.
+**Secondary A (the destination-specificity step, descriptive):** weighted **partial** correlation
+of Δwage with Δborrow **controlling Δ`fin17a_17a1_d`** (formal saving) — does any rail→borrowing
+association survive removing the saving channel, or is it borrowing riding on saving?
+**Secondary B (descriptive):** the same bivariate for the other two rails (Δ`g20_any`,
+Δ`mobileaccount_t_d`) against Δborrow, on their own and on the common sample, so the three rails
+can be ranked against borrowing exactly as E24 ranked them against saving.
+**Keep if:** primary weighted |r| ≥ **0.30** AND G6 sign-stable with retention ≥ 0.5 (the E4
+judgment rule). Registered alternative outcome, equally informative: a primary below 0.30 or a
+jackknife collapse says the rails are **saving-specific** — digitalization moved *where money is
+stored*, not *where credit came from* — which would align the hypothesis stream with P20's basin
+lesson from the prediction stream.
+Declared caveats: contemporaneous Δ-on-Δ co-movement is descriptive, never causal; the borrowing
+headline mixes formal-institution and credit-card borrowing; sample composition differs across the
+rails (E23/E24 showed this moves the bivariates a lot), so every benchmark is recomputed on each
+common sample.
+
+## U18 — pre-registered (micro stream)
+**Idea:** the access-absorption ruler now carries five axes for `anydigpayment` conditional on
+holding an account — education +16.8pp (U10), income +11.5pp (U17), age +10.3pp (U15), urbanicity
++3.7pp (U16), gender +3.4pp (U6). **Labour-force status is the one demographic in `micro.py`'s
+DEMOGRAPHICS list never placed on it**, and it is the axis with the largest *logged access* gap of
+any binary split: U13 found account ownership 76.7 vs 61.7pp in/out of the workforce (+15.0pp), and
+noted a depth gap in formal saving among accountholders (+13.3pp). Whether employment gates the
+*digital-payment* margin once access is held is unknown, and the prior is genuinely two-sided:
+digital payments are heavily wage- and transfer-driven (U14, E24), which argues employment persists;
+but out-of-workforce adults include students and pensioners in high-digitalization economies, which
+argues it collapses like gender and urbanicity.
+**Test:** weighted rate of `anydigpayment == 1` among `account == 1`, split by `emp_in`
+(1 = in workforce, 2 = out of workforce), pooled across all 2024 economies (raw `wgt`,
+economy-equal pooling per `micro.py`). **Primary statistic: (in-workforce − out-of-workforce),
+conditional on account.** Secondary, descriptive: the same split unconditional on account, and the
+access margin (`account == 1` by `emp_in`) — giving the U10/U15/U16/U17-style absorption
+decomposition and the axis's place on the ruler in **residual pp** (U17's method lesson: the
+absorption *share* does not sort axes).
+Gates: M2 (unweighted cell n ≥ 100 — cells are ~84k/56k unconditional, so this is a formality).
+M3 declared **n/a** (within-accountholder split; no country-file equivalent).
+**Keep if:** (in-workforce − out-of-workforce | accountholder) ≥ **5pp**. Registered alternative
+outcome: a residual below 5pp puts employment with gender and urbanicity on the access-only side —
+meaning U13's large access gap is *entirely* an access story and having a job does not change what
+adults do with an account they already hold.
+Disclosure: the access margin used in the absorption arithmetic is **already logged** (U13,
++15.0pp) — that half is a known quantity, not a fresh look; the primary conditional residual is
+genuinely unknown at registration. Declared caveats: `emp_in` is a coarse binary that pools
+students, homemakers, pensioners and the unemployed into "out of workforce"; employment correlates
+with age, education and income, none controlled; conditioning on account holding conditions on a
+post-treatment variable (U6/U8/U10/U14/U15/U16/U17). Single 2024 cross-section — no trend language.
+
+## P21 — pre-registered (prediction stream)
+**Idea:** P19 and P20 offer competing readings of the same shape. P19 (account's 4th stage rejected
+by 0.423pp) was written up as "the compounding curve is **target-specific** — saving takes four
+stages, account stops at three". P20 (saving's 5th stage rejected by 0.274pp on a formal-borrowing
+basin) proposed a different reading: **the basin material matters** — every basin that has ever paid
+is a *digitalization* cut, and the first non-digitalization basin was actively harmful. Those two
+readings are confounded in the record, because **P19's rejected account basin was terciles of
+formal saving — a depth indicator, not a digitalization cut.** So account may have stopped at three
+for the same reason saving stopped at five: the wrong basin material, not an exhausted curve.
+**Test:** re-run account's **fourth stage** with a **digitalization** basin — terciles of
+`fin32_acc` (wage digitalization level), stacked on the P17/P18 account champion (persistence +
+income-group → region → `g20_any`-tercile shrink), k = 0.1 unchanged. `fin32_acc` is distinct from
+the target and from the stage-3 basin column, and has **117/117 panel coverage at 2017 and 2021**
+(verified before registration — a feature-coverage check only, no outcome peeked). It is also the
+rail E24 just certified as the strongest and most jackknife-stable of the three.
+Selection, entirely ≤2021 (no 2024 in features, fitting or selection): CV on the account 2017→2021
+transition with a persistence base (the P10/P12/P13/P16/P17/P18/P19/P20 protocol), every basin —
+including both tercile basins — built from the **2017** cross-section, comparing the incumbent
+three-stage against the four-stage candidate. Per the P14/P15/P19/P20 protocol, if the CV does not
+prefer the candidate, no 2024 evaluation is run and `predictor.py` reverts to the P18 champion.
+Per-target policy (P2's rule): touches account only — saving (6.831) and resilience (6.625) must
+stay byte-identical.
+**Keep if:** the ≤2021 CV prefers four-stage over three-stage **AND** account MAE improves on
+**5.014** on the 2021→2024 evaluation. Registered alternative outcomes, both informative: adoption
+would **overturn P19's target-specific reading** in favour of P20's basin-material reading (account
+does not stop at three; it stopped at the wrong basin); a second rejection with a digitalization
+basin would **confirm P19** — account's curve really is exhausted at three stages, and the two
+lessons are independent rather than competing.
