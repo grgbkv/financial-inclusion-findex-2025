@@ -1,26 +1,28 @@
-"""Prediction stream — P18: does orthogonal-basin shrinkage compound a FOURTH time?
+"""Prediction stream — P21: did ACCOUNT stop at three stages, or stop at the wrong BASIN?
 
-Champion (P17): saving = damped trend (l=0.5) + region -> income-group -> account-tercile shrink
-(7.080), account = persistence + income-group -> region -> g20-tercile shrink (5.014), resilience =
-persistence + region shrink (6.625).
+Champion (P18): saving = damped trend (l=0.5) + region -> income-group -> account-tercile ->
+g20-tercile shrink (6.831), account = persistence + income-group -> region -> g20-tercile shrink
+(5.014), resilience = persistence + region shrink (6.625).
 
-The mechanism has now stacked three stages on saving (P11 -> P12 -> P16: 8.448 -> 7.963 -> 7.359
--> 7.080) and three on account (P7 -> P13 -> P17: 5.144 -> 5.105 -> 5.014), and P17 delivered the
-sharper lesson: a CROSS-INDICATOR basin (terciles of `g20_any`) bought account more than twice
-what a second administrative cut did (-0.091pp vs -0.039pp). Saving's stage 3 is already
-cross-indicator (account terciles). Untested: whether a SECOND data-driven, cross-indicator basin
-still carries independent signal once region, income group and account terciles have each had a
-pass.
+P19 and P20 offer competing readings of the same shape. P19 (account's 4th stage rejected by
+0.423pp) was written up as "the compounding curve is TARGET-SPECIFIC — saving takes four stages,
+account stops at three". P20 (saving's 5th stage rejected by 0.274pp on a formal-borrowing basin)
+proposed instead that the BASIN MATERIAL matters: every basin that ever paid is a digitalization
+cut, and the first non-digitalization basin was actively harmful. The two readings are confounded
+in the record, because P19's rejected account basin was terciles of formal SAVING — a depth
+indicator, not a digitalization cut. So account may have stopped at three for P20's reason.
 
-P18 stage-4 basin for saving: terciles of `g20_any` (digital-payment adoption, 117/117 panel
-coverage at 2014/2017/2021) — a different indicator from both the target and stage 3's basin
-column.
+P21 stage-4 basin for account: terciles of `fin32_acc` (wage digitalization, 117/117 panel coverage
+at 2017 and 2021, verified before registration) — a digitalization cut distinct from the target and
+from stage 3's `g20_any`, and the rail E24 just certified as the strongest and most jackknife-stable
+of the three.
 
 Adoption rule (entirely <=2021, no 2024 anywhere in features, fitting or selection): CV on the
-saving 2017->2021 transition with a persistence base (the P10/P12/P13/P16/P17 protocol), every
-basin — including both tercile basins — built from the 2017 cross-section; adopt the fourth stage
-only if it beats the incumbent three-stage there. Per-target policy (P2): touches saving only;
-account (5.014) and resilience (6.625) stay byte-identical to the P17 champion.
+account 2017->2021 transition with a persistence base (the P10/P12/P13/P16/P17/P18/P19/P20
+protocol), every basin — including both tercile basins — built from the 2017 cross-section; adopt
+the fourth stage only if it beats the incumbent three-stage there. Per the P14/P15/P19/P20 protocol
+a CV rejection means no 2024 evaluation and a revert to the P18 champion. Per-target policy (P2):
+touches account only; saving (6.831) and resilience (6.625) stay byte-identical.
 """
 import pandas as pd
 
@@ -46,10 +48,12 @@ THIRD_BASIN_COL = {
     "account_t_d": "g20_any",
 }
 
-# Per-target stage-4 DATA-DRIVEN basin (P18 candidate): a SECOND cross-indicator basin, distinct
-# from the target and from the stage-3 basin column. saving -> g20_any level.
+# Per-target stage-4 DATA-DRIVEN basin: a SECOND cross-indicator basin, distinct from the target and
+# from the stage-3 basin column. saving -> g20_any level (P18, kept). account -> fin32_acc level
+# (P21 candidate: a DIGITALIZATION cut, where P19's rejected candidate was a depth indicator).
 FOURTH_BASIN_COL = {
     "fin17a_17a1_d": "g20_any",
+    "account_t_d": "fin32_acc",
 }
 
 
@@ -198,9 +202,10 @@ if __name__ == "__main__":
     # Stage 3: saving is the P16 champion (fixed); account is the P17 candidate under test.
     use_three = {"fin17a_17a1_d": _select_third_stage(fx, "fin17a_17a1_d"),
                  "account_t_d": _select_third_stage(fx, "account_t_d")}
-    # Stage 4: the P18 candidate, saving only (per-target policy).
-    use_four = {"fin17a_17a1_d": _select_fourth_stage(fx, "fin17a_17a1_d")}
-    print(f"P18 adopted two-stage: {use_two} | three-stage: {use_three} | "
+    # Stage 4: saving is the P18 champion (fixed); account is the P21 candidate under test.
+    use_four = {"fin17a_17a1_d": _select_fourth_stage(fx, "fin17a_17a1_d"),
+                "account_t_d": _select_fourth_stage(fx, "account_t_d")}
+    print(f"P21 adopted two-stage: {use_two} | three-stage: {use_three} | "
           f"four-stage: {use_four}")
     result = fx.evaluate_predictions(predict(fx, use_two, use_three, use_four))
     for t, r in result.items():
