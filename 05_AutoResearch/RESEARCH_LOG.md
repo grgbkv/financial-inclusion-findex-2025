@@ -2519,3 +2519,96 @@ Declared: this is an estimator-robustness experiment, not a search for a new sta
 median deliberately discards the population weighting inside the basin, so it is the *opposite*
 extreme from the incumbent rather than a mild variant — a middle option (weighted median) is left
 untested and noted as a follow-up if the extreme rejects narrowly.
+
+### E26 — verdict: DISCARD (on the threshold alone; every gate passed)
+Primary weighted r(Δwage, Δresilience) = **+0.294** (n=71) — **misses the pre-registered 0.30 bar by
+0.006**. Under pre-registration that is a discard, and it is logged as one: the bar was set before
+the answer was known and is not renegotiated after seeing it. Worth recording that nothing else
+failed — G3/G4 passed, and G6 *strengthened* (0.294 → **0.407**, retention **1.38**), so the weak
+association is not a big-country artifact; if anything the top-5 countries dilute it.
+The registered alternative outcome is the substantive result. On the identical n=56 three-rail
+common sample, each rail's three destinations line up as a clean ladder:
+
+| rail | → saving | → borrowing | → resilience |
+|---|---|---|---|
+| wage (`fin32_acc`) | +0.804 | +0.649 | **+0.295** |
+| digital payments (`g20_any`) | +0.747 | +0.512 | **+0.000** |
+| mobile money | +0.713 | +0.543 | **+0.208** |
+
+The three-rail story is **bounded to balance-sheet margins**. Digitalization co-moves strongly with
+where money is stored (~0.75) and where credit came from (~0.57), and an order of magnitude more
+weakly with self-reported shock-coping capacity — exactly zero for digital payments. Wage is the
+only rail with any resilience signal at all, and its partial *rises* net of saving (+0.294 →
+**+0.319**, ret 0.61), so what little there is does not run through the saving channel.
+Two declared replications came back clean: **E2 reproduces exactly** (mobile money r=+0.189, n=58,
+matching the logged value to three decimals) and **E15** (Δsaving ~ Δresilience) sits at +0.127 on
+this sample. Three independent attempts on resilience — E2, E15, E26 — now agree.
+Consistent with the flat dev-panel aggregate (54.7 → 54.5pp), which compresses Δ variance and works
+against the hypothesis by construction. Contemporaneous Δ-on-Δ, descriptive only; `fin24aSD_ND` is
+self-reported hypothetical-shock with the standing 2021-vs-2024 framing caveat.
+
+### U19 — verdict: KEEP
+Median within-economy conditional education gap = **+9.4pp** across the **64** qualifying economies
+(69.5% of accountholding respondents), **positive in 63 of 64 (98%)** — both pre-registered
+conditions clear (≥5pp; ≥43/64). IQR +4.2 to +15.6pp, mean +11.2pp, range Comoros −1.5 to Nepal
++39.3. M2 applied per economy; M3 n/a.
+**The composition wedge is small.** Pooled over the same 64 economies the gap is +12.1pp against a
+within-economy median of +9.4pp — a wedge of **+2.7pp, ~22% of the pooled figure**. On the
+like-for-like tertiary-vs-primary contrast the within-country median (**+18.0pp**, positive in
+**23/23**) actually *exceeds* the pooled all-economy figure (+16.8pp), where composition is
+contributing nothing at all. The pooled all-economy tertiary gap reproduces **U10's +16.8pp exactly**.
+This is the first micro experiment to separate within-country gradient from between-country
+composition, and it answers the standing caveat (HARNESS_V2_NOTES #3) in the ruler's favour on its
+largest axis: the education gradient is a regularity *inside* economies, not an artifact of
+low-education adults living in low-digitalization economies. The registered alternative — that the
+ruler is substantially composition — is rejected.
+**Disclosed registration deviation:** the pre-registration stated 31 qualifying economies for the
+tertiary variant; M2 as actually applied drops respondents missing the outcome or the weight, giving
+**23**. The primary's 64 is unaffected (that pre-check did filter on outcome non-missingness). The
+verdict is unchanged either way (23/23 positive), but the registered number was wrong and is
+corrected here rather than quietly restated.
+Caveats: the qualifying set is **selected** — economies need sizeable primary-educated *and*
+secondary-plus accountholding populations — so it skews away from both the least- and
+most-educated economies; `educ >= 2` merges secondary and tertiary and is a coarser contrast than
+U10 by construction (which is why +9.4 < +16.8); the median weights each economy equally, by design
+a different weighting from the pooled statistic. Post-treatment conditioning on account holding.
+Single 2024 cross-section — descriptive, no trend language. **The other five ruler axes remain
+pooled-only and untested on this dimension.**
+
+### P22 — verdict: DISCARD (CV-rejected on both targets), champion unchanged
+The ≤2021 CV rejects the median center **decisively on both candidate targets**: account three-stage
+mean=**6.710** vs median=**7.831** (+1.121pp worse), saving four-stage mean=**6.370** vs
+median=**6.872** (+0.502pp worse). Adoption fails at the first gate on both, so no 2024 evaluation
+was run (P14/P15/P19/P20/P21 protocol), `predictor.py` is reverted to the P18 champion, and all
+three MAEs print byte-identical (account **5.014** / resilience **6.625** / saving **6.831**).
+This is the registered alternative outcome and it is a **positive robustness result — the first for
+the whole P11–P18 stack**: the population-weighted mean is the *right* basin location, and the
+shrinkage gains are **not** a big-country pull. The prediction-side answer to the concern G6 encodes
+on the hypothesis side is that the giant countries are earning their weight here, not distorting it.
+Two things make the rejection more informative than a bare "no". First, the margins are **the
+largest in the entire P-series** — 1.121pp against P19's 0.423, P20's 0.274, P21's 0.070 and P14's
+0.006 — so the *center statistic* matters far more than any stage or basin choice tested to date;
+the seam that looked mined out was being probed on the wrong axis. Second, the evaluator's MAE is
+**unweighted across countries**, so an unweighted median center was if anything favoured by the
+scoring rule and still lost heavily. The population weighting is doing real work inside the basin
+rather than merely aligning with the metric.
+Declared follow-up, untested: a **weighted median** — the middle option between the two extremes
+compared here. P22 deliberately tested the opposite extreme, so a narrow middle ground remains open.
+
+### 2026-07-31 — cycle summary
+Three experiments, one per stream; two discards and one keep, and both discards are informative.
+**E26 discard** (r=+0.294, missing the 0.30 bar by 0.006 with every gate passing and G6 *strengthening*
+to +0.407): the three-rail story is bounded to **balance-sheet** margins — saving ~0.75, borrowing
+~0.57, resilience ~0.0–0.3 and exactly 0.000 for digital payments. E2 replicated to three decimals;
+E2/E15/E26 now agree across three independent attempts that digitalization does not show up in
+self-reported shock-coping capacity.
+**U19 keep** (median within-economy education gap **+9.4pp**, positive in **63/64** economies;
+composition wedge only +2.7pp, ~22% of pooled; tertiary variant +18.0pp, **23/23**): the first micro
+test to separate within-country gradient from between-country composition, and the ruler's largest
+axis survives it. Disclosed: the registered tertiary-variant economy count was 31, actually 23 under
+M2 as applied; verdict unchanged.
+**P22 discard** (CV rejects a median basin center on both targets by 1.121pp and 0.502pp): the
+population-weighted mean is the right shrink target and the P11–P18 gains are not a big-country
+artifact — the first positive robustness result for the stack, with the largest margins in the
+P-series, and obtained under an unweighted metric that would have favoured the median.
+Prediction champion unchanged: **account 5.014 / resilience 6.625 / saving 6.831** (P18, commit 1bb3f78).

@@ -204,7 +204,7 @@ instructive: shrinkage corrects cross-sectional sampling noise, a regime-indepen
 that transfers across the 2021 break (and compounds across orthogonal basins), whereas anything
 tuned to pre-2021 *dynamics* does not.
 
-### What access equalizes, and what it does not (U4, U7, U10, U14, U15)
+### What access equalizes, and what it does not (U4, U7, U10, U14, U15, U16-U19)
 
 Education is the sharpest stratifier in the 2024 micro cross-section, and it does not stop at
 the account door. Unconditionally the digital-payment gap between tertiary and primary-educated
@@ -281,12 +281,39 @@ both sides of the micro/macro boundary. Caveat specific to this axis: `emp_in` i
 that pools students, homemakers, pensioners and the unemployed, so the residual mixes very different
 groups; employment correlates with age, education and income, none controlled.
 
+**Is the ruler a within-country regularity, or between-country composition? (U19)** Every axis above
+is pooled across economies, which leaves one live alternative: the gradients could be produced
+entirely by composition — low-education adults concentrated in low-digitalization economies — with
+no gradient *inside* any country. U19 tests the largest axis directly, computing the conditional
+education gap **separately in each economy** and applying the n ≥ 100 cell rule per economy (64
+economies qualify, 69.5% of accountholding respondents). The median within-economy gap is
+**+9.4 pp, positive in 63 of 64 economies (98%)**; pooled over those same economies it is +12.1 pp,
+so composition accounts for only **+2.7 pp, about a fifth** of the pooled figure. On the
+like-for-like tertiary-vs-primary contrast the within-country median is **+18.0 pp, positive in all
+23** qualifying economies — *above* the pooled +16.8 pp, i.e. composition contributes nothing there.
+The education gradient is a regularity inside economies, not an artifact of where educated adults
+live. Two limits are worth stating in v2: the qualifying set is selected (economies need sizeable
+primary-educated *and* secondary-plus accountholding populations, which trims both tails of the
+education distribution), and **the other five axes remain pooled-only** — U19 licenses the
+within-country reading for education, not yet for income, age, employment, urbanicity or gender.
+
 ## Honest nulls worth one sentence each
 
-- Mobile-money growth ⇏ resilience gains within the window (E2).
+- Mobile-money growth ⇏ resilience gains within the window (E2; replicated exactly at
+  r = +0.189 on the current sample by E26).
 - Neither does the saving surge itself: Δresilience is orthogonal to Δformal-saving
   (r = 0.03, E15) — the composition of emergency funds shifted (E7) before the share who can
   raise them moved.
+- **The digitalization rails stop at the balance sheet (E26).** On one common sample of 56
+  economies, each rail's three destinations form a clean ladder: wage digitalization co-moves with
+  Δformal-saving at +0.80 and Δformal-borrowing at +0.65, but with Δresilience at only +0.30;
+  digital payments give +0.75 / +0.51 / **exactly 0.00**; mobile money +0.71 / +0.54 / +0.21. The
+  wage rail's primary (r = +0.294, n = 71) missed the pre-registered 0.30 bar by 0.006 with every
+  gate passing and the jackknife *strengthening* to +0.407, so it is logged as a discard rather than
+  a keep — but the pattern is the point: digitalization tracks **where money is stored and where
+  credit came from**, an order of magnitude more weakly than it tracks self-reported shock-coping
+  capacity. Three independent attempts (E2, E15, E26) now agree on that boundary, and it is
+  consistent with the flat dev-panel resilience aggregate (54.7 → 54.5 pp).
 - Gender-gap changes 2021→2024 are large (σ = 7.4 pp) but orthogonal to mobile-money growth (E3).
 - No systematic reversion of the unusually narrow 2021 income gap proportional to the
   earlier poorest-40 jump (E6).
@@ -326,3 +353,15 @@ declaration, coverage thresholds, official-aggregate cross-checks, jackknife sta
 pre-registration of every hypothesis before testing; discards are logged, not hidden. One
 gate-design lesson: sign-stability alone is too weak a jackknife criterion (E4 passed the
 letter while violating the intent) — v2 of the harness should require magnitude retention.
+
+### Prediction robustness — the shrinkage basins are not a big-country artifact (P22)
+
+The prediction box's one transferable mechanism is orthogonal-basin shrinkage, which pulls each
+country's forecast toward its basin's **population-weighted mean**. That location statistic is
+dominated inside each basin by a handful of giant countries — the same concern gate G6 encodes on
+the hypothesis side. P22 swapped it for an unweighted **median** at every stage and let the ≤2021
+cross-validation choose. It rejected the robust center decisively on both targets (account 6.710 →
+7.831; saving 6.370 → 6.872), by **the largest margins in the whole prediction series**. The
+population-weighted mean is the right basin location and the gains stacked since P11 are not a
+big-country pull. The result is sharper than it looks because the evaluation metric is *unweighted*
+across countries, so the median center was if anything favoured by the scoring rule and still lost.
