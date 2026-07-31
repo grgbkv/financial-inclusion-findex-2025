@@ -2403,3 +2403,119 @@ available at all — complementary lessons, not competing ones. Champion unchang
 resilience = 6.625, saving = 6.831.
 EXTENSIONS_DRAFT updated with E25 (Extension 1, the rails reach both deepening margins) and U18
 (the access-equalization section, now six axes).
+
+## 2026-07-31 daily autoresearch cycle
+
+## E26 — pre-registered (hypothesis / country level)
+**Idea:** E25 extended the three-rail structure from one destination to two — the rails feed the
+2021-24 formal-saving surge (E10/E12/E23/E24) *and* the formal-borrowing deepening (E25, wage rail
++0.605, +0.419 net of saving). Both destinations are **balance-sheet** margins: where money is
+stored, where credit came from. The ledger has never pointed a rail at the **welfare** margin —
+self-reported ability to raise emergency funds (`fin24aSD_ND`). Two prior discards frame the
+question but do not answer it: E2 tested Δresilience against the *mobile-money* rail (r = 0.189,
+G6 collapse to −0.005) and E15 tested it against the *formal-saving surge itself* (discard). The
+strongest and most jackknife-stable rail — wage digitalization, E10/E24/E25's three-time leader —
+has never been tested against resilience, and E25 just showed the rails reach destinations that
+E11-style co-movement alone would not have predicted. This is the destination question's third and
+last available margin, and it is the one that matters for welfare interpretation of the whole
+three-rail story.
+**Test:** developing panel, 2021→2024 deltas. **Primary:** weighted correlation of Δ`fin32_acc`
+(wage digitalization) with Δ`fin24aSD_ND` (resilience, headline). Weights = 2024 adult population;
+gates G3 (headlines declared; `fin32_acc` has no variant, E10 precedent), G4 (coverage), G6
+(jackknife, drop top-5 population), G5 n/a (no official Δ-correlation series). Feature coverage
+verified before registration (no outcome peeked): Δresilience available for 76 dev-panel economies,
+Δwage for 71, the pair for **71** — identical n to E25's primary, so the two destinations are
+directly comparable on the same sample.
+**Secondary A (descriptive):** weighted **partial** correlation of Δwage with Δresilience
+**controlling Δ`fin17a_17a1_d`** (formal saving) — if any rail→resilience association exists, does
+it survive removing the saving channel, the same net-of-saving step E25 ran for borrowing?
+**Secondary B (descriptive):** the other two rails (Δ`g20_any`, Δ`mobileaccount_t_d`) against
+Δresilience on their own samples and on the three-rail common sample (n = 56 verified), so the rails
+rank against resilience exactly as E24 ranked them against saving and E25 against borrowing — and
+E2's mobile-money result is re-run as a declared **replication** on the current sample rather than a
+fresh hypothesis.
+**Keep if:** primary weighted |r| ≥ **0.30** AND G6 sign-stable with retention ≥ 0.5 (E4 judgment
+rule). Registered alternative outcome, equally informative and the one E2/E15 make likelier: a
+primary below 0.30 or a jackknife collapse bounds the entire three-rail story to **balance-sheet
+behaviour** — digitalization moved where money is stored and where credit came from, but did not
+show up in self-reported shock-coping capacity, which is exactly the aggregate flatness the paper
+already logs (dev-panel resilience 54.7 → 54.5pp, 2021 → 2024).
+Declared caveats: contemporaneous Δ-on-Δ co-movement is descriptive, never causal; `fin24aSD_ND` is
+a *self-reported* hypothetical-shock measure, not a realized-outcome one, and its 2021 and 2024
+question framings carry the paper's standing comparability caveat; the resilience aggregate is flat
+in this window, which compresses Δ variance and works against finding any association; sample
+composition differs across the rails (E23/E24/E25), so every benchmark is recomputed on each common
+sample.
+
+## U19 — pre-registered (micro stream)
+**Idea:** the access-absorption ruler now carries six axes (U6/U10/U15/U16/U17/U18), and **every one
+of them is a pooled-across-economies statistic**. That is the standing caveat on the whole micro
+ledger (HARNESS_V2_NOTES #3, re-declared in every U entry): a pooled gradient can be produced
+entirely by *composition* — low-education adults concentrated in low-digitalization economies —
+without any within-country gradient at all. No U experiment has ever separated the two. This tests
+the ruler's largest axis, education (U10, +16.8pp conditional on account, ~64% absorbed), the one
+whose collapse would do the most damage to the ruler's reading.
+**Test:** micro 2024 wave, weighted. For **each economy separately**, the conditional education gap
+in digital-payment use: weighted rate of `anydigpayment == 1` among `account == 1` for
+`educ >= 2` (secondary-or-more) minus `educ == 1` (primary-or-less). An economy qualifies only if
+**both** cells have unweighted n ≥ 100 (gate M2 applied per economy, not pooled) — **64 economies
+qualify, covering 69.5% of accountholding respondents** (verified before registration as a coverage
+check; no rate computed). **Primary statistic: the median within-economy gap across qualifying
+economies.** Secondary, descriptive: the share of qualifying economies with a positive gap; the
+interquartile range and the extremes; the pooled gap on the same 64 economies and on all economies,
+so the pooled-vs-median wedge is the composition estimate; and the stricter tertiary-vs-primary
+variant (`educ == 3` vs `educ == 1`, **31 economies qualify**) as a robustness check against the
+coarser split.
+Gates: M2 per economy as above. M3 declared **n/a** (within-accountholder split; no country-file
+equivalent). Note the qualifying set is *selected* — economies need a sizeable primary-educated
+**and** secondary-plus accountholding population — so it skews away from both the least- and
+most-educated economies; this is a coverage limit, declared, not a fixable one.
+**Keep if:** median within-economy gap ≥ **5pp** AND at least **two-thirds (≥ 43/64)** of
+qualifying economies show a positive gap. The second condition is registered deliberately: a median
+above threshold driven by a minority of large gaps with the rest scattered around zero would be a
+different (weaker) claim than a consistent within-country regularity, and the ruler's reading needs
+the latter. Registered alternative outcome: a median far below the pooled +16.8pp, or a positive
+share near half, would say the pooled ruler is substantially a **between-country composition**
+artifact — which would be the single most consequential methodological finding in the micro stream
+and would require re-wording U6/U10/U15/U16/U17/U18 as pooled-only descriptions.
+Declared caveats: conditioning on account holding conditions on a post-treatment variable (as in
+U6/U8/U10/U14–U18); `educ >= 2` merges secondary and tertiary, so the primary statistic is a
+*coarser* contrast than U10's tertiary-vs-primary and is expected to be smaller in pp for that
+reason alone — the tertiary variant is the like-for-like comparison; the median across economies
+weights each economy equally, which is a different weighting from the pooled statistic by
+construction (that is the point of the test, not a flaw). Single 2024 cross-section — no trend
+language.
+
+## P22 — pre-registered (prediction stream)
+**Idea:** the shrinkage-stacking seam is mined out — five consecutive experiments (P14, P15, P19,
+P20, P21) failed to move the champion, three of them rejected at the CV gate without reaching the
+holdout, and P21 concluded that saving stops at four stages and account at three. Adding a sixth
+stage is not the experiment. **What has never been varied is the shrinkage target itself.** Every
+stage since P5 shrinks a country toward its basin's **population-weighted mean** — a location
+statistic dominated, inside each basin, by the same handful of giant countries (India, China,
+Indonesia, Nigeria, Pakistan) that gate G6 exists to guard against on the hypothesis side. If the
+gains since P11 are genuine noise correction, they should survive — or improve — under a **robust**
+basin center; if they are partly a big-country pull, a robust center will hurt.
+**Test:** replace the basin center in `_shrink` with the **unweighted median** of the basin's member
+values, at **every** stage, per target. Nothing else changes: k = 0.1, the damped trend (λ = 0.5),
+the basin sequences and the adopted stage counts all stay exactly as in the P18 champion. Adoption
+is per target and entirely ≤2021 (no 2024 in features, fitting or selection): CV on that target's
+2017→2021 transition with a persistence base, all basins built at 2017 — the
+P10/P12/P13/P16/P17/P18/P19/P20/P21 protocol — comparing the incumbent mean-centered champion stack
+against the identical median-centered stack. Per the P14/P15/P19/P20/P21 protocol, a target whose CV
+does not prefer the candidate is not evaluated on 2024 and keeps its champion prediction
+byte-identical. **Resilience is excluded by design** and stays byte-identical at 6.625: its CV is
+infeasible (`fin24aSD_ND` exists only in 2021) and the account-transition proxy is twice on record
+as mis-selecting for it (P8, P13) — running it a third time would be a known-weak selector, not an
+experiment.
+**Keep if:** for any target, the ≤2021 CV prefers the median-centered stack **AND** its 2021→2024
+MAE improves on the champion (account **5.014**, saving **6.831**), with every untouched target
+printing byte-identical. Registered alternative outcomes, both informative: a CV rejection on both
+targets says the population-weighted mean is the *right* basin location and the shrinkage gains are
+not a big-country artifact — a direct prediction-side answer to the concern G6 encodes on the
+hypothesis side, and the first positive robustness result for the whole P11–P18 stack; a split
+(CV adopts, holdout worsens) would repeat the P8/P13 non-transfer pattern on a new axis.
+Declared: this is an estimator-robustness experiment, not a search for a new stage; the unweighted
+median deliberately discards the population weighting inside the basin, so it is the *opposite*
+extreme from the incumbent rather than a mild variant — a middle option (weighted median) is left
+untested and noted as a follow-up if the extreme rejects narrowly.
