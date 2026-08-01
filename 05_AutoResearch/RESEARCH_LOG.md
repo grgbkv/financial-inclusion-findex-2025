@@ -2716,3 +2716,104 @@ because the margin comparison, not the adopt/reject bit, is the information here
 Declared: estimator-robustness experiment, not a search for a new stage; the CV comparison is a
 strict A/B against the incumbent on the identical stack, so nothing about the champion's structure
 is re-litigated.
+
+### E27 — verdict: DISCARD (registered direction rejected; the reverse is the substantive result)
+Primary weighted r(Δother-method saving, Δformal saving) = **+0.696** (n=76) — the registered
+**displacement** direction (r ≤ −0.30) is rejected about as decisively as it could be, and the
+result is logged as a discard on the pre-registered sign (E5/E9/E17 precedent). G3/G4 pass (76
+countries, 100% of dev-panel population); G6 is sign-stable with retention **exactly 0.50**
+(+0.696 → +0.348), so the primary co-movement is *half* big-country amplified — right at the E4
+judgment boundary, and a reason the reverse claim is reported as a description of this window
+rather than promoted to a keep.
+**The surge created savers more than it relabelled them.** The dev-panel accounting:
+
+| margin | 2021 | 2024 | Δ |
+|---|---|---|---|
+| formal (`fin17a_17a1_d`) | 24.3 | 38.0 | **+13.7** |
+| any saving (`save_any_t_d`) | 42.4 | 53.0 | **+10.6** |
+| other-method (`fin17c`) | 8.7 | 16.4 | +7.7 |
+| savings club (`fin17b`) | 5.3 | 14.4 | +9.1 |
+
+**77% of the formal gain shows up in total saving** (+10.6pp of +13.7pp), leaving ~3.1pp — under a
+quarter — as the arithmetic ceiling on pure relabelling. The pop-weighted pass-through slope of
+Δany-saving on Δformal-saving is **+0.720** (r=+0.747), the same story country by country (declared
+partly mechanical: formal is nested inside any-saving).
+The informal margins did not recede — they **rose alongside**, and rose most where formal saving
+rose most: Δformal terciles low/mid/high (+1.8/+8.4/+17.3pp) carry mean Δother-method saving of
+**+0.8/+2.7/+4.6pp**, monotonic. The semiformal savings-club margin behaves the same
+(r=**+0.531**, n=58) and its G6 retention is **1.06** — that one is not a big-country artifact at all.
+So the 2021-24 episode looks like a **broad saving expansion in which the formal mode grew fastest**,
+not a migration of existing savers across a mode boundary. This is the accounting foundation under
+the rails findings (E1/E10/E12/E23/E24): the rails were co-moving with new saving, not with
+re-labelled saving. Contemporaneous Δ-on-Δ, descriptive only; `fin17b`/`fin17c` are narrow variants
+declared under G3.
+
+### U20 — verdict: KEEP
+Median within-economy conditional **income** gap = **+5.7pp** across the **83** qualifying economies
+(**92.6%** of accountholding respondents), positive in **74 of 83 (89%)** — both pre-registered
+conditions clear (≥5pp; ≥56/83). IQR +2.3 to +11.3pp, mean +7.2pp, range Kosovo −9.5 to Ecuador
++32.5. M2 applied per economy; M3 n/a.
+**The composition wedge is again small.** Pooled over the same 83 economies the gap is +7.9pp
+against a within-economy median of +5.7pp — a wedge of **+2.2pp, ~28% of the pooled figure**
+(education: +2.7pp, ~22%). On the like-for-like **q5-vs-q1** contrast the within-country median is
+**+9.7pp**, positive in **30/33**, against a pooled figure of **+11.5pp** that reproduces **U17
+exactly** — a wedge of +1.8pp, ~16%.
+Income is the **second ruler axis** to be separated into within-country gradient vs between-country
+composition, and the second to survive. It is the axis where a collapse would have been most
+diagnostic, since income quintiles are constructed *within* each economy — a between-country story
+would have had to work through something other than quintile membership. It did not.
+**Honest weakness, recorded:** the income axis is *thinner* than education. Only **54%** of
+qualifying economies clear 5pp on the coarse contrast (education: the median itself was +9.4pp with
+IQR starting at +4.2), so the primary sits just above its threshold rather than comfortably over it;
+the like-for-like q5−q1 variant is the stronger reading at +9.7pp.
+**Disclosed registration detail:** the pre-registration wrote "83 of 97 economies qualify" (97 =
+the pre-check base of economies with any usable rows); the run prints "83 of 140" against the full
+economy count. The qualifying count — the number the condition depends on — is **exactly as
+registered**, and this is the U19 counting deviation not recurring.
+Caveats: post-treatment conditioning on account holding; the richest-40 vs poorest-40 contrast is
+coarser than U17's q5−q1 by construction; the median weights each economy equally; the qualifying
+set is selected. Single 2024 cross-section — descriptive, no trend language.
+**Four ruler axes (age, gender, urbanicity, employment) remain pooled-only.**
+
+### P23 — verdict: DISCARD (CV adopts on both targets, holdout worsens), champion unchanged
+The ≤2021 CV **prefers the population-weighted median decisively on both targets** — account
+3-stage **6.710 → 6.229** (margin **−0.481**) and saving 4-stage **6.370 → 5.980** (margin
+**−0.390**) — margins *larger than any adopted stage gain in the entire P-series*. The 2021→2024
+holdout then moves the wrong way on both: account **5.014 → 5.023** (+0.009pp) and saving
+**6.831 → 6.864** (+0.033pp). The keep condition requires CV **and** holdout, so this is a discard;
+`predictor.py` is reverted to the P18 champion and verified byte-identical (account **5.014** /
+resilience **6.625** / saving **6.831**).
+**The registered question is answered cleanly, and the answer reverses P22's reading.** P22's
+unweighted median was CV-rejected by **+1.120 / +0.502**; re-attaching the population weighting and
+changing nothing else flips both to **−0.481 / −0.390 preferred**. So what P22 detected was **the
+population weighting, not the mean-vs-median functional form** — P22's conclusion that "the
+population-weighted mean is the right basin location" should be read more narrowly as *the
+population weighting inside the basin is what matters*; between the two weighted centers, the ≤2021
+window actually prefers the robust one.
+**Second lesson, on the CV itself.** This is the **fourth CV→holdout non-transfer** (P8, P9, P13,
+P23) and by far the sharpest: the largest CV improvement ever measured on this stack buys **nothing**
+out of sample. The 2017→2021 and 2021→2024 transitions disagree about the basin center, which is
+consistent with the surge-window regime change already on record (P3, P10). Practical reading: the
+two centers are **within 0.01–0.03pp of each other on the holdout** — near-equivalent out of sample —
+so the CV's large margin is a property of the calm pre-2021 window, not a durable estimator ranking.
+The declared middle option is now tested and the center axis is closed.
+
+## 2026-08-01 wrap-up
+Ran 3 experiments (E27, U20, P23), one per stream — **one keep, two informative discards**.
+**E27 (hypothesis, DISCARD on the registered sign):** the 2021-24 formal-saving surge did **not**
+displace informal saving — r(Δother-method, Δformal) = **+0.696** (n=76, G6 retention exactly 0.50),
+savings-club margin **+0.531** (retention 1.06), and **77% of the +13.7pp formal gain shows up in
+total saving** (pass-through slope +0.720). The surge is mostly **net new saving**, with informal
+saving rising alongside it and rising most where formal rose most (+0.8/+2.7/+4.6pp across Δformal
+terciles). That is the accounting foundation under the whole rails series.
+**U20 (micro, KEEP):** income is the second ruler axis shown to be **within-country**, not
+composition — median within-economy conditional gap **+5.7pp**, positive in **74/83** economies
+(92.6% of accountholders), wedge **+2.2pp (~28% of pooled)**; like-for-like q5−q1 median **+9.7pp**
+(30/33) against a pooled +11.5pp that reproduces U17 exactly. Weaker than education: only 54% of
+economies clear 5pp.
+**P23 (prediction, DISCARD):** the population-weighted median is CV-preferred by the largest margins
+in the P-series (−0.481 account, −0.390 saving) yet loses on the holdout by 0.009/0.033pp. Two
+results: P22's rejection was **the weighting, not the functional form** (re-weighting flips
++1.120/+0.502 rejected to −0.481/−0.390 preferred), and this is the fourth and sharpest CV→holdout
+non-transfer — the pre-2021 window's estimator ranking does not survive the surge window.
+Prediction champion unchanged: **account 5.014 / resilience 6.625 / saving 6.831** (P18, 1bb3f78).
