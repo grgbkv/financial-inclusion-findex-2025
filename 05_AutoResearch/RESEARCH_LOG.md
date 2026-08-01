@@ -2612,3 +2612,107 @@ population-weighted mean is the right shrink target and the P11–P18 gains are 
 artifact — the first positive robustness result for the stack, with the largest margins in the
 P-series, and obtained under an unweighted metric that would have favoured the median.
 Prediction champion unchanged: **account 5.014 / resilience 6.625 / saving 6.831** (P18, commit 1bb3f78).
+
+## 2026-08-01 daily autoresearch cycle
+
+## E27 — pre-registered (hypothesis / country level)
+**Idea:** eleven experiments have now traced *where the 2021-24 formal-saving surge came from*
+(E1/E10/E12/E23/E24: three digitalization rails) and *where it went* (E7 resilience composition,
+E11/E25 borrowing, E26 the balance-sheet boundary). Nobody has asked the accounting question
+underneath all of it: **did the surge create savers, or relabel them?** The whole rails story reads
+very differently if formal saving grew by pulling existing informal savers across a mode boundary
+(a *composition* shift inside an unchanged saving population) than if it grew on top of unchanged
+informal saving (net new saving). The country file carries the disjoint saving modes needed to
+separate the two: `fin17c` (saved using *other* methods — the informal margin, 76 dev-panel
+countries in both waves), `fin17b` (saved via a savings club or a person outside the family — the
+semiformal margin, 58 countries), and `save_any_t_d` (saved any money, 76 countries), against the
+headline `fin17a_17a1_d` (saved at an FI or via mobile money). Identification check run before
+registration and disclosed: on the 2024 cross-section `fin17a_17a1_d` ≤ `save_any_t_d` in 100% of
+dev-panel countries (nesting confirmed) while `fin17b`/`fin17c` sit near 17pp mean, well below the
+27.1pp headline and *not* nested — so the informal/semiformal margins are genuine non-mechanical
+comparators. No delta and no correlation was computed at that check.
+**Hypothesis (registered direction — displacement):** the surge is substantially a mode switch, so
+Δ(formal saving) co-moves **negatively** with Δ(other-method saving) 2021→2024 across the dev panel.
+**Primary test:** pop-weighted corr of Δ`fin17c` with Δ`fin17a_17a1_d`, 2021→2024, `pan_dev`.
+**Keep if** r ≤ **−0.30** (the registered sign) AND G6 sign-stable with retention ≥ 0.5 (E4 rule).
+Following the E5/E9/E17 precedent, a result of |r| ≥ 0.30 with the *opposite* sign is a **discard of
+the registered direction**, with the reverse reported as the substantive finding.
+**Secondary A:** the same test on the semiformal margin Δ`fin17b` (n≈58).
+**Secondary B (the accounting):** dev-panel pop-weighted aggregates of `save_any_t_d`,
+`fin17a_17a1_d`, `fin17b`, `fin17c` at 2021 and 2024 — how much of the headline formal gain shows up
+in total saving at all.
+**Secondary C (pass-through):** pop-weighted LS slope of Δ`save_any_t_d` on Δ`fin17a_17a1_d`. A
+slope near **1** means every point of formal saving is a point of new saving (net new savers); near
+**0** means pure relabelling; intermediate values split the surge. Reported with its correlation and
+declared *partly mechanical* (formal saving is nested inside any-saving, which biases the slope
+upward), so it is context for the primary, never the test.
+Declared: contemporaneous Δ-on-Δ co-movement, descriptive only, never causal; `fin17b`/`fin17c` are
+narrower variants with no headline status under G3 and are declared as such; sample composition
+differs across the three comparators, so each correlation prints its own n and the primary's sample
+is the one gated.
+
+## U20 — pre-registered (micro stream)
+**Idea:** U19 took the ruler's largest axis (education) apart into within-country gradient vs
+between-country composition and the gradient survived — median within-economy gap **+9.4pp**,
+positive in 63/64 economies, composition wedge only ~22% of the pooled figure. Five axes remain
+pooled-only. This runs the identical test on the **second-largest axis, income** (U17: conditional
+q5−q1 = **+11.5pp**), which is the axis where the composition worry is *a priori* strongest: income
+quintiles are constructed **within** each economy, so a purely between-country story would have to
+work through something other than quintile membership — making a collapse here far more diagnostic
+than a collapse on education would have been.
+**Primary:** for EACH economy separately, the conditional income gap in digital-payment use —
+weighted rate of `anydigpayment == 1` among `account == 1` for `inc_q >= 4` (richest 40%) minus
+`inc_q <= 2` (poorest 40%). An economy qualifies only if BOTH cells reach unweighted n ≥ 100 (M2
+applied PER ECONOMY): **83 of 97 economies qualify** (coverage check run before registration on
+non-missing outcome+weight+`inc_q`, matching M2 as applied — no rate computed; this is the fix for
+U19's disclosed count deviation). Statistic = the **MEDIAN** within-economy gap.
+**Keep if** median ≥ **5pp** AND ≥ two-thirds (**≥ 56/83**) of qualifying economies show a positive
+gap — the same two-part condition as U19, for the same reason: a median driven by a minority of
+large gaps is a weaker claim than a consistent within-country regularity.
+**Secondary:** share positive, IQR and extremes; the pooled gap on the same 83 economies and on all
+economies (the wedge = the composition estimate); and the like-for-like **q5-vs-q1** variant
+(**33 economies** qualify under the same pre-check), which is the direct within-country counterpart
+of U17's +11.5pp headline.
+**Registered alternative outcome:** a median far below the pooled figure, or a positive share near
+half, would say the income axis of the ruler is substantially between-country composition — which,
+given that quintiles are within-economy constructs, would be a sharper methodological result than
+U19's and would force a re-wording of U17.
+Declared caveats: post-treatment conditioning on account holding (as in U6/U8/U10/U14–U19); the
+richest-40 vs poorest-40 contrast is **coarser** than U17's q5−q1 and is expected to be smaller in
+pp for that reason alone — the q5-vs-q1 variant is the like-for-like comparison; the median weights
+each economy equally, by design a different weighting from the pooled statistic; the qualifying set
+is selected (economies need sizeable poorest-40 *and* richest-40 accountholding populations).
+Single 2024 cross-section — descriptive, no trend language.
+
+## P23 — pre-registered (prediction stream)
+**Idea:** P22 replaced the basin center — the population-weighted mean, unchanged since P5 — with
+the **unweighted median** and the ≤2021 CV rejected it decisively on both targets (account +1.121pp,
+saving +0.502pp), the largest margins in the P-series. P22's own declared follow-up is the **middle
+option**: P22 tested the *opposite extreme* (throwing the population weighting away entirely), so
+the rejection does not distinguish "the weighting is doing real work" from "the mean, being
+sensitive to the whole distribution, is the right functional form". A **population-weighted median**
+separates them: it keeps the population weighting exactly as the incumbent uses it, and changes only
+the location functional from mean to median (robust to a single giant country sitting far from its
+basin's mass).
+**Test:** replace the basin center in `_shrink` with the **population-weighted median** — the basin
+member value at which the cumulative population weight first reaches 50% — at **every** stage, per
+target. Everything else is byte-identical to the P18 champion: k = 0.1, damped trend λ = 0.5, basin
+sequences and adopted stage counts unchanged. Adoption is per target and entirely ≤2021 (no 2024 in
+features, fitting or selection): CV on that target's 2017→2021 transition with a persistence base,
+all basins built at 2017 — the P10/P12/P13/P16–P22 protocol — comparing the incumbent mean-centered
+stack against the identical weighted-median-centered stack. Per the P14/P15/P19–P22 protocol, a
+target whose CV does not prefer the candidate is not evaluated on 2024 and keeps its champion
+prediction byte-identical. **Resilience is excluded by design** (CV infeasible; the account proxy is
+twice on record as mis-selecting for it — P8, P13) and stays at 6.625.
+**Keep if** for any target the ≤2021 CV prefers the weighted-median stack **AND** its 2021→2024 MAE
+improves on the champion (account **5.014**, saving **6.831**), with every untouched target printing
+byte-identical.
+**Registered alternative outcomes:** a CV rejection with margins **as large as P22's** would say the
+*functional form* (mean vs median) is what P22 detected, not the weighting; a rejection with margins
+**much smaller than P22's** would say the opposite — that P22's margin was mostly the discarded
+population weighting, and the population-weighted mean's advantage over a robust center is thin.
+Either reading is a sharper result than P22's bare "no", and both are recorded regardless of verdict
+because the margin comparison, not the adopt/reject bit, is the information here.
+Declared: estimator-robustness experiment, not a search for a new stage; the CV comparison is a
+strict A/B against the incumbent on the identical stack, so nothing about the champion's structure
+is re-litigated.
