@@ -1,5 +1,9 @@
 # Parked ideas — capture only, not scheduled
 
+> **The active backlog now lives in `RESEARCH_AGENDA.md`** (seven programs, opened 2026-08-01 after
+> the coverage audit). This file keeps only ideas that are *not* scheduled research — cross-cutting
+> or infrastructure ideas awaiting a decision.
+
 ## 2026-07-11 — Literature into the org / domain model in the MLX lab (Georgy)
 
 Idea as stated: select and add the current financial-inclusion economics literature to "the
