@@ -2817,3 +2817,113 @@ results: P22's rejection was **the weighting, not the functional form** (re-weig
 +1.120/+0.502 rejected to −0.481/−0.390 preferred), and this is the fourth and sharpest CV→holdout
 non-transfer — the pre-2021 window's estimator ranking does not survive the surge window.
 Prediction champion unchanged: **account 5.014 / resilience 6.625 / saving 6.831** (P18, 1bb3f78).
+
+---
+
+## 2026-08-02 — cycle pre-registration (E28, E29, P24)
+
+**B1 coverage run first** (`python3 coverage.py`, no outcome computed): country file 23/429 columns
+touched (5%); untouched wave transition 2011→2014, thin 2014→2017 (3 mentions) against 2021→2024
+(162); untouched frames `education`, `age_cat`, `laborforce`; 14 untouched country modules including
+`con` (133 cols), `fh` (4), `internet` (1).
+
+**Coverage cells this cycle lands on (rule B2):**
+- **E28** → wave transitions **2014→2017** (thin, 3 mentions) and **2017→2021**, i.e. the replication
+  debt itself (Program 1.1/1.2). Parent findings: E1, E10, E12 (lineage depth 1 — B3 clear).
+- **E29** → the **`internet` column, an untouched module** (Program 5.1/5.2), 2024 cross-section.
+  Secondary descends from E23/E24 (lineage depth 1 for that arm).
+- **P24** → prediction stream (no coverage constraint).
+Rule B2 is satisfied twice over; no experiment sits inside the 2021→2024 rails shaft alone.
+
+### E28 (pre-registered) — do the three digitalization rails ↔ formal-saving co-movements exist BEFORE 2021?
+
+**Why.** Under rule B4 every rails keep is `keep-window`: E1 (Δmobile money, r=+0.719), E10 (Δwage
+digitalization `fin32_acc`, r=+0.791) and E12 (Δdigital payments `g20_any`, r=+0.370) were all
+measured on 2021→2024, the surge window. If the co-movement is a general regularity it should be
+visible in the calm windows too; if it is not, the paper's Section 4 is a description of one episode
+and must say so. All four columns are present at 2014/2017/2021 (availability checked, no outcome
+looked at: `fin17a_17a1_d` 77/77/77, `g20_any` 77/77/77, `fin32_acc` 77/77/77, `mobileaccount_t_d`
+57/59/61 dev-panel countries).
+
+**Test.** For each rail R ∈ {`mobileaccount_t_d`, `fin32_acc`, `g20_any`} and each transition
+T ∈ {2014→2017, 2017→2021} (with 2021→2024 recomputed as the reference row): population-weighted
+correlation of Δ_T(R) with Δ_T(`fin17a_17a1_d`) on the developing panel, weight = 2024 adult
+population — E1/E10/E12's exact construction, changing only the window. Δ-tercile means reported per
+cell. Gates G3 (headline concepts declared; `fin32_acc` has no variant, E10 precedent), G4, G6
+(drop top-5 population). **B6 inference on every cell**: country bootstrap, 2,000 resamples,
+percentile 95% interval, plus Kish `neff = (Σw)²/Σw²` beside nominal n.
+
+**Promotion rule (pre-registered).** A rail is promoted `keep-window` → **`keep-general`** iff in at
+least one earlier transition it reaches **r ≥ +0.30 with the same (positive) sign**, G6 is
+sign-stable, and the E4 judgment rule holds (`r_droptop ≥ 0.5 × r_full`). A rail failing that in both
+earlier windows **stays `keep-window`** and its 2021→2024 result is relabelled explicitly as
+window-specific in `findings.tsv`. The bootstrap interval is reported for the record and is *not* an
+extra keep condition (the registered threshold is |r| ≥ 0.30).
+
+**Declared.** Contemporaneous Δ-on-Δ co-movement in every window — descriptive, never causal. Sample
+composition differs by rail and window (mobile money is the thin one at 57–61 countries); each cell
+prints its own n, neff and interval. A null in an earlier window is not evidence the mechanism is
+absent — the calm windows have far less Δ-variance to correlate, and that is itself reported
+(per-window SD of both Δs is printed so a variance-collapse reading can be checked).
+
+### E29 (pre-registered) — is connectivity a prerequisite (threshold) for the digital rails, or a linear correlate?
+
+**Why.** The rails story (E1/E10/E12/E23/E24) has no answer to "are these three margins just measuring
+internet penetration?". `internet` is untouched, present for **2024 only** on 77 developing panel
+economies (117 all-panel). Program 5.1/5.2.
+
+**Primary test.** Developing panel, 2024 cross-section. y = `g20_any` (digital-payment headline),
+x = `internet`. (i) population-weighted correlation r; (ii) weighted mean of y within internet
+terciles; (iii) nonlinearity: population-weighted OLS of y on x, linear vs quadratic, reporting the
+increment in weighted R², and the weighted slope of y on x estimated **separately below and above the
+weighted median of `internet`**.
+**Keep the THRESHOLD claim** iff |r| ≥ 0.30 **and** the low-half slope exceeds the high-half slope by
+a factor ≥ 2 (a prerequisite pattern: steep where connectivity is scarce, flat once it is common)
+**or** the reverse by a factor ≥ 2 (a takeoff pattern) — direction recorded either way — **and** the
+quadratic term adds ≥ 0.05 to weighted R².
+**Fallback claim (registered now, lesser):** if |r| ≥ 0.30 but the nonlinearity bar fails, keep only
+the linear statement "connectivity level tracks digital-payment level across developing economies",
+status `keep-window`, with the note that `internet` is single-wave so B4 promotion is **impossible by
+construction** — this claim can never become `keep-general`.
+
+**Secondary (registered, reported regardless of the primary).** Do the rails survive conditioning on
+connectivity? For each rail R ∈ {`mobileaccount_t_d`, `fin32_acc`, `g20_any`}: weighted **partial**
+correlation of Δ_2021→24(R) with Δ_2021→24(`fin17a_17a1_d`) controlling the **2024 level** of
+`internet` (both residualized by weighted OLS on `internet`). Registered comparison: each rail
+retains **r_partial ≥ +0.30 or ≥ 2/3 of its unconditional magnitude**. Declared design mismatch: a
+*level* control imposed on a Δ design, and a 2024 control on a 2021→2024 change — stated as a
+limitation, not fixed.
+
+**Gates.** G3 (`g20_any`, `mobileaccount_t_d`, `fin17a_17a1_d` headlines declared; `internet` and
+`fin32_acc` have no variant choice and are declared unregistered-by-necessity), G4, G6. B6: bootstrap
+(2,000 country resamples) and Kish `neff` on the primary and on each secondary partial.
+**Declared.** Single cross-section — no trend language on the primary; cross-country level
+correlations are the weakest design in the ledger (development level confounds everything), so the
+primary is worded as a description of the 2024 cross-section, never as a mechanism.
+
+### P24 (pre-registered) — empirical-Bayes ADAPTIVE shrinkage weight: should a basin's reliability set how hard it pulls?
+
+**Why.** `k = 0.1` has been a hard constant since P5, at every stage of every stack. P9 tuned it as a
+single global constant (CV picked 0.2, holdout worsened) and the center axis is closed by P22/P23.
+Untested: whether k should **vary by basin**. A basin whose population-weighted mean rests on many
+countries of comparable size is a more reliable target than one dominated by a single economy, and
+should pull harder — the standard empirical-Bayes shape, and it reuses the Kish machinery rule B6
+just made mandatory on the hypothesis side.
+
+**Candidate.** Replace the constant with `k_g = neff_g / (neff_g + m)` at **every** stage, where
+`neff_g = (Σw)² / Σw²` over the basin's member countries' 2024 adult population weights and `m` is a
+constant selected by CV. `m → ∞` reproduces no-shrink; small `m` approaches full pooling; the
+incumbent constant 0.1 is *not* in the family, so it is carried as the explicit baseline.
+
+**Adoption rule (entirely ≤2021 — no 2024 in features, fitting or selection).** Per target, CV on
+that target's 2017→2021 transition with a persistence base and all basins built at 2017 (the
+P10/P12/P13/P16–P23 protocol), grid `m ∈ {50, 150, 500, 1500, 5000}`, comparing the best adaptive
+stack against the identical incumbent constant-k stack: account = 3-stage (income → region → g20
+terciles), saving = 4-stage (region → income → account terciles → g20 terciles). **Resilience is
+excluded by design** (no pre-2021 transition; the account proxy is twice on record as mis-selecting
+for it — P8, P13) and stays byte-identical at 6.625.
+**Keep if** for any target the ≤2021 CV prefers the adaptive weight **AND** its 2021→2024 MAE improves
+on the champion (account **5.014**, saving **6.831**), with every untouched target printing
+byte-identical. Given four CV→holdout non-transfers on record (P8, P9, P13, P23), the CV margin and
+the holdout delta are both recorded whatever the verdict — the size of the gap between them is now
+the P-series' most reliably informative output.
