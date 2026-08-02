@@ -2971,3 +2971,51 @@ wage digitalization) have intervals comfortably clear of zero in both replicatin
 identification. Composition varies (mobile money 54–58 economies vs 71–77 for the others), the
 weight is the 2024 adult population in all windows by construction, and `fin32_acc` is an
 employer-side attribute. G3/G4 pass in all cells (G4 pop_share 0.66–1.00); G5 n/a.
+
+### E29 — verdict: THRESHOLD claim DISCARDED on the registered bar; FALLBACK linear claim KEPT; secondary is the substantive result
+
+**Primary (2024 cross-section, dev panel).** Weighted r(`g20_any`, `internet`) = **+0.707** (n=76,
+Kish **neff = 7.2**, bootstrap 95% CI **[+0.271, +0.844]**). G4 passes (77 economies, pop_share 1.00);
+G6 is sign-stable with retention **0.54** (+0.707 → +0.380) — clearing the E4 0.50 floor, but only
+just, so the level association is roughly *half* big-country amplified and is reported that way.
+
+The **threshold/prerequisite shape fails its registered bar.** The quadratic term adds only
+**+0.036** to weighted R² (0.500 → 0.537) against the registered ≥ 0.05, so no shape claim is kept.
+What the split-slope test *does* show is recorded because the direction was registered either way,
+and it is the **opposite of the prerequisite hypothesis**: the slope of digital payments on internet
+is **+0.294 below** the population-weighted median connectivity (70.5pp) and **+2.668 above** it —
+ratio 1:9.1 in the **takeoff** direction, not the prerequisite direction. The tercile means agree
+(internet 42.4 → g20 45.3pp; 73.1 → 50.4pp; 86.7 → **82.0pp**): the middle tercile sits barely above
+the bottom, and almost all of the co-movement lives in the top third of the connectivity
+distribution. So the registered "digital rails do not function below a connectivity floor" reading is
+**not** what the 2024 cross-section looks like; it looks like acceleration at high connectivity. The
+magnitude bar was missed, so this is logged as a direction on record, not a claim.
+
+**KEPT (fallback, as registered):** connectivity level and digital-payment level track each other
+strongly across developing economies in 2024, r = +0.707. Status `keep-window` with the note that
+`internet` is **single-wave, so B4 promotion to `keep-general` is impossible by construction** — this
+claim can never become a regularity in this dataset.
+
+**Descriptive, same x, and the most interesting line in the run:**
+r(`account_t_d`, internet) = **+0.359**; r(`fin17a_17a1_d`, internet) = **+0.606**;
+r(`mobileaccount_t_d`, internet) = **+0.097** (n=62). **Mobile money is essentially orthogonal to
+internet penetration** — consistent with a rail that runs on basic handsets rather than data, and a
+useful counterweight to reading the whole rails story as connectivity.
+
+**Secondary — the rails are not proxies for connectivity.** Conditioning the 2021→2024 rail↔saving
+co-movements on the 2024 internet *level* leaves all three essentially untouched, and one *stronger*:
+
+| rail | unconditional | partial \| internet | retains | 95% CI on the partial |
+|---|---|---|---|---|
+| mobile money | +0.719 | **+0.726** | 1.01 | [+0.565, +0.857] |
+| wage digitalization | +0.791 | **+0.795** | 1.00 | [+0.636, +0.875] |
+| digital payments | +0.370 | **+0.637** | 1.72 | [+0.468, +0.841] |
+
+All three clear the registered condition (partial ≥ +0.30 or ≥ 2/3 retention). The digital-payment
+rail is *suppressed* by connectivity in the unconditional form — netting out the internet level
+raises it from +0.370 to +0.637, and lifts its interval clear of the zero it straddled in E28. The
+objection "the rails are just internet penetration" is not supported in this window.
+**Declared mismatch, unfixed:** a *level* control imposed on a Δ design, with the control dated 2024
+while the change spans 2021→2024. Cross-country level correlations are the weakest design in the
+ledger (development level confounds everything); the primary is a description of the 2024
+cross-section, no trend language, never a mechanism.
