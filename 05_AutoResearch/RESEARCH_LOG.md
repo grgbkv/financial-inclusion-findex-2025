@@ -2927,3 +2927,47 @@ on the champion (account **5.014**, saving **6.831**), with every untouched targ
 byte-identical. Given four CV→holdout non-transfers on record (P8, P9, P13, P23), the CV margin and
 the holdout delta are both recorded whatever the verdict — the size of the gap between them is now
 the P-series' most reliably informative output.
+
+### E28 — verdict: KEEP (all three rails replicate on 2017→2021 and are PROMOTED to keep-general)
+
+| rail | 2014→2017 | 2017→2021 | 2021→2024 (reference) |
+|---|---|---|---|
+| mobile money (`mobileaccount_t_d`) | **−0.048** (n=54) | **+0.454** (n=57) | +0.719 (n=58) |
+| wage digitalization (`fin32_acc`) | **+0.155** (n=77) | **+0.678** (n=77) | +0.791 (n=71) |
+| digital payments (`g20_any`) | **−0.248** (n=77) | **+0.685** (n=77) | +0.370 (n=76) |
+
+**The 2017→2021 window replicates all three** at or above the pre-registered +0.30, G6 sign-stable,
+retention 0.89 / 0.75 / 0.61 — every one clear of the E4 0.50 floor. Δ-tercile monotonicity holds in
+that window too (mobile money +2.5/+3.4/+11.4pp; wage +−0.6/+5.5/+8.1pp; digital pay −0.9/+5.9/+8.1pp).
+Under the pre-registered promotion rule **E1, E10 and E12 move `keep-window` → `keep-general`**: the
+rails ↔ formal-saving co-movement is a two-window regularity, not an artifact of the surge.
+
+**2014→2017 replicates nothing, and the registered variance check explains why rather than
+contradicting it.** In that window the dev-panel saving margin *fell* (22.2 → 21.0pp) with the
+smallest country-level Δ dispersion in the series (SD 4.9pp vs 8.4pp in 2017–21 and 7.2pp in
+2021–24). Two of the three cells are also G6-unstable (mobile money −0.048 → +0.414, digital pay
+−0.248 → +0.458 when the top-5 populations drop) — i.e. the pre-2017 cells have no stable sign in
+either direction, which is a different statement from "the association is absent". The honest
+reading: **the rails track saving in the two windows where saving moved; the flat window carries no
+usable signal either way.** The ledger's first look at 2014→2017 as a *comparison* window, not a
+one-off.
+
+**B6 inference, and the sharpest result of this experiment.** The Kish effective sample size is
+**6.8–7.5 in every single cell** — 77 population-weighted countries carry roughly **7.5** effective
+observations, because the weight concentrates in a handful of economies. The bootstrap intervals
+(2,000 country resamples) are correspondingly wide:
+
+- mobile money 2021→24 **[+0.560, +0.852]**, 2017→21 [+0.166, +0.658]
+- wage digital 2021→24 **[+0.637, +0.872]**, 2017→21 [+0.323, +0.833]
+- digital pay 2021→24 **[−0.023, +0.824]** — *straddles zero*, 2017→21 [+0.383, +0.820]
+
+E12's headline (+0.370) is the weakest rail and its interval **includes zero**; per the
+pre-registration the interval is reported, not an extra keep condition, so E12 promotes on the
+registered criterion — but the promotion should be read with that interval attached, and the paper
+must stop implying 76 degrees of freedom behind these numbers. The two strong rails (mobile money,
+wage digitalization) have intervals comfortably clear of zero in both replicating windows.
+
+**Caveats.** Contemporaneous Δ-on-Δ in every window — descriptive temporal co-movement, no
+identification. Composition varies (mobile money 54–58 economies vs 71–77 for the others), the
+weight is the 2024 adult population in all windows by construction, and `fin32_acc` is an
+employer-side attribute. G3/G4 pass in all cells (G4 pop_share 0.66–1.00); G5 n/a.
