@@ -3019,3 +3019,65 @@ objection "the rails are just internet penetration" is not supported in this win
 while the change spans 2021→2024. Cross-country level correlations are the weakest design in the
 ledger (development level confounds everything); the primary is a description of the 2024
 cross-section, no trend language, never a mechanism.
+
+### P24 — verdict: DISCARD (CV rejects on both targets), champion unchanged
+
+The ≤2021 CV **prefers the incumbent constant k on both targets**, at every grid point:
+account 3-stage `constant_k = 6.710` vs `m=50: 6.995 / 150: 7.154 / 500: 7.364 / 1500: 7.449 /
+5000: 7.482` (best margin **+0.284**, wrong side); saving 4-stage `constant_k = 6.370` vs
+`m=50: 6.611 / 150: 6.419 / 500: 6.721 / 1500: 6.874 / 5000: 6.939` (best margin **+0.049**).
+No target adopts, so `predict()` never sees an adaptive weight and the holdout is byte-identical:
+**account 5.014 / resilience 6.625 / saving 6.831**. `predictor.py` is reverted to the P18 champion
+and re-run to confirm.
+
+**The diagnostic is worth more than the verdict, and it indicts the registered grid.** The basin
+reliability table (printed inside the experiment) shows how extreme the weight concentration is:
+
+| basin | n countries | Kish neff |
+|---|---|---|
+| Upper middle income | 32 | **2.77** |
+| Lower middle income | 33 | 4.20 |
+| Low income | 12 | 7.13 |
+| South Asia (excl. HI) | 5 | **1.61** |
+| East Asia & Pacific (excl. HI) | 8 | 1.86 |
+| Sub-Saharan Africa (excl. HI) | 26 | 9.51 |
+
+Every basin's population-weighted mean rests on **2–10 effective economies**, not on its 5–40
+nominal members — the same neff ≈ 7 finding E28 produced on the hypothesis side, now visible inside
+the model. Because `neff_g` is that small, `k_g = neff_g/(neff_g+m)` at **every** grid point m ≥ 50
+is **below the incumbent 0.1 almost everywhere** (at m=500, k_g runs 0.003–0.019). So the registered
+grid conflated two changes — grading k by reliability *and* cutting the average k by an order of
+magnitude — and the monotone deterioration in m is mostly the second one, re-confirming P9's "less
+shrinkage is worse" rather than testing the empirical-Bayes idea cleanly. The best grid point is the
+smallest m on both targets, i.e. the CV is pushing back toward more shrinkage the whole way.
+**Registered as the next candidate in this axis (not run today, budget):** a **shrinkage-neutral**
+version — rescale `k_g` so its population-weighted mean equals the incumbent 0.1, keeping only the
+*relative* grading across basins. That isolates the reliability question from the level question,
+which today's grid could not. Logged in `RESEARCH_AGENDA.md`.
+This is the **fifth** CV→holdout interaction on record (P8, P9, P13, P23, P24) and the first where CV
+and holdout cannot disagree, because CV rejected before the holdout was ever consulted.
+
+## 2026-08-02 wrap-up
+Ran 3 experiments (E28, E29, P24) — **two keeps, one discard, and the ledger's first promotions**.
+**E28 (hypothesis, KEEP — Program 1, the replication debt):** all three digitalization rails
+replicate on **2017→2021** — mobile money **+0.454** (n=57), wage digitalization **+0.678** (n=77),
+digital payments **+0.685** (n=77) — G6 sign-stable with retention 0.89/0.75/0.61, so **E1, E10 and
+E12 are promoted `keep-window` → `keep-general`**, the first three general claims in the ledger.
+2014→2017 replicates nothing, in the one window where dev-panel saving *fell* (22.2→21.0pp) with the
+smallest Δ dispersion (SD 4.9pp) and G6-unstable cells — no signal either way, not a contradiction.
+**B6 bit that changes how the whole ledger should be read: Kish neff is 6.8–7.5 in every cell**, and
+E12's 2021→24 bootstrap interval **[−0.023, +0.824] straddles zero**.
+**E29 (hypothesis, MIXED — Program 5, the untouched `internet` column):** the registered
+*prerequisite/threshold* shape is **discarded** (quadratic adds only +0.036 R² against a 0.05 bar);
+the split slopes run the **opposite** way to the hypothesis — +0.294 below vs **+2.668** above the
+70.5pp weighted-median connectivity, a takeoff rather than a floor. The fallback linear claim is kept
+(r = **+0.707**, n=76, CI [+0.271, +0.844], G6 retention 0.54) and can **never** be promoted —
+`internet` is single-wave. The substantive result is the secondary: conditioning the rails on the
+2024 internet level leaves them intact (**+0.726 / +0.795 / +0.637** against +0.719/+0.791/+0.370),
+and *raises* the digital-payment rail out of its zero-straddling interval — the rails are not proxies
+for connectivity. Mobile money is nearly orthogonal to internet penetration (r = **+0.097**).
+**P24 (prediction, DISCARD):** the empirical-Bayes weight `k_g = neff_g/(neff_g+m)` is CV-rejected on
+both targets (+0.284 account, +0.049 saving); the basin neff table (1.6–9.5 effective economies per
+basin) shows the registered grid cut average shrinkage tenfold instead of isolating the grading, so a
+shrinkage-neutral variant is registered for a later cycle. Champion unchanged:
+**account 5.014 / resilience 6.625 / saving 6.831** (P18, 1bb3f78).

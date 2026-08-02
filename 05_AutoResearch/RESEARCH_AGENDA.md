@@ -128,3 +128,26 @@ Roughly one cycle per program on rotation, with Programs 1 and 2 interleaved eve
 the replication and inference debts are paid. A cycle of three experiments that satisfies B2 might
 look like: one Program 1 replication, one new-ground experiment (3–7), one prediction-stream
 experiment — which is also the natural shape for keeping the paper draft honest while it grows.
+
+---
+
+## Addendum (2026-08-02, from the E28/E29/P24 cycle)
+
+- **Program 1 status.** E28 paid the first instalment: E1/E10/E12 are now `keep-general` (replicated
+  on 2017→2021). Still `keep-window` and owed a replication: E5b, E7, E11, E13, E14, E22, E23, E24,
+  E25, E29. Agenda item 1.3 (E17 "access converges, use diverges") and 1.4 (the E27 accounting on the
+  decade) are the next two with the most riding on them.
+- **Program 2 status.** B6 machinery now exists inside `experiment.py` (country bootstrap + Kish
+  neff) and can be lifted verbatim. The recurring number is **neff ≈ 7** on the developing panel
+  whatever the nominal n — items 2.2 (BH correction, rule B7) and 2.3 (unweighted replication of
+  every kept association) are now the highest-value inference items, because a 7-effective-observation
+  ledger with 50 tests is exactly where FDR bites.
+- **Program 5 status.** 5.1 and 5.2 are answered (E29): no connectivity floor in the 2024
+  cross-section, and the rails survive conditioning on the internet level. **5.3 and 5.4 (micro
+  `internet_use`) are untouched and now the better half of the program** — E29's finding that mobile
+  money is nearly orthogonal to country internet penetration (r = +0.097) makes the individual-level
+  question sharper, not redundant.
+- **New prediction-stream candidate (from P24), registered for a later cycle:** *shrinkage-neutral*
+  reliability grading — rescale `k_g = neff_g/(neff_g+m)` so its population-weighted mean equals the
+  incumbent 0.1, so the CV tests the **relative** grading across basins without also cutting the
+  average shrinkage. P24's grid could not separate the two and rejected on the level, not the shape.
