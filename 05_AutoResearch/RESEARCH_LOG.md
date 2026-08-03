@@ -3081,3 +3081,118 @@ both targets (+0.284 account, +0.049 saving); the basin neff table (1.6–9.5 ef
 basin) shows the registered grid cut average shrinkage tenfold instead of isolating the grading, so a
 shrinkage-neutral variant is registered for a later cycle. Champion unchanged:
 **account 5.014 / resilience 6.625 / saving 6.831** (P18, 1bb3f78).
+
+## 2026-08-03 — cycle pre-registration (E30, E31, P25)
+
+**Coverage cells this cycle lands on (rule B1/B2).** `python3 coverage.py` was run before any
+hypothesis was chosen. The audit still reports 6% of country columns, 11% of micro columns, and
+**three of seven country frames with zero ledger mentions**.
+- **E30** — wave transitions **2014→2017** (thin, 14 mentions) and **2017→2021**; frame `pan_dev`,
+  `group == "all"` (used). Program 1, the replication debt.
+- **E31** — **`pan_grp` with `group ∈ {education, age_cat, laborforce}`: three UNTOUCHED frames
+  (0 mentions each)**, plus `gender` (detector-blind, effectively unused) and `income` (21 mentions),
+  across **all four wave transitions**. This is the cycle's B2 experiment. Program 3.
+- **P25** — prediction stream, no new coverage cell (by nature).
+**Lineage (rule B3).** E30's parents are E11/E13/E14 (a different family from the E1/E10/E12 rails
+that E28/E29 descended from — the chain is broken as B3 requires). E31's parents are E17/E20/E21
+(the gap/convergence family, last touched at E21, five experiments ago). P25's parent is P24.
+
+### E30 (pre-registered) — do the three NON-saving-destination co-movements replicate on earlier transitions?
+
+**Why.** E28 paid the first instalment of the replication debt for the rails→saving family (E1/E10/E12
+promoted). Three further `keep-window` findings share a construction and have never been tested
+outside 2021→2024, and none of them has formal saving as the destination — so they are a genuinely
+independent test of whether the ledger's Δ-on-Δ co-movements are window artifacts:
+- **E11**: Δ`fin22a_22a1_22g_d` (formal borrowing) ~ Δ`fin17a_17a1_d` (formal saving), r = +0.403
+- **E13**: Δ`fiaccount_t_d` ~ Δ`mobileaccount_t_d` (co-development vs leapfrogging), r = +0.435
+- **E14**: Δ`mobileaccount_t_d` ~ Δ`g20_any` (bundled on-ramps), r = +0.600
+
+**Test.** Developing panel (`pan_dev`, `group == "all"`), for each of the three pairs, in each of two
+earlier windows **2014→2017** and **2017→2021**: population-weighted correlation of the two Δs,
+weight = 2024 adult population (E1/E10/E12/E28 construction, changing only the window). Δ-tercile
+means of the destination variable per cell. Per-window SD of both Δs printed (E28's variance-collapse
+check). Gates G3 (headline variants declared), G4, G6 (drop top-5 population).
+**B6 on every cell:** country bootstrap, 2,000 resamples, percentile 95% interval, and Kish
+`neff = (Σw)²/Σw²` beside nominal n.
+
+**Promotion rule (pre-registered, identical to E28's).** A finding is promoted `keep-window` →
+**`keep-general`** iff in at least one earlier window it reaches **r ≥ +0.30 with the same (positive)
+sign**, G6 is sign-stable, and the E4 judgment rule holds (**`r_droptop` ≥ 0.5 × `r_full`**). A
+finding failing that in both earlier windows **stays `keep-window`** and is relabelled explicitly as
+window-specific. The bootstrap interval is reported for the record and is **not** an extra keep
+condition.
+
+**Declared.** Contemporaneous Δ-on-Δ co-movement in every window — descriptive, never causal. Sample
+composition differs by pair and window (the mobile-money pairs are the thin ones at ~54–59
+economies); each cell prints its own n, neff and interval. A null in a calm window is not evidence
+the association is absent — E28 established that the 2014→2017 window has the least Δ-variance in the
+series — and the printed SDs let that reading be checked rather than assumed.
+
+### E31 (pre-registered) — over 13 years, do ACCESS gaps close while USAGE gaps stay open?
+
+**Why.** `pan_grp` is the largest untouched *frame* in the repo: six demographic slices × five waves ×
+117 economies, and `education`, `age_cat` and `laborforce` have **zero** ledger mentions. The paper's
+"access converges, use diverges" motif (E17 tested it on country levels and was discarded) has never
+been tested where it is most natural — *within* countries, across demographic groups, over the whole
+13-year panel. Agenda items 3.2 + 3.3. Parents: E17/E20/E21.
+
+**Construction.** Developing panel economies only (`incomegroupwb24 != "High income"`), five
+dimensions with multi-wave coverage; `urbanicity` is 2024-only and is therefore **excluded from the
+primary** and reported as a single-wave descriptive line. Advantaged group declared a priori for each
+dimension (recorded now, before any answer): gender → `men`; income → `richest 60%`; education →
+`secondary edu or more`; age_cat → `age 25+`; laborforce → `in laborforce`.
+Per country per wave: `gap = advantaged − disadvantaged` in pp. Aggregate = population-weighted mean
+gap across economies (weight = 2024 adult population, ledger convention).
+- **ACCESS margin** = `account_t_d`, window **2011 → 2024**.
+- **USAGE margin** = `g20_any`, window **2014 → 2024** (the column does not exist in 2011; declared).
+
+**Primary test and threshold.** For each of the five dimensions, Δgap over the margin's full window.
+- Claim A, *access gaps closed*: holds iff **≥3 of 5** dimensions have **Δgap_access ≤ −5pp**.
+- Claim B, *usage gaps did not close*: holds iff **≥3 of 5** dimensions have **Δgap_usage > −5pp**.
+- **The registered JOINT claim** ("within countries, access gaps closed while usage gaps did not")
+  is kept iff **A and B both hold AND ≥3 of 5 dimensions show the divergent pattern individually**
+  (Δgap_access ≤ −5pp *and* Δgap_usage > −5pp in the same dimension). Anything less is a discard of
+  the joint claim; A and B are then reported separately as descriptive lines, not as a keep.
+**Scale-free requirement (mandatory, per the agenda's ceiling-artifact note).** The pp gap must
+compress mechanically as the advantaged group approaches 100%. So the **log-odds gap**
+`L = logit(adv) − logit(disadv)` is computed for every cell and its Δ reported beside the pp Δ. A
+dimension may only *count toward* the joint claim if **ΔL and Δgap agree in sign**. Where they
+disagree, the pp narrowing is declared a ceiling artifact and that dimension counts as a non-closer.
+**Gates.** G3 (`account_t_d`, `g20_any` headlines declared), G4 per wave and dimension, G6
+(drop-top-5 population, sign stability of each Δgap). **B6:** country bootstrap 2,000 draws with a
+percentile 95% interval on every Δgap, and Kish `neff` per dimension.
+**Declared.** Descriptive within-country gap arithmetic across waves — an ordering of gaps in time,
+never a claim about what moved them. Panel composition is fixed by construction (117 panel economies,
+77 developing), but the *within-country* group samples are survey subgroups whose sampling error is
+not in this file; the bootstrap is over countries only and does not capture it.
+
+### P25 (pre-registered) — shrinkage-NEUTRAL empirical-Bayes grading (the variant P24 registered for a later cycle)
+
+**Why.** P24 tested `k_g = neff_g/(neff_g+m)` and was CV-rejected on both targets, but its own
+diagnostic showed the test was confounded: basin `neff` runs **1.6–9.5**, so at every grid point
+m ≥ 50 the adaptive weight sat an order of magnitude *below* the incumbent 0.1, and the CV was mostly
+re-rejecting P9's "less shrinkage is worse" rather than judging the reliability *grading*. Parent: P24.
+
+**Candidate.** Same shape, **renormalized so the level is held fixed**: at every stage compute
+`k_raw_g = neff_g/(neff_g+m)`, then rescale `k_g = 0.1 × k_raw_g / mean_w(k_raw)`, where `mean_w` is
+the population-weighted mean of `k_raw` over the countries being shrunk — so the population-weighted
+average shrinkage equals the incumbent constant **0.1 by construction** and only the *relative*
+grading across basins varies. `k_g` is clipped to [0, 0.5] for numerical sanity (declared).
+Note the grid now spans grading *strength*, not level: as `m → 0` all `k_raw → 1` and the scheme
+collapses **exactly onto the incumbent constant**; as `m → ∞`, `k_g ∝ neff_g` (full proportional
+grading). Registered grid **m ∈ {1, 3, 10, 30, 100, 1000}**, with the incumbent constant carried as
+the explicit baseline.
+
+**Adoption rule (entirely ≤2021 — no 2024 in features, fitting or selection).** Per target, CV on
+that target's **2017→2021** transition with a persistence base and all basins built at 2017 (the
+P10/P12/P13/P16–P24 protocol), comparing the best graded stack against the identical incumbent
+constant-k stack: account = 3-stage (income → region → `g20_any` terciles), saving = 4-stage
+(region → income → account terciles → `g20_any` terciles). **Resilience is excluded by design** (no
+pre-2021 transition; the account proxy is twice on record as mis-selecting for it — P8, P13) and
+stays byte-identical at 6.625.
+**Keep if** for any target the ≤2021 CV prefers the graded weight **AND** its 2021→2024 MAE improves
+on the champion (**account 5.014**, **saving 6.831**), with every untouched target printing
+byte-identical. Five CV→holdout interactions are on record (P8, P9, P13, P23, P24); the CV margin and
+the holdout delta are both recorded whatever the verdict. The per-basin `k_g` table is printed so the
+grading can be inspected directly — if this variant also fails, the axis is closed and that is the
+result.
