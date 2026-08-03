@@ -3284,3 +3284,47 @@ Descriptive urbanicity line (2024 only, excluded from the primary by design): ur
 about what moved them. The bootstrap resamples countries only; the within-country subgroup sampling
 error is not in this file and is not captured. Panel composition drops from 77 to 60–66 economies
 because 2011 subgroup coverage is incomplete.
+
+### P25 — verdict: DISCARD (CV rejects on both targets, monotonically); champion unchanged; the grading axis is now CLOSED
+
+The ≤2021 CV **prefers the incumbent constant k on both targets, at every grid point**, and the
+deterioration is **monotone in grading strength**:
+account 3-stage `constant_k = 6.710` vs `m=1: 6.784 / 3: 6.870 / 10: 6.992 / 30: 7.094 / 100: 7.151 /
+1000: 7.179` (best margin **+0.073**, wrong side); saving 4-stage `constant_k = 6.370` vs
+`m=1: 6.394 / 3: 6.460 / 10: 6.596 / 30: 6.704 / 100: 6.772 / 1000: 6.805` (best margin **+0.024**).
+Neither target adopts, so `predict()` never sees a graded weight; `predictor.py` was reverted to the
+P18 champion (1bb3f78) and re-run to confirm the holdout is byte-identical:
+**account 5.014 / resilience 6.625 / saving 6.831**.
+
+**This is a cleaner rejection than P24's, and it closes the axis.** P24's grid confounded grading
+with level — every point cut average shrinkage tenfold. P25 removes that confound by construction:
+the population-weighted mean of `k_g` is **exactly 0.1** at every m, so the only thing varying is the
+*relative* pull across basins. The parameterization also nests the incumbent: `m → 0` reproduces the
+constant k exactly, and the best grid point on **both** targets is the **smallest m** — i.e. the CV
+is walking back toward uniform shrinkage as hard as the grid allows. The grading table at the
+adopted-best m=1 shows how mild the tested grading already was:
+
+| basin | n | Kish neff | k_g |
+|---|---|---|---|
+| Sub-Saharan Africa (excl. HI) | 26 | 9.51 | **0.1221** |
+| High income | 40 | 9.19 | 0.1217 |
+| Latin America & Caribbean (excl. HI) | 14 | 4.76 | 0.1115 |
+| Europe & Central Asia (excl. HI) | 17 | 4.46 | 0.1102 |
+| Middle East & North Africa (excl. HI) | 7 | 3.87 | 0.1072 |
+| East Asia & Pacific (excl. HI) | 8 | 1.86 | 0.0878 |
+| South Asia (excl. HI) | 5 | 1.61 | **0.0833** |
+
+Even a spread of 0.083–0.122 around the constant 0.1 costs +0.073pp of CV MAE, and widening it
+(larger m, up to `k_g ∝ neff_g`) costs monotonically more. **The empirical-Bayes premise is simply
+wrong for this problem:** the reliability of a basin's population-weighted mean, as measured by Kish
+`neff`, carries no usable information about how hard that basin should pull. Two independent
+parameterizations (P24 unnormalized, P25 shrinkage-neutral) now reject it, the second one with the
+level confound removed and the incumbent nested. **The adaptive-k axis is closed — no further
+variant should be registered without a different reliability statistic entirely.**
+
+Together with P22/P23 (basin *center*: mean vs median vs weighted median, all rejected) and P9 (the
+single global constant, rejected), every knob on the shrinkage operator except the *basins
+themselves* has now been tested and none has beaten `k = 0.1` with a population-weighted mean. The
+remaining live direction in this stream is what P16–P18 actually exploited: **more and better
+basins**, not better weights or centers. This is the sixth CV→holdout interaction on record
+(P8, P9, P13, P23, P24, P25) and the second where CV rejected before the holdout was consulted.
