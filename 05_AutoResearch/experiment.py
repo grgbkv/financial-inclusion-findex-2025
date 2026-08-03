@@ -1,31 +1,41 @@
-"""E30 (pre-registered): do the three NON-saving-destination co-movements replicate earlier?
+"""E31 (pre-registered): over 13 years, do ACCESS gaps close while USAGE gaps stay open?
 
-Program 1, the replication debt. E28 promoted the rails->saving family (E1/E10/E12) by replicating
-on 2017->2021. Three further keep-window findings share the same Delta-on-Delta construction but do
-NOT have formal saving as the destination, so they are an independent test of whether the ledger's
-co-movements are 2021-24 window artifacts:
+Program 3 — the 13-year inequality panel, and this cycle's B2 breadth experiment. `pan_grp` is the
+largest untouched FRAME in the repo: six demographic slices x five waves x 117 economies, and
+`education`, `age_cat` and `laborforce` have ZERO ledger mentions. The paper's "access converges,
+use diverges" motif was tested once (E17, on country levels) and discarded; it has never been tested
+where it is most natural — WITHIN countries, across demographic groups, over the whole panel.
+Parents: E17 / E20 / E21 (the gap-and-convergence family, last touched at E21).
 
-  E11  d(fin22a_22a1_22g_d) ~ d(fin17a_17a1_d)      formal borrowing ~ formal saving     +0.403
-  E13  d(fiaccount_t_d)     ~ d(mobileaccount_t_d)  co-development vs leapfrogging       +0.435
-  E14  d(mobileaccount_t_d) ~ d(g20_any)            bundled digital on-ramps             +0.600
+CONSTRUCTION. Developing panel economies only. Five dimensions with multi-wave coverage;
+`urbanicity` is 2024-only and is EXCLUDED from the primary, reported as a single-wave line.
+Advantaged group declared a priori (pre-registered before any answer):
+    gender -> men | income -> richest 60% | education -> secondary edu or more
+    age_cat -> age 25+ | laborforce -> in laborforce
+Per country per wave: gap = advantaged - disadvantaged (pp). Aggregate = population-weighted mean
+gap across economies, weight = 2024 adult population (ledger convention).
+    ACCESS margin = account_t_d, window 2011 -> 2024
+    USAGE  margin = g20_any,     window 2014 -> 2024  (column absent in 2011; declared)
 
-TEST. Developing panel, each pair, in 2014->2017 and 2017->2021 (2021->2024 reprinted as the
-reference). Population-weighted correlation, weight = 2024 adult population — E1/E10/E12/E28
-construction, changing only the window. Delta-tercile means of the destination variable per cell.
-Per-window SD of both Deltas (E28's variance-collapse check). Gates G3, G4, G6.
-B6 on every cell: country bootstrap 2,000 resamples, percentile 95% interval, Kish neff.
+PRIMARY TEST AND THRESHOLD.
+  Claim A (access gaps closed):     >= 3 of 5 dimensions with d_gap_access <= -5pp
+  Claim B (usage gaps did not):     >= 3 of 5 dimensions with d_gap_usage  >  -5pp
+  JOINT claim kept iff A and B both hold AND >= 3 of 5 dimensions show the divergent pattern
+  INDIVIDUALLY (d_gap_access <= -5pp and d_gap_usage > -5pp in the same dimension).
 
-PROMOTION RULE (registered, identical to E28's): keep-window -> keep-general iff in at least one
-earlier window r >= +0.30 with the same (positive) sign, G6 sign-stable, and r_droptop >= 0.5 x
-r_full (the E4 judgment rule). Failing that in both earlier windows, the finding STAYS keep-window
-and is relabelled explicitly window-specific. The bootstrap interval is reported, not a keep
-condition.
+SCALE-FREE REQUIREMENT (mandatory — the agenda's ceiling-artifact note). The pp gap must compress
+mechanically as the advantaged group approaches 100%, so the log-odds gap
+L = logit(adv) - logit(disadv) is computed for every cell and its delta reported beside the pp
+delta. A dimension may only COUNT toward the joint claim if dL and d_gap AGREE IN SIGN; where they
+disagree the pp narrowing is declared a ceiling artifact and the dimension counts as a non-closer.
 
-DECLARED. Contemporaneous Delta-on-Delta co-movement in every window — descriptive, never causal.
-Composition differs by pair and window (the mobile-money pairs are thin, ~54-59 economies); each
-cell prints its own n, neff and interval. A null in a calm window is not evidence of absence — E28
-established 2014->2017 has the least Delta-variance in the series — so the SDs are printed and the
-reading is checked rather than assumed.
+GATES. G3 (account_t_d, g20_any headlines declared), G4 per wave and dimension, G6 (drop top-5
+population, sign stability of each d_gap). B6: country bootstrap 2,000 draws, percentile 95%
+interval on every d_gap, Kish neff per dimension.
+
+DECLARED. Descriptive within-country gap arithmetic across waves — an ordering of gaps in time,
+never a claim about what moved them. The bootstrap is over COUNTRIES only; the within-country
+subgroup sampling error is not in this file and is not captured.
 """
 import numpy as np
 import pandas as pd
@@ -33,26 +43,22 @@ import pandas as pd
 from harness import Findex
 
 BOOT = 2000
-SEED = 30
+SEED = 31
 
-WINDOWS = [(2014, 2017), (2017, 2021), (2021, 2024)]
-REFERENCE_WINDOW = (2021, 2024)
+ACCESS, USAGE = "account_t_d", "g20_any"
+ACCESS_WINDOW, USAGE_WINDOW = (2011, 2024), (2014, 2024)
 
-# (label, x column, y column, published 2021->24 r, parent finding)
-PAIRS = [
-    ("E11 borrow~save", "fin22a_22a1_22g_d", "fin17a_17a1_d", 0.403, "E11"),
-    ("E13 fi~mobile", "mobileaccount_t_d", "fiaccount_t_d", 0.435, "E13"),
-    ("E14 mobile~g20", "mobileaccount_t_d", "g20_any", 0.600, "E14"),
-]
-
-# G3 declarations: every column above is a registry headline except none — all four are headlines.
-G3_CONCEPTS = {
-    "fin22a_22a1_22g_d": "borrowed_formally",
-    "fin17a_17a1_d": "saved_formally",
-    "mobileaccount_t_d": "mobile_money",
-    "fiaccount_t_d": "fi_account",
-    "g20_any": "digital_payment",
+# dimension -> (advantaged group2 label, disadvantaged group2 label) — declared a priori
+DIMENSIONS = {
+    "gender": ("men", "women"),
+    "income": ("richest 60%", "poorest 40%"),
+    "education": ("secondary edu or more", "prim edu or less"),
+    "age_cat": ("age 25+", "ages 15-24"),
+    "laborforce": ("in laborforce", "out of laborforce"),
 }
+SINGLE_WAVE = {"urbanicity": ("urban", "rural")}  # 2024 only — descriptive line, not in the primary
+
+PP_BAR = -5.0  # pre-registered group-difference threshold
 
 
 def _kish(w):
@@ -60,8 +66,39 @@ def _kish(w):
     return float(w.sum() ** 2 / (w ** 2).sum())
 
 
+def _logit(p_pp):
+    """logit of a percentage, clipped away from the boundaries (0.5pp) for numerical safety."""
+    p = np.clip(np.asarray(p_pp, float) / 100.0, 0.005, 0.995)
+    return np.log(p / (1 - p))
+
+
+def gap_frame(fx: Findex, dim, col, years):
+    """Per-country gap (pp) and log-odds gap for `col` in each wave of `years`.
+    Returns a country-indexed frame with gap_<y>, L_<y> for each year, plus the 2024 pop weight."""
+    adv_lab, dis_lab = (DIMENSIONS | SINGLE_WAVE)[dim]
+    g = fx.pan_grp
+    g = g[(g["group"] == dim) & (g["incomegroupwb24"] != "High income")]
+    out = {}
+    for y in years:
+        w_ = g[g["year"] == y]
+        adv = w_[w_["group2"] == adv_lab].set_index("countrynewwb")[col] * 100
+        dis = w_[w_["group2"] == dis_lab].set_index("countrynewwb")[col] * 100
+        common = adv.dropna().index.intersection(dis.dropna().index)
+        out[f"gap_{y}"] = (adv - dis).reindex(common)
+        out[f"L_{y}"] = pd.Series(_logit(adv.reindex(common)) - _logit(dis.reindex(common)),
+                                  index=common)
+    df = pd.DataFrame(out)
+    pop = g[g["year"] == 2024].drop_duplicates("countrynewwb").set_index(
+        "countrynewwb")["pop_adult"]
+    df["pop"] = pop
+    return df.dropna()
+
+
+def _wmean(v, w):
+    return float(np.average(np.asarray(v, float), weights=np.asarray(w, float)))
+
+
 def _boot_ci(fn, frame, draws=BOOT, seed=SEED):
-    """Country bootstrap of a statistic computed from a country-indexed frame (B6)."""
     rng = np.random.default_rng(seed)
     idx = np.arange(len(frame))
     out = []
@@ -74,90 +111,94 @@ def _boot_ci(fn, frame, draws=BOOT, seed=SEED):
     return float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5))
 
 
-def _delta_frame(fx: Findex, xcol, ycol, y0, y1):
-    """Per-country Delta of both columns over [y0, y1] plus the 2024 population weight."""
-    xw = fx.country_panel(fx.pan_dev, xcol, [y0, y1])
-    yw = fx.country_panel(fx.pan_dev, ycol, [y0, y1])
-    df = pd.DataFrame({
-        "dx": xw[y1] - xw[y0],
-        "dy": yw[y1] - yw[y0],
-        "pop": xw["pop"],
-    }).dropna()
-    return df
-
-
-def run_pair(fx: Findex, label, xcol, ycol, published_r, parent):
-    print("\n" + "=" * 96)
-    print(f"{label}   d({xcol}) ~ d({ycol})   [parent {parent}, published 2021->24 r = "
-          f"{published_r:+.3f}]")
-    print("=" * 96)
-    cells = {}
-    for y0, y1 in WINDOWS:
-        df = _delta_frame(fx, xcol, ycol, y0, y1)
+def margin(fx: Findex, name, col, window):
+    y0, y1 = window
+    print("\n" + "=" * 100)
+    print(f"{name} MARGIN — `{col}`, gap = advantaged - disadvantaged, {y0} -> {y1} (dev panel)")
+    print("=" * 100)
+    res = {}
+    for dim in DIMENSIONS:
+        df = gap_frame(fx, dim, col, [y0, y1])
         if len(df) < 10:
-            print(f"  {y0}->{y1}: insufficient coverage (n={len(df)})")
-            cells[(y0, y1)] = None
+            print(f"  {dim:12s} insufficient coverage (n={len(df)})")
             continue
         w = df["pop"]
-        r, n = fx.weighted_corr(df["dx"], df["dy"], w)
-        neff = _kish(w)
-        lo, hi = _boot_ci(lambda s: fx.weighted_corr(s["dx"], s["dy"], s["pop"])[0], df,
-                          seed=SEED + y0)
-        g6 = fx.gate_jackknife(df["dx"], df["dy"], w)
-        g4 = fx.gate_coverage(fx.pan_dev, ycol, y1)
-        retain = (abs(g6["r_droptop"]) / abs(r)) if (r and g6.get("r_droptop") is not None) else np.nan
-        ci = f"[{lo:+.3f}, {hi:+.3f}]" if lo is not None else "n/a"
-        tag = "  <- REFERENCE" if (y0, y1) == REFERENCE_WINDOW else ""
-        print(f"\n  {y0}->{y1}   r = {r:+.3f}   (n={n}, Kish neff={neff:.1f})   95% CI {ci}{tag}")
-        print(f"      G6 sign-stable={g6['ok']}  r_droptop={g6['r_droptop']:+.3f}  "
-              f"retention={retain:.2f}   (E4 floor 0.50)")
-        print(f"      G4 {g4['n_countries']} economies, pop_share {g4['pop_share']}")
-        print(f"      Delta dispersion: SD(dx)={df['dx'].std():5.2f}pp  SD(dy)={df['dy'].std():5.2f}pp")
+        g0, g1 = _wmean(df[f"gap_{y0}"], w), _wmean(df[f"gap_{y1}"], w)
+        l0, l1 = _wmean(df[f"L_{y0}"], w), _wmean(df[f"L_{y1}"], w)
+        dgap, dL = g1 - g0, l1 - l0
 
-        ter = pd.qcut(df["dx"], 3, labels=["low", "mid", "high"], duplicates="drop")
-        parts = []
-        for lab, g in df.groupby(ter, observed=True):
-            parts.append(f"{lab} {np.average(g['dy'], weights=g['pop']):+5.1f}pp")
-        print(f"      dx-tercile mean dy: {'  '.join(parts)}")
+        lo, hi = _boot_ci(
+            lambda s: _wmean(s[f"gap_{y1}"], s["pop"]) - _wmean(s[f"gap_{y0}"], s["pop"]),
+            df, seed=SEED + hash(dim) % 1000)
+        # G6: drop the five largest-population economies, does d_gap keep its sign?
+        keep = w.sort_values(ascending=False).index[5:]
+        d_jack = (_wmean(df.loc[keep, f"gap_{y1}"], w[keep])
+                  - _wmean(df.loc[keep, f"gap_{y0}"], w[keep]))
+        g6_ok = np.sign(d_jack) == np.sign(dgap)
+        agree = np.sign(dL) == np.sign(dgap)
+        share_narrow = float((df[f"gap_{y1}"] < df[f"gap_{y0}"]).mean())
 
-        cells[(y0, y1)] = {"r": r, "n": n, "neff": neff, "ci": (lo, hi),
-                           "g6_ok": g6["ok"], "retain": retain}
-
-    # ---- pre-registered promotion rule
-    ref = cells[REFERENCE_WINDOW]
-    earlier = [(w, c) for w, c in cells.items() if w != REFERENCE_WINDOW and c is not None]
-    replicated = [w for w, c in earlier
-                  if c["r"] >= 0.30 and np.sign(c["r"]) == np.sign(ref["r"])
-                  and c["g6_ok"] and c["retain"] >= 0.50]
-    verdict = "PROMOTE keep-window -> keep-general" if replicated else "STAYS keep-window"
-    print(f"\n  >>> {parent}: replicating windows = "
-          f"{[f'{a}->{b}' for a, b in replicated] or 'none'}   -->  {verdict}")
-    return {"parent": parent, "cells": cells, "replicated": replicated,
-            "promote": bool(replicated)}
+        print(f"\n  {dim:12s} gap {g0:5.1f}pp ({y0})  ->  {g1:5.1f}pp ({y1})    "
+              f"Δgap = {dgap:+5.1f}pp   95% CI [{lo:+.1f}, {hi:+.1f}]")
+        print(f"               log-odds gap {l0:+.3f} -> {l1:+.3f}   ΔL = {dL:+.3f}   "
+              f"sign agrees with Δgap: {agree}")
+        print(f"               n={len(df)}  Kish neff={_kish(w):.1f}   "
+              f"G6 drop-top-5 Δgap = {d_jack:+.1f}pp (sign-stable {g6_ok})   "
+              f"{share_narrow:.0%} of economies narrowed")
+        print(f"               G4 {fx.gate_coverage(fx.pan_dev, col, y1)}")
+        res[dim] = {"g0": g0, "g1": g1, "dgap": dgap, "dL": dL, "agree": bool(agree),
+                    "g6_ok": bool(g6_ok), "n": len(df), "neff": _kish(w), "ci": (lo, hi)}
+    return res
 
 
 if __name__ == "__main__":
     fx = Findex()
-    print("E30 — Program 1 replication debt: E11 / E13 / E14 on 2014->2017 and 2017->2021")
-    print("Frame: pan_dev, group == 'all'. Weight: 2024 adult population (ledger convention).\n")
-    print("G3 declarations (all five columns are registry headlines):")
-    for col, concept in G3_CONCEPTS.items():
-        print("   ", fx.gate_variant(concept, col))
-    print("G5: n/a — no official series exists for a cross-country correlation")
+    print("E31 — the 13-year inequality panel: access vs usage gaps within countries")
+    print("Frame: pan_grp, developing economies. UNTOUCHED frames used: education, age_cat,")
+    print("laborforce (0 ledger mentions each); gender and income also included.\n")
+    print("G3:", fx.gate_variant("account", ACCESS), fx.gate_variant("digital_payment", USAGE))
+    print("G5: n/a — no official series for a within-country demographic gap")
+    print("Advantaged group declared a priori:",
+          {k: v[0] for k, v in DIMENSIONS.items()})
 
-    results = [run_pair(fx, *p) for p in PAIRS]
+    acc = margin(fx, "ACCESS", ACCESS, ACCESS_WINDOW)
+    use = margin(fx, "USAGE", USAGE, USAGE_WINDOW)
 
-    print("\n" + "=" * 96)
-    print("SUMMARY — r by window (dev panel, population-weighted)")
-    print("=" * 96)
-    print(f"  {'finding':18s} {'2014->2017':>18s} {'2017->2021':>18s} {'2021->2024 (ref)':>20s}"
-          f"   verdict")
-    for res, (label, _, _, _, parent) in zip(results, PAIRS):
-        row = []
-        for w in WINDOWS:
-            c = res["cells"][w]
-            row.append(f"{c['r']:+.3f} (n={c['n']})" if c else "n/a")
-        print(f"  {parent + ' ' + label.split()[1]:18s} {row[0]:>18s} {row[1]:>18s} {row[2]:>20s}"
-              f"   {'PROMOTE' if res['promote'] else 'stays keep-window'}")
-    print(f"\nPromotions this experiment: "
-          f"{[r['parent'] for r in results if r['promote']] or 'none'}")
+    print("\n" + "=" * 100)
+    print("PRIMARY — pre-registered joint claim: access gaps close while usage gaps do not")
+    print("=" * 100)
+    print(f"  {'dimension':12s} {'Δgap access':>13s} {'ΔL access':>11s} {'Δgap usage':>12s}"
+          f" {'ΔL usage':>10s}   {'closer?':>8s} {'divergent?':>11s}")
+    A = B = J = 0
+    for dim in DIMENSIONS:
+        a, u = acc.get(dim), use.get(dim)
+        if not a or not u:
+            print(f"  {dim:12s} — insufficient coverage")
+            continue
+        # a dimension counts as an access-closer only if pp and log-odds AGREE (ceiling guard)
+        closed = (a["dgap"] <= PP_BAR) and a["agree"]
+        not_closed_use = u["dgap"] > PP_BAR
+        divergent = closed and not_closed_use
+        A += closed
+        B += not_closed_use
+        J += divergent
+        print(f"  {dim:12s} {a['dgap']:+12.1f}pp {a['dL']:+11.3f} {u['dgap']:+11.1f}pp"
+              f" {u['dL']:+10.3f}   {str(closed):>8s} {str(divergent):>11s}")
+    claim_a, claim_b, joint = A >= 3, B >= 3, (A >= 3 and B >= 3 and J >= 3)
+    print(f"\n  Claim A (access gaps closed, >=3 of 5 with Δgap <= -5pp AND log-odds agreement): "
+          f"{A}/5 -> {claim_a}")
+    print(f"  Claim B (usage gaps did NOT close, >=3 of 5 with Δgap > -5pp):                    "
+          f"{B}/5 -> {claim_b}")
+    print(f"  JOINT claim (A and B and >=3 of 5 divergent INDIVIDUALLY):                        "
+          f"{J}/5 -> {joint}")
+    print(f"\n  >>> REGISTERED VERDICT: joint claim {'KEPT' if joint else 'DISCARDED'}")
+
+    print("\n" + "=" * 100)
+    print("DESCRIPTIVE — urbanicity, 2024 only (single wave, excluded from the primary by design)")
+    print("=" * 100)
+    for col, lab in [(ACCESS, "account"), (USAGE, "digital payment")]:
+        df = gap_frame(fx, "urbanicity", col, [2024])
+        if len(df) >= 10:
+            print(f"  urban - rural {lab:16s} gap 2024 = "
+                  f"{_wmean(df['gap_2024'], df['pop']):+5.1f}pp   (n={len(df)}, "
+                  f"Kish neff={_kish(df['pop']):.1f}, log-odds {_wmean(df['L_2024'], df['pop']):+.3f})")
