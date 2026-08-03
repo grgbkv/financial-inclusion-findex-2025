@@ -151,3 +151,37 @@ experiment — which is also the natural shape for keeping the paper draft hones
   reliability grading — rescale `k_g = neff_g/(neff_g+m)` so its population-weighted mean equals the
   incumbent 0.1, so the CV tests the **relative** grading across basins without also cutting the
   average shrinkage. P24's grid could not separate the two and rejected on the level, not the shape.
+
+## Addendum (2026-08-03, from the E30/E31/P25 cycle)
+
+- **Program 1 status.** E30 paid the second instalment: **E11, E13 and E14 are now `keep-general`**
+  (replicated on 2017→2021; E14 also on 2014→2017). The ledger has **six** general claims
+  (E1, E10, E11, E12, E13, E14). Still `keep-window` and owed a replication: **E5b, E7, E22, E23,
+  E24, E25** (E29 is unpromotable — `internet` is single-wave). Agenda items **1.3** (E17 "access
+  converges, use diverges" on country levels) and **1.4** (the E27 accounting on the decade) remain
+  the two with the most riding on them. Note for whoever runs 1.4: **2014→2017 has now failed to
+  produce a stable sign in five of six cells across E28 and E30** — treat it as a low-power window
+  and register the variance check up front rather than reading nulls there as absence.
+- **Program 3 status.** E31 opened the `education`, `age_cat` and `laborforce` frames and returned a
+  clean discard with a useful mechanism: **population-weighted gap trajectories are dominated by a
+  handful of large economies** — on gender and education a *minority* of economies narrowed while the
+  weighted mean fell 5.8–9.1pp. Any future `pan_grp` item (3.1, 3.4, 3.5, 3.6) should pre-register
+  the **unweighted share of economies moving in the claimed direction** as a primary, not a
+  diagnostic, alongside G6. The live sub-question E31 raises and does not answer: **why the usage
+  log-odds gap widens for income and education while every access log-odds gap narrows** — 3.3 is
+  now the highest-value item in this program.
+- **Prediction stream — an axis is closed.** P25 (shrinkage-neutral grading, level confound removed,
+  incumbent nested) rejects monotonically, as P24 did unnormalized. Combined with P22/P23 (basin
+  center) and P9 (global constant), **every knob on the shrinkage operator except the basins
+  themselves has been tested and none beats `k = 0.1` toward a population-weighted mean.** Do not
+  register another adaptive-`k` or alternative-center variant. The remaining live direction is the
+  one P16–P18 actually exploited: **more and better basins** (cross-indicator, data-driven cuts).
+  A fifth-stage basin on a genuinely new axis — e.g. terciles of a *non-financial* covariate such as
+  `internet` (2024-only, so unusable in features) or a pre-2021 demographic composition variable —
+  is the natural next candidate, subject to the ≤2021 constraint.
+- **Inference debt (Program 2) is now the most overdue item.** Kish `neff` has come in at **5.7–7.6
+  in every cell of every experiment that has measured it** (E28, E29, E30, E31) across four different
+  frame families. Items **2.2** (BH correction over the association ledger, rule B7) and **2.3**
+  (unweighted replication of every kept association) should be the next cycle's Program-2 slot —
+  with six `keep-general` claims now standing, an FDR accounting is owed before any of them reaches
+  the paper draft as a regularity.

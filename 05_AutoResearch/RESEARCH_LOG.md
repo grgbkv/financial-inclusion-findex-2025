@@ -3328,3 +3328,32 @@ themselves* has now been tested and none has beaten `k = 0.1` with a population-
 remaining live direction in this stream is what P16–P18 actually exploited: **more and better
 basins**, not better weights or centers. This is the sixth CV→holdout interaction on record
 (P8, P9, P13, P23, P24, P25) and the second where CV rejected before the holdout was consulted.
+
+## 2026-08-03 wrap-up
+Ran 3 experiments (E30, E31, P25) — **one keep with three promotions, one discard, one discard that
+closes a modelling axis**.
+**E30 (hypothesis, KEEP — Program 1, replication debt):** the three non-saving-destination
+co-movements all replicate on **2017→2021** — formal borrowing ~ formal saving **+0.616** (n=77),
+FI-account ~ mobile money **+0.509** (n=57), mobile money ~ digital payments **+0.871** (n=57) —
+G6 sign-stable with retention 0.77/0.93/0.99, so **E11, E13 and E14 are promoted `keep-window` →
+`keep-general`**, taking the ledger to **six general claims**. **E14 replicates in all three windows
+tested** (2014→17 +0.520 as well) and is now the ledger's most robust association. 2014→2017 fails
+for E11/E13 with **G6 sign flips**, the second independent time that window has produced no stable
+signal in either direction.
+**E31 (hypothesis, DISCARD — Program 3, the cycle's B2 experiment on three untouched frames):** the
+registered "access gaps close while usage gaps stay open" joint claim met the raw count (3/5) but
+**fails once G6 is applied** — the gender access gap flips from −5.8pp to +0.7pp under drop-top-5,
+leaving 2/5. The E4 rule voids the survivors' magnitude too (retention **0.37** income, **0.09**
+education), and on gender and education **only 38% and 42% of developing economies actually
+narrowed** while the population-weighted mean fell sharply — the working paper's own aggregation
+pitfall reproduced inside the ledger. Direction on record, not a claim: access log-odds gaps narrowed
+in all five dimensions while the **income (+0.100) and education (+0.056) usage log-odds gaps
+widened**.
+**P25 (prediction, DISCARD):** the shrinkage-neutral empirical-Bayes weight is CV-rejected on both
+targets (+0.073 account, +0.024 saving) and **monotonically in grading strength**, with the level
+confound removed by construction and the incumbent nested at m→0. Two parameterizations have now
+rejected the premise: Kish `neff` carries no usable information about how hard a basin should pull.
+**The adaptive-k axis is closed.** Champion unchanged: **account 5.014 / resilience 6.625 /
+saving 6.831** (P18, 1bb3f78).
+**Recurring number, now on a third frame family:** Kish `neff` ≈ **5.7–7.6** in every cell of both
+hypothesis experiments, whatever the nominal n.
