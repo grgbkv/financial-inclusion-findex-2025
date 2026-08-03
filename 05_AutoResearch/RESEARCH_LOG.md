@@ -3238,3 +3238,49 @@ identification. Composition varies (mobile-money pairs 54–59 economies vs 76�
 is the 2024 adult population in all windows by construction, and E13/E14 share the same x variable so
 their cells are not independent of each other. G3/G4 pass everywhere (G4 pop_share 0.97–1.00);
 G5 n/a.
+
+### E31 — verdict: JOINT CLAIM DISCARDED (G6 voids the access-closure half); the usage-margin null is the substantive result
+
+**The registered joint claim fails.** The raw count reaches the bar (A 3/5, B 5/5, joint 3/5), but
+**G6 is a registered gate and the pre-registration made it applicable to every Δgap**. On the access
+margin, **gender fails G6 outright — the −5.8pp narrowing becomes +0.7pp (a sign flip) when the five
+largest-population economies are dropped**. With gender excluded, only **2 of 5** dimensions clear
+Claim A, below the registered 3, so **Claim A fails and the joint claim is discarded.**
+
+| dimension | Δgap access 2011→24 | ΔL access | G6 drop-top-5 | 95% CI | economies narrowed | Δgap usage 2014→24 | ΔL usage |
+|---|---|---|---|---|---|---|---|
+| gender | −5.8pp | −0.266 | **+0.7pp (FLIPS)** | [−11.0, +2.6] | **38%** | −2.2pp | −0.167 |
+| income | −8.4pp | −0.173 | −3.1pp (ok) | **[−12.6, −1.0]** | 69% | −0.5pp | **+0.100** |
+| education | −9.1pp | −0.197 | −0.8pp (ok) | [−15.2, +3.3] | **42%** | −2.8pp | **+0.056** |
+| age_cat | −3.1pp | −0.074 | −4.0pp (ok) | [−9.2, +0.6] | 58% | +1.3pp | −0.025 |
+| laborforce | −4.5pp | −0.151 | −3.1pp (ok) | [−9.1, +3.6] | 55% | +1.4pp | −0.067 |
+
+**The E4 judgment rule voids the magnitude of the two survivors as well, and this is the sharper
+finding.** Retention of the population-weighted access narrowing under drop-top-5 is **0.37 for
+income and 0.09 for education** — both far under the 0.50 floor. And the unweighted share of
+economies whose gap actually narrowed is **38% (gender) and 42% (education)**: on two of the three
+dimensions carrying the claim, *a minority of developing economies narrowed their access gap*, while
+the population-weighted mean fell sharply. That is the working paper's own aggregation pitfall
+appearing inside the ledger — a handful of very large economies closing their gaps, read as a global
+convergence. Only **income** shows both a majority of economies narrowing (69%) and a bootstrap
+interval clear of zero.
+
+**Claim B holds on its own and is reported as descriptive, not as a keep.** No dimension's *usage*
+gap closed by 5pp; two **widened** in pp (age_cat +1.3, laborforce +1.4), and on the scale-free
+measure the **income (+0.100) and education (+0.056) log-odds usage gaps widened** while every
+access log-odds gap narrowed. The directional contrast — access gaps narrowing on the scale-free
+measure in all five dimensions, usage gaps widening in two of the most policy-relevant ones — is the
+one thing here worth carrying forward, but four of the five usage cells are themselves G6-unstable,
+so it is logged as a direction on record, not a claim. Its status would be `keep-window`-ineligible
+in any case: this is a 13-year trajectory, not a transition test.
+
+**Coverage note (rule B2 satisfied).** First ledger use of the `education`, `age_cat` and
+`laborforce` frames. Kish `neff` = **6.8–7.0 (access) and 5.7–5.8 (usage)** on 60–66 economies — the
+same ≈7 effective observations the rest of the ledger keeps producing, now on a third frame family.
+Descriptive urbanicity line (2024 only, excluded from the primary by design): urban − rural gap
+**+4.8pp** on accounts and **+6.4pp** on digital payments (n=77/76).
+
+**Declared.** Within-country gap arithmetic across waves — an ordering of gaps in time, never a claim
+about what moved them. The bootstrap resamples countries only; the within-country subgroup sampling
+error is not in this file and is not captured. Panel composition drops from 77 to 60–66 economies
+because 2011 subgroup coverage is incomplete.
