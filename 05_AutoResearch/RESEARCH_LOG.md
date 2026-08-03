@@ -3196,3 +3196,45 @@ byte-identical. Five CV→holdout interactions are on record (P8, P9, P13, P23, 
 the holdout delta are both recorded whatever the verdict. The per-basin `k_g` table is printed so the
 grading can be inspected directly — if this variant also fails, the axis is closed and that is the
 result.
+
+### E30 — verdict: KEEP (all three replicate on 2017→2021; E11, E13, E14 PROMOTED to keep-general)
+
+| finding | 2014→2017 | 2017→2021 | 2021→2024 (reference) |
+|---|---|---|---|
+| E11 formal borrowing ~ formal saving | −0.181 (n=77), **G6 unstable** | **+0.616** (n=77) | +0.403 (n=76) |
+| E13 FI-account ~ mobile-money | −0.393 (n=54), **G6 unstable** | **+0.509** (n=57) | +0.435 (n=59) |
+| E14 mobile money ~ digital payments | **+0.520** (n=54) | **+0.871** (n=57) | +0.600 (n=58) |
+
+All three clear the pre-registered promotion rule on **2017→2021** — r ≥ +0.30, same sign, G6
+sign-stable, retention **0.77 / 0.93 / 0.99**, every one well clear of the E4 0.50 floor. Under the
+registered rule **E11, E13 and E14 move `keep-window` → `keep-general`**, bringing the ledger's
+general claims to six (E1, E10, E11, E12, E13, E14). Δ-tercile monotonicity holds in the replicating
+window for all three (E11 −0.9/+1.8/+4.8pp; E13 +0.5/−0.6/+12.4pp; E14 +0.5/+6.7/+19.3pp).
+
+**E14 is now the ledger's most robust association — the only one that replicates in every window
+tested**, including 2014→2017 (+0.520, G6 retention 1.09, CI [+0.220, +0.771]) where E28's rails and
+today's other two pairs all fail. Its 2017→2021 cell is the strongest number in the entire ledger:
+**+0.871, CI [+0.793, +0.931], retention 0.99**. Mobile-money growth and digital-payment growth are
+bundled across three consecutive transitions and thirteen years; that is a decade regularity, not an
+episode.
+
+**2014→2017 fails the same way it failed for E28, and the registered variance check says the same
+thing.** Both failing cells are **G6-unstable with a sign flip** (E11 −0.181 → +0.351 when the top-5
+populations drop; E13 −0.393 → +0.249) and both sit in the window with the smallest Δ dispersion
+(E11 SD 4.5/4.9pp vs 6.5/8.4pp in 2017–21; E13's is the exception at 9.2/7.6pp). A cell with no
+stable sign in either direction is not evidence of absence — it is a window that carries no usable
+signal, which is now the ledger's second independent observation of that property of 2014→2017.
+
+**B6 inference.** Kish `neff = 6.8–7.6` in every cell — the same ≈7 effective observations behind
+54–77 nominal countries that E28 found, now confirmed on a different family. Bootstrap intervals
+(2,000 country resamples): E11 2021→24 **[+0.146, +0.638]**, 2017→21 [+0.163, +0.786]; E13 2021→24
+**[+0.076, +0.686]** (only just clear of zero), 2017→21 [+0.277, +0.682]; E14 2021→24
+[+0.187, +0.885], 2017→21 **[+0.793, +0.931]**. E13's headline is the weakest of the three and its
+interval nearly touches zero — the promotion is on the registered criterion, and should be read with
+that interval attached.
+
+**Caveats.** Contemporaneous Δ-on-Δ in every window — descriptive temporal co-movement, no
+identification. Composition varies (mobile-money pairs 54–59 economies vs 76–77 for E11), the weight
+is the 2024 adult population in all windows by construction, and E13/E14 share the same x variable so
+their cells are not independent of each other. G3/G4 pass everywhere (G4 pop_share 0.97–1.00);
+G5 n/a.
