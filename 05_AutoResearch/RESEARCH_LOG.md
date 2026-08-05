@@ -3563,3 +3563,52 @@ been a keep in an unweighted world. Sign flips occur only in **E18 and E19**, bo
 exclusions named in the pre-registration). A ledger-wide FDR over all ~30 country-level tests would
 be **more** punishing, not less, so nothing here is softened by the narrow family. This experiment
 computes no new association, adds no keep, and is not subject to B4.
+
+### E33 — verdict: KEEP (`keep-window`, structurally unpromotable). The rails DO reach a second welfare margin; E26's null was measure-specific
+
+**All nine primary cells clear the bar, with one sign, and every gate passes.** Δ`fh` ~ Δrail,
+2021→2024, `pan_dev`:
+
+| item | digital pay (`g20_any`) | wage (`fin32_acc`) | mobile money (`mobileaccount_t_d`) |
+|---|---|---|---|
+| `fh1` | **+0.699** | +0.524 | +0.465 |
+| `fh2` | **+0.684** | +0.434 | +0.364 |
+| `fh1_fh2` | **+0.705** | +0.447 | +0.354 |
+
+Sign-consistent across all three rails and across `fh1`/`fh2`; **G6 sign-stable in 9/9** with E4
+retention **0.83–1.76** (every counting cell ≥ 0.5); G4 ok (71 economies, 0.69 population share).
+Terciles run the expected shape — `fh1_fh2` ~ `g20_any` gives **−5.0 / +3.4 / +5.1**. The registered
+comparison, E26's **+0.294** for wage digitalization on `fin24aSD_ND`, is beaten by **every one of
+the nine cells**.
+
+**The answer to agenda item 4.2 is unambiguous, and it is the finding: E26's welfare null is
+MEASURE-SPECIFIC.** Secondary B asked whether the two welfare families agree with each other at all.
+They barely do — Δ`fh` ~ Δ`fin24aSD_ND` is **+0.146 / +0.032 / +0.104**. Two self-reported welfare
+margins measured on the same 69 economies over the same window are **nearly orthogonal to each
+other**, while one of them tracks all three digitalization rails at 0.35–0.71 and the other tracks
+none of them. The paper's Section 6 boundary — "the rails do not reach welfare" — is a statement
+about `fin24aSD_ND`, not about welfare. Secondary A (item 4.4): `fh` tracks the saving surge itself
+at **+0.534 / +0.470 / +0.465**.
+
+**Precision caveat, applied deliberately as the first keep logged after E32.** At Kish `neff` =
+**6.5–6.9** (nominal n 54–69), only the **digital-payment** cells have bootstrap intervals clear of
+zero on all three items (lower bounds **+0.447 / +0.460 / +0.496**). **All three mobile-money cells
+include zero** ([−0.046,+0.789], [−0.210,+0.799], [−0.208,+0.766]), as does `fh2` ~ wage
+([−0.018,+0.714]). The keep rests on the digital-payment rail and, more weakly, the wage rail; **the
+ordering of the three rails is not resolvable at seven effective observations** and is not claimed.
+
+**POLARITY IS UNRESOLVED, and the claim is worded to survive that.** The pre-registration declared
+the welfare *reading* of the sign to be an interpretive step outside the registration. The declared
+anchor (levels) does not settle it — `fh1` 21.2→19.8, `fh2` 25.0→24.3, `fh1_fh2` 32.9→32.0, all
+mildly falling. A **post-hoc** cross-sectional anchor was added and is labelled as post-hoc in the
+file: correlating the 2024 `fh` levels against two known-polarity columns returns **contradictory and
+weak** signs (`fh1`: **+0.211** against resilience but **−0.075** against account ownership;
+`fh2`: +0.113 and −0.247). The unlabelled country file cannot settle whether these are
+worry/distress items or financial-health items. **The pre-registered quantity — magnitude and
+sign-consistency — stands; the welfare direction does not, and this finding must not be worded as
+either improvement or deterioration until the questionnaire labels are obtained.** That is recorded
+in `findings.tsv` and is the first item owed to `HARNESS_V2_NOTES.md` from this cycle.
+
+**B4, declared in advance.** `fh` has no pre-2021 wave, so this keep is **structurally unpromotable**
+— it can never become `keep-general` under the replication rule, exactly like E29. **B2 satisfied:**
+first ledger use of the `fh` module, one of the thirteen untouched country families.
