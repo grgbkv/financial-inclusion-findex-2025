@@ -3519,3 +3519,47 @@ No 2024 data anywhere in features, fitting or selection.
 A monotone CV preference for coarser or finer bins would say the resolution axis is live; a CV that
 picks B=3 on both targets says P16's inherited default is at a local optimum and the resolution axis
 is closed too.
+
+### E32 — verdict: DISCARD of the registered robustness claim; (a) passes, (b) fails; and the `neff` column is the real finding
+
+**Reproduction check first.** The file recomputes all sixteen ledger correlations from the raw frames
+and matches `findings.tsv` to **max |Δr| = 0.0005** across the family. The audit is auditing the
+ledger's actual numbers, not an approximation of them.
+
+**The registered claim fails on limb (b).**
+- **(a) BH at q = 0.10 on `p_boot`: 7 of 8 kept rows survive (88%) — PASS.** The single failure is
+  **E7** (`p_boot = 0.068` against a rank-10 threshold of 0.0625 — it misses by five thousandths).
+  Nine of the full sixteen survive; the ladder is auditable in the output.
+- **(b) `|r_unweighted| ≥ 0.30`: only 6 of 8 (75%) — FAIL** against the 80% bar. **E7 falls
+  +0.541 → +0.283** and **E13 falls +0.435 → +0.188**. Both keeps are substantially creatures of the
+  population weighting.
+
+Because the pre-registration required **both**, the joint verdict is **DISCARD**, and per the
+protocol the informative content is *which rows failed*.
+
+**The one keep this audit recommends demoting: E7.** It is the only row in the family that fails
+**all three** new lenses — BH on the bootstrap p, the unweighted replication, *and* the E4 magnitude
+rule (`r_droptop` 0.24 vs `r_full` 0.54, retention 0.44 < 0.5, which the original E7 entry recorded
+as "G6 sign-stable" without applying the E4 judgment rule that post-dates it). **E13** fails the
+unweighted lens alone and is flagged rather than demoted — it is a `keep-general` whose 2017→2021
+replication (+0.509) was independent evidence.
+
+**The headline is a column nobody registered a threshold on: `p_neff` rejects 0 of 16.** Kish `neff`
+is **7.1–7.6 across the entire family** on nominal n of 58–76. Evaluated at those effective degrees
+of freedom, the *best* p-value in the ledger's core family is **E10 at p = 0.030**, and BH at
+q = 0.10 over m = 16 needs p ≤ 0.00625 at rank 1 — so **not one association clears it**. Against
+`p_nominal`, 11 of 16 clear. The gap between "11 of 16" and "0 of 16" is the entire population-
+weighting question stated as inference: the ledger has been reporting associations as if it had ~76
+observations when the weights concentrate it into ~7.
+
+**A finding that runs against the obvious prior: the weighting is not uniformly inflationary.** The
+median change in |r| on removing the weights is **+0.011**, and only 8 of 16 tests are *weaker*
+unweighted. The weighting **relocates** the association rather than inflating it — E12 goes the other
+way entirely (**+0.370 weighted → +0.617 unweighted**), and the discarded **E16 (account growth ~
+saving surge) is +0.198 weighted but +0.555 unweighted**, i.e. a test the ledger rejected would have
+been a keep in an unweighted world. Sign flips occur only in **E18 and E19**, both already discards.
+
+**Scope, declared.** The BH family is the Δ→Δ family only (sixteen tests, listed and with the
+exclusions named in the pre-registration). A ledger-wide FDR over all ~30 country-level tests would
+be **more** punishing, not less, so nothing here is softened by the narrow family. This experiment
+computes no new association, adds no keep, and is not subject to B4.
