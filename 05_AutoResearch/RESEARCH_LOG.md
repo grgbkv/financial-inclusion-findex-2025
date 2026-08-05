@@ -3646,3 +3646,36 @@ only knob that has ever paid and is still untested in part is **which indicator 
 from** — and P19/P20/P21 already showed that axis is exhausted at three stages for account and four
 for saving. The prediction stream is close to needing a different mechanism entirely rather than
 another knob.
+
+
+## 2026-08-05 wrap-up
+Ran 3 experiments (E32, E33, P26) — **one keep on new ground, one audit that lands on the ledger
+itself, one discard that closes a modelling axis**.
+**E32 (hypothesis, DISCARD of the registered claim — Program 2, the inference debt):** the ledger's
+sixteen-test Δ→Δ family reproduces exactly (max |Δr| = 0.0005) and **7 of 8 kept rows survive BH at
+q = 0.10** on the bootstrap p — but only **6 of 8 retain |r_unweighted| ≥ 0.30**, so the joint claim
+fails. **E7 fails all three lenses** (BH, unweighted +0.541→+0.283, and E4 retention 0.44) and is the
+one keep this audit recommends demoting; **E13** fails the unweighted lens alone. The headline is
+the column nobody set a threshold on: at **Kish `neff` = 7.1–7.6** on nominal n of 58–76,
+**BH rejects 0 of 16** (best p = 0.030) against **11 of 16** at nominal n. Counter to the obvious
+prior, the weighting is **not uniformly inflationary** — median |r| change on de-weighting is
+**+0.011**, and the discarded **E16 is +0.198 weighted but +0.555 unweighted**.
+**E33 (hypothesis, KEEP `keep-window` — Program 4, the cycle's B2 experiment on the untouched `fh`
+module):** all nine primary cells clear the bar with one sign and 9/9 G6 stability — digital
+payments **+0.699 / +0.684 / +0.705**, wage **+0.524 / +0.434 / +0.447**, mobile money
+**+0.465 / +0.364 / +0.354** on `fh1`/`fh2`/`fh1_fh2` — every cell beating **E26's +0.294**. Item 4.2
+is answered: **E26's welfare null is MEASURE-SPECIFIC**, because the two welfare families are nearly
+orthogonal to each other (Δ`fh` ~ Δ`fin24aSD_ND` = **+0.146 / +0.032 / +0.104**). Applying E32's
+lesson immediately: only the **digital-payment** cells have intervals clear of zero; all three
+mobile-money cells include it, so the rail ordering is not claimed. **Polarity of the `fh` items is
+unresolved** — the disclosed post-hoc anchor contradicts itself — so the magnitude claim stands and
+the welfare *direction* is explicitly not asserted. Structurally unpromotable (no pre-2021 `fh`
+wave).
+**P26 (prediction, DISCARD):** account's CV picks the incumbent tercile at a **clean single-peaked
+optimum** (7.052 / **6.710** / 6.906 / 6.959 / 6.905), so the tercile is tuned rather than inherited;
+saving's CV prefers B=6 by −0.060 on a **bimodal** curve, and the holdout punished it
+**6.831 → 7.024**. Fifth CV→holdout non-transfer (P8, P9, P13, P23, P26), and the first where the
+*shape* of the CV curve predicted the failure. Champion unchanged: **account 5.014 / resilience
+6.625 / saving 6.831** (P18, 1bb3f78).
+**Recurring number, now measured on the ledger's own core family:** Kish `neff` = **6.5–7.6** in
+every cell of both hypothesis experiments — the fifth frame family to return ≈7.

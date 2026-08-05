@@ -185,3 +185,48 @@ experiment — which is also the natural shape for keeping the paper draft hones
   (unweighted replication of every kept association) should be the next cycle's Program-2 slot —
   with six `keep-general` claims now standing, an FDR accounting is owed before any of them reaches
   the paper draft as a regularity.
+
+
+## Addendum (2026-08-05, from the E32/E33/P26 cycle)
+
+- **Program 2 status — item 2.2 and 2.3 are PAID for the Δ→Δ family, and the answer is bracing.**
+  E32 applied BH (q=0.10) and an unweighted replication to the declared sixteen-test family. Two
+  results the rest of the agenda must now absorb: (i) **at Kish `neff` ≈ 7, BH rejects 0 of 16** —
+  no association in the ledger's core family is defensible as "significant" once the population
+  weighting's true degrees of freedom are used, versus 11 of 16 at nominal n. Every future write-up
+  must report `neff` beside n and must not attach significance language to nominal n. (ii) the
+  weighting **relocates rather than inflates** (median |r| change on de-weighting **+0.011**), which
+  kills the simplest dismissal of the ledger but raises a new item: **`E16` is +0.198 weighted and
+  +0.555 unweighted**, i.e. a *discard* that an unweighted ledger would have kept. **New item 2.5:
+  re-examine the discards whose unweighted counterpart clears 0.30 (E16 the clearest case) — the
+  weighting has been silently setting the keep/discard boundary in both directions.**
+- **A demotion is owed. E7 (`keep-window`) fails all three lenses** — BH (p_boot 0.068), the
+  unweighted replication (+0.541 → +0.283) and the E4 magnitude rule (retention 0.44, applied here
+  for the first time since the rule post-dates E7). **Recommend demoting E7 to `discard` at the next
+  distillation**; E13 fails the unweighted lens only and is flagged, not demoted, since its
+  2017→2021 replication is independent evidence. Items 2.2/2.3 remain **open for the non-Δ→Δ
+  families** (partials E5b/E23/E24, level→change E5/E9/E17, gap designs E20/E21).
+- **Program 4 status — reopened and productive. E33 is the answer to 4.1, 4.2 and 4.4 in one pass**,
+  and it overturns the framing of the paper's Section 6: the "rails do not reach welfare" boundary is
+  a property of **`fin24aSD_ND`**, not of welfare. The `fh` family co-moves with all three rails
+  (0.354–0.705) while being **nearly orthogonal to `fin24aSD_ND`** (+0.03 to +0.15). Two live
+  follow-ups: **4.5 (new) — obtain the `fh1`/`fh2` questionnaire labels and settle the polarity**;
+  until then no welfare *direction* may be asserted, and this is the first item owed to
+  `HARNESS_V2_NOTES.md`. **4.3 (`fin25*` emergency-fund sources, 14 columns) is untouched** and is
+  now the natural next step in this program. Note `fh2a` is 2024-only (level 9.5) and unusable for Δ.
+- **Prediction stream — a second axis closes, and a screening rule falls out.** P26 tested basin
+  **resolution** (bin count 2–6, incumbent nested). Account's CV is **single-peaked at B=3** — the
+  tercile is tuned, not inherited. Saving's CV preferred B=6 by −0.060 on a **bimodal** curve and the
+  holdout worsened +0.193pp: the fifth CV→holdout non-transfer. **New screening rule for this stream:
+  read the SHAPE of the CV curve, not just its argmin — a thin margin at a secondary local minimum
+  at `neff` ≈ 7 is noise, and should not trigger a holdout evaluation.** With adaptive `k`
+  (P24/P25), basin center (P22/P23), the global constant (P9) and now resolution (P26) all closed,
+  and stage-count exhausted (P19/P20/P21), **the shrinkage operator has no untested knobs left**.
+  The next prediction cycle should register a **different mechanism**, not another parameter — the
+  honest options are a change in the base predictor (the trend term, untouched since P2 and never
+  basin-varying) or accepting the champion as final and turning the stream to characterising its
+  errors.
+- **B2 note for the next cycle.** `fh` is now used; still-untouched country modules include **`con`
+  (133 cols, Program 7, still the largest block), `fin25`, `fin31`, `fin34`, `fin43`, `fin13`,
+  `fin14`, `dig_acc`, `merchant_pay`, `borrow_any_t_d`**. The **`age_cat` frame remains at zero
+  mentions**, and **2011→2014 remains the thinnest transition (1 mention)**.
