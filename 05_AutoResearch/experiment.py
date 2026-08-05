@@ -200,6 +200,31 @@ def run(fx: Findex):
               f"r={best['r']:+.3f} (n={best['n']}, neff={best['neff']:.1f})")
     print(f"  Kish neff across primary cells: {res['neff'].min():.1f}-{res['neff'].max():.1f} "
           f"on nominal n {int(res['n'].min())}-{int(res['n'].max())}")
+
+    # ---- POST-HOC polarity anchor (DISCLOSED: added after the primary was read) ---------------
+    # The pre-registration declared the welfare READING of the sign to be an interpretive step
+    # that is not pre-registered, anchored by the levels. The levels alone did not resolve it, so
+    # this cross-sectional anchor is added and labelled POST-HOC. It does not touch the
+    # pre-registered quantity (the magnitude and sign-consistency of the delta~delta cells).
+    print("\n" + "-" * 104)
+    print("POST-HOC POLARITY ANCHOR (added after reading the primary — NOT pre-registered)")
+    print("  2024 cross-sectional level correlations against two columns of KNOWN polarity:")
+    print("  `fin24aSD_ND` = able to come up with emergency funds (higher = BETTER off)")
+    print("  `account_t_d` = account ownership (higher = better off, development proxy)")
+    print("-" * 104)
+    d24 = fx.pan_dev[fx.pan_dev["year"] == 2024].set_index("countrynewwb")
+    pop = d24["pop_adult"]
+    for fh in FH_PRIMARY + ["fh2a"]:
+        line = f"  {fh:9s}"
+        for anchor in ("fin24aSD_ND", "account_t_d"):
+            m = d24[[fh, anchor]].dropna()
+            r, n = fx.weighted_corr(m[fh] * 100, m[anchor] * 100, pop.reindex(m.index))
+            line += f"   r(level, {anchor}) = {r:+.3f} (n={n:3d})"
+        print(line)
+    print("  READING: a NEGATIVE correlation with both anchors implies the item is a "
+          "WORRY/DISTRESS measure (higher = worse);")
+    print("           a POSITIVE correlation implies it is a financial-HEALTH measure "
+          "(higher = better).")
     return res, sec
 
 
