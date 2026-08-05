@@ -1,26 +1,31 @@
-"""Prediction stream — P18: does orthogonal-basin shrinkage compound a FOURTH time?
+"""Prediction stream — P26: is the TERCILE the right RESOLUTION for the data-driven basins?
 
-Champion (P17): saving = damped trend (l=0.5) + region -> income-group -> account-tercile shrink
-(7.080), account = persistence + income-group -> region -> g20-tercile shrink (5.014), resilience =
-persistence + region shrink (6.625).
+Champion (P18, 1bb3f78): account 5.014 = persistence + income-group -> region -> g20-tercile shrink;
+saving 6.831 = damped trend (l=0.5) + region -> income-group -> account-tercile -> g20-tercile
+shrink; resilience 6.625 = persistence + region shrink. k = 0.1 at every stage.
 
-The mechanism has now stacked three stages on saving (P11 -> P12 -> P16: 8.448 -> 7.963 -> 7.359
--> 7.080) and three on account (P7 -> P13 -> P17: 5.144 -> 5.105 -> 5.014), and P17 delivered the
-sharper lesson: a CROSS-INDICATOR basin (terciles of `g20_any`) bought account more than twice
-what a second administrative cut did (-0.091pp vs -0.039pp). Saving's stage 3 is already
-cross-indicator (account terciles). Untested: whether a SECOND data-driven, cross-indicator basin
-still carries independent signal once region, income group and account terciles have each had a
-pass.
+MOTIVATION. P24/P25 closed the adaptive-`k` axis; P22/P23 closed the basin CENTER; P9 closed the
+global constant. The 2026-08-03 agenda addendum records the one live direction as the BASINS
+THEMSELVES. Every data-driven basin in the champion is a TERCILE — a number never chosen, only
+inherited from P16. Bin count trades bias (coarse basins pool unlike countries) against variance
+(fine basins have unreliable means), and unlike `k` it is a property of the PARTITION, which is the
+part of the operator that has kept paying (P16 -0.279pp, P17 -0.091pp, P18 -0.249pp).
 
-P18 stage-4 basin for saving: terciles of `g20_any` (digital-payment adoption, 117/117 panel
-coverage at 2014/2017/2021) — a different indicator from both the target and stage 3's basin
-column.
+DESIGN. One shared bin count B applied to ALL data-driven basins of a target, selected per target by
+the established <=2021 CV (2017->2021, persistence base, every basin built from the 2017
+cross-section). Grid B in {2, 3, 4, 5, 6}, with B = 3 the incumbent, EXACTLY NESTED (as P25's m->0
+nested the constant k). Administrative basins (region, income group) are unchanged — they have no
+bin count. Per-target policy (P2): resilience has no data-driven stage and stays byte-identical.
 
-Adoption rule (entirely <=2021, no 2024 anywhere in features, fitting or selection): CV on the
-saving 2017->2021 transition with a persistence base (the P10/P12/P13/P16/P17 protocol), every
-basin — including both tercile basins — built from the 2017 cross-section; adopt the fourth stage
-only if it beats the incumbent three-stage there. Per-target policy (P2): touches saving only;
-account (5.014) and resilience (6.625) stay byte-identical to the P17 champion.
+ADOPTION RULE. Adopt B != 3 for a target only if the <=2021 CV STRICTLY PREFERS it; then, and only
+then, evaluate the 2024 holdout, and keep only if the holdout MAE also improves (the P11/P16/P17
+condition — CV AND holdout, given the four CV->holdout non-transfers on record: P8, P9, P13, P23).
+If CV does not prefer any B != 3, adoption fails at the first gate, no 2024 evaluation is run
+(P14/P15/P19/P20/P21 protocol) and predictor.py reverts to the P18 champion.
+
+No 2024 data anywhere in features, fitting or selection.
+
+REGISTERED QUESTION. Is the tercile a TUNED choice or an ARBITRARY one that happens to work?
 """
 import pandas as pd
 
@@ -31,35 +36,31 @@ SHRINK_K = 0.1
 INCOME_BASIN = "incomegroupwb24"   # P7 champion basin for account
 REGION_BASIN = "regionwb24_hi"     # P5/P11 champion basin for resilience & saving stage 1
 
-# Per-target basin order: (stage-1 basin, candidate stage-2 basin)
+INCUMBENT_BINS = 3                 # P16/P17/P18 inherited default
+BIN_GRID = [2, 3, 4, 5, 6]         # P26 candidate grid; B=3 nests the incumbent exactly
+
+# Per-target basin order: (stage-1 basin, stage-2 basin)
 BASIN_ORDER = {
     "account_t_d": (INCOME_BASIN, REGION_BASIN),
     "fin24aSD_ND": (REGION_BASIN, INCOME_BASIN),
     "fin17a_17a1_d": (REGION_BASIN, INCOME_BASIN),  # P12, fixed
 }
 
-# Per-target stage-3 DATA-DRIVEN basin: terciles of another indicator's level.
-# saving -> account level ("digitalization stage", P16, fixed).
-# account -> g20_any level ("digital-usage stage", P17 candidate).
-THIRD_BASIN_COL = {
-    "fin17a_17a1_d": "account_t_d",
-    "account_t_d": "g20_any",
-}
-
-# Per-target stage-4 DATA-DRIVEN basin (P18 candidate): a SECOND cross-indicator basin, distinct
-# from the target and from the stage-3 basin column. saving -> g20_any level.
-FOURTH_BASIN_COL = {
-    "fin17a_17a1_d": "g20_any",
+# Data-driven basin columns, in stage order, per target (P16/P17/P18 champions).
+DATA_BASIN_COLS = {
+    "fin17a_17a1_d": ["account_t_d", "g20_any"],   # stage 3, stage 4
+    "account_t_d": ["g20_any"],                    # stage 3
 }
 
 
-def _tercile_basin(train, col, at_year):
-    """Data-driven basin: terciles of `col`'s level at `at_year`. Built from <=2021 data only;
-    cuts across region and income group."""
+def _tile_basin(train, col, at_year, bins=INCUMBENT_BINS):
+    """Data-driven basin: `bins`-quantile tiles of `col`'s level at `at_year`. Built from <=2021
+    data only; cuts across region and income group. bins=3 reproduces P16/P17/P18's tercile."""
     ref = train[train["year"] == at_year].set_index("countrynewwb")[col].dropna()
-    if len(ref) < 9:
+    if len(ref) < 3 * bins:
         return pd.Series(dtype=object)
-    return pd.qcut(ref, 3, labels=["ter_low", "ter_mid", "ter_high"]).astype(object)
+    q = pd.qcut(ref, bins, labels=False, duplicates="drop")
+    return q.map(lambda i: f"tile{int(i)}_of{bins}").astype(object)
 
 
 def _shrink(train, last, k, basin, at_year=2021):
@@ -77,131 +78,78 @@ def _shrink(train, last, k, basin, at_year=2021):
     return shrunk.reindex(last.index).fillna(last)
 
 
-def _select_two_stage(fx: Findex, target: str):
-    """Pre-2021 CV: predict 2021 from 2017 (persistence base), compare that target's current
-    single shrink vs the two-stage version. Adopt two-stage only if it wins on <=2021 data.
-
-    Deviation from the P13 pre-registration, disclosed: fin24aSD_ND exists only in 2021, so it
-    has no pre-2021 transition to CV on — the registered per-target rule is infeasible for it.
-    Fallback follows the P5 precedent (which picked k=0.1 for resilience off the account
-    transition): run the CV on account_t_d while keeping resilience's own basin ORDER
-    (region -> income-group). Still no 2024 anywhere. P8 is on record that account-CV basin
-    preferences need not transfer to resilience, so this selector is known-weak.
-    """
-    train, _ = fx.prediction_task()
-    cv_target = "account_t_d" if target == "fin24aSD_ND" else target
-    if cv_target != target:
-        print(f"P13 note: {target} has no pre-2021 history; CV proxied on {cv_target} "
-              f"with {target}'s basin order (P5 precedent, disclosed deviation)")
-    wide = train.pivot_table(index="countrynewwb", columns="year", values=cv_target) * 100
-    truth_2021, from_2017 = wide.get(2021), wide.get(2017)
-    common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
-
+def _stack(train, base, target, at_year, bins, n_data_stages):
+    """The target's full champion shrink stack applied to `base`, with the data-driven stages cut
+    into `bins` tiles. Administrative stages are unchanged."""
     b1, b2 = BASIN_ORDER[target]
-    single = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
-    two_stage = _shrink(train, single, SHRINK_K, b2, at_year=2017)
-    mae_single = float((single.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    mae_two = float((two_stage.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    use_two = mae_two < mae_single
-    print(f"P13 pre-2021 CV {target:16s} (2017->2021): single={mae_single:.3f} "
-          f"two_stage={mae_two:.3f}  -> two_stage={use_two}  (n={len(common)})")
-    return use_two
+    out = _shrink(train, base, SHRINK_K, b1, at_year=at_year)
+    out = _shrink(train, out, SHRINK_K, b2, at_year=at_year)
+    for col in DATA_BASIN_COLS[target][:n_data_stages]:
+        basin = _tile_basin(train, col, at_year, bins)
+        out = _shrink(train, out, SHRINK_K, basin, at_year=at_year)
+    return out
 
 
-def _select_third_stage(fx: Findex, target: str):
-    """P16/P17 pre-2021 CV: predict `target` 2021 from 2017 (persistence base, P12 protocol), all
-    basins — including the data-driven tercile basin — built at 2017. Adopt the third stage only
-    if it beats the incumbent two-stage on this <=2021 window."""
+def _select_bins(fx: Findex, target: str):
+    """P26 pre-2021 CV: predict `target` 2021 from 2017 (persistence base, the P12/P16/P17/P18
+    protocol), every basin built at 2017, the target's full champion stack, sweeping the shared
+    bin count over BIN_GRID. Returns (chosen_bins, table)."""
     train, _ = fx.prediction_task()
     wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
     truth_2021, from_2017 = wide.get(2021), wide.get(2017)
     common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
+    n_stages = len(DATA_BASIN_COLS[target])
 
-    b1, b2 = BASIN_ORDER[target]
-    b3 = _tercile_basin(train, THIRD_BASIN_COL[target], 2017)
-    s1 = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
-    s2 = _shrink(train, s1, SHRINK_K, b2, at_year=2017)
-    s3 = _shrink(train, s2, SHRINK_K, b3, at_year=2017)
-    mae_two = float((s2.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    mae_three = float((s3.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    use_three = mae_three < mae_two
-    tag = "P16" if target == "fin17a_17a1_d" else "P17"
-    print(f"{tag} pre-2021 CV {target:16s} (2017->2021, stage-3 basin = "
-          f"{THIRD_BASIN_COL[target]} terciles): two_stage={mae_two:.3f} "
-          f"three_stage={mae_three:.3f}  -> three_stage={use_three}  (n={len(common)})")
-    return use_three
+    table = {}
+    for b in BIN_GRID:
+        pred = _stack(train, from_2017, target, 2017, b, n_stages)
+        table[b] = float((pred.reindex(common) - truth_2021.reindex(common)).abs().mean())
+
+    best = min(table, key=table.get)
+    incumbent = table[INCUMBENT_BINS]
+    # Adopt a non-incumbent B only on a STRICT CV improvement.
+    chosen = best if table[best] < incumbent else INCUMBENT_BINS
+    grid = "  ".join(f"B={b}: {v:.3f}" for b, v in table.items())
+    print(f"P26 pre-2021 CV {target:16s} (2017->2021, {n_stages} data-driven stage(s), "
+          f"basins at 2017, n={len(common)})")
+    print(f"    {grid}")
+    print(f"    incumbent B={INCUMBENT_BINS}: {incumbent:.3f}  best B={best}: {table[best]:.3f}  "
+          f"margin {table[best] - incumbent:+.3f}  -> adopted B={chosen}"
+          f"{'' if chosen != INCUMBENT_BINS else '  (incumbent retained)'}")
+    return chosen, table
 
 
-def _select_fourth_stage(fx: Findex, target: str):
-    """P18 pre-2021 CV: predict `target` 2021 from 2017 (persistence base, P12 protocol), all
-    basins — including both data-driven tercile basins — built at 2017. Adopt the fourth stage
-    only if it beats the incumbent three-stage on this <=2021 window."""
+def predict(fx: Findex, bins: dict) -> dict:
     train, _ = fx.prediction_task()
-    wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
-    truth_2021, from_2017 = wide.get(2021), wide.get(2017)
-    common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
-
-    b1, b2 = BASIN_ORDER[target]
-    b3 = _tercile_basin(train, THIRD_BASIN_COL[target], 2017)
-    b4 = _tercile_basin(train, FOURTH_BASIN_COL[target], 2017)
-    s1 = _shrink(train, from_2017, SHRINK_K, b1, at_year=2017)
-    s2 = _shrink(train, s1, SHRINK_K, b2, at_year=2017)
-    s3 = _shrink(train, s2, SHRINK_K, b3, at_year=2017)
-    s4 = _shrink(train, s3, SHRINK_K, b4, at_year=2017)
-    mae_three = float((s3.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    mae_four = float((s4.reindex(common) - truth_2021.reindex(common)).abs().mean())
-    use_four = mae_four < mae_three
-    print(f"P18 pre-2021 CV {target:16s} (2017->2021, stage-4 basin = "
-          f"{FOURTH_BASIN_COL[target]} terciles): three_stage={mae_three:.3f} "
-          f"four_stage={mae_four:.3f}  -> four_stage={use_four}  (n={len(common)})")
-    return use_four
-
-
-def predict(fx: Findex, use_two: dict, use_three: dict, use_four: dict) -> dict:
-    train, _ = fx.prediction_task()
-    third_basin_2021 = {t: _tercile_basin(train, col, 2021)
-                        for t, col in THIRD_BASIN_COL.items()}
-    fourth_basin_2021 = {t: _tercile_basin(train, col, 2021)
-                         for t, col in FOURTH_BASIN_COL.items()}
     preds = {}
     for target in fx.PRED_TARGETS:
         wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
         last = wide.get(2021)
-        b1, b2 = BASIN_ORDER[target]
+
+        if target == "fin24aSD_ND":
+            # P5 champion: persistence + single region shrink. No data-driven stage, no bin count.
+            preds[target] = _shrink(train, last, SHRINK_K, REGION_BASIN)
+            continue
 
         if target == "fin17a_17a1_d":
             prev = wide.get(2017)
             trend = (last - prev).fillna(0.0) if prev is not None else 0.0
-            pred = (last + DAMP * trend).clip(0, 100).fillna(last)  # P2 damped trend
+            base = (last + DAMP * trend).clip(0, 100).fillna(last)  # P2 damped trend
         else:
-            pred = last
+            base = last
 
-        pred = _shrink(train, pred, SHRINK_K, b1)          # stage 1 (champion basin)
-        if use_two.get(target):                            # stage 2 (orthogonal basin)
-            pred = _shrink(train, pred, SHRINK_K, b2)
-        if use_three.get(target):                          # stage 3 (data-driven basin)
-            pred = _shrink(train, pred, SHRINK_K, third_basin_2021[target])
-        if use_four.get(target):                           # stage 4 (2nd data-driven basin)
-            pred = _shrink(train, pred, SHRINK_K, fourth_basin_2021[target])
-        preds[target] = pred
+        preds[target] = _stack(train, base, target, 2021, bins[target],
+                               len(DATA_BASIN_COLS[target]))
     return preds
 
 
 if __name__ == "__main__":
     fx = Findex()
-    # Resilience: the P13 run showed the proxied CV adopted two-stage (6.955 < 7.209) but
-    # out-of-sample MAE worsened 6.625 -> 6.730, so it reverts to the P5 single region shrink
-    # under the per-target policy — the same non-transfer P8 found. Kept hard-coded off rather
-    # than re-running a selector already known to mis-select for this target.
-    use_two = {"fin17a_17a1_d": True, "fin24aSD_ND": False,
-               "account_t_d": _select_two_stage(fx, "account_t_d")}
-    # Stage 3: saving is the P16 champion (fixed); account is the P17 candidate under test.
-    use_three = {"fin17a_17a1_d": _select_third_stage(fx, "fin17a_17a1_d"),
-                 "account_t_d": _select_third_stage(fx, "account_t_d")}
-    # Stage 4: the P18 candidate, saving only (per-target policy).
-    use_four = {"fin17a_17a1_d": _select_fourth_stage(fx, "fin17a_17a1_d")}
-    print(f"P18 adopted two-stage: {use_two} | three-stage: {use_three} | "
-          f"four-stage: {use_four}")
-    result = fx.evaluate_predictions(predict(fx, use_two, use_three, use_four))
+    bins = {t: _select_bins(fx, t)[0] for t in ("account_t_d", "fin17a_17a1_d")}
+    print(f"\nP26 adopted bin counts: {bins}  (incumbent = {INCUMBENT_BINS} on both)")
+    if all(b == INCUMBENT_BINS for b in bins.values()):
+        print("P26: CV prefers the incumbent tercile on BOTH targets — adoption fails at the "
+              "first gate. Holdout below is the P18 champion, re-run to confirm it is unchanged.")
+    result = fx.evaluate_predictions(predict(fx, bins))
     for t, r in result.items():
         print(f"{t:20s} MAE = {r['mae']} pp  (n={r['n']})")
