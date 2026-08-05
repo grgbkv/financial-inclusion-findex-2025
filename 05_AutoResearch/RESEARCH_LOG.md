@@ -3612,3 +3612,37 @@ in `findings.tsv` and is the first item owed to `HARNESS_V2_NOTES.md` from this 
 **B4, declared in advance.** `fh` has no pre-2021 wave, so this keep is **structurally unpromotable**
 — it can never become `keep-general` under the replication rule, exactly like E29. **B2 satisfied:**
 first ledger use of the `fh` module, one of the thirteen untouched country families.
+
+### P26 — verdict: DISCARD; the tercile survives on both targets, and the resolution axis closes
+
+**Account: adoption fails at the first gate, and informatively.** The ≤2021 CV (2017→2021,
+persistence base, three-stage income-group → region → `g20_any` B-tiles, all basins built at 2017)
+sweeps the bin grid to a **clean single-peaked interior optimum at the incumbent**:
+
+`B=2: 7.052 · B=3: 6.710 · B=4: 6.906 · B=5: 6.959 · B=6: 6.905`
+
+Both coarser and finer partitions are strictly worse. No 2024 evaluation was run for this target
+(P14/P15/P19/P20/P21 protocol) and the holdout is byte-identical at 5.014. **This answers the
+registered question for account: the tercile is a TUNED choice, not an arbitrary inheritance.**
+
+**Saving: CV preferred B=6, so the holdout was consulted — and it lost.** The four-stage saving CV
+gives `B=2: 7.080 · B=3: 6.370 · B=4: 6.454 · B=5: 6.553 · B=6: 6.310`, a strict preference for
+B=6 by **−0.060**, which triggered the holdout under the adoption rule. The holdout **worsens
+6.831 → 7.024 (+0.193pp)**. The keep condition requires CV **and** holdout, so P26 is discarded and
+`predictor.py` was reverted to the P18 champion (1bb3f78) and re-run to confirm byte-identical
+output: **account 5.014 / resilience 6.625 / saving 6.831**.
+
+**This is the fifth CV→holdout non-transfer on record (P8, P9, P13, P23, P26)** — and the diagnostic
+is visible in the CV curve itself, before the holdout was consulted. Saving's curve is
+**non-monotone and bimodal**: two local minima at B=3 and B=6 separated by a hump at B=4–5. Account's
+is single-peaked. A **−0.060 margin on a bimodal curve at `neff` ≈ 7** is not a preference, it is
+sampling noise finding a second dip, which is exactly what the holdout then punished. The shape of a
+CV curve, not just its argmin, is usable evidence — worth carrying into the next prediction cycle as
+a screening rule.
+
+**The resolution axis is closed.** Bin count now joins adaptive `k` (P24/P25), basin center
+(P22/P23) and the global constant (P9) as tested and rejected. Of the whole shrinkage operator, the
+only knob that has ever paid and is still untested in part is **which indicator a basin is drawn
+from** — and P19/P20/P21 already showed that axis is exhausted at three stages for account and four
+for saving. The prediction stream is close to needing a different mechanism entirely rather than
+another knob.
