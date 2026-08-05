@@ -3357,3 +3357,165 @@ rejected the premise: Kish `neff` carries no usable information about how hard a
 saving 6.831** (P18, 1bb3f78).
 **Recurring number, now on a third frame family:** Kish `neff` ≈ **5.7–7.6** in every cell of both
 hypothesis experiments, whatever the nominal n.
+
+---
+
+# 2026-08-05 cycle — pre-registrations (written before any answer was computed)
+
+**Coverage audit (rule B1) run first.** `python3 coverage.py`: country file 24/429 columns touched
+(6%); 13 untouched module families / 309 columns; micro 22/192 (11%); transitions 2011→2014 thin (1
+mention), 2014→17 / 2017→21 / 2021→24 used; frames `age_cat` untouched, `education` and `laborforce`
+thin (1 mention each, from E31).
+
+**Cycle shape and the coverage cells it lands on.**
+- **E32 — Program 2 (items 2.2 + 2.3), the inference debt.** No new columns by design: this is an
+  audit of the ledger's *own* association family. The 2026-08-03 addendum names 2.2 and 2.3 as the
+  cycle's Program-2 slot, with six `keep-general` claims now standing and Kish `neff` ≈ 5.7–7.6 in
+  every cell ever measured.
+- **E33 — Program 4 (items 4.1, 4.2, 4.4), the welfare margin reopened.** Lands on the **`fh`
+  financial-health module — 4 columns, ZERO ledger mentions**, one of the 13 untouched country
+  families. **This is the cycle's B2 breadth experiment.**
+- **P26 — prediction stream.** Basin *resolution* for the data-driven shrinkage stages.
+
+**Lineage (rule B3).** E32's parent is the association ledger as a whole (a meta-experiment, no
+single parent). E33's parent is **E26** (the welfare-margin null) — first descendant, cap not
+engaged. No three-in-a-row from one parent this cycle.
+
+## E32 (pre-registered) — Program 2: does the ledger's association family survive false-discovery control, and how much of it is the population weighting?
+
+**Motivation.** The ledger reports ~30 country-level tests with no multiple-testing correction (rule
+B7, owed since the harness v2 note) and no unweighted counterpart (agenda item 2.3). With Kish
+`neff` coming in at 5.7–7.6 whatever the nominal n, a 50-test ledger nominally significant at n≈76
+may be nominally significant at 7 effective observations essentially never. This must be settled
+before any `keep-general` reaches the paper draft as a regularity.
+
+**FAMILY (declared exactly, before computation).** The homogeneous same-construction family:
+population-weighted correlation of two **2021→2024 changes** on the developing panel (`pan_dev`,
+`group == "all"`). Sixteen tests, each named with its ledger id and column pair:
+
+| id | Δx | Δy | ledger r | ledger status |
+|---|---|---|---|---|
+| E1 | `mobileaccount_t_d` | `fin17a_17a1_d` | +0.719 | keep-general |
+| E2 | `mobileaccount_t_d` | `fin24aSD_ND` | +0.189 | discard |
+| E7 | `fin17a_17a1_d` | `fin24sav` | +0.541 | keep-window |
+| E10 | `fin32_acc` | `fin17a_17a1_d` | +0.791 | keep-general |
+| E11 | `fin22a_22a1_22g_d` | `fin17a_17a1_d` | +0.403 | keep-general |
+| E12 | `g20_any` | `fin17a_17a1_d` | +0.370 | keep-general |
+| E13 | `fiaccount_t_d` | `mobileaccount_t_d` | +0.435 | keep-general |
+| E14 | `mobileaccount_t_d` | `g20_any` | +0.600 | keep-general |
+| E15 | `fin24aSD_ND` | `fin17a_17a1_d` | +0.031 | discard |
+| E16 | `account_t_d` | `fin17a_17a1_d` | +0.198 | discard |
+| E18 | `fin24bor` | `fin17a_17a1_d` | +0.069 | discard |
+| E19 | `inactive_t_d` | `fin17a_17a1_d` | +0.160 | discard |
+| E25 | `fin32_acc` | `fin22a_22a1_22g_d` | +0.605 | keep-window |
+| E26 | `fin32_acc` | `fin24aSD_ND` | +0.294 | discard |
+| E27 | `fin17c` | `fin17a_17a1_d` | +0.696 | discard (sign) |
+| E27b | `fin17b` | `fin17a_17a1_d` | +0.531 | secondary of E27 |
+
+**EXCLUDED from the family, and why** (declared so the family cannot be gerrymandered after the
+answer): partial-correlation designs (E5b, E23, E24), level→change designs (E5, E9, E17), gap
+designs (E3, E20, E21), region-split replications (E22), earlier-transition replications (E28, E30),
+the 2024 cross-section (E29), the trajectory design (E31), and the micro stream. Those are different
+constructions and would need their own families; the BH accounting here is explicitly *within* the
+Δ→Δ family and is reported as such.
+
+**TEST.** For each of the sixteen: population-weighted `r` (harness `weighted_corr`), **unweighted**
+`r`, nominal `n`, Kish `neff = (Σw)²/Σw²`, a country bootstrap (2,000 draws, percentile 95% CI), and
+three p-values — `p_boot` (2 × the smaller bootstrap tail mass at 0, floored at 1/draws),
+`p_nominal` (t on `n−2` df) and `p_neff` (the same t on `neff−2` df). Benjamini–Hochberg at
+**q = 0.10** applied over the sixteen, on `p_boot` (primary) and on `p_neff` (secondary).
+
+**PRE-REGISTERED CLAIM AND THRESHOLD.** The ledger's kept associations in this family are robust in
+the two senses it has never checked. Kept iff **BOTH**:
+  (a) **≥ 80% of the family's kept rows (7 of 8: E1, E7, E10, E11, E12, E13, E14, E25) survive BH at
+      q = 0.10 on `p_boot`**, and
+  (b) **≥ 80% of those same kept rows retain `|r_unweighted| ≥ 0.30`.**
+Failure of either is the informative outcome and is logged as a discard of *this* claim — i.e. as a
+finding about the ledger, with the specific rows that fail named.
+
+**DECLARED.** This experiment computes no new association; it recomputes existing ones under two
+additional lenses. It is therefore not subject to B4 (no window claim) and adds no new keep to the
+ledger. Whatever it returns is an audit result about the ledger's own inference, and the BH family is
+the Δ→Δ family only — a ledger-wide FDR would be more punishing, not less.
+
+## E33 (pre-registered) — Program 4: do the digitalization rails reach a SECOND welfare margin (`fh` financial health), 2021→2024?
+
+**Motivation and parent (B3).** Parent is **E26**, which found the three rails miss the welfare
+margin at the pre-registered bar (wage digitalization r = +0.294 vs a 0.30 threshold — a
+six-thousandths miss) on a *single* self-reported measure, `fin24aSD_ND`. Agenda item 4.2 asks
+whether that null is a **measure artifact or a real boundary**. The `fh` family (`fh1`, `fh2`,
+`fh2a`, `fh1_fh2`) is an untouched module with 2021 **and** 2024 coverage on ~74/71 developing
+economies — a second and third welfare margin with a usable Δ. **B2 breadth cell: `fh`, zero prior
+ledger mentions.**
+
+**G3 DECLARATION.** The harness `INDICATORS` registry does not cover the `fh` family, so
+`gate_variant` will return `UNREGISTERED` by construction; this is disclosed, not evaded. Variants
+declared here instead: **`fh1` and `fh2` are the primary items**, `fh1_fh2` the declared composite,
+`fh2a` excluded (2024 only, no Δ). Column-set membership is verified in the file; the questionnaire
+*polarity* of the items is **not** assumed — see the polarity clause below.
+
+**POLARITY CLAUSE (the honest part).** The country file is unlabelled, so the direction in which a
+higher `fh1`/`fh2` value means better or worse financial health is **not known at registration
+time**. The pre-registered quantity is therefore the **magnitude and sign-consistency** of the
+co-movement, not its welfare direction:
+  - the sign must be **consistent across all three rails** for a given item, and
+  - **consistent across `fh1` and `fh2`**.
+The welfare *reading* of that sign (improvement vs deterioration) is declared, in advance, to be an
+**interpretive step that is NOT pre-registered**, will be labelled as such in the verdict, and will be
+anchored by reporting the pop-weighted 2021 and 2024 levels of each item alongside the correlation.
+A claim about magnitude survives regardless of how the polarity resolves; a claim about direction
+will be worded as conditional on it.
+
+**TEST.** `pan_dev`, `group == "all"`, 2021→2024 changes, population-weighted correlation (harness
+`weighted_corr`), exactly E26's construction with the destination swapped.
+  - **PRIMARY (4.1):** Δ`fh1`, Δ`fh2`, Δ`fh1_fh2` each against the three rails —
+    Δ`fin32_acc` (wage), Δ`g20_any` (digital payments), Δ`mobileaccount_t_d` (mobile money).
+  - **SECONDARY A (4.4):** Δ`fh*` ~ Δ`fin17a_17a1_d` — does financial health track the saving surge?
+  - **SECONDARY B (4.2):** Δ`fh*` ~ Δ`fin24aSD_ND` — do the two welfare measures agree with each
+    other at all? If they do not, E26's boundary claim is measure-specific.
+  - Rail terciles (low/mid/high mean Δ`fh`) reported for the primary, ledger convention.
+
+**KEEP THRESHOLD.** Kept iff **at least one of `fh1`/`fh2`/`fh1_fh2` reaches `|r| ≥ 0.30` against at
+least TWO of the three rails, with the same sign on all three rails and the same sign for `fh1` and
+`fh2`**, AND G4 passes, AND G6 is sign-stable on every cell that counts toward the claim, AND the E4
+judgment rule holds on those cells (`|r_droptop| ≥ 0.5 × |r_full|` — a jackknife that keeps its sign
+but loses most of its magnitude is a big-country artifact and voids the general claim).
+
+**B6 INFERENCE (mandatory for a new keep).** Country bootstrap, 2,000 draws, percentile 95% interval
+on every primary correlation; Kish `neff` reported beside the nominal n in every cell.
+
+**B4.** Any keep here is 2021→2024 only and is logged **`keep-window`** — `fh` has no pre-2021 wave,
+so this claim is *structurally unpromotable*, exactly as E29 is. Declared now so it is not later
+mistaken for a general regularity.
+
+**DECLARED.** Descriptive co-movement of contemporaneous changes. It identifies nothing, and the
+registered comparison is against E26's +0.294 on `fin24aSD_ND`.
+
+## P26 (pre-registered) — prediction: is the tercile the right RESOLUTION for the data-driven basins?
+
+**Motivation.** P24/P25 closed the adaptive-`k` axis; P22/P23 closed the basin *center*; P9 closed
+the global constant. The 2026-08-03 addendum records the one live direction as **the basins
+themselves**. Every data-driven basin in the champion is a **tercile** — a number never chosen, only
+inherited from P16. Bin count trades bias (coarse basins pool unlike countries) against variance
+(fine basins have unreliable means), and unlike `k` it is a property of the *partition*, which is the
+part of the operator that has kept paying (P16 −0.279pp, P17 −0.091pp, P18 −0.249pp).
+
+**DESIGN.** One shared bin count `B` applied to **all** data-driven tercile basins of a target,
+selected per target by the established ≤2021 CV — saving/account 2017→2021, persistence base, every
+basin built from the 2017 cross-section. Grid **B ∈ {2, 3, 4, 5, 6}**, with **B = 3 the incumbent,
+exactly nested** (as P25's m→0 was). Champion stacks unchanged otherwise: account = income-group →
+region → `g20_any` B-tiles; saving = damped trend (λ=0.5) + region → income-group → `account_t_d`
+B-tiles → `g20_any` B-tiles. `k = 0.1` at every stage. Per-target policy (P2): resilience has no
+data-driven stage and stays byte-identical at 6.625.
+
+**ADOPTION RULE.** Adopt `B ≠ 3` for a target only if the ≤2021 CV **strictly prefers** it; then, and
+only then, evaluate the 2024 holdout, and keep only if the holdout MAE also improves (the P11/P16/P17
+condition — CV **and** holdout, per the four CV→holdout non-transfers on record: P8, P9, P13, P23).
+If CV does not prefer any `B ≠ 3`, adoption fails at the first gate, no 2024 evaluation is run
+(P14/P15/P19/P20/P21 protocol) and `predictor.py` reverts to the P18 champion (1bb3f78).
+No 2024 data anywhere in features, fitting or selection.
+
+**REGISTERED QUESTION.** Is the tercile a *tuned* choice or an *arbitrary* one that happens to work?
+A monotone CV preference for coarser or finer bins would say the resolution axis is live; a CV that
+picks B=3 on both targets says P16's inherited default is at a local optimum and the resolution axis
+is closed too.
