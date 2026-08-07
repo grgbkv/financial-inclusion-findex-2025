@@ -1,40 +1,23 @@
-"""E33 (pre-registered): do the digitalization rails reach a SECOND welfare margin (`fh`), 2021->24?
+"""E34 (pre-registered): has the within-country AGE gap in account ownership narrowed, 2011->2024?
 
-Program 4 — the welfare margin reopened (agenda items 4.1, 4.2, 4.4). Parent: **E26**, which found
-the three rails miss the welfare margin at the registered bar (wage digitalization r = +0.294 vs a
-0.30 threshold) on a SINGLE self-reported measure, `fin24aSD_ND`. Item 4.2 asks whether that null is
-a measure artifact or a real boundary. First descendant of E26, so rule B3's lineage cap is not
-engaged.
+Program 3, item 3.4. Parent: E31 (first descendant, B3 not engaged).
 
-B2 BREADTH CELL: the `fh` family (`fh1`, `fh2`, `fh2a`, `fh1_fh2`) — an UNTOUCHED country module,
-zero ledger mentions, one of the thirteen untouched families in the coverage audit. 2021 AND 2024
-coverage on ~74/71 developing economies, so it carries a usable delta.
+B2 BREADTH CELL: `group == "age_cat"` — the one country frame at ZERO ledger mentions — plus the
+2011->2014 transition, the thinnest in the ledger (2 mentions).
 
-G3 DECLARATION. The harness INDICATORS registry does not cover `fh`, so `gate_variant` returns
-UNREGISTERED by construction — disclosed, not evaded. Declared instead: `fh1` and `fh2` are the
-PRIMARY items, `fh1_fh2` the declared composite, `fh2a` EXCLUDED (2024 only, no delta).
+DESIGN, per the pre-registration:
+  PRIMARY   unweighted SHARE of developing panel economies whose LOG-ODDS age gap
+            (logit(p_25+) - logit(p_15-24)) is smaller in 2024 than in 2011.  Keep if >= 60%.
+  SEC 1     pop-weighted mean d(log-odds gap) 2011->2024 with its UNWEIGHTED twin beside it;
+            the keep also requires these two to carry the SAME (negative) sign.
+  SEC 2     the same share per transition (2011->14, 14->17, 17->21, 21->24).
+  SEC 3     the usage margin `g20_any` over 2014->2024, same statistics.
+  DESCR     pp gap levels by wave, both margins.
 
-POLARITY CLAUSE. The country file is unlabelled, so whether a higher `fh1`/`fh2` means better or
-worse financial health is NOT known at registration time. The pre-registered quantity is therefore
-the MAGNITUDE and SIGN-CONSISTENCY of the co-movement, not its welfare direction: the sign must be
-consistent across all three rails for a given item, and consistent across `fh1` and `fh2`. The
-welfare READING of that sign is declared in advance to be an interpretive step that is NOT
-pre-registered; it is labelled as such in the verdict and anchored by reporting the pop-weighted
-2021 and 2024 levels of each item beside the correlations.
+Gates: G3 (headline columns), G4, G6 (drop-top-5 on the weighted mean), G5 n/a.
+B6: 2,000-draw country bootstrap on the primary share and the weighted mean; Kish neff throughout.
 
-KEEP THRESHOLD. At least one of fh1/fh2/fh1_fh2 reaches |r| >= 0.30 against at least TWO of the
-three rails, with the same sign on all three rails and the same sign for fh1 and fh2; AND G4 passes;
-AND G6 is sign-stable on every counting cell; AND the E4 judgment rule holds on those cells
-(|r_droptop| >= 0.5 |r_full|).
-
-B6: country bootstrap 2,000 draws, percentile 95% interval on every primary correlation; Kish neff
-beside the nominal n everywhere.
-
-B4: any keep here is 2021->2024 only and is STRUCTURALLY UNPROMOTABLE (`fh` has no pre-2021 wave),
-exactly as E29 is. Logged `keep-window` and declared so now.
-
-DECLARED. Descriptive co-movement of contemporaneous changes. Identifies nothing. The registered
-comparison is E26's +0.294 on `fin24aSD_ND`.
+DECLARED. Descriptive gap trajectories. No causal reading. Multi-wave, so B4 does not bind.
 """
 import numpy as np
 import pandas as pd
@@ -42,20 +25,11 @@ import pandas as pd
 from harness import Findex
 
 BOOT = 2000
-SEED = 33
-BAR = 0.30
-WINDOW = (2021, 2024)
-
-FH_PRIMARY = ["fh1", "fh2", "fh1_fh2"]      # fh2a excluded: 2024 only, no delta
-RAILS = {                                    # E26's three rails, same columns
-    "wage (fin32_acc)":        "fin32_acc",
-    "digital pay (g20_any)":   "g20_any",
-    "mobile money (mobileacc)": "mobileaccount_t_d",
-}
-SECONDARY = {
-    "A 4.4 saving surge (fin17a_17a1_d)": "fin17a_17a1_d",
-    "B 4.2 resilience (fin24aSD_ND)":     "fin24aSD_ND",
-}
+SEED = 34
+SHARE_BAR = 0.60
+CLIP = (0.005, 0.995)
+ADV, DIS = "age 25+", "ages 15-24"          # advantaged / disadvantaged, declared
+WAVES = [2011, 2014, 2017, 2021, 2024]
 
 
 def _kish(w):
@@ -63,169 +37,108 @@ def _kish(w):
     return float(w.sum() ** 2 / (w ** 2).sum())
 
 
-def delta_frame(fx: Findex, xcol, ycol):
-    y0, y1 = WINDOW
-    wx = fx.country_panel(fx.pan_dev, xcol, [y0, y1])
-    wy = fx.country_panel(fx.pan_dev, ycol, [y0, y1])
-    return pd.DataFrame({"dx": wx[y1] - wx[y0],
-                         "dy": wy[y1] - wy[y0],
-                         "pop": wx["pop"]}).dropna()
+def _logit(p):
+    p = np.clip(p, *CLIP)
+    return np.log(p / (1 - p))
 
 
-def _boot_ci(fx: Findex, df, draws=BOOT, seed=SEED):
-    rng = np.random.default_rng(seed)
-    idx = np.arange(len(df))
-    out = []
-    for _ in range(draws):
-        d = df.iloc[rng.choice(idx, size=len(idx), replace=True)]
-        r, _n = fx.weighted_corr(d["dx"], d["dy"], d["pop"])
-        if pd.notna(r):
-            out.append(r)
-    if len(out) < draws * 0.9:
-        return None, None
-    return float(np.percentile(out, 2.5)), float(np.percentile(out, 97.5))
+def gap_table(fx: Findex, col):
+    """Per-country, per-wave age gap on `col`, developing panel economies.
+
+    Returns two wide frames (log-odds gap, pp gap) indexed by country, columns = waves,
+    plus a 2024 adult-population weight column."""
+    g = fx.pan_grp[fx.pan_grp["group"] == "age_cat"]
+    g = g[g["incomegroupwb24"] != "High income"]
+    adv = g[g["group2"] == ADV].pivot_table(index="countrynewwb", columns="year", values=col)
+    dis = g[g["group2"] == DIS].pivot_table(index="countrynewwb", columns="year", values=col)
+    waves = [y for y in WAVES if y in adv.columns and y in dis.columns]
+    lo = pd.DataFrame({y: _logit(adv[y]) - _logit(dis[y]) for y in waves})
+    pp = pd.DataFrame({y: (adv[y] - dis[y]) * 100 for y in waves})
+    # weight: the "all" slice's 2024 adult population, the harness convention
+    pop = fx.pan_dev[fx.pan_dev["year"] == 2024].set_index("countrynewwb")["pop_adult"]
+    lo["pop"], pp["pop"] = pop, pop
+    return lo, pp
 
 
-def _terciles(df):
-    """Mean dy (pop-weighted) within terciles of dx — ledger convention."""
-    if len(df) < 9:
-        return None
-    t = pd.qcut(df["dx"], 3, labels=["low", "mid", "high"])
-    return [float(np.average(g["dy"], weights=g["pop"])) for _, g in df.groupby(t, observed=True)]
+def _wmean(v, w):
+    m = pd.notna(v) & pd.notna(w)
+    return float(np.average(v[m], weights=w[m]))
 
 
-def cell(fx: Findex, fh, rail_name, rail_col, show_terciles=True):
-    df = delta_frame(fx, rail_col, fh)
-    if len(df) < 10:
-        print(f"    {rail_name:28s} insufficient coverage (n={len(df)})")
-        return None
-    r, n = fx.weighted_corr(df["dx"], df["dy"], df["pop"])
-    g6 = fx.gate_jackknife(df["dx"], df["dy"], df["pop"])
-    lo, hi = _boot_ci(fx, df)
-    rd = g6.get("r_droptop")
-    ret = abs(rd) / abs(r) if (rd is not None and abs(r) > 1e-9) else np.nan
-    ci = f"[{lo:+.3f},{hi:+.3f}]" if lo is not None else "n/a"
-    ter = _terciles(df) if show_terciles else None
-    ters = ("  terciles " + "/".join(f"{v:+.1f}" for v in ter)) if ter else ""
-    print(f"    {rail_name:28s} r={r:+.3f}  n={n:3d}  neff={_kish(df['pop']):4.1f}  "
-          f"CI95 {ci:>18s}  G6 {'ok ' if g6['ok'] else 'FAIL'} r_drop={rd:+.3f} "
-          f"ret={ret:.2f}{ters}")
-    return {"fh": fh, "rail": rail_name, "r": r, "n": n, "neff": _kish(df["pop"]),
-            "ci": (lo, hi), "g6_ok": bool(g6["ok"]), "r_droptop": rd, "ret": ret}
+def transition(lo, y0, y1, label, boot=True):
+    """Share narrowing + weighted/unweighted mean change over one span."""
+    d = pd.DataFrame({"d": lo[y1] - lo[y0], "pop": lo["pop"]}).dropna()
+    share = float((d["d"] < 0).mean())
+    wm, um = _wmean(d["d"], d["pop"]), float(d["d"].mean())
+    neff, n = _kish(d["pop"]), len(d)
+
+    ci_share = ci_wm = (np.nan, np.nan)
+    if boot:
+        rng = np.random.default_rng(SEED)
+        idx = np.arange(n)
+        bs, bw = [], []
+        for _ in range(BOOT):
+            s = d.iloc[rng.choice(idx, size=n, replace=True)]
+            bs.append(float((s["d"] < 0).mean()))
+            bw.append(_wmean(s["d"], s["pop"]))
+        ci_share = (float(np.percentile(bs, 2.5)), float(np.percentile(bs, 97.5)))
+        ci_wm = (float(np.percentile(bw, 2.5)), float(np.percentile(bw, 97.5)))
+
+    # G6 in its drop-top-5-population form, applied to the weighted mean
+    keep = d["pop"].sort_values(ascending=False).index[5:]
+    wm_drop = _wmean(d.loc[keep, "d"], d.loc[keep, "pop"])
+
+    print(f"  {label:12s} n={n:3d} neff={neff:4.1f} | share narrowing={share:5.1%}"
+          f" [{ci_share[0]:.1%},{ci_share[1]:.1%}]"
+          f" | wmean={wm:+.3f} [{ci_wm[0]:+.3f},{ci_wm[1]:+.3f}]"
+          f" | unwtd={um:+.3f} | wmean_droptop5={wm_drop:+.3f}")
+    return {"span": label, "n": n, "neff": neff, "share": share, "share_lo": ci_share[0],
+            "share_hi": ci_share[1], "wmean": wm, "wmean_lo": ci_wm[0], "wmean_hi": ci_wm[1],
+            "unwtd": um, "wmean_droptop5": wm_drop}
+
+
+def levels(fx: Findex, lo, pp, col, label):
+    print(f"  pp gap (25+ minus 15-24), pop-weighted, {label}:")
+    for y in [c for c in pp.columns if c != "pop"]:
+        d = pd.DataFrame({"v": pp[y], "lov": lo[y], "pop": pp["pop"]}).dropna()
+        print(f"     {y}: {_wmean(d['v'], d['pop']):+5.1f}pp   "
+              f"log-odds {_wmean(d['lov'], d['pop']):+.3f}   (n={len(d)})")
 
 
 def run(fx: Findex):
-    y0, y1 = WINDOW
-    print("=" * 104)
-    print("E33 — do the digitalization rails reach the `fh` financial-health margin? "
-          f"({y0}->{y1}, pan_dev)")
-    print("=" * 104)
+    out = {}
+    for col, label, spans, full in [
+        ("account_t_d", "ACCESS (account_t_d)",
+         [(2011, 2014), (2014, 2017), (2017, 2021), (2021, 2024)], (2011, 2024)),
+        ("g20_any", "USAGE (g20_any)",
+         [(2014, 2017), (2017, 2021), (2021, 2024)], (2014, 2024)),
+    ]:
+        print(f"\n=== {label} — age gap, developing panel economies ===")
+        lo, pp = gap_table(fx, col)
+        print(f"  G3: {fx.gate_variant('account' if col == 'account_t_d' else 'digital_payment', col)}")
+        print(f"  G4: {fx.gate_coverage(fx.pan_dev, col, full[1])}")
+        levels(fx, lo, pp, col, label)
+        print(f"  FULL SPAN {full[0]}->{full[1]} (primary for account):")
+        out[(col, "full")] = transition(lo, full[0], full[1], f"{full[0]}->{full[1]}")
+        print("  per transition:")
+        out[(col, "trans")] = [transition(lo, a, b, f"{a}->{b}") for a, b in spans]
+        # pp-gap twin of the full-span primary, secondary/descriptive only
+        dpp = pd.DataFrame({"d": pp[full[1]] - pp[full[0]], "pop": pp["pop"]}).dropna()
+        print(f"  [secondary, pp scale] share narrowing={float((dpp['d'] < 0).mean()):.1%} "
+              f"wmean={_wmean(dpp['d'], dpp['pop']):+.2f}pp unwtd={dpp['d'].mean():+.2f}pp")
 
-    # ---- G3 disclosure + polarity anchor (levels; the welfare reading is NOT pre-registered) --
-    print("\nG3 (declared): harness INDICATORS does not cover the `fh` family — "
-          f"gate_variant('resilience','fh1') -> {fx.gate_variant('resilience', 'fh1')['role']}")
-    print("\nPOLARITY ANCHOR — pop-weighted developing-panel LEVELS (pp), interpretive only:")
-    for col in FH_PRIMARY + ["fh2a"]:
-        s = fx.series(fx.pan_dev, col, years=[2021, 2024])
-        cov = {y: fx.gate_coverage(fx.pan_dev, col, y) for y in (2021, 2024)}
-        lv = "  ".join(f"{y}={s[y]:5.1f}" for y in s.index)
-        print(f"  {col:9s} {lv:24s}  "
-              f"n_countries 2021={cov[2021]['n_countries']:3d} 2024={cov[2024]['n_countries']:3d}  "
-              f"pop share 2024={cov[2024]['pop_share']:.2f}"
-              + ("   [EXCLUDED from the primary: single wave]" if col == "fh2a" else ""))
-
-    # ---- PRIMARY (4.1) -----------------------------------------------------------------------
-    print("\n" + "-" * 104)
-    print("PRIMARY (4.1) — d(fh) ~ d(rail), E26's construction with the destination swapped")
-    print("-" * 104)
-    results = []
-    for fh in FH_PRIMARY:
-        print(f"  {fh}:")
-        for rn, rc in RAILS.items():
-            out = cell(fx, fh, rn, rc)
-            if out:
-                results.append(out)
-
-    res = pd.DataFrame(results)
-
-    # ---- SECONDARY ---------------------------------------------------------------------------
-    print("\n" + "-" * 104)
-    print("SECONDARY — A (4.4) does fh track the saving surge?  B (4.2) do the two welfare "
-          "measures agree?")
-    print("-" * 104)
-    sec = []
-    for fh in FH_PRIMARY:
-        print(f"  {fh}:")
-        for sn, sc in SECONDARY.items():
-            out = cell(fx, fh, sn, sc, show_terciles=False)
-            if out:
-                sec.append(out)
-    sec = pd.DataFrame(sec)
-
-    # ---- pre-registered threshold ------------------------------------------------------------
-    print("\n" + "=" * 104)
-    print("PRE-REGISTERED THRESHOLD")
-    print("=" * 104)
-    kept_any = False
-    for fh in FH_PRIMARY:
-        sub = res[res["fh"] == fh]
-        if sub.empty:
-            continue
-        n_bar = int((sub["r"].abs() >= BAR).sum())
-        signs = set(np.sign(sub["r"]))
-        sign_consistent = len(signs) == 1
-        counting = sub[sub["r"].abs() >= BAR]
-        g6_ok = bool(counting["g6_ok"].all()) if len(counting) else False
-        e4_ok = bool((counting["ret"] >= 0.5).all()) if len(counting) else False
-        print(f"  {fh:9s} |r|>=0.30 on {n_bar}/3 rails (bar 2)  "
-              f"sign-consistent across rails: {sign_consistent}  "
-              f"G6 on counting cells: {g6_ok}  E4 retention>=0.5: {e4_ok}")
-        if n_bar >= 2 and sign_consistent and g6_ok and e4_ok:
-            kept_any = True
-
-    # cross-item sign consistency between fh1 and fh2 (required by the pre-registration)
-    s1 = res[res["fh"] == "fh1"]["r"]
-    s2 = res[res["fh"] == "fh2"]["r"]
-    cross_ok = (len(s1) and len(s2)
-                and len(set(np.sign(s1)) | set(np.sign(s2))) == 1)
-    print(f"\n  Cross-item sign consistency (fh1 and fh2 same sign on all rails): {bool(cross_ok)}")
-    verdict = "KEEP (keep-window, structurally unpromotable)" if (kept_any and cross_ok) \
-        else "DISCARD"
-    print(f"\n  VERDICT: {verdict}")
-
-    print(f"\n  Registered comparison — E26 on `fin24aSD_ND`: wage +0.294, g20 +0.000, mm +0.208")
-    best = res.loc[res["r"].abs().idxmax()] if len(res) else None
-    if best is not None:
-        print(f"  Strongest primary cell here: {best['fh']} ~ {best['rail']} "
-              f"r={best['r']:+.3f} (n={best['n']}, neff={best['neff']:.1f})")
-    print(f"  Kish neff across primary cells: {res['neff'].min():.1f}-{res['neff'].max():.1f} "
-          f"on nominal n {int(res['n'].min())}-{int(res['n'].max())}")
-
-    # ---- POST-HOC polarity anchor (DISCLOSED: added after the primary was read) ---------------
-    # The pre-registration declared the welfare READING of the sign to be an interpretive step
-    # that is not pre-registered, anchored by the levels. The levels alone did not resolve it, so
-    # this cross-sectional anchor is added and labelled POST-HOC. It does not touch the
-    # pre-registered quantity (the magnitude and sign-consistency of the delta~delta cells).
-    print("\n" + "-" * 104)
-    print("POST-HOC POLARITY ANCHOR (added after reading the primary — NOT pre-registered)")
-    print("  2024 cross-sectional level correlations against two columns of KNOWN polarity:")
-    print("  `fin24aSD_ND` = able to come up with emergency funds (higher = BETTER off)")
-    print("  `account_t_d` = account ownership (higher = better off, development proxy)")
-    print("-" * 104)
-    d24 = fx.pan_dev[fx.pan_dev["year"] == 2024].set_index("countrynewwb")
-    pop = d24["pop_adult"]
-    for fh in FH_PRIMARY + ["fh2a"]:
-        line = f"  {fh:9s}"
-        for anchor in ("fin24aSD_ND", "account_t_d"):
-            m = d24[[fh, anchor]].dropna()
-            r, n = fx.weighted_corr(m[fh] * 100, m[anchor] * 100, pop.reindex(m.index))
-            line += f"   r(level, {anchor}) = {r:+.3f} (n={n:3d})"
-        print(line)
-    print("  READING: a NEGATIVE correlation with both anchors implies the item is a "
-          "WORRY/DISTRESS measure (higher = worse);")
-    print("           a POSITIVE correlation implies it is a financial-HEALTH measure "
-          "(higher = better).")
-    return res, sec
+    p = out[("account_t_d", "full")]
+    print("\n=== VERDICT (pre-registered) ===")
+    print(f"  PRIMARY share narrowing 2011->2024 (log-odds) = {p['share']:.1%}  "
+          f"bar = {SHARE_BAR:.0%}  -> {'PASS' if p['share'] >= SHARE_BAR else 'FAIL'}")
+    same_sign = np.sign(p["wmean"]) == np.sign(p["unwtd"]) and p["wmean"] < 0
+    print(f"  SIGN AGREEMENT weighted {p['wmean']:+.3f} vs unweighted {p['unwtd']:+.3f}, "
+          f"both negative -> {'PASS' if same_sign else 'FAIL'}")
+    print(f"  KEEP = {'YES' if (p['share'] >= SHARE_BAR and same_sign) else 'NO'}")
+    u = out[("g20_any", "full")]
+    print(f"  [SEC 3 two-margin] usage gap 2014->2024: share narrowing={u['share']:.1%}, "
+          f"wmean={u['wmean']:+.3f}, unwtd={u['unwtd']:+.3f}")
+    return out
 
 
 if __name__ == "__main__":
