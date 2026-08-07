@@ -3679,3 +3679,155 @@ saving's CV prefers B=6 by −0.060 on a **bimodal** curve, and the holdout puni
 6.625 / saving 6.831** (P18, 1bb3f78).
 **Recurring number, now measured on the ledger's own core family:** Kish `neff` = **6.5–7.6** in
 every cell of both hypothesis experiments — the fifth frame family to return ≈7.
+
+---
+
+## Cycle 2026-08-07 — coverage cells declared (rule B1/B2)
+
+`python3 coverage.py` was run before any hypothesis was chosen. The ledger stands at 28/429 country
+columns (7%), 25/192 micro columns (13%), twelve untouched country modules, and one frame at zero
+mentions. This cycle's cells:
+
+- **E34 — `group == "age_cat"` (UNTOUCHED frame, 0 ledger mentions)** plus the **2011→2014 transition
+  (thin, 2 mentions)** and the full 2011→2024 span. This is the cycle's **B2** experiment.
+- **E35 — the 2017→2021 transition** (used) on the *partial*-correlation family, which no replication
+  experiment has touched (E28 and E30 replicated bivariates only). Pays Program 1 replication debt
+  and Program 2 items 2.2/2.3 for the non-Δ→Δ partial family.
+- **P27 — prediction stream**, no new frame; a diagnostic, not a mechanism.
+
+Lineage (**B3**): E34's parent is **E31** (first descendant). E35's parents are **E23/E24/E25** (first
+replication attempt on those three). P27's parent is **P26**. No chain reaches three.
+
+## E34 — pre-registered (hypothesis / country level)
+
+**Program 3, item 3.4. Parent: E31 (first descendant — B3 not engaged).**
+
+**Hypothesis.** The within-country **age gap in account ownership** (25+ minus 15-24) **narrowed**
+over **2011→2024** in a **majority** of developing panel economies, on a scale-free measure.
+
+**Why it is not already known.** The `age_cat` frame has **zero ledger mentions**. The micro stream
+found (U15) that among accountholders the age gradient in digital-payment *use* is barely absorbed by
+access — 11.6 → 10.3pp, only ~10% — but that is a single 2024 cross-section and says nothing about
+whether the *access* gap itself has moved over thirteen years. E31 supplies the design lesson and the
+genuine two-sidedness: on gender and education the population-weighted gap fell 5.8-9.1pp while a
+*minority* of economies narrowed, i.e. the weighted mean was a big-country artifact. It is unknown
+whether age behaves the same way.
+
+**Test.** Frame `Findex.pan_grp`, `group == "age_cat"`, subgroups `age 25+` / `ages 15-24`, restricted
+to non-high-income economies (the `pan_dev` convention). Indicator `account_t_d` (headline, G3
+declared). Per country and wave the gap is measured **scale-free as a log-odds difference**,
+`logit(p_25+) − logit(p_15-24)` (E21's construction, with p clipped to [0.005, 0.995]), because a pp
+gap must mechanically compress as the advantaged group approaches 100%.
+
+- **PRIMARY (the E31 lesson, promoted from diagnostic to primary): the UNWEIGHTED SHARE of
+  developing panel economies whose log-odds age gap is smaller in 2024 than in 2011.**
+- **SECONDARY 1:** the population-weighted mean Δ log-odds gap 2011→2024, and its unweighted twin
+  reported beside it (Program 2 item 2.3 applied at registration time, not after).
+- **SECONDARY 2:** the same share per transition — **2011→2014** (the thinnest cell in the ledger),
+  2014→2017, 2017→2021, 2021→2024 — so the decade is decomposed rather than summarised.
+- **SECONDARY 3 (two-margin, item 3.3 on the age axis):** the same statistics for the *usage* margin
+  `g20_any` over **2014→2024** (first wave with coverage), to test whether an access gap and a usage
+  gap move together on this axis.
+- **DESCRIPTIVE:** pp gap levels by wave for both margins.
+
+**Gates.** G3 (`account_t_d` and `g20_any` headline). G4 on the estimation sample. G6 in its
+drop-top-5-population form applied to the weighted mean. G5 n/a (no official gap series). **B6:**
+country bootstrap, 2,000 draws, percentile 95% interval on the primary share and on the weighted mean
+Δ; Kish `neff` beside nominal n everywhere.
+
+**KEEP IF** the unweighted share of economies narrowing is **≥ 60%** (majority plus a margin, against
+a 50% coin-flip null) **AND** the weighted and unweighted mean Δ log-odds gaps carry the **same
+(negative) sign** — the sign-agreement condition E32 showed the ledger has been silently failing.
+
+**Registered alternative outcomes, both informative.** A share near 50% with a large negative weighted
+mean reproduces E31's big-country artifact on a third dimension and would make that a *general*
+property of the `pan_grp` frame rather than a gender/education quirk. A share ≥ 60% **with** a
+positive weighted mean would say the age gap narrows in most economies while widening where most
+people live.
+
+**Declared.** Descriptive within-country gap trajectories, 117-economy panel, developing subset. No
+causal reading. Multi-wave, so B4's window rule does not bind: the claim is registered over the full
+2011→2024 span and decomposed by transition.
+
+## E35 — pre-registered (hypothesis / country level)
+
+**Program 1 (replication debt) + Program 2 items 2.2/2.3 for the partial family. Parents: E23, E24,
+E25 — first replication attempt on any of them (B3 not engaged).**
+
+**Hypothesis.** The **three-separate-rails structure** — mobile money, digital payments and wage
+digitalization each carrying an association with the formal-saving surge *net of* the others (E23,
+E24), and wage digitalization reaching formal borrowing net of saving (E25) — is a **general
+regularity**, not a 2021-24 window feature. E28 and E30 replicated six *bivariate* co-movements onto
+2017→2021 and promoted them to `keep-general`. **No partial correlation has ever been replicated**,
+and the partials are what the paper's rail decomposition actually rests on.
+
+**Test.** Exactly the E23/E24/E25 constructions, re-run on the **2017→2021** transition, `pan_dev`,
+population weights = 2024 adult population (the harness convention, held fixed so the two windows are
+comparable):
+
+- **E23-R:** partial corr Δ`mobileaccount_t_d` ~ Δ`fin17a_17a1_d` | Δ`g20_any`.
+- **E24-R:** partial corr Δ`fin32_acc` ~ Δ`fin17a_17a1_d` | Δ`g20_any`; plus the two-control variant
+  (| Δ`g20_any`, Δ`mobileaccount_t_d`), descriptive.
+- **E25-R:** bivariate Δ`fin32_acc` ~ Δ`fin22a_22a1_22g_d`, and the partial controlling
+  Δ`fin17a_17a1_d`.
+- Residualization is pop-weighted least squares on the control set, then `weighted_corr` of the
+  residuals (E5b/E23 construction), with `gate_jackknife` on the residual pair.
+- **2021→2024 recomputed in the same file** so each replication is read beside its original rather
+  than against a number copied from `findings.tsv`.
+
+**Inference layer, registered as part of the test (Program 2, non-Δ→Δ family).** For every primary
+cell in both windows: **country bootstrap, 2,000 draws, percentile 95% interval**; **Kish `neff`**;
+the **unweighted** partial beside the weighted one; and **BH at q = 0.10** over the declared family of
+**six primary cells** (three designs × two windows) using the bootstrap p.
+
+**Gates.** G3 (all headline concepts declared; `fin32_acc` has no variant — E10 precedent). G4 per
+estimation sample. G6 on every primary residual pair, with the **E4 magnitude rule** (retention
+≥ 0.5) applied — the rule post-dates E23/E24/E25 and has never been applied to them.
+
+**PROMOTION RULE (B4).** A design is promoted `keep-window` → **`keep-general`** only if its
+2017→2021 partial has the **same sign**, **|r| ≥ 0.30**, **G6 sign-stable with retention ≥ 0.5**. A
+sign flip or a collapse below 0.30 on the earlier window means the rail separation is a
+**2021-24 window property**, and the finding stays `keep-window` with that recorded. A cell failing
+BH or the unweighted lens is **flagged**, not demoted, on the E13 precedent.
+
+**Declared.** Partialling a contemporaneous Δ decomposes co-movement; it does not control confounding
+and identifies nothing. Sample composition differs between windows (mobile money binds), so every
+benchmark is recomputed on each window's own common sample.
+
+## P27 — pre-registered (prediction stream)
+
+**Parent: P26. Not a mechanism — a diagnostic, and a registered stopping rule for the stream.**
+
+**Why.** Every knob on the shrinkage operator is now closed: stage count (P19/P20/P21), basin center
+(P22/P23), adaptive `k` (P24/P25), global `k` (P9), bin count (P26). The base predictor's one
+dynamics knob was closed even earlier (P10: the ≤2021 CV picks λ=0 and the holdout punishes it by
+1.319pp — the 2021-24 surge has momentum absent from pre-2021 dynamics). The agenda's two honest
+options are "register a different mechanism" or "characterise the champion's errors". This registers
+the second, **with a decision rule attached** so it is not a free look.
+
+**Test.** The P18 champion (`account` 5.014 / `resilience` 6.625 / `saving` 6.831), unchanged, with
+its 2024 residuals decomposed:
+
+- **(a) BIAS vs SCATTER:** mean **signed** error per target beside the MAE. A predictor that misses a
+  surge is biased, not noisy.
+- **(b) STRUCTURE:** MAE and mean signed error by region and by income group; is the residual flat
+  across basins, or does one basin carry it?
+- **(c) CONCENTRATION:** share of total absolute error contributed by the ten worst countries, and
+  the identity of those countries per target.
+- **(d) BENCHMARK LADDER:** champion vs naive persistence vs panel-mean vs the **movement scale**
+  (median |Δ2021→2024| of the target) — how much of what there was to predict was predicted.
+- **(e) COMMON FACTOR:** correlation of the signed residuals *across* the three targets, country by
+  country. A country the model misses on all three margins at once is a missing common shock, and
+  that correlation bounds how much a joint model could recover.
+
+**REGISTERED DECISION RULE.** If **|mean signed error| ≥ 0.25 × MAE on any target**, a systematic and
+in-principle correctable component remains and the stream registers **one more mechanism** next
+cycle. If all three targets are near-zero-mean **and** cross-target residual correlation is
+**< 0.30**, the champion is declared **final** and the stream closes; the write-up records the
+benchmark ladder as its closing statement.
+
+**PEEK DISCLOSURE, explicit.** This experiment reads 2024 residuals, which is what the evaluator is
+for, but it is **not blind to the holdout**. Under the amended peek rule it is logged as
+**exploratory/diagnostic**: `predictor.py` is not modified, no MAE may improve as a result of it, and
+**any future feature or basin choice traceable to what is learned here must be declared as
+peek-informed in its own pre-registration**. Nothing here can produce a keep.
