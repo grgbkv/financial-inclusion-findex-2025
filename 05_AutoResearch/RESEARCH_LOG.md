@@ -3865,3 +3865,48 @@ this is not E31's artifact reproduced on a third dimension (the share is a major
 it), nor is it "narrows in most economies while widening where people live" (the weighted mean is
 negative too, merely small). The honest reading is a genuine but *slight* decade narrowing that
 stalled and reversed after 2021.
+
+### E35 — VERDICT: DISCARD (registered generality claim rejected), 2026-08-08
+
+**No partial promotes. 0 of 3.** The registered claim was that the three-separate-rails structure is
+a general regularity rather than a 2021-24 feature. It is not.
+
+- **E23** (mobile money ~ saving | digital payments): **+0.509 → −0.042**. A sign flip, CI
+  [−0.295, +0.231], p_boot 0.835, G6 sign-unstable. Nothing survives.
+- **E24** (wage digitalization ~ saving | digital payments): **+0.583 → +0.291**. Same sign, G6
+  clean (retention 1.45), and it **misses the 0.30 bar by 0.009**. The closest thing to a
+  replication in the set, and under a pre-registered bar it is still a fail.
+- **E25** (wage ~ formal borrowing | saving): **+0.419 → +0.459** — clears sign and magnitude, then
+  **G6 destroys it**: drop-top-5 takes the residual correlation to −0.028, retention **0.06**. A pure
+  big-country artifact in the earlier window; without the jackknife this would have read as the
+  cycle's one clean promotion.
+
+**The mechanism is in the benchmarks, and it is the useful part.** In 2017→2021 the two rails are
+nearly collinear: **r(Δmobile money, Δdigital payments) = +0.871**, against **+0.600** in 2021→2024.
+When two regressors move together that tightly there is no independent variation left to partial —
+the rails were not *separable* in the earlier window, whether or not they were separate. So the
+honest reading is narrower than "the structure is a window artifact": the **separation itself became
+measurable only when the rails decoupled**, and the 2021-24 partials describe a period in which
+mobile money and digital payments stopped moving in lockstep. That is a statement about the data's
+information content, not about the world, and it is why the bivariates replicate (E28/E30, six
+`keep-general` claims) while every partial built on them does not.
+
+**Inference layer (Program 2, non-Δ→Δ family — now paid).** BH at q = 0.10 over the declared
+six-cell family rejects **4/6 on p_boot** and **0/6 on p_neff**. The E32 result reproduces exactly on
+a second family: at Kish `neff` ≈ 7 nothing in the ledger is significant, and the gap between
+nominal-n and neff-based inference (5/6 vs 0/6) is the whole story. The **unweighted lens is worse
+here than on the Δ→Δ family**: only **2/6** cells clear 0.30 unweighted, and E25's earlier-window
+cell flips sign entirely (+0.459 → −0.055). Partials are more weighting-dependent than bivariates,
+which is a new fact about the ledger and follows directly from residualizing with the same weights.
+
+**Consequence for the paper.** E23, E24 and E25 stay `keep-window` and are now on record as having
+*failed* their promotion test — a stronger statement than "not yet replicated". Section 4's rail
+decomposition may be reported for 2021-24 only, with the collinearity number beside it.
+
+**Disclosed implementation fix.** The first run joined the population weight with `fillna`, which
+inherited only the mobile-money panel's index and silently narrowed every cell (E24-R n = 61 rather
+than 71). It was caught because the recomputed 2021-24 cells did not reproduce their logged
+originals; fixed to `combine_first`, committed, re-run, and all three originals then reproduced
+exactly (+0.509 / +0.583 / +0.419, n = 58 / 71 / 71). No verdict was read from the defective run.
+Recomputing the original window inside the replication file is what caught this, and that convention
+should be mandatory for every future replication.
