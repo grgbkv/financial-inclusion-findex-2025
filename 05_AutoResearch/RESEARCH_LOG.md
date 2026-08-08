@@ -3831,3 +3831,37 @@ for, but it is **not blind to the holdout**. Under the amended peek rule it is l
 **exploratory/diagnostic**: `predictor.py` is not modified, no MAE may improve as a result of it, and
 **any future feature or basin choice traceable to what is learned here must be declared as
 peek-informed in its own pre-registration**. Nothing here can produce a keep.
+
+### E34 — VERDICT: KEEP (weak), 2026-08-08
+
+Run of the pre-registered E34 (committed 6224bf7 in the interrupted 2026-08-07 session).
+
+**Both pre-registered conditions pass.** PRIMARY: **63.6%** of developing panel economies (42/66) have
+a smaller log-odds age gap in account ownership in 2024 than in 2011, against the 60% bar; bootstrap
+95% CI **[51.5%, 75.8%]** (2,000 country draws). SIGN AGREEMENT: weighted mean Δ log-odds **−0.074**
+and unweighted **−0.171** are both negative. G6 in its drop-top-5 form takes the weighted mean to
+**−0.266** — sign-stable with the magnitude *growing* 3.6×, so this is the opposite of E31's
+big-country artifact: the giants damp the narrowing rather than manufacture it. Kish `neff` = 6.8
+against nominal n = 66.
+
+**Three caveats recorded as part of the keep, not after it.** (i) The weighted-mean CI
+**[−0.465, +0.097]** straddles zero, so only the *share* statistic is separated from its null; the
+keep rests on the count of economies, which is exactly what the E31 lesson promoted to primary.
+(ii) The share CI's lower bound is 51.5% — clear of the coin flip, but only just. (iii) **No single
+transition clears 60%**: 2011→14 48.5%, 2014→17 59.5%, 2017→21 57.1%, **2021→24 44.2%**. The decade
+result accumulates two mildly narrowing middle windows against a *widening* final window. pp gap
+levels: +7.9 / +10.2 / +6.4 / +6.4 / +5.2.
+
+**SEC 3, the two-margin result, is the interesting half.** The *usage* age gap (`g20_any`, 2014→2024)
+narrows in **64.5%** of economies (n = 62, neff = 5.7), weighted mean −0.025, unweighted −0.159,
+drop-top-5 −0.319. E31 found the income and education usage log-odds gaps **widening** (+0.100,
++0.056) while their access gaps narrowed. On the age axis both margins move the same way. So the
+"access converges, use diverges" pattern is **axis-specific**, not a property of the `pan_grp` frame:
+it holds where the disadvantaged group is defined by resources (income, education) and fails where it
+is defined by cohort. Registered as a live sub-question for Program 3, not as a claim.
+
+**Registered alternative outcomes, resolved.** Neither of the two registered alternatives occurred:
+this is not E31's artifact reproduced on a third dimension (the share is a majority and G6 strengthens
+it), nor is it "narrows in most economies while widening where people live" (the weighted mean is
+negative too, merely small). The honest reading is a genuine but *slight* decade narrowing that
+stalled and reversed after 2021.
