@@ -3910,3 +3910,70 @@ originals; fixed to `combine_first`, committed, re-run, and all three originals 
 exactly (+0.509 / +0.583 / +0.419, n = 58 / 71 / 71). No verdict was read from the defective run.
 Recomputing the original window inside the replication file is what caught this, and that convention
 should be mandatory for every future replication.
+
+### P27 — VERDICT: EXPLORATORY/DIAGNOSTIC; the stopping rule fires on the "keep going" branch, 2026-08-08
+
+`predictor.py` was imported unchanged by a separate file (`p27_diagnostic.py`), so the champion is
+byte-identical: **account 5.014 / resilience 6.625 / saving 6.831**. Peek-disclosed: this reads 2024
+residuals and cannot produce a keep.
+
+**(a) The champion is off-centre, not merely noisy.** Mean signed error ÷ MAE: account
+**−0.802/5.014 = 0.160** (centred), resilience **−3.253/6.625 = 0.491**, saving
+**−4.914/6.831 = 0.719**. Both non-account targets are systematically **under**-predicted. On saving,
+roughly seven-tenths of the average miss is one direction rather than scatter.
+
+**(b) The residual is not flat, but it is not one basin either.** Account MAE runs 8.447 (low income)
+→ 8.022 (lower-middle) → 4.216 (upper-middle) → **2.141 (high income)**, a clean four-to-one gradient,
+with its negative bias sitting in Sub-Saharan Africa (−4.403) and low income (−4.289). Saving
+under-predicts in **every** region (−1.8 to −6.0) — a broad level shift, not a regional story.
+Resilience is the least structured: −7.4 in MENA and −7.0 in ECA but **+4.8** in East Asia.
+
+**(c) Concentration.** The ten worst countries carry **26.9% / 32.1% / 33.7%** of total absolute
+error, 2.6–3.2× an even split. Worst cells: account Zambia −21.7, Kyrgyz Republic −21.4, Senegal
+−17.9, India −15.3; saving Nigeria −26.3, Bulgaria −23.4, China −20.7.
+
+**(d) The benchmark ladder is the most sobering panel.** Skill against persistence:
+**10.1% (account) / 0.8% (resilience) / 30.1% (saving)**. Against the panel mean the champion is far
+ahead (20.1 / 11.6 / 11.6), but that is a low bar. Against the **movement scale** — median |actual
+2021→2024 change| = 3.405 / 5.761 / 9.234 — only **saving** has a champion MAE below the typical
+country's actual move. For account and resilience the typical miss is still *larger* than the typical
+movement, and resilience is within **0.8%** of doing nothing at all. Twenty-seven prediction
+experiments have bought one target that genuinely beats the movement it is trying to track.
+
+**(e) Common factor.** Signed residuals correlate **+0.624** between account and saving (n = 81),
++0.252 account~resilience, +0.155 resilience~saving. The model misses account and saving on the same
+countries.
+
+**DECISION: the registered rule fires on its first branch** — |mean signed| ≥ 0.25 × MAE on two of
+three targets — so a systematic component remains, the stream does **not** close, and one more
+mechanism is owed. **The constraint travels with the decision, and it is severe:** the bias is a
+broad upward level shift over 2021-24 that ≤2021 history cannot observe. That is the same regime
+change P3 and P10 already failed to learn, and any correction fitted to *these* residuals would be
+peek-informed and inadmissible under the evaluation rules. The next registration must state
+explicitly how its mechanism is estimable from ≤2021 data alone; if no such mechanism can be named,
+the honest move is to close the stream on the benchmark ladder rather than to keep tuning.
+
+---
+
+## Cycle wrap-up — 2026-08-08
+
+Continuation of the 2026-08-07 pre-registration (E34/E35/P27), which was committed but interrupted
+before execution. All three ran today; the working tree was clean at start, so no `wip` commit was
+needed.
+
+- **E34 — KEEP (weak).** The within-country age gap in account ownership narrowed in **63.6%** of
+  developing economies over 2011→2024 (bar 60%), with weighted and unweighted means agreeing in sign
+  and G6 *strengthening* the effect. Caveats logged with the keep: the weighted-mean CI straddles
+  zero, and no single transition clears the bar — 2021→24 actually widens.
+- **E35 — DISCARD.** **0 of 3** rail-separation partials replicate on 2017→2021: E23 sign-flips, E24
+  misses the bar by **0.009**, E25 dies at G6 with retention **0.06**. The mechanism is collinearity
+  — r(Δmobile money, Δdigital payments) was **+0.871** in the earlier window versus +0.600 in
+  2021-24, so there was nothing to separate. E23/E24/E25 stay `keep-window`, now on record as having
+  *failed* their promotion test.
+- **P27 — diagnostic, stream stays open.** The champion is biased (signed/MAE 0.72 on saving, 0.49 on
+  resilience) and beats the movement scale on saving only; resilience has 0.8% skill over
+  persistence. One more mechanism is owed, but it must be estimable from ≤2021 data alone.
+- **Inference note, second family paid.** BH at q=0.10 over E35's six-cell partial family rejects
+  4/6 on the bootstrap p and **0/6 at Kish `neff` ≈ 7** — E32's result reproduces exactly on the
+  partial family, and partials turn out to be *more* weighting-dependent than bivariates (only 2/6
+  cells clear 0.30 unweighted).
