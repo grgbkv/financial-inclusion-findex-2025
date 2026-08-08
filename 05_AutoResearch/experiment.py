@@ -98,7 +98,10 @@ def deltas(fx: Findex, cols, t0, t1):
             out[name] = pd.Series(dtype=float)
             continue
         out[name] = (t[t1] - t[t0]).rename(name)
-        pop = t["pop"] if pop is None else pop.fillna(t["pop"])
+        # combine_first, not fillna: the weight series must span the UNION of the panels, or the
+        # narrowest column (mobile money) silently shrinks every cell's sample. Each cell then
+        # drops to its own common sample in cell(), which is the registered construction.
+        pop = t["pop"] if pop is None else pop.combine_first(t["pop"])
     df = pd.DataFrame(out)
     df["pop"] = pop.reindex(df.index)
     return df
