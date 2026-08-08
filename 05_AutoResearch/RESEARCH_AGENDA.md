@@ -230,3 +230,51 @@ experiment — which is also the natural shape for keeping the paper draft hones
   (133 cols, Program 7, still the largest block), `fin25`, `fin31`, `fin34`, `fin43`, `fin13`,
   `fin14`, `dig_acc`, `merchant_pay`, `borrow_any_t_d`**. The **`age_cat` frame remains at zero
   mentions**, and **2011→2014 remains the thinnest transition (1 mention)**.
+
+## Addendum (2026-08-08, from the E34/E35/P27 cycle)
+
+- **Program 1 status — the replication debt has hit a wall, and it is an informative one.** E35 tried
+  the first replication of any *partial* and **0 of 3 promoted**. E23/E24/E25 stay `keep-window` and
+  are now on record as having **failed** their promotion test, which is a stronger negative than "not
+  yet attempted". The mechanism matters more than the verdict: **r(Δmobile money, Δdigital payments)
+  = +0.871 in 2017→2021 versus +0.600 in 2021→2024**, so the two rails were nearly collinear in the
+  earlier window and there was no independent variation left to partial. Read the rail decomposition
+  as describing the window in which the rails **decoupled**, not as a general structure. **New rule
+  for this program, adopted from the E35 run: every replication file must recompute the original
+  window inside itself** — that is what caught a weight-join defect before any verdict was read.
+  Still `keep-window` and owed a replication: **E5b, E7, E22** (E23/E24/E25 now failed, E29
+  unpromotable).
+- **Program 2 status — item 2.2/2.3 now paid for a second family, with a new fact.** BH at q=0.10
+  over E35's six primary cells: **4/6 on p_boot, 0/6 at `neff` ≈ 7**. The E32 finding reproduces
+  exactly. What is *new*: **partials are far more weighting-dependent than bivariates** — only **2/6**
+  cells clear 0.30 unweighted, and E25's earlier-window cell flips sign (+0.459 → −0.055). Residualizing
+  with the same weights compounds the weighting rather than neutralising it. Items 2.2/2.3 remain open
+  only for the **level→change family (E5/E9/E17)** and the **gap designs (E20/E21/E31/E34)**.
+- **Program 3 status — a genuine asymmetry across axes, and the highest-value open item shifts.**
+  E34 opened the `age_cat` frame and returned a weak keep: the age access gap narrowed in 63.6% of
+  economies over the decade, with G6 *strengthening* the effect — the mirror image of E31, where the
+  weighted mean moved far but a minority of economies moved with it. More importantly, the **usage**
+  age gap narrowed too (64.5%), where E31 found the income and education **usage** log-odds gaps
+  *widening*. So **"access converges, use diverges" is axis-specific**: it holds where disadvantage is
+  defined by *resources* and fails where it is defined by *cohort*. **New item 3.7: test the same
+  two-margin split on `laborforce` and `urbanicity`** — if employment behaves like income and
+  urbanicity like age, the resource/cohort dividing line is the finding. Note E34's decade result is
+  an accumulation of two mild middle windows against a **widening 2021→24**; the last window deserves
+  its own look before the decade claim is leaned on.
+- **Prediction stream — the stream stays open on the rule, but P27 changes what "open" means.** The
+  champion is **biased, not just noisy**: signed/MAE = **0.72 on saving, 0.49 on resilience**, both
+  under-predicting. Against the **movement scale** (median |actual Δ|: 3.405 / 5.761 / 9.234) only
+  **saving** has a MAE below the typical country's actual move; **resilience has 0.8% skill over
+  persistence** after twenty-seven experiments. Account~saving signed residuals correlate **+0.624**.
+  **The binding constraint on the next registration, stated up front:** the residual bias is a broad
+  upward 2021-24 level shift invisible to ≤2021 history — the regime change P3 and P10 already failed
+  to learn — and any correction fitted to P27's residuals is **peek-informed and inadmissible**. The
+  next prediction pre-registration must name how its mechanism is estimable from ≤2021 data alone. If
+  none can be named, **close the stream on the benchmark ladder**; that is now the recommended
+  default rather than a fallback.
+- **B2 note for the next cycle.** `age_cat` is now used. Untouched country modules unchanged and still
+  led by **`con` (133 cols, Program 7)**, then `fin25`, `fin31`, `fin34`, `fin43`, `fin13`, `fin14`,
+  `dig_acc`, `merchant_pay`, `borrow_any_t_d`. **2011→2014 is no longer the thinnest transition**
+  (E34 used it). The thinnest *frames* are now `gender` and `urbanicity`; the largest untouched
+  surface in the whole repo remains the **micro consumer-protection/digital-risk block** (`con` 52
+  cols, `fin48`/`fin49` 12 cols, zero mentions).
