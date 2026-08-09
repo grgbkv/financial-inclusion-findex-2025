@@ -12,3 +12,13 @@
    exact pooled pp values carry the caveat.
 4. Prediction stream: add a strict holdout discipline note — repeated test-set evaluation is
    the autoresearch game, but champion claims should also report leave-one-wave-out fit.
+5. Item labels are missing for two families the agenda depends on. (a) The `fh1`/`fh2` financial-
+   health polarity is still unsettled (owed since E33) — no welfare *direction* may be asserted
+   until it is. (b) **Program 7 is blocked at its first step**: the microdata zip
+   (`WLD_2024_FINDEX_v02_M_CSV.zip`) contains the CSV and nothing else — no questionnaire, no
+   codebook — and the 133 country + 52 micro `con*` columns are bare numeric codes (1/2/8/9 with
+   skip filters, verified 2026-08-09). The mandatory mapping pass cannot be completed from the
+   files in the repo, so the largest untouched block stays untouchable until the WB questionnaire
+   is fetched into `microdata/`. Structural identification (filter populations, response scales)
+   is possible without it; item *meaning* is not, and guessing meaning would be worse than
+   leaving the block alone.

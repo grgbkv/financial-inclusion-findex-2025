@@ -278,3 +278,49 @@ experiment — which is also the natural shape for keeping the paper draft hones
   (E34 used it). The thinnest *frames* are now `gender` and `urbanicity`; the largest untouched
   surface in the whole repo remains the **micro consumer-protection/digital-risk block** (`con` 52
   cols, `fin48`/`fin49` 12 cols, zero mentions).
+
+## Addendum (2026-08-09, from the E36/U21/P28 cycle)
+
+- **Program 3 — item 3.7 is answered, negatively, and the lineage cap now binds.** The
+  resource/ascription dividing line does **not** hold as a two-class rule: employment's *usage* gap
+  narrowed in 57.4% of economies (the registered divergence bar was < 50%), and the `gender` frame
+  is a coin flip on both margins (54.5% access, 53.2% usage, both p > 0.5). What survives is an
+  **ordering, not a split**: access-minus-usage asymmetry runs income +23.3pp > education +18.0 >
+  laborforce +7.1 > gender +1.3 > age −0.9. **New item 3.8:** if this ordering is to become a claim,
+  it needs a pre-registered *monotonicity* statistic (e.g. rank correlation of the asymmetry against
+  an independent measure of how resource-linked each axis is), not five separate share tests — and
+  it must take a parent other than E31, since **E31 → E34 → E36 exhausts rule B3's cap**.
+  Second finding, on a frame at zero prior mentions: **`gender` is the purest big-country artifact
+  in the ledger** — weighted mean Δ log-odds access −0.266 against an unweighted −0.002, with G6
+  flipping the sign to +0.057. The pop-weighted gender access gap fell 10.2 → 4.6pp over 13 years;
+  in the typical economy it barely moved.
+- **Program 5 — the micro half is open and item 5.3 is answered.** Among accountholders the
+  connectivity gap in digital-payment use is **+13.6pp**, *smaller* than the education gap
+  (**+16.8pp**) on the same sample, and conditioning on `internet_use` absorbs only **22.8%** of the
+  education gradient. The result that reframes the ruler: **account holding absorbs 55.5% of the
+  unconditional connectivity gap** (+30.5 → +13.6pp), where it absorbs almost none of the education,
+  income or age gradients. Connectivity is mostly an *access* story; the resource axes are not.
+  **5.4 is answered descriptively** (offline share among accountholders: 43.6% primary-or-less vs
+  2.3% tertiary; 34.6% at 65+; 22.7% rural vs 11.8% urban; sex nearly flat). **New item 5.5:** the
+  within-country version of 5.3 (per-economy connectivity gaps, M2 per economy, the U19/U20 design)
+  — the pooled figure could still be a composition artifact and every other ruler axis has had that
+  test.
+- **The prediction stream is CLOSED.** P28 (basin-level drift, the last untested knob on the base
+  predictor and the mechanism P27's rule demanded) cleared both of P26's screening conditions on
+  account — single-peaked <=2021 CV curve, interior minimum, +0.107pp margin — and then **worsened
+  the holdout 5.014 → 5.124**. Sixth CV→holdout non-transfer, first to pass the shape screen: at
+  `neff` ≈ 7 the *shape* of a CV curve is no more informative about the holdout than its argmin was.
+  Champion final: **account 5.014 / resilience 6.625 / saving 6.831**, skill over persistence
+  10.1% / 0.8% / 30.1%. Do not register another predictor experiment; if the stream is ever
+  reopened it should be by a change to the *task* (a new target, or an earlier holdout wave), not by
+  another mechanism on this one.
+- **Program 7 is BLOCKED, not deferred.** The microdata zip ships no codebook and the `con*` items
+  are bare numeric codes, so the mandatory mapping pass cannot be done from the repo (see
+  `HARNESS_V2_NOTES.md` item 5). Until the questionnaire is obtained, the largest untouched block is
+  unreachable — plan cycles as if it did not exist.
+- **B2 note for the next cycle.** `gender` and `laborforce` are now used; `internet_use` is now used.
+  The thinnest remaining *frame* is `urbanicity` (single-wave, so gap trajectories are impossible).
+  Untouched country modules unchanged: `fin25` (emergency-fund sources, agenda 4.3, the best
+  remaining new-ground target), `fin31`, `fin34`, `fin43`, `fin13`, `fin14`, `dig_acc`,
+  `merchant_pay`, `borrow_any_t_d`. The untouched micro surface outside `con` is `fin22`, `fin24`,
+  `fin31`, `fin34`, `fin39`, `fin43` and the payment-channel singletons.
