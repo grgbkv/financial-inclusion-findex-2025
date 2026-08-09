@@ -4168,3 +4168,37 @@ ten-cell family rejects **4/10** (income access, laborforce access, age access, 
 **Consequence for Program 3.** Item 3.7 is answered and the answer is negative: the resource /
 ascription split does **not** generalize as a two-class rule. Rule B3's lineage cap is now reached
 (E31 → E34 → E36), so the next Program-3 experiment must take a different parent.
+
+### U21 — VERDICT: DISCARD on both registered claims, 2026-08-09
+
+M3 passes on both outcomes (`account`, `anydigpayment` reproduce the country file to 0.0pp over 10
+and 9 economies). M2 passes on every reported cell; the thinnest is 565 (offline tertiary-educated
+accountholders).
+
+- **C1 — DISCARD, and it fails on the comparison, not on the size.** Among accountholders, the
+  online-minus-offline gap in digital-payment use is **+13.6pp** (88.5% vs 74.9%), comfortably over
+  the 5pp bar. But the **education** gap on the same sample is **+16.8pp** (94.1% vs 77.3%), so
+  connectivity is *not* the larger conditional difference. The registered claim required both.
+- **C2 — DISCARD.** Conditioning on internet use removes **22.8%** of the education gap among
+  accountholders (+16.8 → +13.0pp), against a 30% bar. The income gap behaves the same way: 25.3%
+  absorbed (+11.5 → +8.6pp).
+
+**The meaningful negative is in the step the claims were built on.** Account holding absorbs
+**55.5%** of the *unconditional* connectivity gap: +30.5pp for everyone, +13.6pp among
+accountholders. Every previous axis of this ruler behaved the opposite way — access absorbed almost
+none of the age gradient (U15, ~10%) and little of the education or income gradient. So connectivity
+is, to a first approximation, **mostly an access story**: offline adults differ from online adults
+largely because they are less likely to hold an account at all. Education and income are not like
+that, which is why they keep surviving the conditioning and connectivity does not.
+
+**Item 5.4 — who is offline among accountholders — is the sharpest descriptive panel in the run.**
+Share with `internet_use == 0`, among accountholders: education **43.6%** (primary or less) /
+10.7% / **2.3%** (tertiary); age **34.6%** at 65+ against 12.1% at 25-34; labour force 23.7% out
+versus 14.3% in; rural 22.7% versus urban 11.8%; income q1 24.4% versus q5 10.4%; and sex is nearly
+flat (men 19.0%, women 16.0%). The **41-point education spread is the widest split on any axis**,
+about double the income spread. Descriptive, unregistered, logged as an observation.
+
+**Declared, and it matters for how the 55.5% is read.** `internet_use` is self-reported internet
+use, a behaviour co-determined with digital payment use — someone may report using the internet
+because they pay digitally. This is one 2024 cross-section: no direction, no trend, no causal
+content. Conditioning on account holding remains post-treatment.
