@@ -4126,3 +4126,45 @@ which a drift is computable at any date — the per-target policy (P2) leaves it
 **Declared.** No 2024 data enters features, fitting or selection; the harness evaluator remains the
 only place 2024 exists. If adopted, the champion changes only where the holdout MAE improves;
 otherwise `predictor.py` reverts to the P18 champion commit.
+
+### E36 — VERDICT: DISCARD (registered joint claim rejected), 2026-08-09
+
+**Both registered predictions fail, and they fail in different ways.**
+
+- **P1 (laborforce resource-like): FAIL on the second half.** The access gap narrowed in **64.5%**
+  of developing panel economies (bar 60%, CI [51.6%, 75.8%], BH-significant), so the access half
+  passes. But the *usage* gap also narrowed, in **57.4%** — the registered divergence bar was
+  **< 50%**. Employment does not behave like income or education on the usage margin.
+- **P2 (gender ascribed-like): FAIL on both halves.** Access share **54.5%** (CI [42.4%, 66.7%],
+  p = 0.53) and usage share **53.2%** (p = 0.69) are both indistinguishable from a coin flip. The
+  `gender` frame — used here for the first time in the ledger — returns a null on the primary
+  statistic for both margins.
+
+**The originals reproduce, which is what makes the failure readable.** Recomputed inside this file:
+income access **75.0%** narrowing versus usage **51.7%** with a *positive* weighted mean (+0.100);
+education access **61.5%** versus usage **43.5%** (+0.056); age **63.6%** versus **64.5%**. E31 and
+E34 are both confirmed on their own axes.
+
+**What the data actually shows is a GRADIENT, not a dividing line.** The access-minus-usage
+asymmetry in share-narrowing runs income **+23.3pp**, education **+18.0pp**, laborforce **+7.1pp**,
+gender **+1.3pp**, age **−0.9pp**. The ordering is exactly the one the hypothesis predicted — the
+three resource axes on top, the two ascribed axes at the bottom — but employment sits **between**
+the groups rather than inside the resource one, and the registered bars were written for a
+two-class split. Logged as an observation, not a keep: it was not the pre-registered statistic, and
+promoting it now would be fitting the threshold to the answer.
+
+**A second big-country artifact, on a new axis.** `gender` shows the E31 signature in its purest
+form: weighted mean Δ log-odds access **−0.266** (the largest narrowing in the whole table) against
+an unweighted twin of **−0.002**, and G6 drop-top-5 flips it to **+0.057**. The usage margin is the
+same (−0.167 weighted, −0.013 unweighted, +0.077 after G6). Read plainly: the pop-weighted gender
+access gap fell 10.2 → 4.6pp over 13 years, and that fall is a story about a few very large
+economies, not about most economies.
+
+**Inference layer (B6/B7).** Kish `neff` = **6.8** on access and **5.7** on usage against nominal
+n = 60–66 — the fifth and sixth frame family to come in at ≈ 6–7. BH at q = 0.10 over the declared
+ten-cell family rejects **4/10** (income access, laborforce access, age access, age usage) versus
+5/10 uncorrected. Every usage cell except age fails BH.
+
+**Consequence for Program 3.** Item 3.7 is answered and the answer is negative: the resource /
+ascription split does **not** generalize as a two-class rule. Rule B3's lineage cap is now reached
+(E31 → E34 → E36), so the next Program-3 experiment must take a different parent.
