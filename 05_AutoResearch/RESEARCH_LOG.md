@@ -4237,3 +4237,33 @@ and every correction for it that this loop could construct would have to be fitt
 (median |actual 2021->2024 change| = 3.405 / 5.761 / 9.234pp), only **saving** predicts better than
 the typical country's actual move. Twenty-eight prediction experiments, one target that beats what
 it is trying to track.
+
+---
+
+## Cycle wrap-up — 2026-08-09
+
+Working tree clean at start; coverage audit run before hypotheses were chosen (rule B1). Three
+experiments, three discards — and the run's value is in what the discards rule out.
+
+- **E36 — DISCARD.** The "access converges, use diverges" split is **not** a resource/ascription
+  dividing line. Employment's access gap narrowed in 64.5% of economies but its **usage** gap
+  narrowed too (57.4%, bar was < 50%), and the `gender` frame — used for the first time — is a coin
+  flip on both margins (54.5% / 53.2%). What the ten-cell table does show is a **gradient** in the
+  access-minus-usage asymmetry: income +23.3pp, education +18.0, laborforce +7.1, gender +1.3, age
+  −0.9. Logged as an observation, not promoted. Gender is a textbook big-country artifact (weighted
+  mean −0.266, unweighted −0.002, G6 flips it to +0.057). BH rejects 4/10 at `neff` ≈ 6–7.
+- **U21 — DISCARD on both claims, with a real finding underneath.** Among accountholders the
+  offline-vs-online gap in digital-payment use is **+13.6pp** — over the 5pp bar but **smaller than
+  the education gap (+16.8pp)** — and connectivity absorbs only **22.8%** of the education gradient
+  (bar 30%). The fact worth keeping: account holding absorbs **55.5%** of the unconditional
+  connectivity gap (+30.5 → +13.6pp), which is the opposite of every other axis of this ruler.
+  Connectivity is mostly an *access* story; education and income are not.
+- **P28 — DISCARD, and the prediction stream is now CLOSED.** The basin-drift term cleared both of
+  P26's screening conditions on account (single-peaked CV curve, interior minimum, +0.107pp margin)
+  and then **worsened the holdout 5.014 → 5.124** — the sixth CV→holdout non-transfer and the first
+  to pass the shape screen. Saving was blocked by the margin bar and never reached the holdout.
+  Champion final: **account 5.014 / resilience 6.625 / saving 6.831**.
+- **Housekeeping.** Rule B3's lineage cap is reached (E31 → E34 → E36); the next Program-3
+  experiment must take a different parent. Program 7 is **blocked**, not skipped: the microdata zip
+  ships no codebook and the `con*` items are bare numeric codes, so the mandatory mapping pass
+  cannot be completed from the files in the repo — recorded for `HARNESS_V2_NOTES.md`.
