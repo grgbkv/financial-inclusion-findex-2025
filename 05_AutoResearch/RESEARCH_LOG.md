@@ -4202,3 +4202,38 @@ about double the income spread. Descriptive, unregistered, logged as an observat
 use, a behaviour co-determined with digital payment use — someone may report using the internet
 because they pay digitally. This is one 2024 cross-section: no direction, no trend, no causal
 content. Conditioning on account holding remains post-treatment.
+
+### P28 — VERDICT: DISCARD; and the stream CLOSES, 2026-08-09
+
+**Account: the adoption rule passed it, and the holdout rejected it.** The <=2021 CV curve over
+gamma is `6.710 / 6.604 / 7.032 / 7.732 / 8.770` for gamma = 0 / 0.25 / 0.50 / 0.75 / 1.00 — a
+clean single-peaked curve with an **interior** minimum at gamma = 0.25 and a margin of **+0.107pp**
+over the incumbent, comfortably past the 0.05 bar. Both registered conditions held, so the holdout
+was run as registered. Holdout MAE **5.014 -> 5.124**, i.e. **worse by 0.110pp**. Reverted to the
+P18 champion, which reproduces byte-identically (5.014 / 6.625 / 6.831).
+
+**Saving: the rule blocked it, correctly.** CV `6.370 / 6.368 / 6.511 / 6.723 / 7.018` — argmin at
+gamma = 0.25 with a margin of **+0.002pp**, far under the 0.05 bar, so no holdout evaluation was
+triggered. Saving stays at 6.831. Resilience has no pre-2021 history and was out of scope by
+construction; it stays at 6.625.
+
+**The most useful thing in this run is that the P26 screening rule failed its first live test.**
+P26 wrote the shape rule after five CV->holdout non-transfers, on the theory that a *well-shaped* CV
+win would transfer where a thin one at a secondary local minimum would not. Account's curve was as
+well-shaped as this stream has produced — monotone down, interior minimum, monotone up, a margin
+twice the bar — and it still did not transfer. **This is the sixth non-transfer and the first to
+clear the shape screen.** At Kish `neff` ~ 7 on the training window, curve shape is not evidence
+about the holdout either.
+
+**DECISION: the prediction stream is CLOSED, champion final.** P27's rule required one more
+mechanism, estimable from <=2021 data alone. The basin drift was that mechanism: it is the last
+untested knob on the base predictor, it was named in the agenda before P27 ran, and it is fully
+pre-2021. It failed. No further mechanism can be named that is both admissible and untried — the
+residual bias P27 measured is a broad 2021-24 upward level shift that no <=2021 quantity observes,
+and every correction for it that this loop could construct would have to be fitted to the holdout.
+
+**Closing statement (the benchmark ladder, from P27).** Champion **account 5.014 / resilience 6.625
+/ saving 6.831** pp. Skill over persistence: **10.1% / 0.8% / 30.1%**. Against the movement scale
+(median |actual 2021->2024 change| = 3.405 / 5.761 / 9.234pp), only **saving** predicts better than
+the typical country's actual move. Twenty-eight prediction experiments, one target that beats what
+it is trying to track.

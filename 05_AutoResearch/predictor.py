@@ -1,45 +1,27 @@
-"""Prediction stream — P28: a BASIN-LEVEL DRIFT term, the first change to the base predictor
-since P2.
+"""Prediction stream — P18: does orthogonal-basin shrinkage compound a FOURTH time?
 
-Parent: P27 (the error diagnostic). ADMISSIBILITY, addressed up front because P27's decision rule
-demands it: the next mechanism had to be estimable from <=2021 data ALONE and must not be fitted to
-P27's residuals. A basin drift satisfies both — it is the standard alternative to the country-level
-damped trend P10 tested, it was named as an open direction in the 2026-08-05 agenda addendum
-("the trend term, untouched since P2 and never basin-varying") BEFORE P27 ran, and every quantity it
-uses is a pre-2021 change.
-
-MECHANISM. Every predictor since P5 is a CROSS-SECTIONAL operator: shrink a level toward a basin
-mean. Nothing in the stack carries GROUP-LEVEL MOMENTUM. P28 adds, to the base prediction and before
-any shrinkage stage,
-
-    pred_i <- base_i + gamma * drift_{g(i)},
-    drift_g = pop-weighted mean of (level_2021 - level_2017) over the countries of basin g
-
-with g = the target's stage-1 basin (income group for account, region for saving), and gamma chosen
-by <=2021 CV: predict 2021 from 2017 with the persistence base and the drift built from the
-2014->2017 change, over the grid gamma in {0, 0.25, 0.50, 0.75, 1.00}. gamma = 0 nests the incumbent
-EXACTLY, so the CV comparison is nested by construction.
-
-ADOPTION RULE, with the P26 screening rule attached. Adopt only if BOTH:
-  (i)  the CV strictly prefers some gamma > 0 by a margin >= 0.05pp over gamma = 0, and
-  (ii) the CV curve over the grid is SINGLE-PEAKED with an INTERIOR minimum (monotone on each side).
-A thin margin, or a win at a secondary local minimum, does NOT trigger a holdout evaluation — that
-is the rule P26 wrote after five CV->holdout non-transfers. If the rule blocks adoption on both
-targets, the stream CLOSES on the benchmark ladder, which is what P27's write-up and the agenda both
-recommend as the default.
-
-SCOPE. account_t_d and fin17a_17a1_d only. fin24aSD_ND exists in 2021 alone, so no drift is
-computable for it at any date; per the P2 per-target policy it stays at the P5 champion (6.625),
-byte-identical.
-
-Incumbent champion (P18): account 5.014 / resilience 6.625 / saving 6.831.
-
---- P18 stack, unchanged below this line ---
 Champion (P17): saving = damped trend (l=0.5) + region -> income-group -> account-tercile shrink
 (7.080), account = persistence + income-group -> region -> g20-tercile shrink (5.014), resilience =
-persistence + region shrink (6.625). P18 adds a fourth, cross-indicator basin to saving.
+persistence + region shrink (6.625).
+
+The mechanism has now stacked three stages on saving (P11 -> P12 -> P16: 8.448 -> 7.963 -> 7.359
+-> 7.080) and three on account (P7 -> P13 -> P17: 5.144 -> 5.105 -> 5.014), and P17 delivered the
+sharper lesson: a CROSS-INDICATOR basin (terciles of `g20_any`) bought account more than twice
+what a second administrative cut did (-0.091pp vs -0.039pp). Saving's stage 3 is already
+cross-indicator (account terciles). Untested: whether a SECOND data-driven, cross-indicator basin
+still carries independent signal once region, income group and account terciles have each had a
+pass.
+
+P18 stage-4 basin for saving: terciles of `g20_any` (digital-payment adoption, 117/117 panel
+coverage at 2014/2017/2021) — a different indicator from both the target and stage 3's basin
+column.
+
+Adoption rule (entirely <=2021, no 2024 anywhere in features, fitting or selection): CV on the
+saving 2017->2021 transition with a persistence base (the P10/P12/P13/P16/P17 protocol), every
+basin — including both tercile basins — built from the 2017 cross-section; adopt the fourth stage
+only if it beats the incumbent three-stage there. Per-target policy (P2): touches saving only;
+account (5.014) and resilience (6.625) stay byte-identical to the P17 champion.
 """
-import numpy as np
 import pandas as pd
 
 from harness import Findex
@@ -175,79 +157,7 @@ def _select_fourth_stage(fx: Findex, target: str):
     return use_four
 
 
-# ---------------------------------------------------------------- P28: basin drift
-DRIFT_GRID = [0.0, 0.25, 0.50, 0.75, 1.00]
-DRIFT_MARGIN = 0.05          # minimum <=2021 CV improvement over gamma = 0 to consider adoption
-
-
-def _basin_drift(train, target, basin, y0, y1, at_year):
-    """Country-indexed pop-weighted mean change in `target` over y0->y1 within each basin.
-
-    Basin membership and population weights are read at `at_year`; both endpoints are <=2021 by
-    construction of every caller. Returned in pp, aligned to the basin frame's index."""
-    wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
-    if y0 not in wide.columns or y1 not in wide.columns:
-        return pd.Series(dtype=float)
-    chg = (wide[y1] - wide[y0]).dropna()
-    ref = train[train["year"] == at_year].set_index("countrynewwb")
-    d = pd.DataFrame({"chg": chg, "basin": ref[basin], "pop": ref["pop_adult"]}).dropna(
-        subset=["chg", "basin", "pop"])
-    grp = d.groupby("basin").apply(
-        lambda g: (g["chg"] * g["pop"]).sum() / g["pop"].sum(), include_groups=False)
-    return ref[basin].map(grp)
-
-
-def _select_drift(fx: Findex, target: str):
-    """P28 pre-2021 CV: predict `target` 2021 from 2017 (persistence base, the P12/P16/P17
-    protocol), adding gamma * (2014->2017 basin drift) before the shrinkage stack. Returns the
-    adopted gamma (0.0 = incumbent) and prints the whole CV curve, because the registered rule is
-    about the SHAPE of the curve and not only its argmin."""
-    train, _ = fx.prediction_task()
-    wide = train.pivot_table(index="countrynewwb", columns="year", values=target) * 100
-    truth_2021, from_2017 = wide.get(2021), wide.get(2017)
-    common = truth_2021.dropna().index.intersection(from_2017.dropna().index)
-
-    b1, b2 = BASIN_ORDER[target]
-    drift = _basin_drift(train, target, b1, 2014, 2017, at_year=2017).reindex(
-        from_2017.index).fillna(0.0)
-    b3 = _tercile_basin(train, THIRD_BASIN_COL[target], 2017) if target in THIRD_BASIN_COL else None
-    b4 = _tercile_basin(train, FOURTH_BASIN_COL[target], 2017) if target in FOURTH_BASIN_COL else None
-
-    curve = []
-    for gamma in DRIFT_GRID:
-        p = from_2017 + gamma * drift
-        p = _shrink(train, p, SHRINK_K, b1, at_year=2017)
-        p = _shrink(train, p, SHRINK_K, b2, at_year=2017)
-        if b3 is not None:
-            p = _shrink(train, p, SHRINK_K, b3, at_year=2017)
-        if b4 is not None:
-            p = _shrink(train, p, SHRINK_K, b4, at_year=2017)
-        curve.append(float((p.reindex(common) - truth_2021.reindex(common)).abs().mean()))
-
-    base = curve[0]
-    j = int(np.argmin(curve))
-    margin = base - curve[j]
-    # unimodal = non-increasing to the argmin then non-decreasing; the registered rule additionally
-    # requires the minimum to be INTERIOR (not at a grid boundary).
-    unimodal = (all(curve[i] >= curve[i + 1] for i in range(j))
-                and all(curve[i] <= curve[i + 1] for i in range(j, len(curve) - 1)))
-    interior = 0 < j < len(curve) - 1
-    adopt = bool(margin >= DRIFT_MARGIN and unimodal and interior)
-
-    print(f"P28 <=2021 CV {target:16s} (2017->2021, drift = 2014->2017 {b1} means):")
-    print("      gamma  " + "  ".join(f"{g:5.2f}" for g in DRIFT_GRID))
-    print("      MAE    " + "  ".join(f"{c:5.3f}" for c in curve) + f"   (n={len(common)})")
-    print(f"      argmin gamma={DRIFT_GRID[j]:.2f} margin vs gamma=0 = {margin:+.3f}pp "
-          f"(bar {DRIFT_MARGIN:.2f}) | unimodal={unimodal} interior_min={interior} -> "
-          f"ADOPT={adopt}")
-    if margin >= DRIFT_MARGIN and unimodal and not interior:
-        print("      NOTE: minimum sits at a grid boundary — the registered rule requires an "
-              "interior minimum, so this does NOT trigger a holdout evaluation.")
-    return DRIFT_GRID[j] if adopt else 0.0
-
-
-def predict(fx: Findex, use_two: dict, use_three: dict, use_four: dict,
-            gammas: dict) -> dict:
+def predict(fx: Findex, use_two: dict, use_three: dict, use_four: dict) -> dict:
     train, _ = fx.prediction_task()
     third_basin_2021 = {t: _tercile_basin(train, col, 2021)
                         for t, col in THIRD_BASIN_COL.items()}
@@ -265,12 +175,6 @@ def predict(fx: Findex, use_two: dict, use_three: dict, use_four: dict,
             pred = (last + DAMP * trend).clip(0, 100).fillna(last)  # P2 damped trend
         else:
             pred = last
-
-        gamma = gammas.get(target, 0.0)
-        if gamma:                                          # P28 basin drift, before any shrinkage
-            drift = _basin_drift(train, target, b1, 2017, 2021, at_year=2021).reindex(
-                pred.index).fillna(0.0)
-            pred = (pred + gamma * drift).clip(0, 100)
 
         pred = _shrink(train, pred, SHRINK_K, b1)          # stage 1 (champion basin)
         if use_two.get(target):                            # stage 2 (orthogonal basin)
@@ -298,9 +202,6 @@ if __name__ == "__main__":
     use_four = {"fin17a_17a1_d": _select_fourth_stage(fx, "fin17a_17a1_d")}
     print(f"P18 adopted two-stage: {use_two} | three-stage: {use_three} | "
           f"four-stage: {use_four}")
-    # P28: basin drift, account and saving only (resilience has no pre-2021 history).
-    gammas = {t: _select_drift(fx, t) for t in ["account_t_d", "fin17a_17a1_d"]}
-    print(f"P28 adopted gammas: {gammas}")
-    result = fx.evaluate_predictions(predict(fx, use_two, use_three, use_four, gammas))
+    result = fx.evaluate_predictions(predict(fx, use_two, use_three, use_four))
     for t, r in result.items():
         print(f"{t:20s} MAE = {r['mae']} pp  (n={r['n']})")
