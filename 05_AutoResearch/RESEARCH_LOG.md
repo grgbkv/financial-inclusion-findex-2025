@@ -3977,3 +3977,152 @@ needed.
   4/6 on the bootstrap p and **0/6 at Kish `neff` ≈ 7** — E32's result reproduces exactly on the
   partial family, and partials turn out to be *more* weighting-dependent than bivariates (only 2/6
   cells clear 0.30 unweighted).
+
+---
+
+## Cycle 2026-08-09 — pre-registration (E36 / U21 / P28)
+
+Coverage audit (`python3 coverage.py`) run before any hypothesis was chosen, per rule B1. It
+reports: country file 28/429 columns touched (7%); untouched frames `gender` (0 mentions) and
+`urbanicity` (single-wave); thin frames `education`/`age_cat`/`laborforce` (1 mention each); micro
+file 25/192 columns touched, with `internet_use` (144,090 non-null, binary) at **zero** mentions and
+the whole `con`/`fin48`/`fin49` digital-risk block untouched.
+
+**Coverage cells this cycle lands on (rule B2, named in advance):**
+- **E36** — country frames `group == "laborforce"` (thin, 1 mention) and `group == "gender"`
+  (**zero** mentions, 5 waves), plus the 2011->2024 and 2014->2024 spans.
+- **U21** — micro column **`internet_use`** (zero mentions) — the first use of Program 5's
+  individual-level half.
+- **P28** — prediction stream, no new coverage claim (mechanism change, see below).
+
+**Lineage (rule B3).** E36's parent is **E34**, whose parent is **E31**. That is the **third**
+consecutive experiment descending from E31's gap-trajectory design, i.e. the cap is now reached:
+the next Program-3 experiment must jump to a different parent. U21's parent is **U15/U17** (the
+access-absorption ruler) via agenda item 5.3; P28's parent is **P27** (the diagnostic), and its
+admissibility constraint is inherited from P27's decision rule.
+
+**A note on the `con` block.** The largest untouched surface (133 country + 52 micro columns) was
+inspected for a labelled codebook before this cycle's hypotheses were chosen. The zip ships the CSV
+only — **no questionnaire or codebook** — and the `con*` values are bare numeric codes (1/2/8/9 with
+skip patterns), so Program 7's mandatory mapping pass cannot be completed from the files in the
+repo. Recorded here as a blocker, not a skipped obligation; `HARNESS_V2_NOTES.md` gets the item.
+
+### E36 (pre-registered): is the "access converges, use diverges" split a RESOURCE/ASCRIPTION line?
+
+Program 3, item **3.7** (opened by the 2026-08-08 addendum). Parent: E34.
+
+**Why.** E31 found the within-country **income** and **education** gaps in *usage* (`g20_any`)
+**widening** in log-odds while the access gaps narrowed. E34 found the **age** gap narrowing on
+*both* margins. Two axes on one side, one on the other, is not yet a pattern. The sharp hypothesis
+is that the dividing line is **what defines the disadvantaged group**: axes tied to *resources*
+(income, education, employment) diverge on usage, axes that are *ascribed* (age cohort, sex) do not.
+`laborforce` and `gender` are the two untested axes and they fall on opposite sides of that line, so
+this is a genuine out-of-sample test of the split rather than a fourth description.
+
+**Design.** E34's construction exactly, generalized over five axes x two margins, developing panel
+economies, `pan_grp`:
+- gap = logit(p_advantaged) - logit(p_disadvantaged), p clipped to [0.005, 0.995];
+  advantaged/disadvantaged = richest 60%/poorest 40%, secondary+/primary-or-less, 25+/15-24,
+  in-laborforce/out-of-laborforce, men/women.
+- ACCESS margin `account_t_d` over **2011->2024**; USAGE margin `g20_any` over **2014->2024**.
+- PRIMARY statistic per cell (E31 lesson): **unweighted share of economies whose gap is smaller at
+  the end of the span**. Secondary: pop-weighted mean change, its unweighted twin, drop-top-5 (G6).
+- The **income, education and age axes are recomputed inside this file** so the new axes are read
+  beside their originals (the E35 convention, now mandatory).
+
+**Registered predictions and keep rule.** KEEP the joint dividing-line claim only if BOTH hold:
+- **P1 (laborforce behaves like a resource axis):** access share **>= 60%** AND usage share **< 50%**.
+- **P2 (gender behaves like an ascribed axis):** access share **>= 60%** AND usage share **>= 60%**.
+Any other outcome is a DISCARD of the joint claim, with the per-axis pattern logged. Registered
+alternatives: (a) both new axes look ascribed -> the split is specific to income/education, not a
+resource line; (b) both look resource-like -> sex is a resource axis in this data, which would be a
+finding about the gender gap, not about the split; (c) neither margin's share clears 60% on either
+new axis -> the frames are too noisy to adjudicate and the split stays a two-axis observation.
+
+**Gates and inference.** G3 (headline columns `account_t_d`, `g20_any`); G4 per margin; G6 in the
+drop-top-5 form on every weighted mean; G5 n/a. **B6:** 2,000-draw country bootstrap percentile
+intervals on the share and the weighted mean, Kish `neff` beside nominal n, in every one of the ten
+cells. **B7:** BH at q = 0.10 over the declared family of **ten** cells (5 axes x 2 margins), on the
+bootstrap p of the share against 0.5. B4 does not bind (multi-wave design, not a 2021-24 window).
+
+**Declared.** Descriptive gap trajectories. Composition of the groups changes over 13 years
+(schooling expands, populations age), so a narrowing gap is not evidence that any individual's
+position changed. No causal reading, no policy reading.
+
+### U21 (pre-registered): is being OFFLINE a bigger gate on digital-payment use than being least-educated?
+
+Program 5, items **5.3 and 5.4**. Parents: U10/U15/U17 (the access-absorption ruler). Micro stream,
+2024 wave, cross-sectional — no trend language by construction.
+
+**Why.** The ruler has been run on education, age, income, labour force and urbanicity, all
+conditional on holding an account, and the recurring result is that access absorbs almost none of the
+gradient. `internet_use` has never been used at either level. E29 showed that at the *country* level
+the rails are not proxies for connectivity; the individual-level question is different and sharper:
+among people who already have an account, is connectivity the binding constraint on using it
+digitally, and does conditioning on it absorb the education gradient that access could not?
+
+**Design (all weighted by `wgt`, via the fixed `micro.py`).**
+1. **Ruler step 1** — `anydigpayment` rate by `internet_use` (1 vs 0), pooled, unconditional.
+2. **Ruler step 2** — the same gap **among accountholders** (`account == 1`).
+3. **Ruler step 3 (the registered comparison)** — among accountholders, the connectivity gap from
+   step 2 beside the **education gap** (educ 3 = tertiary/secondary+ vs educ 1 = primary or less) and
+   the **income gap** (inc_q 5 vs inc_q 1) computed on the same sample.
+4. **Absorption** — the education gap among accountholders, recomputed **among accountholders who
+   use the internet**; registered statistic = 1 - (conditional gap / unconditional-on-connectivity
+   gap).
+5. **Item 5.4** — demographic profile of `internet_use == 0` among accountholders: share offline by
+   educ, inc_q, age band, sex, urbanicity, labour force, with M2 on every cell.
+
+**Registered claims and keep thresholds.**
+- **C1:** among accountholders, the offline-vs-online gap in `anydigpayment` is **>= 5pp** (the
+  default group-difference bar) AND is **larger than** the education gap on the same sample.
+- **C2 (absorption):** conditioning on `internet_use` removes **>= 30%** of the education gap in
+  `anydigpayment` among accountholders.
+KEEP C1 and C2 separately; each stands or falls on its own bar.
+
+**Gates.** M1 (weights, enforced by the module). M2 (unweighted n >= 100) on every reported cell.
+M3: `account` and `anydigpayment` micro aggregates reproduced against the country file on a
+declared set of economies, tolerance 1pp. Single wave, so no B4/B6 replication or bootstrap
+obligation attaches to a cross-sectional micro description; the M2 counts are reported instead.
+
+**Declared.** `internet_use` is self-reported internet use, i.e. a *behaviour*, not infrastructure
+access, and it is plainly co-determined with digital payment use — a person may report using the
+internet *because* they pay digitally. This is an association inside one cross-section and cannot
+separate the two directions. Nothing here is a constraint, a barrier or a cause; "gate" is shorthand
+for a conditional difference and is used in that sense only.
+
+### P28 (pre-registered): a BASIN-LEVEL DRIFT term — the first change to the base predictor since P2
+
+Parent: P27. **Admissibility, addressed up front as P27's rule demands.** P27 fired on "keep going"
+and attached a constraint: the next mechanism must be **estimable from <=2021 data alone** and must
+not be fitted to P27's residuals. A basin drift satisfies both. It is not traceable to the diagnostic
+(it is the standard alternative to the country-level damped trend that P10 tested, and was named as
+"the trend term, untouched since P2 and never basin-varying" in the 2026-08-05 agenda addendum,
+before P27 ran), and every quantity it uses is a pre-2021 change.
+
+**Mechanism.** Every predictor since P5 has been a *cross-sectional* operator: shrink a level toward
+a basin's mean. Nothing in the stack carries **group-level momentum**. P28 adds, to the base
+prediction and before any shrinkage stage, a term
+
+    pred_i <- base_i + gamma * drift_{g(i)},   drift_g = pop-weighted mean of (level_2021 - level_2017)
+                                                         over the countries in basin g
+
+with `g` = the target's stage-1 basin (income group for account, region for saving) and gamma
+selected by **<=2021 CV**: predict 2021 from 2017 with the persistence base and the drift computed
+from the **2014->2017** change, over the grid gamma in {0, 0.25, 0.50, 0.75, 1.00}. gamma = 0 nests
+the incumbent exactly.
+
+**Adoption rule, with the P26 screening rule attached.** Adopt only if BOTH: (i) the CV strictly
+prefers some gamma > 0 by a margin **>= 0.05pp** over gamma = 0, and (ii) the CV curve over the grid
+is **single-peaked** (one interior minimum; monotone on each side). A thin margin, or a win at a
+secondary local minimum, does **not** trigger a holdout evaluation — that is the rule P26 wrote after
+five CV->holdout non-transfers. If the rule blocks adoption for both targets, the stream **closes**
+on the benchmark ladder, as P27's write-up and the agenda both anticipate.
+
+**Scope.** Account and saving only. `fin24aSD_ND` exists in 2021 alone, so it has no history from
+which a drift is computable at any date — the per-target policy (P2) leaves it at the P5 champion,
+6.625, unchanged.
+
+**Declared.** No 2024 data enters features, fitting or selection; the harness evaluator remains the
+only place 2024 exists. If adopted, the champion changes only where the holdout MAE improves;
+otherwise `predictor.py` reverts to the P18 champion commit.
