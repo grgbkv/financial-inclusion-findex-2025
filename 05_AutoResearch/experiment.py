@@ -1,63 +1,63 @@
-"""E35 (pre-registered): do the THREE-SEPARATE-RAILS partials (E23/E24/E25) replicate on 2017->2021?
+"""E36 (pre-registered): is "access converges, use diverges" a RESOURCE/ASCRIPTION line?
 
-Program 1 (replication debt) + Program 2 items 2.2/2.3 for the PARTIAL family.
-Parents: E23, E24, E25 — first replication attempt on any of them (B3 not engaged).
+Program 3, item 3.7. Parent: E34 (whose parent is E31) — the THIRD consecutive descendant of
+E31's gap-trajectory design, so rule B3's cap is reached with this experiment.
 
-B2 note: this experiment sits on the 2017->2021 transition, not the 2021->2024 shaft; E34 (same
-cycle) carries the frame-rotation requirement on the `age_cat` panel.
+B2 BREADTH CELLS: `group == "laborforce"` (thin, 1 mention) and `group == "gender"` (ZERO ledger
+mentions, five waves) — the two untested axes of the 13-year inequality panel.
 
-WHY. E28 and E30 replicated six BIVARIATE co-movements onto 2017->2021 and promoted E1/E10/E11/
-E12/E13/E14 to keep-general. No PARTIAL correlation has ever been replicated, and the partials are
-what the paper's rail decomposition actually rests on: they are the only evidence that mobile money,
-digital payments and wage digitalization are three separate channels rather than one digitalization
-factor wearing three hats.
+WHY. E31: the income and education USAGE gaps (`g20_any`) widened in log-odds while their ACCESS
+gaps narrowed. E34: the age gap narrowed on BOTH margins. The sharp hypothesis is that the split is
+set by what defines the disadvantaged group — RESOURCE axes (income, education, employment) diverge
+on usage, ASCRIBED axes (age cohort, sex) do not. `laborforce` and `gender` fall on opposite sides
+of that line, so this is an out-of-sample test of the split, not a fourth description.
 
-DESIGN, per the pre-registration. Exactly the E23/E24/E25 constructions on 2017->2021, pan_dev,
-population weights = 2024 adult population (harness convention, held fixed across windows), with
-2021->2024 recomputed in the same file so each replication is read beside its original:
+DESIGN, per the pre-registration:
+  gap        = logit(p_advantaged) - logit(p_disadvantaged), p clipped to [0.005, 0.995]
+  ACCESS     `account_t_d`, 2011->2024      USAGE  `g20_any`, 2014->2024
+  PRIMARY    unweighted SHARE of developing panel economies whose gap is SMALLER at span end
+  SECONDARY  pop-weighted mean change, its unweighted twin, drop-top-5 (G6)
+  Income, education and age are recomputed INSIDE this file (the E35 convention) so the two new
+  axes are read beside their originals.
 
-  E23-R  partial r( d mobileaccount_t_d , d fin17a_17a1_d | d g20_any )
-  E24-R  partial r( d fin32_acc        , d fin17a_17a1_d | d g20_any )
-         + two-control variant (| d g20_any, d mobileaccount_t_d), descriptive
-  E25-R  bivariate r( d fin32_acc , d fin22a_22a1_22g_d ) and the partial controlling d fin17a_17a1_d
+REGISTERED KEEP RULE (joint claim). Keep only if BOTH:
+  P1 laborforce = resource-like: access share >= 60% AND usage share  < 50%
+  P2 gender     = ascribed-like: access share >= 60% AND usage share >= 60%
+Anything else discards the joint claim; the per-axis pattern is logged either way.
 
-Residualization is pop-weighted least squares on the control set, then weighted_corr of the
-residuals (E5b/E23/E24 construction), with gate_jackknife on the residual pair.
+Gates: G3 (headline columns), G4 per margin, G6 on every weighted mean, G5 n/a.
+B6: 2,000-draw country bootstrap on share and weighted mean; Kish neff in every cell.
+B7: BH at q=0.10 over the declared family of TEN cells (5 axes x 2 margins) on the share's
+bootstrap p against 0.5.
 
-INFERENCE LAYER, registered as part of the test (Program 2, non-delta->delta family). For every
-primary cell in both windows: 2,000-draw country bootstrap percentile 95% interval and two-sided
-bootstrap p; Kish neff; the UNWEIGHTED partial beside the weighted one; BH at q = 0.10 over the
-declared family of SIX primary cells (three designs x two windows) on p_boot.
-
-GATES. G3 (headline concepts declared; fin32_acc has no variant — E10 precedent). G4 per estimation
-sample. G6 on every primary residual pair with the E4 magnitude rule (retention >= 0.5) applied —
-the rule post-dates E23/E24/E25 and has never been applied to them.
-
-PROMOTION RULE (B4). keep-window -> keep-general only if the 2017->2021 partial has the SAME SIGN,
-|r| >= 0.30, and is G6 sign-stable with retention >= 0.5. A sign flip or a collapse below 0.30 means
-the rail separation is a 2021-24 window property and the finding stays keep-window with that
-recorded. A cell failing BH or the unweighted lens is FLAGGED, not demoted (E13 precedent).
-
-DECLARED. Partialling a contemporaneous delta decomposes co-movement; it does not control
-confounding and identifies nothing. Sample composition differs between windows (mobile money binds),
-so every benchmark is recomputed on each window's own common sample. Descriptive, never causal.
+DECLARED. Descriptive gap trajectories over 13 years. Group composition changes across waves
+(schooling expands, populations age, labour-force participation moves), so a narrowing gap is not
+evidence that any individual's position changed. No causal reading.
 """
 import numpy as np
 import pandas as pd
-from scipy import stats
 
-from harness import Findex, INDICATORS
+from harness import Findex
 
 BOOT = 2000
-SEED = 35
+SEED = 36
+SHARE_BAR = 0.60
+DIVERGE_BAR = 0.50
+CLIP = (0.005, 0.995)
 Q = 0.10
-WINDOWS = [(2017, 2021), (2021, 2024)]
+WAVES = [2011, 2014, 2017, 2021, 2024]
 
-SAV = INDICATORS["saved_formally"]["headline"]      # fin17a_17a1_d
-G20 = INDICATORS["digital_payment"]["headline"]     # g20_any
-MM = INDICATORS["mobile_money"]["headline"]         # mobileaccount_t_d
-WAGE = "fin32_acc"                                  # E10/E24 wage digitalization (no variant)
-BOR = "fin22a_22a1_22g_d"                           # E11/E25 formal borrowing
+# axis -> (advantaged group2 label, disadvantaged group2 label, declared kind)
+AXES = {
+    "income":     ("richest 60%", "poorest 40%", "resource"),
+    "education":  ("secondary edu or more", "prim edu or less", "resource"),
+    "laborforce": ("in laborforce", "out of laborforce", "resource (NEW)"),
+    "age_cat":    ("age 25+", "ages 15-24", "ascribed"),
+    "gender":     ("men", "women", "ascribed (NEW)"),
+}
+
+MARGINS = [("account_t_d", "ACCESS", "account", 2011, 2024),
+           ("g20_any", "USAGE", "digital_payment", 2014, 2024)]
 
 
 def _kish(w):
@@ -65,78 +65,62 @@ def _kish(w):
     return float(w.sum() ** 2 / (w ** 2).sum())
 
 
-def _wresid(y, X, w):
-    """Residuals of a pop-weighted LS fit of y on a constant plus the columns of X (E24's helper)."""
-    X = pd.DataFrame(X)
-    A = np.column_stack([np.ones(len(X)), X.to_numpy(dtype=float)])
-    yv = np.asarray(y, dtype=float)
-    sw = np.sqrt(np.asarray(w, dtype=float))
-    beta, *_ = np.linalg.lstsq(A * sw[:, None], yv * sw, rcond=None)
-    return pd.Series(yv - A @ beta, index=X.index)
+def _logit(p):
+    return np.log(np.clip(p, *CLIP) / (1 - np.clip(p, *CLIP)))
 
 
-def _uresid(y, X):
-    """Unweighted twin of _wresid (Program 2 item 2.3, applied to the partial family)."""
-    X = pd.DataFrame(X)
-    A = np.column_stack([np.ones(len(X)), X.to_numpy(dtype=float)])
-    yv = np.asarray(y, dtype=float)
-    beta, *_ = np.linalg.lstsq(A, yv, rcond=None)
-    return pd.Series(yv - A @ beta, index=X.index)
+def _wmean(v, w):
+    m = pd.notna(v) & pd.notna(w)
+    return float(np.average(v[m], weights=w[m])) if m.any() else np.nan
 
 
-def _ucorr(x, y):
-    m = pd.notna(x) & pd.notna(y)
-    return float(np.corrcoef(x[m], y[m])[0, 1]) if m.sum() >= 10 else np.nan
+def gap_table(fx: Findex, axis, col):
+    """Per-country, per-wave log-odds gap on `col` for one axis, developing panel economies."""
+    adv_lab, dis_lab, _ = AXES[axis]
+    g = fx.pan_grp[(fx.pan_grp["group"] == axis)
+                   & (fx.pan_grp["incomegroupwb24"] != "High income")]
+    adv = g[g["group2"] == adv_lab].pivot_table(index="countrynewwb", columns="year", values=col)
+    dis = g[g["group2"] == dis_lab].pivot_table(index="countrynewwb", columns="year", values=col)
+    if adv.empty or dis.empty:
+        raise ValueError(f"axis {axis}: labels {adv_lab!r}/{dis_lab!r} not found")
+    waves = [y for y in WAVES if y in adv.columns and y in dis.columns]
+    lo = pd.DataFrame({y: _logit(adv[y]) - _logit(dis[y]) for y in waves})
+    pp = pd.DataFrame({y: (adv[y] - dis[y]) * 100 for y in waves})
+    pop = fx.pan_dev[fx.pan_dev["year"] == 2024].set_index("countrynewwb")["pop_adult"]
+    lo["pop"], pp["pop"] = pop, pop
+    return lo, pp
 
 
-def deltas(fx: Findex, cols, t0, t1):
-    """Wide per-country deltas (pp) over one window for the requested columns, plus pop weights."""
-    out, pop = {}, None
-    for name, col in cols.items():
-        t = fx.country_panel(fx.pan_dev, col, [t0, t1])
-        if t0 not in t.columns or t1 not in t.columns:
-            out[name] = pd.Series(dtype=float)
-            continue
-        out[name] = (t[t1] - t[t0]).rename(name)
-        # combine_first, not fillna: the weight series must span the UNION of the panels, or the
-        # narrowest column (mobile money) silently shrinks every cell's sample. Each cell then
-        # drops to its own common sample in cell(), which is the registered construction.
-        pop = t["pop"] if pop is None else pop.combine_first(t["pop"])
-    df = pd.DataFrame(out)
-    df["pop"] = pop.reindex(df.index)
-    return df
+def cell(lo, y0, y1, axis, margin):
+    """Share narrowing + weighted/unweighted mean change + bootstrap + G6, one axis x margin."""
+    d = pd.DataFrame({"d": lo[y1] - lo[y0], "pop": lo["pop"]}).dropna()
+    n = len(d)
+    share = float((d["d"] < 0).mean())
+    wm, um = _wmean(d["d"], d["pop"]), float(d["d"].mean())
+    neff = _kish(d["pop"])
 
+    rng = np.random.default_rng(SEED)
+    idx = np.arange(n)
+    bs, bw = [], []
+    for _ in range(BOOT):
+        s = d.iloc[rng.choice(idx, size=n, replace=True)]
+        bs.append(float((s["d"] < 0).mean()))
+        bw.append(_wmean(s["d"], s["pop"]))
+    bs, bw = np.asarray(bs), np.asarray(bw)
+    # two-sided bootstrap p for the share against the coin flip
+    tail = min((bs <= 0.5).mean(), (bs >= 0.5).mean())
+    p_share = float(max(2.0 * tail, 1.0 / BOOT))
 
-def _boot_partial(fx, df, xcol, ycol, ctrls, draws=BOOT, seed=SEED):
-    """Country bootstrap of the pop-weighted PARTIAL correlation: the residualization is redone
-    inside every draw, so the interval covers the control fit as well as the correlation."""
-    rng = np.random.default_rng(seed)
-    idx = np.arange(len(df))
-    out = []
-    for _ in range(draws):
-        d = df.iloc[rng.choice(idx, size=len(idx), replace=True)].reset_index(drop=True)
-        try:
-            rx = _wresid(d[xcol], d[ctrls], d["pop"])
-            ry = _wresid(d[ycol], d[ctrls], d["pop"])
-            r, _n = fx.weighted_corr(rx, ry, d["pop"])
-        except Exception:
-            continue
-        if pd.notna(r):
-            out.append(r)
-    if len(out) < draws * 0.9:
-        return None, None, None
-    a = np.asarray(out)
-    tail = min((a <= 0).mean(), (a >= 0).mean())
-    return (float(np.percentile(a, 2.5)), float(np.percentile(a, 97.5)),
-            float(max(2.0 * tail, 1.0 / draws)))
+    keep = d["pop"].sort_values(ascending=False).index[5:]
+    wm_drop = _wmean(d.loc[keep, "d"], d.loc[keep, "pop"])
+    share_drop = float((d.loc[keep, "d"] < 0).mean())
 
-
-def _p_t(r, dof_n):
-    if pd.isna(r) or dof_n <= 2.0:
-        return np.nan
-    df_ = dof_n - 2.0
-    t = abs(r) * np.sqrt(df_ / max(1.0 - r ** 2, 1e-12))
-    return float(2.0 * stats.t.sf(t, df_))
+    return {"axis": axis, "margin": margin, "span": f"{y0}->{y1}", "n": n, "neff": neff,
+            "share": share, "share_lo": float(np.percentile(bs, 2.5)),
+            "share_hi": float(np.percentile(bs, 97.5)), "p_share": p_share,
+            "wmean": wm, "wmean_lo": float(np.percentile(bw, 2.5)),
+            "wmean_hi": float(np.percentile(bw, 97.5)), "unwtd": um,
+            "wmean_droptop5": wm_drop, "share_droptop5": share_drop}
 
 
 def benjamini_hochberg(pvals, q=Q):
@@ -150,122 +134,81 @@ def benjamini_hochberg(pvals, q=Q):
     thresh = q * np.arange(1, m + 1) / m
     passed = p[order] <= thresh
     if passed.any():
-        kmax = int(np.max(np.where(passed)[0]))
-        out[order[:kmax + 1]] = True
+        out[order[:int(np.max(np.where(passed)[0])) + 1]] = True
     return out
 
 
-def cell(fx: Findex, eid, df, xcol, ycol, ctrls, t0, t1, primary=True, label=""):
-    """One partial (or bivariate, ctrls=[]) cell with the full inference layer."""
-    use = df[[xcol, ycol, "pop"] + ctrls].dropna()
-    w = use["pop"]
-    if ctrls:
-        rx, ry = _wresid(use[xcol], use[ctrls], w), _wresid(use[ycol], use[ctrls], w)
-        ux, uy = _uresid(use[xcol], use[ctrls]), _uresid(use[ycol], use[ctrls])
-    else:
-        rx, ry, ux, uy = use[xcol], use[ycol], use[xcol], use[ycol]
-    r, n = fx.weighted_corr(rx, ry, w)
-    r_u = _ucorr(ux, uy)
-    neff = _kish(w)
-    g6 = fx.gate_jackknife(rx, ry, w)
-    jack = g6.get("r_droptop")
-    ret = (abs(jack) / abs(r)) if (jack is not None and r) else float("nan")
-
-    lo = hi = p_boot = None
-    if primary:
-        lo, hi, p_boot = _boot_partial(fx, use, xcol, ycol, ctrls)
-
-    ctrl_txt = ("|" + "+".join(c.replace("d_", "") for c in ctrls)) if ctrls else "(bivariate)"
-    ci = f"[{lo:+.3f},{hi:+.3f}]" if lo is not None else "        n/a       "
-    print(f"  {eid:7s} {t0}->{t1}  r({xcol.replace('d_','')},{ycol.replace('d_','')}{ctrl_txt})"
-          f" = {r:+.3f}  n={n:3d} neff={neff:4.1f}  95%CI {ci}"
-          f"  p_boot={p_boot if p_boot is None else round(p_boot, 4)}")
-    print(f"          unweighted twin {r_u:+.3f}   G6 r_droptop {jack:+.3f} "
-          f"(retention {ret:.2f}, sign_ok={g6['ok']}, E4 rule {'PASS' if ret >= 0.5 else 'FAIL'})"
-          f"{('   [' + label + ']') if label else ''}")
-    return {"eid": eid, "t0": t0, "t1": t1, "r": r, "n": n, "neff": neff, "r_unwtd": r_u,
-            "ci_lo": lo, "ci_hi": hi, "p_boot": p_boot, "p_nom": _p_t(r, float(n)),
-            "p_neff": _p_t(r, neff), "r_droptop": jack, "retention": ret,
-            "g6_ok": bool(g6["ok"]), "primary": primary}
-
-
 def run(fx: Findex):
-    print("E35 — do the rail-separation PARTIALS replicate on 2017->2021? (dev panel)\n")
-    print("G3:", fx.gate_variant("saved_formally", SAV), fx.gate_variant("digital_payment", G20),
-          fx.gate_variant("mobile_money", MM))
-    print("G3 note: fin32_acc (wages into an account) and fin22a_22a1_22g_d (formal borrowing) have")
-    print("         no variant choice — E10/E11 precedent.")
-    print("G5: n/a — no official partial-correlation series exists\n")
-
-    cols = {"d_mm": MM, "d_sav": SAV, "d_g20": G20, "d_wage": WAGE, "d_bor": BOR}
-    rows = []
-    for t0, t1 in WINDOWS:
-        d = deltas(fx, cols, t0, t1)
-        g4 = fx.gate_coverage(fx.pan_dev, SAV, t1)
-        print(f"=== window {t0}->{t1}   G4 n={g4['n_countries']} pop_share={g4['pop_share']} ===")
-
-        rows.append(cell(fx, "E23-R", d, "d_mm", "d_sav", ["d_g20"], t0, t1,
-                         label="mobile money net of digital payments"))
-        rows.append(cell(fx, "E24-R", d, "d_wage", "d_sav", ["d_g20"], t0, t1,
-                         label="wage digitalization net of digital payments"))
-        rows.append(cell(fx, "E25-R", d, "d_wage", "d_bor", ["d_sav"], t0, t1,
-                         label="wage -> formal borrowing net of saving"))
-
-        # descriptive companions (not in the BH family, no bootstrap)
-        print("   descriptive companions:")
-        cell(fx, "E24-2c", d, "d_wage", "d_sav", ["d_g20", "d_mm"], t0, t1, primary=False,
-             label="two simultaneous controls")
-        cell(fx, "E23-rev", d, "d_g20", "d_sav", ["d_mm"], t0, t1, primary=False,
-             label="symmetric reverse of E23")
-        cell(fx, "E25-biv", d, "d_wage", "d_bor", [], t0, t1, primary=False,
-             label="E25 bivariate")
-
-        print("   same-window bivariate benchmarks (each on its own common sample):")
-        for a, b in [("d_mm", "d_sav"), ("d_wage", "d_sav"), ("d_g20", "d_sav"),
-                     ("d_mm", "d_g20")]:
-            u = d[[a, b, "pop"]].dropna()
-            r, n = fx.weighted_corr(u[a], u[b], u["pop"])
-            print(f"      r({a},{b}) = {r:+.3f} (n={n})")
+    print("E36 — resource vs ascribed axes on two margins (dev panel, pan_grp)\n")
+    rows, levels = [], []
+    for col, margin, concept, y0, y1 in MARGINS:
+        print(f"=== {margin} margin: {col}, {y0}->{y1} ===")
+        print("  G3:", fx.gate_variant(concept, col), "| G4:", fx.gate_coverage(fx.pan_dev, col, y1))
+        for axis in AXES:
+            lo, pp = gap_table(fx, axis, col)
+            if y0 not in lo.columns or y1 not in lo.columns:
+                print(f"  {axis}: span unavailable ({list(lo.columns)})")
+                continue
+            r = cell(lo, y0, y1, axis, margin)
+            rows.append(r)
+            print(f"  {axis:11s} [{AXES[axis][2]:14s}] n={r['n']:3d} neff={r['neff']:4.1f} | "
+                  f"share narrowing {r['share']:5.1%} [{r['share_lo']:.1%},{r['share_hi']:.1%}] "
+                  f"p={r['p_share']:.4f} | wmean {r['wmean']:+.3f} "
+                  f"[{r['wmean_lo']:+.3f},{r['wmean_hi']:+.3f}] | unwtd {r['unwtd']:+.3f} | "
+                  f"G6 droptop5 wmean {r['wmean_droptop5']:+.3f} share {r['share_droptop5']:.1%}")
+            for y in [c for c in pp.columns if c != "pop"]:
+                dd = pd.DataFrame({"v": pp[y], "pop": pp["pop"]}).dropna()
+                levels.append({"axis": axis, "margin": margin, "year": y,
+                               "pp_gap": _wmean(dd["v"], dd["pop"]), "n": len(dd)})
         print()
 
-    res = pd.DataFrame([r for r in rows if r["primary"]])
-    res["bh_boot"] = benjamini_hochberg(res["p_boot"].values)
-    res["bh_neff"] = benjamini_hochberg(res["p_neff"].values)
+    res = pd.DataFrame(rows)
+    res["bh"] = benjamini_hochberg(res["p_share"].values)
 
-    print("=" * 100)
-    print("SUMMARY — six primary cells (three designs x two windows)\n")
-    print(f"  {'cell':8s} {'window':11s} {'r_w':>7s} {'r_u':>7s} {'n':>4s} {'neff':>5s} "
-          f"{'ret':>5s} {'p_boot':>8s} {'p_nom':>8s} {'p_neff':>8s} {'BHb':>4s} {'BHn':>4s}")
+    print("=" * 104)
+    print("PP-GAP LEVELS (pop-weighted, advantaged minus disadvantaged)\n")
+    lv = pd.DataFrame(levels).pivot_table(index=["margin", "axis"], columns="year",
+                                          values="pp_gap")
+    print(lv.round(1).to_string())
+
+    print("\n" + "=" * 104)
+    print("TEN-CELL FAMILY (BH at q=0.10 on the share's bootstrap p)\n")
+    print(f"  {'axis':11s} {'margin':7s} {'n':>4s} {'neff':>5s} {'share':>7s} {'95% CI':>17s} "
+          f"{'p':>7s} {'BH':>5s} {'wmean':>7s} {'unwtd':>7s} {'drop5':>7s}")
     for _, r in res.iterrows():
-        print(f"  {r['eid']:8s} {int(r['t0'])}->{int(r['t1'])}   {r['r']:+7.3f} {r['r_unwtd']:+7.3f} "
-              f"{int(r['n']):4d} {r['neff']:5.1f} {r['retention']:5.2f} {r['p_boot']:8.4f} "
-              f"{r['p_nom']:8.4f} {r['p_neff']:8.4f} {str(bool(r['bh_boot'])):>4s} "
-              f"{str(bool(r['bh_neff'])):>4s}")
+        print(f"  {r['axis']:11s} {r['margin']:7s} {int(r['n']):4d} {r['neff']:5.1f} "
+              f"{r['share']:7.1%} [{r['share_lo']:5.1%},{r['share_hi']:5.1%}] {r['p_share']:7.4f} "
+              f"{str(bool(r['bh'])):>5s} {r['wmean']:+7.3f} {r['unwtd']:+7.3f} "
+              f"{r['wmean_droptop5']:+7.3f}")
+    print(f"\n  BH rejects {int(res['bh'].sum())}/{len(res)} cells at q={Q:.2f}; "
+          f"uncorrected p<=0.10: {int((res['p_share'] <= Q).sum())}/{len(res)}")
 
-    print(f"\n  BH at q={Q:.2f} over the declared family of {len(res)}: "
-          f"p_boot rejects {int(res['bh_boot'].sum())}/{len(res)}, "
-          f"p_nominal {int((res['p_nom'] <= Q).sum())}/{len(res)} (uncorrected reference), "
-          f"p_neff rejects {int(res['bh_neff'].sum())}/{len(res)}")
-    print(f"  unweighted lens (|r_u| >= 0.30): "
-          f"{int((res['r_unwtd'].abs() >= 0.30).sum())}/{len(res)} cells")
+    print("\n" + "=" * 104)
+    print("ACCESS-MINUS-USAGE ASYMMETRY (the statistic the hypothesis is about)\n")
+    for axis in AXES:
+        a = res[(res["axis"] == axis) & (res["margin"] == "ACCESS")]
+        u = res[(res["axis"] == axis) & (res["margin"] == "USAGE")]
+        if a.empty or u.empty:
+            continue
+        a, u = a.iloc[0], u.iloc[0]
+        print(f"  {axis:11s} [{AXES[axis][2]:14s}] access {a['share']:5.1%} - usage "
+              f"{u['share']:5.1%} = {(a['share'] - u['share']) * 100:+5.1f}pp   "
+              f"(wmean access {a['wmean']:+.3f}, usage {u['wmean']:+.3f})")
 
-    print("\n=== PROMOTION VERDICTS (pre-registered) ===")
-    for eid, parent in [("E23-R", "E23"), ("E24-R", "E24"), ("E25-R", "E25")]:
-        e = res[(res["eid"] == eid) & (res["t0"] == 2017)].iloc[0]
-        o = res[(res["eid"] == eid) & (res["t0"] == 2021)].iloc[0]
-        same = np.sign(e["r"]) == np.sign(o["r"])
-        ok = bool(same and abs(e["r"]) >= 0.30 and e["g6_ok"] and e["retention"] >= 0.5)
-        print(f"  {parent}: 2021->24 {o['r']:+.3f}  vs  2017->21 {e['r']:+.3f}  "
-              f"[same sign {same}, |r|>=0.30 {abs(e['r']) >= 0.30}, "
-              f"G6 {e['g6_ok']}, retention {e['retention']:.2f}] -> "
-              f"{'PROMOTE to keep-general' if ok else 'STAYS keep-window (2021-24 window property)'}")
-        flags = []
-        if not bool(e["bh_boot"]):
-            flags.append("fails BH on p_boot")
-        if abs(e["r_unwtd"]) < 0.30:
-            flags.append(f"unweighted twin {e['r_unwtd']:+.3f} < 0.30")
-        if flags:
-            print(f"       FLAG (not a demotion, E13 precedent): {'; '.join(flags)}")
+    print("\n=== VERDICT (pre-registered joint claim) ===")
+    def get(axis, margin):
+        return res[(res["axis"] == axis) & (res["margin"] == margin)].iloc[0]
+    la, lu = get("laborforce", "ACCESS"), get("laborforce", "USAGE")
+    ga, gu = get("gender", "ACCESS"), get("gender", "USAGE")
+    p1 = bool(la["share"] >= SHARE_BAR and lu["share"] < DIVERGE_BAR)
+    p2 = bool(ga["share"] >= SHARE_BAR and gu["share"] >= SHARE_BAR)
+    print(f"  P1 laborforce resource-like: access {la['share']:.1%} >= {SHARE_BAR:.0%} "
+          f"({la['share'] >= SHARE_BAR}) AND usage {lu['share']:.1%} < {DIVERGE_BAR:.0%} "
+          f"({lu['share'] < DIVERGE_BAR}) -> {'PASS' if p1 else 'FAIL'}")
+    print(f"  P2 gender ascribed-like:     access {ga['share']:.1%} >= {SHARE_BAR:.0%} "
+          f"({ga['share'] >= SHARE_BAR}) AND usage {gu['share']:.1%} >= {SHARE_BAR:.0%} "
+          f"({gu['share'] >= SHARE_BAR}) -> {'PASS' if p2 else 'FAIL'}")
+    print(f"  JOINT KEEP = {'YES' if (p1 and p2) else 'NO'}")
     return res
 
 
