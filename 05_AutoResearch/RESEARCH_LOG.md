@@ -4417,3 +4417,46 @@ and makes 6.4 (the diagonal-dominance matrix) not worth running: with no rung sh
 positive lead term, a 4×4 matrix of the same design at `neff` ≈ 7 is a false-discovery machine.
 Item **6.5** (the E5b replication) is unaffected and runs next as E38. Descriptive temporal ordering
 throughout; no causal content.
+
+### E38 — VERDICT: DISCARD the promotion, and RECOMMEND DEMOTING E5b, 2026-08-10
+
+| window | raw r | **partial \| account level** | 95% CI | p_boot | convergence benchmark | G6 drop-top-5 | retention |
+|---|---|---|---|---|---|---|---|
+| 2014→2017 | −0.621 | **−0.654** | [−0.835, +0.055] | 0.070 | −0.359 | −0.266 | 0.41 |
+| 2017→2021 | +0.598 | **+0.591** | [−0.185, +0.786] | 0.314 | −0.126 | +0.031 | 0.05 |
+| 2021→2024 *(original)* | −0.590 | **−0.595** | [−0.771, +0.201] | 0.352 | −0.301 | −0.030 | 0.05 |
+
+n = 77, Kish `neff` = 7.5 in every window. **The original window reproduces exactly** (−0.595
+against −0.595 on record), so the E35 convention confirms the construction rather than catching a
+defect this time.
+
+**The pattern alternates sign, which no version of the accounts-first story predicts.** E5b said
+that at a given account level, economies whose accounts were *less used* grew accounts faster.
+2014→2017 agrees strongly (−0.654). 2017→2021 says the **opposite** with almost equal force
+(+0.591). 2021→2024 agrees again (−0.595). A mechanism that reverses between consecutive four-year
+windows and then reverses back is not a mechanism.
+
+**Two pre-registered rules fired at once, and I am recording the conflict rather than picking the
+flattering one.** The promotion rule — "at least one earlier transition with r_partial ≤ −0.30,
+sign-stable under G6" — is *mechanically satisfied* by 2014→2017. The registered secondary verdict
+— "if the earlier windows also collapse under the jackknife, recommend demotion" — is *also*
+satisfied, with retentions of 0.41, 0.05 and 0.05. **Resolved against promotion**, on the standing
+E4 magnitude rule, which is protocol and not a discretionary tiebreak: a coefficient that loses
+59–95% of its magnitude when five economies leave is a big-country story.
+
+**The fault is in my pre-registration and it should be fixed in the protocol, not argued away.**
+The promotion rule said *at least one* earlier window, which lets a claim promote on the strength
+of one window while an equally-powered window of the same design contradicts it. **Proposed rule
+for the next amendment: a promotion requires every tested earlier window to agree in sign, not one
+of them.** Under that rule E5b fails cleanly and no conflict arises.
+
+**RECOMMENDATION: demote E5b from `keep-window` to `discard`.** This is the **second pending
+demotion**, alongside E7 (recommended by E32). Both should be applied in the same distillation pass
+rather than accumulating as recommendations that never execute. What survives of E5b is the
+*within-window* description for 2021→2024, already caveated in the ledger as concentrated in large
+economies — and now known to be a window-specific fact of two windows out of three.
+
+**One more thing the intervals say.** All three bootstrap intervals straddle zero despite point
+estimates near ±0.6. At `neff` ≈ 7, a resample that happens to omit the dominant economies produces
+a completely different coefficient — which is the same lesson E32 delivered with BH, arriving here
+through the interval instead.
