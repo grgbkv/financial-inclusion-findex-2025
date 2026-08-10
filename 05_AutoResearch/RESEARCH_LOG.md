@@ -4369,3 +4369,51 @@ outcome is the more valuable of the two and will be logged as a keep in the nega
 G6 is not applicable to an unweighted-share statistic and is reported as a weighted-vs-unweighted
 contrast instead. No bootstrap is registered for E39: the primary statistic is a share, not an
 association, and B6 binds on association keeps.
+
+### E37 — VERDICT: DISCARD (the ladder), 2026-08-10
+
+**The joint claim fails 1-of-3, and the one rung that passed is a big-country artifact.**
+
+| rung | design | pooled r | 95% CI | p_boot | own-level partial | convergence benchmark | G6 drop-top-5 |
+|---|---|---|---|---|---|---|---|
+| R1 | account level → Δ digital payments | **+0.066** | [−0.232, +0.169] | 0.669 | +0.197 | −0.086 | **−0.177 (sign flips)** |
+| R2 | digital-payment level → Δ formal saving | **+0.447** | [+0.113, +0.633] | 0.000 | +0.517 | +0.130 | **+0.126 (retention 0.28)** |
+| R3 | formal-saving level → Δ any borrowing | **−0.126** | [−0.217, −0.031] | 0.015 | −0.024 | −0.432 | −0.095 |
+
+n = 230 country-transition rows over 77 economies. **Kish `neff` = 7.5 at the country level.**
+
+**R1 is the cleanest negative in the run.** The account level at t tells you essentially nothing
+about how fast digital payments grow afterwards (r = +0.066, interval straddling zero, p_boot 0.67),
+and dropping the five largest economies flips the sign. The most intuitive rung of the ladder —
+you need accounts before you can pay from them — has no cross-country signal at all once you look
+at growth rather than levels.
+
+**R2 passed the registered conditions and still should not be believed.** Its partial *exceeds* its
+raw correlation (0.517 vs 0.447), which is what you want from a ladder: stripping the saving
+margin's own convergence makes the digital-payment lead stronger, not weaker. But G6 takes it from
++0.447 to **+0.126** — retention 0.28, under the E4 rule's 0.5 — and the 2014→2017 window gives
+**−0.434** against +0.584 and +0.441 in the two later ones. A relationship that reverses in one of
+three windows and lives in five economies is not a sequencing regularity.
+
+**R3 is where the pooled design earns its keep as a warning.** The pooled figure is −0.126, but the
+three windows are **+0.295 / +0.280 / −0.742**. Pooling averaged a consistent positive relationship
+in 2014→2021 against a violent negative one in 2021→2024, and reported the near-zero midpoint. Any
+future pooled-transition design in this loop must show its per-window terms; a pooled coefficient
+here is not a summary of anything.
+
+**A methodological correction that matters beyond E37.** Stacking three transitions gives a
+row-level Kish `neff` of **22.2** while the country-level `neff` is **7.5**. The stacked figure is
+pure arithmetic — the same economy contributing three rows triples Σw without adding an
+observation. Every future pooled design must report the country-level `neff`, and the bootstrap
+must resample **countries** carrying all their rows (as this one did), not rows.
+
+**One defect found and fixed before the verdict was read** (the E35 convention working as intended):
+`_wresid` returns bare arrays, so on a *sliced* per-transition frame the residuals misaligned
+against the weight index and the partials came back NaN. Fixed with a `reset_index`; the pooled
+primaries were computed on a zero-based frame and are unchanged by the fix.
+
+**Verdict.** DISCARD the joint ladder claim. This also **closes agenda items 6.1–6.3 negatively**
+and makes 6.4 (the diagonal-dominance matrix) not worth running: with no rung showing a robust
+positive lead term, a 4×4 matrix of the same design at `neff` ≈ 7 is a false-discovery machine.
+Item **6.5** (the E5b replication) is unaffected and runs next as E38. Descriptive temporal ordering
+throughout; no causal content.
