@@ -107,15 +107,25 @@ def build(fx: Findex, up_col, down_col):
 
 
 def stats(df):
-    """Raw corr, own-level partial, convergence benchmark, neff — on one stacked table."""
+    """Raw corr, own-level partial, convergence benchmark, neff — on one stacked table.
+
+    The reset_index is load-bearing: _wresid returns bare arrays, so a sliced (non-zero-based)
+    frame would silently misalign them against the weights and return NaN partials.
+    """
+    df = df.reset_index(drop=True)
     w = df["pop"]
     raw, n = _wcorr(df["up_level"], df["down_d"], w)
     bench, _ = _wcorr(df["down_t0"], df["down_d"], w)
     rx = _wresid(df["up_level"], df["down_t0"], w)
     ry = _wresid(df["down_d"], df["down_t0"], w)
     part, _ = _wcorr(pd.Series(rx), pd.Series(ry), w)
+    # Two neffs. The row-level one is inflated by stacking: a country contributing three rows
+    # triples the weight sum without adding an economy. The country-level one — each economy's
+    # population counted once — is the honest degrees-of-freedom figure.
+    cw = df.groupby("country")["pop"].max()
     return {"r": raw, "partial": part, "bench": bench, "n": n,
-            "n_countries": df["country"].nunique(), "neff": _kish(w)}
+            "n_countries": df["country"].nunique(),
+            "neff": _kish(w), "neff_country": _kish(cw)}
 
 
 def bootstrap_countries(df, rng, draws=BOOT):
@@ -162,7 +172,8 @@ def run(fx: Findex):
 
         print("-" * 92)
         print(f"{tag} (agenda {item}):  level({up_col}) at t  ->  d({down_col}) over t->t+1")
-        print(f"  pooled rows n={st['n']} over {st['n_countries']} economies | Kish neff={st['neff']:.1f}")
+        print(f"  pooled rows n={st['n']} over {st['n_countries']} economies | Kish neff "
+              f"{st['neff']:.1f} row-level, {st['neff_country']:.1f} COUNTRY-level (the honest one)")
         print(f"  PRIMARY pooled weighted r        = {st['r']:+.3f}   95% CI [{lo:+.3f}, {hi:+.3f}]  "
               f"p_boot={p_boot:.3f}")
         print(f"  own-level partial (E5b constr.)  = {st['partial']:+.3f}   95% CI [{plo:+.3f}, {phi:+.3f}]"
@@ -189,7 +200,7 @@ def run(fx: Findex):
         print(f"  --> rung {tag} {'PASSES' if passes else 'FAILS'} the registered conditions")
         summary.append({"rung": tag, "r": st["r"], "partial": st["partial"],
                         "bench": st["bench"], "retention": retention, "pass": passes,
-                        "neff": st["neff"], "ci": (lo, hi), "p_boot": p_boot,
+                        "neff_country": st["neff_country"], "ci": (lo, hi), "p_boot": p_boot,
                         "r_droptop": st_dt["r"], "n": st["n"]})
 
     print("=" * 92)
