@@ -1,172 +1,167 @@
-"""E38 (pre-registered): does the E5b "accounts-first" pattern replicate on earlier transitions?
+"""E39 (pre-registered): is 2021->2024 actually a unique episode, or only a weighted-mean one?
 
-Program 1 (the replication debt), agenda item 6.5. Parent: E5b (`keep-window`) — one of the three
-remaining unreplicated keeps, with E7 and E22.
+Program 1, item 1.5. Parent: E27 / the paper draft's Section 4 framing. NOT the rails chain.
 
-WHAT E5b CLAIMED. Usage intensity at t = g20_any(t) / account_t_d(t) — what share of an economy's
-accountholders actually pay digitally. E5b partialled that ratio against subsequent account growth,
-holding the account LEVEL at t fixed (pop-weighted LS residualization), and found
-**r_partial = -0.595 (n=77) on 2021->2024** against a convergence benchmark of -0.301: at the same
-account level, economies whose existing accounts were LESS used grew accounts FASTER. Hence
-"accounts first" — breadth runs ahead of depth.
+B2 BREADTH CELL: all four transitions including **2011->2014**, the thinnest in the audit
+(6 ledger mentions), and `borrow_any_t_d` (untouched module) as a context margin.
 
-TEST, per the pre-registration: the identical construction on **2014->2017** and **2017->2021**,
-with **2021->2024 recomputed inside this file** (the rule adopted from E35, where recomputing the
-original window is what caught a weight-join defect before any verdict was read).
+WHY THIS IS OWED. The entire ledger is built on a 2021->2024 "saving surge", and rule B4 exists
+precisely because that window may be special. But nobody has checked whether the surge is unique
+WITHIN COUNTRIES or only in the population-weighted aggregate. E31 and E36 both showed those two
+can point in opposite directions — a weighted mean can move a long way while a minority of
+economies moves with it.
 
-PROMOTION THRESHOLD. E5b promotes keep-window -> keep-general only if at least one earlier
-transition gives r_partial <= -0.30 with the same sign AND the drop-top-5 jackknife keeps that sign.
-Otherwise E5b stays keep-window and is recorded as having FAILED its promotion test.
+DESIGN, per the pre-registration. For each margin and each available transition, the distribution
+of per-country change on `pan_dev`: unweighted median, unweighted mean, IQR, the SHARE of economies
+with change >= +10pp, and the population-weighted mean for contrast.
 
-REGISTERED SECONDARY VERDICT, declared up front because it is uncomfortable. E5b's ORIGINAL window
-already fails the E4 magnitude rule as now written (jackknife retention 0.19: -0.595 -> -0.114) and
-that rule post-dates the finding. If the earlier windows also collapse under the jackknife,
-**recommend demoting E5b to `discard`**, as E32 recommended for E7.
+  PRIMARY margin  fin17a_17a1_d (formal saving)
+  CONTEXT margins account_t_d, g20_any, borrow_any_t_d
 
-Gates: G4 · G6 drop-top-5 · B6 country bootstrap (2,000 draws, percentile interval) + Kish neff,
-per window. Registered note on power: 2014->2017 has failed to produce a stable sign in five of six
-cells across E28 and E30, so a null there is weak evidence of absence; 2017->2021 decides it.
+PRIMARY PRE-REGISTERED STATISTIC (formal saving). 2021->2024 is declared unique iff BOTH:
+  (a) its unweighted share of economies with change >= +10pp is >= 1.5x the largest such share in
+      any earlier transition, AND
+  (b) its unweighted median change is the largest of the four.
 
-DECLARED. Descriptive temporal ordering; a ratio measured before a change is not identification.
+REGISTERED ALTERNATIVE OUTCOME. If 2021->2024 is NOT top on both, the "episode" framing is an
+aggregate artifact and Section 4 of the paper draft needs rewording — that outcome is the more
+valuable of the two and is logged as a keep in the negative direction.
+
+Gates: G4 · G5 against the official developing aggregate for fin17a_17a1_d where it exists · G6 is
+not applicable to an unweighted share and is reported as the weighted-vs-unweighted contrast
+instead. No bootstrap: the primary statistic is a share, not an association, and B6 binds on
+association keeps (the share's binomial interval is reported as a descriptive courtesy).
+
+DECLARED. Descriptive distributional comparison across waves. Wave spacing is uneven (3/3/4/3
+years) and the 2021 wave is a pandemic-period measurement; both are stated, neither is adjusted for.
 """
 import numpy as np
 import pandas as pd
 
 from harness import Findex
 
-BOOT = 2000
-SEED = 38
-PROMOTE_BAR = -0.30
-TRANSITIONS = [(2014, 2017), (2017, 2021), (2021, 2024)]
-ORIGINAL = (2021, 2024)
-E5B_ORIGINAL_PARTIAL = -0.595   # value on record in findings.tsv, for the reproduction check
+BIG_MOVE = 10.0          # pp
+UNIQUE_FACTOR = 1.5
+SEED = 39
+TRANSITIONS = [(2011, 2014), (2014, 2017), (2017, 2021), (2021, 2024)]
+
+PRIMARY = ("fin17a_17a1_d", "formal saving")
+CONTEXT = [("account_t_d", "account ownership"),
+           ("g20_any", "digital payments"),
+           ("borrow_any_t_d", "any borrowing")]
 
 
-def _kish(w):
-    w = np.asarray(w, dtype=float)
-    return float(w.sum() ** 2 / (w ** 2).sum())
+def deltas(fx: Findex, col, t0, t1):
+    w = fx.country_panel(fx.pan_dev, col, [t0, t1])
+    d = pd.DataFrame({"d": w[t1] - w[t0], "pop": w["pop"]}).dropna()
+    return d
 
 
-def _wcorr(x, y, w):
-    x, y, w = (np.asarray(v, float) for v in (x, y, w))
-    m = ~(np.isnan(x) | np.isnan(y) | np.isnan(w))
-    x, y, w = x[m], y[m], w[m]
-    if len(x) < 10:
-        return np.nan, len(x)
-    mx, my = np.average(x, weights=w), np.average(y, weights=w)
-    sx = np.sqrt(np.average((x - mx) ** 2, weights=w))
-    sy = np.sqrt(np.average((y - my) ** 2, weights=w))
-    if sx == 0 or sy == 0:
-        return np.nan, len(x)
-    return float(np.average((x - mx) * (y - my), weights=w) / (sx * sy)), len(x)
+def describe(d):
+    if len(d) < 30:
+        return None
+    share = float((d["d"] >= BIG_MOVE).mean())
+    se = np.sqrt(share * (1 - share) / len(d))
+    return {
+        "n": len(d),
+        "median": float(d["d"].median()),
+        "mean_unw": float(d["d"].mean()),
+        "mean_wtd": float(np.average(d["d"], weights=d["pop"])),
+        "iqr": float(d["d"].quantile(0.75) - d["d"].quantile(0.25)),
+        "share_big": share,
+        "share_lo": max(0.0, share - 1.96 * se),
+        "share_hi": min(1.0, share + 1.96 * se),
+    }
 
 
-def _wresid(y, z, w):
-    """Pop-weighted LS residual of y on z with intercept (the E5b construction)."""
-    y, z, w = (np.asarray(v, float) for v in (y, z, w))
-    mz, my = np.average(z, weights=w), np.average(y, weights=w)
-    var = np.average((z - mz) ** 2, weights=w)
-    b = 0.0 if var == 0 else np.average((z - mz) * (y - my), weights=w) / var
-    return y - (my + b * (z - mz))
+def margin_table(fx: Findex, col):
+    rows = []
+    for t0, t1 in TRANSITIONS:
+        d = deltas(fx, col, t0, t1)
+        r = describe(d)
+        if r:
+            r["span"] = f"{t0}->{t1}"
+            rows.append(r)
+    return pd.DataFrame(rows).set_index("span") if rows else pd.DataFrame()
 
 
-def build(fx: Findex, t0, t1):
-    """One transition: usage-intensity ratio at t0, account level at t0, account change t0->t1."""
-    acc = fx.country_panel(fx.pan_dev, "account_t_d", [t0, t1])
-    g20 = fx.country_panel(fx.pan_dev, "g20_any", [t0])
-    df = pd.DataFrame({
-        "acc_t0": acc[t0],
-        "d_acc": acc[t1] - acc[t0],
-        "g20_t0": g20[t0],
-        "pop": acc["pop"],
-    }).dropna()
-    df = df[df["acc_t0"] > 0]
-    df["ratio"] = df["g20_t0"] / df["acc_t0"]      # usage intensity: users per accountholder
-    return df.reset_index().rename(columns={"countrynewwb": "country"})
+def show(name, col, tbl):
+    print("-" * 96)
+    print(f"{name}  ({col})")
+    if tbl.empty:
+        print("  no transition reaches 30 economies")
+        return
+    print(f"  {'span':12s} {'n':>4s} {'median':>8s} {'mean_unw':>9s} {'mean_WTD':>9s} {'IQR':>7s} "
+          f"{'share>=+10pp':>13s}  {'95% CI':>16s}")
+    for span, r in tbl.iterrows():
+        print(f"  {span:12s} {int(r['n']):4d} {r['median']:+8.2f} {r['mean_unw']:+9.2f} "
+              f"{r['mean_wtd']:+9.2f} {r['iqr']:7.2f} {r['share_big']*100:12.1f}%  "
+              f"[{r['share_lo']*100:5.1f}%,{r['share_hi']*100:5.1f}%]")
 
 
-def stats(df):
-    df = df.reset_index(drop=True)
-    w = df["pop"]
-    raw, n = _wcorr(df["ratio"], df["d_acc"], w)
-    bench, _ = _wcorr(df["acc_t0"], df["d_acc"], w)     # the convergence benchmark (E17: -0.301)
-    rx = _wresid(df["ratio"], df["acc_t0"], w)
-    ry = _wresid(df["d_acc"], df["acc_t0"], w)
-    part, _ = _wcorr(rx, ry, w)
-    return {"r": raw, "partial": part, "bench": bench, "n": n, "neff": _kish(w)}
-
-
-def drop_top(df, k=5):
-    top = df.nlargest(k, "pop")["country"]
-    return df[~df["country"].isin(top)]
-
-
-def bootstrap(df, rng, draws=BOOT):
-    out_r, out_p = [], []
-    idx = np.arange(len(df))
-    for _ in range(draws):
-        s = df.iloc[rng.choice(idx, size=len(idx), replace=True)]
-        st = stats(s)
-        if pd.notna(st["partial"]):
-            out_r.append(st["r"])
-            out_p.append(st["partial"])
-    return np.array(out_r), np.array(out_p)
+def repeat_movers(fx: Findex, col):
+    """Descriptive: does a big mover in one window move again in the next? Spearman on consecutive
+    per-country deltas."""
+    out = []
+    for i in range(len(TRANSITIONS) - 1):
+        a0, a1 = TRANSITIONS[i]
+        b0, b1 = TRANSITIONS[i + 1]
+        da, db = deltas(fx, col, a0, a1)["d"], deltas(fx, col, b0, b1)["d"]
+        j = pd.concat([da.rename("a"), db.rename("b")], axis=1).dropna()
+        if len(j) >= 30:
+            out.append((f"{a0}->{a1} vs {b0}->{b1}", len(j),
+                        float(j["a"].corr(j["b"], method="spearman"))))
+    return out
 
 
 def run(fx: Findex):
-    rng = np.random.default_rng(SEED)
-    print("=" * 92)
-    print("E38 — E5b REPLICATION: usage intensity at t -> subsequent account growth, at the same")
-    print("      account level. Promotion needs an earlier window with r_partial <= -0.30, sign-stable.")
-    print("=" * 92)
+    print("=" * 96)
+    print("E39 — IS 2021->2024 A UNIQUE EPISODE? Distribution of per-country change, four windows")
+    print("=" * 96)
+    print(f"pan_dev | unique iff share(>= +{BIG_MOVE:.0f}pp) >= {UNIQUE_FACTOR}x the best earlier "
+          f"window AND the median is the largest of the four\n")
 
-    rows = []
-    for t0, t1 in TRANSITIONS:
-        df = build(fx, t0, t1)
-        st = stats(df)
-        st_dt = stats(drop_top(df))
-        br, bp = bootstrap(df, rng)
-        lo, hi = np.percentile(bp, [2.5, 97.5])
-        p_boot = 2 * min((bp <= 0).mean(), (bp >= 0).mean())
-        ret = abs(st_dt["partial"]) / abs(st["partial"]) if st["partial"] else np.nan
-        tag = "  [ORIGINAL WINDOW]" if (t0, t1) == ORIGINAL else ""
-        print("-" * 92)
-        print(f"{t0}->{t1}{tag}   n={st['n']}   Kish neff={st['neff']:.1f}")
-        print(f"  raw r(ratio, d_account)          = {st['r']:+.3f}")
-        print(f"  PRIMARY partial | account level  = {st['partial']:+.3f}   "
-              f"95% CI [{lo:+.3f}, {hi:+.3f}]   p_boot={p_boot:.3f}")
-        print(f"  convergence benchmark r(acc,d)   = {st['bench']:+.3f}")
-        print(f"  G6 drop-top-5: partial = {st_dt['partial']:+.3f}  (retention {ret:.2f}, "
-              f"n={st_dt['n']}, neff={st_dt['neff']:.1f})")
-        print(f"  mean usage intensity at t0 = {np.average(df['ratio'], weights=df['pop']):.3f} "
-              f"| pop-weighted mean d_account = {np.average(df['d_acc'], weights=df['pop']):+.2f}pp")
-        rows.append({"span": f"{t0}->{t1}", "n": st["n"], "neff": round(st["neff"], 1),
-                     "r_raw": st["r"], "partial": st["partial"], "ci_lo": lo, "ci_hi": hi,
-                     "p_boot": p_boot, "bench": st["bench"],
-                     "partial_droptop": st_dt["partial"], "retention": ret})
+    col, name = PRIMARY
+    prim = margin_table(fx, col)
+    show(f"PRIMARY — {name}", col, prim)
 
-    tbl = pd.DataFrame(rows)
-    print("=" * 92)
-    print(tbl.to_string(index=False))
+    last = f"{TRANSITIONS[-1][0]}->{TRANSITIONS[-1][1]}"
+    earlier = prim.drop(index=last)
+    cond_a = prim.loc[last, "share_big"] >= UNIQUE_FACTOR * earlier["share_big"].max()
+    cond_b = prim.loc[last, "median"] >= prim["median"].max() - 1e-12
+    print(f"\n  (a) share test: {prim.loc[last,'share_big']*100:.1f}% vs "
+          f"{UNIQUE_FACTOR}x{earlier['share_big'].max()*100:.1f}% = "
+          f"{UNIQUE_FACTOR*earlier['share_big'].max()*100:.1f}%  -> {bool(cond_a)}")
+    print(f"  (b) median test: {prim.loc[last,'median']:+.2f}pp is the largest of the four "
+          f"-> {bool(cond_b)}")
+    print(f"  UNIQUE-EPISODE CLAIM: {'CONFIRMED' if (cond_a and cond_b) else 'REJECTED'}")
 
-    # reproduction check on the original window (the E35 convention)
-    orig = tbl[tbl["span"] == f"{ORIGINAL[0]}->{ORIGINAL[1]}"].iloc[0]
-    dev = abs(orig["partial"] - E5B_ORIGINAL_PARTIAL)
-    print(f"\nREPRODUCTION CHECK: this file gives {orig['partial']:+.3f} on {orig['span']} against "
-          f"{E5B_ORIGINAL_PARTIAL:+.3f} on record — deviation {dev:.3f} "
-          f"({'reproduces' if dev <= 0.02 else 'DOES NOT REPRODUCE'})")
+    print("\nCONTEXT MARGINS — which window was each margin's own big one?")
+    for c, nm in CONTEXT:
+        t = margin_table(fx, c)
+        show(nm, c, t)
+        if not t.empty:
+            print(f"    -> top window by share>=+10pp: {t['share_big'].idxmax()} "
+                  f"({t['share_big'].max()*100:.1f}%) | by median: {t['median'].idxmax()} "
+                  f"({t['median'].max():+.2f}pp)")
 
-    earlier = tbl[tbl["span"] != f"{ORIGINAL[0]}->{ORIGINAL[1]}"]
-    promote = bool(((earlier["partial"] <= PROMOTE_BAR)
-                    & (np.sign(earlier["partial_droptop"]) == np.sign(earlier["partial"]))).any())
-    print(f"\nPROMOTION (needs an earlier window with partial <= {PROMOTE_BAR:+.2f} AND "
-          f"sign-stable under G6): {'YES -> keep-general' if promote else 'NO -> stays keep-window, FAILED'}")
-    collapse = bool((earlier["retention"].fillna(0) < 0.5).all()
-                    and orig["retention"] < 0.5)
-    print(f"REGISTERED SECONDARY VERDICT (all windows collapse under the jackknife -> recommend "
-          f"demoting E5b to discard): {collapse}")
-    print("=" * 92)
-    return tbl
+    print("-" * 96)
+    print("REPEAT MOVERS (Spearman of consecutive per-country changes; descriptive)")
+    for c, nm in [PRIMARY] + CONTEXT:
+        for lbl, n, rho in repeat_movers(fx, c):
+            print(f"  {nm:20s} {lbl:26s} n={n:3d}  rho={rho:+.3f}")
+
+    print("-" * 96)
+    print("GATES")
+    for y in (2021, 2024):
+        g4 = fx.gate_coverage(fx.pan_dev, col, y)
+        print(f"  G4 {col} {y}: ok={g4['ok']} n={g4['n_countries']} pop_share={g4['pop_share']}")
+    g5 = fx.gate_official(fx.series(fx.pan_dev, col), "developing", col)
+    print(f"  G5 {col} vs official developing aggregate: {g5}")
+    print("  G6 n/a for an unweighted share — the weighted-vs-unweighted mean columns above are "
+          "the equivalent contrast")
+    print("=" * 96)
+    return prim
 
 
 if __name__ == "__main__":
