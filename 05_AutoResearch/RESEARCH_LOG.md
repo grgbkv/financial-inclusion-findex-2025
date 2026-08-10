@@ -4267,3 +4267,105 @@ experiments, three discards — and the run's value is in what the discards rule
   experiment must take a different parent. Program 7 is **blocked**, not skipped: the microdata zip
   ships no codebook and the `con*` items are bare numeric codes, so the mandatory mapping pass
   cannot be completed from the files in the repo — recorded for `HARNESS_V2_NOTES.md`.
+
+---
+
+## Cycle 2026-08-10 — pre-registration (written before any outcome was computed)
+
+Working tree clean at start. `python3 coverage.py` run first (rule B1). The prediction stream is
+CLOSED (P28), so this cycle is three country-level hypothesis experiments and no predictor run.
+
+**Coverage cells this cycle lands on (rule B2).**
+- **E37** opens **Program 6 (the sequencing ladder), which has zero prior experiments**, uses the
+  **untouched country module `borrow_any_t_d`**, and is the loop's **first lagged (level-at-t →
+  change-over-t→t+1) design** under rule B5. Three transitions, not one.
+- **E38** is a **Program 1** replication (2014→2017 and 2017→2021).
+- **E39** uses **all four transitions including 2011→2014**, the thinnest (6 prior mentions).
+- Micro stream sits out this cycle: the within-economy design I intended for it (mobile-only vs
+  bank-only accountholders on the untouched `merchantpay_dig` column) qualifies **only 5 of 77
+  economies** at M2's n ≥ 100 per cell — a cell-size pre-check computing no rate — and the pooled-only
+  version is too confounded with country composition to be worth a slot. Recorded as a dead end.
+- Lineage (rule B3): E31 → E34 → E36 exhausted the cap. All three of today's experiments take a
+  different parent, named below.
+
+### E37 — pre-registration: does financial deepening follow a ladder? (Program 6, items 6.1–6.3)
+
+**Parent:** E17 / E5 (the level→change family), **not** E31 or the rails chain.
+**Idea.** Every country-level claim in the ledger correlates contemporaneous changes. Rule B5 opened
+lagged designs. The ladder hypothesis is that margins move in order — account → digital payment →
+formal saving → borrowing — so the *level* of a rung at time t should predict the *subsequent growth*
+of the rung above it.
+**Frame.** `pan_dev`, `group == "all"` (77 non-high-income panel economies). Transitions
+**2014→2017, 2017→2021, 2021→2024** (all three rungs have all four waves needed).
+**Rungs (G3: all four are declared headline variants).**
+- R1 (6.1): up = `account_t_d` level at t → down = Δ`g20_any`
+- R2 (6.2): up = `g20_any` level at t → down = Δ`fin17a_17a1_d`
+- R3 (6.3): up = `fin17a_17a1_d` level at t → down = Δ`borrow_any_t_d`  *(untouched module)*
+
+**Primary statistic.** Pooled population-weighted correlation over stacked country-transition
+observations (each country appears three times, weight = its 2024 adult population each time).
+Per-transition correlations reported alongside.
+**Keep threshold — the ladder claim is a JOINT claim and is kept only if all three hold:**
+(i) pooled weighted r ≥ **+0.30** for each of R1, R2, R3, and
+(ii) the **own-level-controlled partial** — both sides residualized on the *downstream* margin's own
+level at t by pop-weighted LS (the E5b/E23 construction) — keeps its sign and retains ≥ **0.5** of the
+raw magnitude (the E4 rule).
+Condition (ii) exists because a rung's own level mechanically predicts its own subsequent change
+(convergence): E17 measured that benchmark at **−0.301** for account. The **convergence benchmark**
+r(L_down(t), Δ_down) is reported for every rung as the thing the ladder has to beat.
+**Gates.** G3 declared above · G4 coverage · G6 jackknife dropping the five largest-population
+economies · **B6**: country bootstrap 2,000 draws (resample *countries*, carrying all of a country's
+transitions together, so the pooling does not fake independence) with percentile interval, plus Kish
+`neff = (Σw)²/Σw²` beside the nominal n.
+**Registered alternative outcome.** Negative pooled correlations on all three rungs would say the
+panel is dominated by convergence and there is no sequencing signal above it — which is a clean
+negative for Program 6 and would close items 6.1–6.4 rather than invite a variant.
+**Declared in advance.** Descriptive temporal ordering only. A level at t preceding a change after t
+is *not* identification; nothing here is causal. Countries appear three times, so the pooled n is not
+77 independent observations — that is exactly what the country-level bootstrap is for.
+
+### E38 — pre-registration: does the E5b "accounts-first" pattern replicate? (Program 1, agenda 6.5)
+
+**Parent:** E5b (`keep-window`, one of three remaining unreplicated keeps with E7 and E22).
+**Original.** Usage intensity at t = `g20_any`(t) / `account_t_d`(t); partial correlation of that
+ratio with Δ`account_t_d`(t→t+1) controlling the account *level* at t, pop-weighted LS residualization.
+2021→2024 gave **r_partial = −0.595** (n = 77) against a convergence benchmark of −0.301: at the same
+account level, economies whose existing accounts were *less* used grew accounts faster.
+**Test.** The identical construction on **2014→2017** and **2017→2021**, with **2021→2024 recomputed
+inside the same file** (the rule adopted from E35, which is what caught a weight-join defect there).
+**Promotion threshold.** E5b promotes `keep-window` → `keep-general` only if at least one earlier
+transition gives r_partial ≤ **−0.30** with the same sign **and** the drop-top-5 jackknife keeps that
+sign. Otherwise it stays `keep-window` and is recorded as having *failed* its promotion test.
+**Registered in advance, and this one is uncomfortable.** E5b's *original* window already fails the
+E4 magnitude rule as now written — its jackknife retention was 0.19 (−0.595 → −0.114), and the rule
+post-dates the finding. So the pre-registered secondary verdict is: **if the earlier windows also
+collapse under the jackknife, recommend demoting E5b to `discard`**, as E32 recommended for E7.
+**Gates.** G4 · G6 · B6 bootstrap (2,000 country draws) and Kish `neff` per window.
+**Note on power.** 2014→2017 has failed to produce a stable sign in five of six cells across E28 and
+E30. Registered up front: a null there is weak evidence of absence, and the 2017→2021 window is the
+one that decides the promotion.
+
+### E39 — pre-registration: is 2021→2024 actually a unique episode? (Program 1, item 1.5)
+
+**Parent:** E27 / the paper's Section 4 framing, **not** the rails chain.
+**Why this is owed.** The whole ledger is built on a 2021→2024 "surge", and rule B4 exists because
+that window may be special. But nobody has checked whether the surge is unique **within countries**
+or only in the population-weighted aggregate — E31 and E36 both showed those two can point opposite
+ways. This uses **all four transitions, including 2011→2014**, the thinnest cell in the audit.
+**Design.** For `fin17a_17a1_d` (formal saving) on `pan_dev`, and for `account_t_d`, `g20_any` and
+`borrow_any_t_d` as context margins, compute the **distribution of per-country Δ** in each available
+transition: unweighted median, unweighted mean, IQR, the **share of economies with Δ ≥ +10pp**, and
+the population-weighted mean for contrast.
+**Primary pre-registered statistic (formal saving).** The 2021→2024 window is declared unique iff
+**both**: (a) its unweighted **share of economies with Δ ≥ +10pp** is at least **1.5×** the largest
+such share in any earlier transition, and (b) its unweighted **median Δ** is the largest of the four.
+**Secondary.** The same two statistics for the three context margins — a margin whose unique window is
+*not* 2021→2024 is informative about what kind of episode this was. Rank correlation between a
+country's Δ in consecutive windows (is a big mover a repeat mover?) reported descriptively.
+**Registered alternative outcome.** If 2021→2024 is *not* the top window on both statistics, the
+"episode" framing in the paper draft is an aggregate artifact and Section 4 needs rewording — that
+outcome is the more valuable of the two and will be logged as a keep in the negative direction.
+**Gates.** G4 · G5 against the official developing aggregate for `fin17a_17a1_d` where it exists ·
+G6 is not applicable to an unweighted-share statistic and is reported as a weighted-vs-unweighted
+contrast instead. No bootstrap is registered for E39: the primary statistic is a share, not an
+association, and B6 binds on association keeps.
