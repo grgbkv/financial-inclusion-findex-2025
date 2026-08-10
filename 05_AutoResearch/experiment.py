@@ -53,8 +53,9 @@ CONTEXT = [("account_t_d", "account ownership"),
 
 def deltas(fx: Findex, col, t0, t1):
     w = fx.country_panel(fx.pan_dev, col, [t0, t1])
-    d = pd.DataFrame({"d": w[t1] - w[t0], "pop": w["pop"]}).dropna()
-    return d
+    if t0 not in w.columns or t1 not in w.columns:
+        return pd.DataFrame(columns=["d", "pop"])   # g20_any and borrow_any_t_d start in 2014
+    return pd.DataFrame({"d": w[t1] - w[t0], "pop": w["pop"]}).dropna()
 
 
 def describe(d):

@@ -4460,3 +4460,54 @@ economies — and now known to be a window-specific fact of two windows out of t
 estimates near ±0.6. At `neff` ≈ 7, a resample that happens to omit the dominant economies produces
 a completely different coefficient — which is the same lesson E32 delivered with BH, arriving here
 through the interval instead.
+
+### E39 — VERDICT: KEEP, 2026-08-10
+
+**Both pre-registered conditions pass for formal saving, and the context margins turn the result
+into something better than a robustness check.**
+
+Per-country change on `pan_dev`, share of economies moving **≥ +10pp**, and the unweighted median:
+
+| margin | 2011→14 | 2014→17 | 2017→21 | 2021→24 | peak window |
+|---|---|---|---|---|---|
+| **formal saving** | 6.5% / +2.76 | 2.6% / +0.01 | 20.8% / +4.37 | **42.1% / +8.29** | **2021→24** |
+| account ownership | **49.4% / +9.90** | 41.6% / +8.35 | 35.1% / +7.49 | 24.7% / +4.06 | **2011→14** |
+| digital payments | — | **48.1% / +9.87** | 45.5% / +8.88 | 21.1% / +2.62 | **2014→17** |
+| any borrowing | — | 5.2% / −2.92 | 22.1% / +5.17 | **52.6% / +10.59** | **2021→24** |
+
+*(cells are share ≥ +10pp / unweighted median pp; n = 76–77 per cell)*
+
+**(a)** 42.1% against a bar of 1.5 × 20.8% = 31.2% — passes. **(b)** +8.29pp is the largest median
+of the four — passes. G5 holds against the official developing aggregate (max deviation **1.7pp**,
+tolerance 2.5).
+
+**It survives the E31 critique, which is the point of running it.** The population-weighted mean
+change for saving in 2021→24 is **+13.72pp** against an unweighted mean of **+9.14** and a median of
+**+8.29** — so the weighted aggregate does overstate the typical economy, exactly as E31 and E36
+warned. But the episode does not depend on the weighting: **42% of developing panel economies
+individually gained 10pp or more of formal saving**, against a previous best of 21%. This is a real
+within-country episode.
+
+**The finding that was not the hypothesis: 2021→24 is a BALANCE-SHEET window, not a digitalization
+one.** Each margin peaks in a different window, and the ordering is clean. Account ownership's big
+window was **2011→14** and its share has declined monotonically since (49.4 → 41.6 → 35.1 → 24.7%).
+Digital payments peaked in **2014→17** and 2021→24 is its *weakest* window (21.1%). Saving and
+borrowing both peak in **2021→24**, borrowing most of all (52.6%, median +10.59pp). The rails were
+laid down in 2011–2017; what moved in 2021–2024 was the balance sheet on top of them.
+
+**This reframes the paper draft's Section 4 without contradicting it.** Calling 2021–24 "the
+digital-inclusion episode" is wrong on this evidence — digital payments were *decelerating*. The
+window is better described as one in which saving and borrowing rose together, which is also what
+E11 found contemporaneously (r = +0.403) and what E37's R3 rung stumbled over (a **−0.742**
+saving-level → borrowing-growth correlation in this window alone).
+
+**Movers do not repeat.** Spearman correlations between a country's change in consecutive windows
+are **≤ +0.07 in all ten pairs tested** and negative in eight of them (saving: −0.413, −0.350,
++0.070). A big mover in one window is, if anything, a small mover in the next. This is independent
+corroboration of E37's central negative — nothing at t predicts the size of the next move — and it
+is the strongest argument in the ledger for why the prediction stream topped out where it did.
+
+**Declared.** Descriptive distributional comparison. Wave spacing is uneven (3/3/4/3 years) and the
+2021 wave was measured in the pandemic period; both are stated and neither is adjusted for, so
+"largest median" is partly a statement about a four-year window competing with three-year ones —
+which, note, works *against* 2021→24 (three years) and in favour of 2017→21.
