@@ -1,38 +1,44 @@
-"""E36 (pre-registered): is "access converges, use diverges" a RESOURCE/ASCRIPTION line?
+"""E37 (pre-registered): does financial deepening follow a SEQUENCING LADDER?
 
-Program 3, item 3.7. Parent: E34 (whose parent is E31) — the THIRD consecutive descendant of
-E31's gap-trajectory design, so rule B3's cap is reached with this experiment.
+Program 6, items 6.1-6.3. Parent: E17 / E5 (the level->change family). NOT E31 (whose lineage
+cap is exhausted) and NOT the rails chain.
 
-B2 BREADTH CELLS: `group == "laborforce"` (thin, 1 mention) and `group == "gender"` (ZERO ledger
-mentions, five waves) — the two untested axes of the 13-year inequality panel.
+B2 BREADTH CELLS, three of them:
+  * Program 6 has ZERO prior experiments.
+  * `borrow_any_t_d` is an UNTOUCHED country module (rung R3's destination).
+  * This is the loop's FIRST lagged design under rule B5: a LEVEL at t against a CHANGE over
+    t->t+1, pooled across THREE transitions rather than the usual single 2021->2024 window.
 
-WHY. E31: the income and education USAGE gaps (`g20_any`) widened in log-odds while their ACCESS
-gaps narrowed. E34: the age gap narrowed on BOTH margins. The sharp hypothesis is that the split is
-set by what defines the disadvantaged group — RESOURCE axes (income, education, employment) diverge
-on usage, ASCRIBED axes (age cohort, sex) do not. `laborforce` and `gender` fall on opposite sides
-of that line, so this is an out-of-sample test of the split, not a fourth description.
+WHY. Every country-level association in the ledger correlates contemporaneous changes, which is
+why every claim carries "identifies nothing". The ladder hypothesis is a real theory rather than a
+correlation hunt: margins deepen in order — account -> digital payment -> formal saving ->
+borrowing — so the LEVEL of a rung at t should predict the SUBSEQUENT GROWTH of the rung above it.
 
 DESIGN, per the pre-registration:
-  gap        = logit(p_advantaged) - logit(p_disadvantaged), p clipped to [0.005, 0.995]
-  ACCESS     `account_t_d`, 2011->2024      USAGE  `g20_any`, 2014->2024
-  PRIMARY    unweighted SHARE of developing panel economies whose gap is SMALLER at span end
-  SECONDARY  pop-weighted mean change, its unweighted twin, drop-top-5 (G6)
-  Income, education and age are recomputed INSIDE this file (the E35 convention) so the two new
-  axes are read beside their originals.
+  frame       pan_dev, group == "all" (77 non-high-income panel economies)
+  transitions 2014->2017, 2017->2021, 2021->2024
+  R1 (6.1)    up = account_t_d      level(t) -> down = d g20_any
+  R2 (6.2)    up = g20_any          level(t) -> down = d fin17a_17a1_d
+  R3 (6.3)    up = fin17a_17a1_d    level(t) -> down = d borrow_any_t_d   [untouched module]
+  PRIMARY     pooled pop-weighted corr over stacked country-transition rows (a country appears
+              three times, each row carrying its 2024 adult population as weight)
+  PARTIAL     both sides residualized on the DOWNSTREAM margin's own level at t, pop-weighted LS
+              (the E5b/E23 construction) — strips the pure convergence channel
+  BENCHMARK   r(L_down(t), d_down) — the convergence rate the ladder has to beat (E17: -0.301)
 
-REGISTERED KEEP RULE (joint claim). Keep only if BOTH:
-  P1 laborforce = resource-like: access share >= 60% AND usage share  < 50%
-  P2 gender     = ascribed-like: access share >= 60% AND usage share >= 60%
-Anything else discards the joint claim; the per-axis pattern is logged either way.
+REGISTERED KEEP RULE (joint claim). Keep only if for EVERY rung R1, R2, R3:
+  (i)  pooled weighted r >= +0.30, AND
+  (ii) the own-level partial keeps its sign and retains >= 0.5 of the raw magnitude (E4 rule).
+Registered alternative outcome: negative pooled correlations on all three rungs say the panel is
+dominated by convergence and closes items 6.1-6.4 rather than inviting a variant.
 
-Gates: G3 (headline columns), G4 per margin, G6 on every weighted mean, G5 n/a.
-B6: 2,000-draw country bootstrap on share and weighted mean; Kish neff in every cell.
-B7: BH at q=0.10 over the declared family of TEN cells (5 axes x 2 margins) on the share's
-bootstrap p against 0.5.
+Gates: G3 (all four columns are declared headline variants) · G4 per margin/wave · G6 drop-top-5
+by population · B6 country bootstrap 2,000 draws resampling COUNTRIES (carrying all three of a
+country's transitions together, so pooling does not fake independence) + Kish neff.
 
-DECLARED. Descriptive gap trajectories over 13 years. Group composition changes across waves
-(schooling expands, populations age, labour-force participation moves), so a narrowing gap is not
-evidence that any individual's position changed. No causal reading.
+DECLARED. Descriptive temporal ordering only. A level measured before a change is not
+identification and nothing here is causal. The pooled n counts country-transition rows, not
+independent countries — which is precisely what the country-level bootstrap and neff are for.
 """
 import numpy as np
 import pandas as pd
@@ -40,24 +46,17 @@ import pandas as pd
 from harness import Findex
 
 BOOT = 2000
-SEED = 36
-SHARE_BAR = 0.60
-DIVERGE_BAR = 0.50
-CLIP = (0.005, 0.995)
-Q = 0.10
-WAVES = [2011, 2014, 2017, 2021, 2024]
+SEED = 37
+R_BAR = 0.30
+RETENTION_BAR = 0.5
+TRANSITIONS = [(2014, 2017), (2017, 2021), (2021, 2024)]
 
-# axis -> (advantaged group2 label, disadvantaged group2 label, declared kind)
-AXES = {
-    "income":     ("richest 60%", "poorest 40%", "resource"),
-    "education":  ("secondary edu or more", "prim edu or less", "resource"),
-    "laborforce": ("in laborforce", "out of laborforce", "resource (NEW)"),
-    "age_cat":    ("age 25+", "ages 15-24", "ascribed"),
-    "gender":     ("men", "women", "ascribed (NEW)"),
-}
-
-MARGINS = [("account_t_d", "ACCESS", "account", 2011, 2024),
-           ("g20_any", "USAGE", "digital_payment", 2014, 2024)]
+# rung -> (agenda item, upstream col, upstream concept, downstream col, downstream concept)
+RUNGS = [
+    ("R1", "6.1", "account_t_d",   "account",         "g20_any",        "digital_payment"),
+    ("R2", "6.2", "g20_any",       "digital_payment", "fin17a_17a1_d",  "saved_formally"),
+    ("R3", "6.3", "fin17a_17a1_d", "saved_formally",  "borrow_any_t_d", None),
+]
 
 
 def _kish(w):
@@ -65,151 +64,144 @@ def _kish(w):
     return float(w.sum() ** 2 / (w ** 2).sum())
 
 
-def _logit(p):
-    return np.log(np.clip(p, *CLIP) / (1 - np.clip(p, *CLIP)))
+def _wcorr(x, y, w):
+    m = pd.notna(x) & pd.notna(y) & pd.notna(w)
+    x, y, w = np.asarray(x[m], float), np.asarray(y[m], float), np.asarray(w[m], float)
+    if len(x) < 10:
+        return np.nan, len(x)
+    mx, my = np.average(x, weights=w), np.average(y, weights=w)
+    sx = np.sqrt(np.average((x - mx) ** 2, weights=w))
+    sy = np.sqrt(np.average((y - my) ** 2, weights=w))
+    if sx == 0 or sy == 0:
+        return np.nan, len(x)
+    return float(np.average((x - mx) * (y - my), weights=w) / (sx * sy)), len(x)
 
 
-def _wmean(v, w):
-    m = pd.notna(v) & pd.notna(w)
-    return float(np.average(v[m], weights=w[m])) if m.any() else np.nan
+def _wresid(y, z, w):
+    """Pop-weighted LS residual of y on z (with intercept) — the E5b/E23 construction."""
+    y, z, w = np.asarray(y, float), np.asarray(z, float), np.asarray(w, float)
+    mz, my = np.average(z, weights=w), np.average(y, weights=w)
+    var = np.average((z - mz) ** 2, weights=w)
+    b = 0.0 if var == 0 else np.average((z - mz) * (y - my), weights=w) / var
+    return y - (my + b * (z - mz))
 
 
-def gap_table(fx: Findex, axis, col):
-    """Per-country, per-wave log-odds gap on `col` for one axis, developing panel economies."""
-    adv_lab, dis_lab, _ = AXES[axis]
-    g = fx.pan_grp[(fx.pan_grp["group"] == axis)
-                   & (fx.pan_grp["incomegroupwb24"] != "High income")]
-    adv = g[g["group2"] == adv_lab].pivot_table(index="countrynewwb", columns="year", values=col)
-    dis = g[g["group2"] == dis_lab].pivot_table(index="countrynewwb", columns="year", values=col)
-    if adv.empty or dis.empty:
-        raise ValueError(f"axis {axis}: labels {adv_lab!r}/{dis_lab!r} not found")
-    waves = [y for y in WAVES if y in adv.columns and y in dis.columns]
-    lo = pd.DataFrame({y: _logit(adv[y]) - _logit(dis[y]) for y in waves})
-    pp = pd.DataFrame({y: (adv[y] - dis[y]) * 100 for y in waves})
-    pop = fx.pan_dev[fx.pan_dev["year"] == 2024].set_index("countrynewwb")["pop_adult"]
-    lo["pop"], pp["pop"] = pop, pop
-    return lo, pp
+def build(fx: Findex, up_col, down_col):
+    """Stacked country-transition rows: upstream level at t, downstream change t->t+1,
+    downstream own level at t, weight, country, transition."""
+    d = fx.pan_dev
+    rows = []
+    for t0, t1 in TRANSITIONS:
+        up = fx.country_panel(d, up_col, [t0])
+        dn = fx.country_panel(d, down_col, [t0, t1])
+        j = pd.DataFrame({
+            "up_level": up[t0],
+            "down_t0": dn[t0],
+            "down_d": dn[t1] - dn[t0],
+            "pop": dn["pop"],
+        }).dropna()
+        j["country"] = j.index
+        j["span"] = f"{t0}->{t1}"
+        rows.append(j.reset_index(drop=True))
+    return pd.concat(rows, ignore_index=True)
 
 
-def cell(lo, y0, y1, axis, margin):
-    """Share narrowing + weighted/unweighted mean change + bootstrap + G6, one axis x margin."""
-    d = pd.DataFrame({"d": lo[y1] - lo[y0], "pop": lo["pop"]}).dropna()
-    n = len(d)
-    share = float((d["d"] < 0).mean())
-    wm, um = _wmean(d["d"], d["pop"]), float(d["d"].mean())
-    neff = _kish(d["pop"])
-
-    rng = np.random.default_rng(SEED)
-    idx = np.arange(n)
-    bs, bw = [], []
-    for _ in range(BOOT):
-        s = d.iloc[rng.choice(idx, size=n, replace=True)]
-        bs.append(float((s["d"] < 0).mean()))
-        bw.append(_wmean(s["d"], s["pop"]))
-    bs, bw = np.asarray(bs), np.asarray(bw)
-    # two-sided bootstrap p for the share against the coin flip
-    tail = min((bs <= 0.5).mean(), (bs >= 0.5).mean())
-    p_share = float(max(2.0 * tail, 1.0 / BOOT))
-
-    keep = d["pop"].sort_values(ascending=False).index[5:]
-    wm_drop = _wmean(d.loc[keep, "d"], d.loc[keep, "pop"])
-    share_drop = float((d.loc[keep, "d"] < 0).mean())
-
-    return {"axis": axis, "margin": margin, "span": f"{y0}->{y1}", "n": n, "neff": neff,
-            "share": share, "share_lo": float(np.percentile(bs, 2.5)),
-            "share_hi": float(np.percentile(bs, 97.5)), "p_share": p_share,
-            "wmean": wm, "wmean_lo": float(np.percentile(bw, 2.5)),
-            "wmean_hi": float(np.percentile(bw, 97.5)), "unwtd": um,
-            "wmean_droptop5": wm_drop, "share_droptop5": share_drop}
+def stats(df):
+    """Raw corr, own-level partial, convergence benchmark, neff — on one stacked table."""
+    w = df["pop"]
+    raw, n = _wcorr(df["up_level"], df["down_d"], w)
+    bench, _ = _wcorr(df["down_t0"], df["down_d"], w)
+    rx = _wresid(df["up_level"], df["down_t0"], w)
+    ry = _wresid(df["down_d"], df["down_t0"], w)
+    part, _ = _wcorr(pd.Series(rx), pd.Series(ry), w)
+    return {"r": raw, "partial": part, "bench": bench, "n": n,
+            "n_countries": df["country"].nunique(), "neff": _kish(w)}
 
 
-def benjamini_hochberg(pvals, q=Q):
-    p = np.asarray(pvals, dtype=float)
-    ok = ~np.isnan(p)
-    m = int(ok.sum())
-    out = np.zeros(len(p), dtype=bool)
-    if m == 0:
-        return out
-    order = np.argsort(np.where(ok, p, np.inf))[:m]
-    thresh = q * np.arange(1, m + 1) / m
-    passed = p[order] <= thresh
-    if passed.any():
-        out[order[:int(np.max(np.where(passed)[0])) + 1]] = True
-    return out
+def bootstrap_countries(df, rng, draws=BOOT):
+    """B6: resample COUNTRIES with replacement, carrying all of a country's transitions."""
+    by = {c: g for c, g in df.groupby("country")}
+    names = np.array(list(by))
+    out_r, out_p = [], []
+    for _ in range(draws):
+        pick = rng.choice(names, size=len(names), replace=True)
+        s = pd.concat([by[c] for c in pick], ignore_index=True)
+        st = stats(s)
+        if pd.notna(st["r"]):
+            out_r.append(st["r"])
+            out_p.append(st["partial"])
+    return np.array(out_r), np.array(out_p)
+
+
+def drop_top(df, k=5):
+    """G6: drop the k largest-population economies (by their single 2024 population)."""
+    pops = df.groupby("country")["pop"].max().sort_values(ascending=False)
+    return df[~df["country"].isin(pops.head(k).index)]
 
 
 def run(fx: Findex):
-    print("E36 — resource vs ascribed axes on two margins (dev panel, pan_grp)\n")
-    rows, levels = [], []
-    for col, margin, concept, y0, y1 in MARGINS:
-        print(f"=== {margin} margin: {col}, {y0}->{y1} ===")
-        print("  G3:", fx.gate_variant(concept, col), "| G4:", fx.gate_coverage(fx.pan_dev, col, y1))
-        for axis in AXES:
-            lo, pp = gap_table(fx, axis, col)
-            if y0 not in lo.columns or y1 not in lo.columns:
-                print(f"  {axis}: span unavailable ({list(lo.columns)})")
-                continue
-            r = cell(lo, y0, y1, axis, margin)
-            rows.append(r)
-            print(f"  {axis:11s} [{AXES[axis][2]:14s}] n={r['n']:3d} neff={r['neff']:4.1f} | "
-                  f"share narrowing {r['share']:5.1%} [{r['share_lo']:.1%},{r['share_hi']:.1%}] "
-                  f"p={r['p_share']:.4f} | wmean {r['wmean']:+.3f} "
-                  f"[{r['wmean_lo']:+.3f},{r['wmean_hi']:+.3f}] | unwtd {r['unwtd']:+.3f} | "
-                  f"G6 droptop5 wmean {r['wmean_droptop5']:+.3f} share {r['share_droptop5']:.1%}")
-            for y in [c for c in pp.columns if c != "pop"]:
-                dd = pd.DataFrame({"v": pp[y], "pop": pp["pop"]}).dropna()
-                levels.append({"axis": axis, "margin": margin, "year": y,
-                               "pp_gap": _wmean(dd["v"], dd["pop"]), "n": len(dd)})
-        print()
+    rng = np.random.default_rng(SEED)
+    print("=" * 92)
+    print("E37 — THE SEQUENCING LADDER: level of a rung at t -> subsequent growth of the rung above")
+    print("=" * 92)
+    print(f"frame pan_dev group=all | transitions {', '.join(f'{a}->{b}' for a, b in TRANSITIONS)}")
+    print(f"keep rule: every rung pooled r >= +{R_BAR:.2f} AND own-level partial keeps sign with "
+          f">= {RETENTION_BAR} retention\n")
 
-    res = pd.DataFrame(rows)
-    res["bh"] = benjamini_hochberg(res["p_share"].values)
+    summary = []
+    for tag, item, up_col, up_con, down_col, down_con in RUNGS:
+        df = build(fx, up_col, down_col)
+        st = stats(df)
+        st_dt = stats(drop_top(df))
+        br, bp = bootstrap_countries(df, rng)
+        lo, hi = np.percentile(br, [2.5, 97.5])
+        plo, phi = np.percentile(bp, [2.5, 97.5])
+        p_boot = 2 * min((br <= 0).mean(), (br >= 0).mean())
+        retention = abs(st["partial"]) / abs(st["r"]) if st["r"] else np.nan
+        sign_ok = np.sign(st["partial"]) == np.sign(st["r"])
 
-    print("=" * 104)
-    print("PP-GAP LEVELS (pop-weighted, advantaged minus disadvantaged)\n")
-    lv = pd.DataFrame(levels).pivot_table(index=["margin", "axis"], columns="year",
-                                          values="pp_gap")
-    print(lv.round(1).to_string())
+        print("-" * 92)
+        print(f"{tag} (agenda {item}):  level({up_col}) at t  ->  d({down_col}) over t->t+1")
+        print(f"  pooled rows n={st['n']} over {st['n_countries']} economies | Kish neff={st['neff']:.1f}")
+        print(f"  PRIMARY pooled weighted r        = {st['r']:+.3f}   95% CI [{lo:+.3f}, {hi:+.3f}]  "
+              f"p_boot={p_boot:.3f}")
+        print(f"  own-level partial (E5b constr.)  = {st['partial']:+.3f}   95% CI [{plo:+.3f}, {phi:+.3f}]"
+              f"   retention={retention:.2f} sign_kept={bool(sign_ok)}")
+        print(f"  convergence benchmark r(L_down,d)= {st['bench']:+.3f}  (what the ladder must beat)")
+        print(f"  G6 drop-top-5 pop: r = {st_dt['r']:+.3f} (partial {st_dt['partial']:+.3f}, "
+              f"n={st_dt['n']}, neff={st_dt['neff']:.1f})")
+        for (t0, t1) in TRANSITIONS:
+            s = df[df["span"] == f"{t0}->{t1}"]
+            ss = stats(s)
+            print(f"    {t0}->{t1}: r={ss['r']:+.3f}  partial={ss['partial']:+.3f}  "
+                  f"bench={ss['bench']:+.3f}  n={ss['n']:3d}  neff={ss['neff']:4.1f}  "
+                  f"mean d_down={np.average(s['down_d'], weights=s['pop']):+5.2f}pp")
+        # G4 coverage on both endpoints of the newest transition
+        for col, con in ((up_col, up_con), (down_col, down_con)):
+            g4 = fx.gate_coverage(fx.pan_dev, col, 2021)
+            g3 = fx.gate_variant(con, col) if con else {"gate": "G3_variant", "ok": True,
+                                                        "note": "no variant registry entry"}
+            print(f"    gate {col:16s} G4 {g4['ok']} (n={g4['n_countries']}, "
+                  f"pop {g4['pop_share']}) | G3 {g3['ok']}")
 
-    print("\n" + "=" * 104)
-    print("TEN-CELL FAMILY (BH at q=0.10 on the share's bootstrap p)\n")
-    print(f"  {'axis':11s} {'margin':7s} {'n':>4s} {'neff':>5s} {'share':>7s} {'95% CI':>17s} "
-          f"{'p':>7s} {'BH':>5s} {'wmean':>7s} {'unwtd':>7s} {'drop5':>7s}")
-    for _, r in res.iterrows():
-        print(f"  {r['axis']:11s} {r['margin']:7s} {int(r['n']):4d} {r['neff']:5.1f} "
-              f"{r['share']:7.1%} [{r['share_lo']:5.1%},{r['share_hi']:5.1%}] {r['p_share']:7.4f} "
-              f"{str(bool(r['bh'])):>5s} {r['wmean']:+7.3f} {r['unwtd']:+7.3f} "
-              f"{r['wmean_droptop5']:+7.3f}")
-    print(f"\n  BH rejects {int(res['bh'].sum())}/{len(res)} cells at q={Q:.2f}; "
-          f"uncorrected p<=0.10: {int((res['p_share'] <= Q).sum())}/{len(res)}")
+        passes = (pd.notna(st["r"]) and st["r"] >= R_BAR and sign_ok
+                  and retention >= RETENTION_BAR)
+        print(f"  --> rung {tag} {'PASSES' if passes else 'FAILS'} the registered conditions")
+        summary.append({"rung": tag, "r": st["r"], "partial": st["partial"],
+                        "bench": st["bench"], "retention": retention, "pass": passes,
+                        "neff": st["neff"], "ci": (lo, hi), "p_boot": p_boot,
+                        "r_droptop": st_dt["r"], "n": st["n"]})
 
-    print("\n" + "=" * 104)
-    print("ACCESS-MINUS-USAGE ASYMMETRY (the statistic the hypothesis is about)\n")
-    for axis in AXES:
-        a = res[(res["axis"] == axis) & (res["margin"] == "ACCESS")]
-        u = res[(res["axis"] == axis) & (res["margin"] == "USAGE")]
-        if a.empty or u.empty:
-            continue
-        a, u = a.iloc[0], u.iloc[0]
-        print(f"  {axis:11s} [{AXES[axis][2]:14s}] access {a['share']:5.1%} - usage "
-              f"{u['share']:5.1%} = {(a['share'] - u['share']) * 100:+5.1f}pp   "
-              f"(wmean access {a['wmean']:+.3f}, usage {u['wmean']:+.3f})")
-
-    print("\n=== VERDICT (pre-registered joint claim) ===")
-    def get(axis, margin):
-        return res[(res["axis"] == axis) & (res["margin"] == margin)].iloc[0]
-    la, lu = get("laborforce", "ACCESS"), get("laborforce", "USAGE")
-    ga, gu = get("gender", "ACCESS"), get("gender", "USAGE")
-    p1 = bool(la["share"] >= SHARE_BAR and lu["share"] < DIVERGE_BAR)
-    p2 = bool(ga["share"] >= SHARE_BAR and gu["share"] >= SHARE_BAR)
-    print(f"  P1 laborforce resource-like: access {la['share']:.1%} >= {SHARE_BAR:.0%} "
-          f"({la['share'] >= SHARE_BAR}) AND usage {lu['share']:.1%} < {DIVERGE_BAR:.0%} "
-          f"({lu['share'] < DIVERGE_BAR}) -> {'PASS' if p1 else 'FAIL'}")
-    print(f"  P2 gender ascribed-like:     access {ga['share']:.1%} >= {SHARE_BAR:.0%} "
-          f"({ga['share'] >= SHARE_BAR}) AND usage {gu['share']:.1%} >= {SHARE_BAR:.0%} "
-          f"({gu['share'] >= SHARE_BAR}) -> {'PASS' if p2 else 'FAIL'}")
-    print(f"  JOINT KEEP = {'YES' if (p1 and p2) else 'NO'}")
-    return res
+    print("=" * 92)
+    tbl = pd.DataFrame(summary)
+    print(tbl.to_string(index=False))
+    kept = bool(tbl["pass"].all())
+    print("\nJOINT LADDER CLAIM:", "KEEP" if kept else "DISCARD")
+    if not kept:
+        neg = (tbl["r"] < 0).all()
+        print("  registered alternative outcome (all three rungs negative):", neg)
+    print("=" * 92)
+    return tbl
 
 
 if __name__ == "__main__":
