@@ -1,44 +1,33 @@
-"""E37 (pre-registered): does financial deepening follow a SEQUENCING LADDER?
+"""E38 (pre-registered): does the E5b "accounts-first" pattern replicate on earlier transitions?
 
-Program 6, items 6.1-6.3. Parent: E17 / E5 (the level->change family). NOT E31 (whose lineage
-cap is exhausted) and NOT the rails chain.
+Program 1 (the replication debt), agenda item 6.5. Parent: E5b (`keep-window`) — one of the three
+remaining unreplicated keeps, with E7 and E22.
 
-B2 BREADTH CELLS, three of them:
-  * Program 6 has ZERO prior experiments.
-  * `borrow_any_t_d` is an UNTOUCHED country module (rung R3's destination).
-  * This is the loop's FIRST lagged design under rule B5: a LEVEL at t against a CHANGE over
-    t->t+1, pooled across THREE transitions rather than the usual single 2021->2024 window.
+WHAT E5b CLAIMED. Usage intensity at t = g20_any(t) / account_t_d(t) — what share of an economy's
+accountholders actually pay digitally. E5b partialled that ratio against subsequent account growth,
+holding the account LEVEL at t fixed (pop-weighted LS residualization), and found
+**r_partial = -0.595 (n=77) on 2021->2024** against a convergence benchmark of -0.301: at the same
+account level, economies whose existing accounts were LESS used grew accounts FASTER. Hence
+"accounts first" — breadth runs ahead of depth.
 
-WHY. Every country-level association in the ledger correlates contemporaneous changes, which is
-why every claim carries "identifies nothing". The ladder hypothesis is a real theory rather than a
-correlation hunt: margins deepen in order — account -> digital payment -> formal saving ->
-borrowing — so the LEVEL of a rung at t should predict the SUBSEQUENT GROWTH of the rung above it.
+TEST, per the pre-registration: the identical construction on **2014->2017** and **2017->2021**,
+with **2021->2024 recomputed inside this file** (the rule adopted from E35, where recomputing the
+original window is what caught a weight-join defect before any verdict was read).
 
-DESIGN, per the pre-registration:
-  frame       pan_dev, group == "all" (77 non-high-income panel economies)
-  transitions 2014->2017, 2017->2021, 2021->2024
-  R1 (6.1)    up = account_t_d      level(t) -> down = d g20_any
-  R2 (6.2)    up = g20_any          level(t) -> down = d fin17a_17a1_d
-  R3 (6.3)    up = fin17a_17a1_d    level(t) -> down = d borrow_any_t_d   [untouched module]
-  PRIMARY     pooled pop-weighted corr over stacked country-transition rows (a country appears
-              three times, each row carrying its 2024 adult population as weight)
-  PARTIAL     both sides residualized on the DOWNSTREAM margin's own level at t, pop-weighted LS
-              (the E5b/E23 construction) — strips the pure convergence channel
-  BENCHMARK   r(L_down(t), d_down) — the convergence rate the ladder has to beat (E17: -0.301)
+PROMOTION THRESHOLD. E5b promotes keep-window -> keep-general only if at least one earlier
+transition gives r_partial <= -0.30 with the same sign AND the drop-top-5 jackknife keeps that sign.
+Otherwise E5b stays keep-window and is recorded as having FAILED its promotion test.
 
-REGISTERED KEEP RULE (joint claim). Keep only if for EVERY rung R1, R2, R3:
-  (i)  pooled weighted r >= +0.30, AND
-  (ii) the own-level partial keeps its sign and retains >= 0.5 of the raw magnitude (E4 rule).
-Registered alternative outcome: negative pooled correlations on all three rungs say the panel is
-dominated by convergence and closes items 6.1-6.4 rather than inviting a variant.
+REGISTERED SECONDARY VERDICT, declared up front because it is uncomfortable. E5b's ORIGINAL window
+already fails the E4 magnitude rule as now written (jackknife retention 0.19: -0.595 -> -0.114) and
+that rule post-dates the finding. If the earlier windows also collapse under the jackknife,
+**recommend demoting E5b to `discard`**, as E32 recommended for E7.
 
-Gates: G3 (all four columns are declared headline variants) · G4 per margin/wave · G6 drop-top-5
-by population · B6 country bootstrap 2,000 draws resampling COUNTRIES (carrying all three of a
-country's transitions together, so pooling does not fake independence) + Kish neff.
+Gates: G4 · G6 drop-top-5 · B6 country bootstrap (2,000 draws, percentile interval) + Kish neff,
+per window. Registered note on power: 2014->2017 has failed to produce a stable sign in five of six
+cells across E28 and E30, so a null there is weak evidence of absence; 2017->2021 decides it.
 
-DECLARED. Descriptive temporal ordering only. A level measured before a change is not
-identification and nothing here is causal. The pooled n counts country-transition rows, not
-independent countries — which is precisely what the country-level bootstrap and neff are for.
+DECLARED. Descriptive temporal ordering; a ratio measured before a change is not identification.
 """
 import numpy as np
 import pandas as pd
@@ -46,17 +35,11 @@ import pandas as pd
 from harness import Findex
 
 BOOT = 2000
-SEED = 37
-R_BAR = 0.30
-RETENTION_BAR = 0.5
+SEED = 38
+PROMOTE_BAR = -0.30
 TRANSITIONS = [(2014, 2017), (2017, 2021), (2021, 2024)]
-
-# rung -> (agenda item, upstream col, upstream concept, downstream col, downstream concept)
-RUNGS = [
-    ("R1", "6.1", "account_t_d",   "account",         "g20_any",        "digital_payment"),
-    ("R2", "6.2", "g20_any",       "digital_payment", "fin17a_17a1_d",  "saved_formally"),
-    ("R3", "6.3", "fin17a_17a1_d", "saved_formally",  "borrow_any_t_d", None),
-]
+ORIGINAL = (2021, 2024)
+E5B_ORIGINAL_PARTIAL = -0.595   # value on record in findings.tsv, for the reproduction check
 
 
 def _kish(w):
@@ -65,8 +48,9 @@ def _kish(w):
 
 
 def _wcorr(x, y, w):
-    m = pd.notna(x) & pd.notna(y) & pd.notna(w)
-    x, y, w = np.asarray(x[m], float), np.asarray(y[m], float), np.asarray(w[m], float)
+    x, y, w = (np.asarray(v, float) for v in (x, y, w))
+    m = ~(np.isnan(x) | np.isnan(y) | np.isnan(w))
+    x, y, w = x[m], y[m], w[m]
     if len(x) < 10:
         return np.nan, len(x)
     mx, my = np.average(x, weights=w), np.average(y, weights=w)
@@ -78,139 +62,109 @@ def _wcorr(x, y, w):
 
 
 def _wresid(y, z, w):
-    """Pop-weighted LS residual of y on z (with intercept) — the E5b/E23 construction."""
-    y, z, w = np.asarray(y, float), np.asarray(z, float), np.asarray(w, float)
+    """Pop-weighted LS residual of y on z with intercept (the E5b construction)."""
+    y, z, w = (np.asarray(v, float) for v in (y, z, w))
     mz, my = np.average(z, weights=w), np.average(y, weights=w)
     var = np.average((z - mz) ** 2, weights=w)
     b = 0.0 if var == 0 else np.average((z - mz) * (y - my), weights=w) / var
     return y - (my + b * (z - mz))
 
 
-def build(fx: Findex, up_col, down_col):
-    """Stacked country-transition rows: upstream level at t, downstream change t->t+1,
-    downstream own level at t, weight, country, transition."""
-    d = fx.pan_dev
-    rows = []
-    for t0, t1 in TRANSITIONS:
-        up = fx.country_panel(d, up_col, [t0])
-        dn = fx.country_panel(d, down_col, [t0, t1])
-        j = pd.DataFrame({
-            "up_level": up[t0],
-            "down_t0": dn[t0],
-            "down_d": dn[t1] - dn[t0],
-            "pop": dn["pop"],
-        }).dropna()
-        j["country"] = j.index
-        j["span"] = f"{t0}->{t1}"
-        rows.append(j.reset_index(drop=True))
-    return pd.concat(rows, ignore_index=True)
+def build(fx: Findex, t0, t1):
+    """One transition: usage-intensity ratio at t0, account level at t0, account change t0->t1."""
+    acc = fx.country_panel(fx.pan_dev, "account_t_d", [t0, t1])
+    g20 = fx.country_panel(fx.pan_dev, "g20_any", [t0])
+    df = pd.DataFrame({
+        "acc_t0": acc[t0],
+        "d_acc": acc[t1] - acc[t0],
+        "g20_t0": g20[t0],
+        "pop": acc["pop"],
+    }).dropna()
+    df = df[df["acc_t0"] > 0]
+    df["ratio"] = df["g20_t0"] / df["acc_t0"]      # usage intensity: users per accountholder
+    return df.reset_index().rename(columns={"countrynewwb": "country"})
 
 
 def stats(df):
-    """Raw corr, own-level partial, convergence benchmark, neff — on one stacked table.
-
-    The reset_index is load-bearing: _wresid returns bare arrays, so a sliced (non-zero-based)
-    frame would silently misalign them against the weights and return NaN partials.
-    """
     df = df.reset_index(drop=True)
     w = df["pop"]
-    raw, n = _wcorr(df["up_level"], df["down_d"], w)
-    bench, _ = _wcorr(df["down_t0"], df["down_d"], w)
-    rx = _wresid(df["up_level"], df["down_t0"], w)
-    ry = _wresid(df["down_d"], df["down_t0"], w)
-    part, _ = _wcorr(pd.Series(rx), pd.Series(ry), w)
-    # Two neffs. The row-level one is inflated by stacking: a country contributing three rows
-    # triples the weight sum without adding an economy. The country-level one — each economy's
-    # population counted once — is the honest degrees-of-freedom figure.
-    cw = df.groupby("country")["pop"].max()
-    return {"r": raw, "partial": part, "bench": bench, "n": n,
-            "n_countries": df["country"].nunique(),
-            "neff": _kish(w), "neff_country": _kish(cw)}
+    raw, n = _wcorr(df["ratio"], df["d_acc"], w)
+    bench, _ = _wcorr(df["acc_t0"], df["d_acc"], w)     # the convergence benchmark (E17: -0.301)
+    rx = _wresid(df["ratio"], df["acc_t0"], w)
+    ry = _wresid(df["d_acc"], df["acc_t0"], w)
+    part, _ = _wcorr(rx, ry, w)
+    return {"r": raw, "partial": part, "bench": bench, "n": n, "neff": _kish(w)}
 
 
-def bootstrap_countries(df, rng, draws=BOOT):
-    """B6: resample COUNTRIES with replacement, carrying all of a country's transitions."""
-    by = {c: g for c, g in df.groupby("country")}
-    names = np.array(list(by))
+def drop_top(df, k=5):
+    top = df.nlargest(k, "pop")["country"]
+    return df[~df["country"].isin(top)]
+
+
+def bootstrap(df, rng, draws=BOOT):
     out_r, out_p = [], []
+    idx = np.arange(len(df))
     for _ in range(draws):
-        pick = rng.choice(names, size=len(names), replace=True)
-        s = pd.concat([by[c] for c in pick], ignore_index=True)
+        s = df.iloc[rng.choice(idx, size=len(idx), replace=True)]
         st = stats(s)
-        if pd.notna(st["r"]):
+        if pd.notna(st["partial"]):
             out_r.append(st["r"])
             out_p.append(st["partial"])
     return np.array(out_r), np.array(out_p)
 
 
-def drop_top(df, k=5):
-    """G6: drop the k largest-population economies (by their single 2024 population)."""
-    pops = df.groupby("country")["pop"].max().sort_values(ascending=False)
-    return df[~df["country"].isin(pops.head(k).index)]
-
-
 def run(fx: Findex):
     rng = np.random.default_rng(SEED)
     print("=" * 92)
-    print("E37 — THE SEQUENCING LADDER: level of a rung at t -> subsequent growth of the rung above")
+    print("E38 — E5b REPLICATION: usage intensity at t -> subsequent account growth, at the same")
+    print("      account level. Promotion needs an earlier window with r_partial <= -0.30, sign-stable.")
     print("=" * 92)
-    print(f"frame pan_dev group=all | transitions {', '.join(f'{a}->{b}' for a, b in TRANSITIONS)}")
-    print(f"keep rule: every rung pooled r >= +{R_BAR:.2f} AND own-level partial keeps sign with "
-          f">= {RETENTION_BAR} retention\n")
 
-    summary = []
-    for tag, item, up_col, up_con, down_col, down_con in RUNGS:
-        df = build(fx, up_col, down_col)
+    rows = []
+    for t0, t1 in TRANSITIONS:
+        df = build(fx, t0, t1)
         st = stats(df)
         st_dt = stats(drop_top(df))
-        br, bp = bootstrap_countries(df, rng)
-        lo, hi = np.percentile(br, [2.5, 97.5])
-        plo, phi = np.percentile(bp, [2.5, 97.5])
-        p_boot = 2 * min((br <= 0).mean(), (br >= 0).mean())
-        retention = abs(st["partial"]) / abs(st["r"]) if st["r"] else np.nan
-        sign_ok = np.sign(st["partial"]) == np.sign(st["r"])
-
+        br, bp = bootstrap(df, rng)
+        lo, hi = np.percentile(bp, [2.5, 97.5])
+        p_boot = 2 * min((bp <= 0).mean(), (bp >= 0).mean())
+        ret = abs(st_dt["partial"]) / abs(st["partial"]) if st["partial"] else np.nan
+        tag = "  [ORIGINAL WINDOW]" if (t0, t1) == ORIGINAL else ""
         print("-" * 92)
-        print(f"{tag} (agenda {item}):  level({up_col}) at t  ->  d({down_col}) over t->t+1")
-        print(f"  pooled rows n={st['n']} over {st['n_countries']} economies | Kish neff "
-              f"{st['neff']:.1f} row-level, {st['neff_country']:.1f} COUNTRY-level (the honest one)")
-        print(f"  PRIMARY pooled weighted r        = {st['r']:+.3f}   95% CI [{lo:+.3f}, {hi:+.3f}]  "
-              f"p_boot={p_boot:.3f}")
-        print(f"  own-level partial (E5b constr.)  = {st['partial']:+.3f}   95% CI [{plo:+.3f}, {phi:+.3f}]"
-              f"   retention={retention:.2f} sign_kept={bool(sign_ok)}")
-        print(f"  convergence benchmark r(L_down,d)= {st['bench']:+.3f}  (what the ladder must beat)")
-        print(f"  G6 drop-top-5 pop: r = {st_dt['r']:+.3f} (partial {st_dt['partial']:+.3f}, "
+        print(f"{t0}->{t1}{tag}   n={st['n']}   Kish neff={st['neff']:.1f}")
+        print(f"  raw r(ratio, d_account)          = {st['r']:+.3f}")
+        print(f"  PRIMARY partial | account level  = {st['partial']:+.3f}   "
+              f"95% CI [{lo:+.3f}, {hi:+.3f}]   p_boot={p_boot:.3f}")
+        print(f"  convergence benchmark r(acc,d)   = {st['bench']:+.3f}")
+        print(f"  G6 drop-top-5: partial = {st_dt['partial']:+.3f}  (retention {ret:.2f}, "
               f"n={st_dt['n']}, neff={st_dt['neff']:.1f})")
-        for (t0, t1) in TRANSITIONS:
-            s = df[df["span"] == f"{t0}->{t1}"]
-            ss = stats(s)
-            print(f"    {t0}->{t1}: r={ss['r']:+.3f}  partial={ss['partial']:+.3f}  "
-                  f"bench={ss['bench']:+.3f}  n={ss['n']:3d}  neff={ss['neff']:4.1f}  "
-                  f"mean d_down={np.average(s['down_d'], weights=s['pop']):+5.2f}pp")
-        # G4 coverage on both endpoints of the newest transition
-        for col, con in ((up_col, up_con), (down_col, down_con)):
-            g4 = fx.gate_coverage(fx.pan_dev, col, 2021)
-            g3 = fx.gate_variant(con, col) if con else {"gate": "G3_variant", "ok": True,
-                                                        "note": "no variant registry entry"}
-            print(f"    gate {col:16s} G4 {g4['ok']} (n={g4['n_countries']}, "
-                  f"pop {g4['pop_share']}) | G3 {g3['ok']}")
+        print(f"  mean usage intensity at t0 = {np.average(df['ratio'], weights=df['pop']):.3f} "
+              f"| pop-weighted mean d_account = {np.average(df['d_acc'], weights=df['pop']):+.2f}pp")
+        rows.append({"span": f"{t0}->{t1}", "n": st["n"], "neff": round(st["neff"], 1),
+                     "r_raw": st["r"], "partial": st["partial"], "ci_lo": lo, "ci_hi": hi,
+                     "p_boot": p_boot, "bench": st["bench"],
+                     "partial_droptop": st_dt["partial"], "retention": ret})
 
-        passes = (pd.notna(st["r"]) and st["r"] >= R_BAR and sign_ok
-                  and retention >= RETENTION_BAR)
-        print(f"  --> rung {tag} {'PASSES' if passes else 'FAILS'} the registered conditions")
-        summary.append({"rung": tag, "r": st["r"], "partial": st["partial"],
-                        "bench": st["bench"], "retention": retention, "pass": passes,
-                        "neff_country": st["neff_country"], "ci": (lo, hi), "p_boot": p_boot,
-                        "r_droptop": st_dt["r"], "n": st["n"]})
-
+    tbl = pd.DataFrame(rows)
     print("=" * 92)
-    tbl = pd.DataFrame(summary)
     print(tbl.to_string(index=False))
-    kept = bool(tbl["pass"].all())
-    print("\nJOINT LADDER CLAIM:", "KEEP" if kept else "DISCARD")
-    if not kept:
-        neg = (tbl["r"] < 0).all()
-        print("  registered alternative outcome (all three rungs negative):", neg)
+
+    # reproduction check on the original window (the E35 convention)
+    orig = tbl[tbl["span"] == f"{ORIGINAL[0]}->{ORIGINAL[1]}"].iloc[0]
+    dev = abs(orig["partial"] - E5B_ORIGINAL_PARTIAL)
+    print(f"\nREPRODUCTION CHECK: this file gives {orig['partial']:+.3f} on {orig['span']} against "
+          f"{E5B_ORIGINAL_PARTIAL:+.3f} on record — deviation {dev:.3f} "
+          f"({'reproduces' if dev <= 0.02 else 'DOES NOT REPRODUCE'})")
+
+    earlier = tbl[tbl["span"] != f"{ORIGINAL[0]}->{ORIGINAL[1]}"]
+    promote = bool(((earlier["partial"] <= PROMOTE_BAR)
+                    & (np.sign(earlier["partial_droptop"]) == np.sign(earlier["partial"]))).any())
+    print(f"\nPROMOTION (needs an earlier window with partial <= {PROMOTE_BAR:+.2f} AND "
+          f"sign-stable under G6): {'YES -> keep-general' if promote else 'NO -> stays keep-window, FAILED'}")
+    collapse = bool((earlier["retention"].fillna(0) < 0.5).all()
+                    and orig["retention"] < 0.5)
+    print(f"REGISTERED SECONDARY VERDICT (all windows collapse under the jackknife -> recommend "
+          f"demoting E5b to discard): {collapse}")
     print("=" * 92)
     return tbl
 
