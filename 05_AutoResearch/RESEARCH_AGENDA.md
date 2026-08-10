@@ -324,3 +324,54 @@ experiment — which is also the natural shape for keeping the paper draft hones
   remaining new-ground target), `fin31`, `fin34`, `fin43`, `fin13`, `fin14`, `dig_acc`,
   `merchant_pay`, `borrow_any_t_d`. The untouched micro surface outside `con` is `fin22`, `fin24`,
   `fin31`, `fin34`, `fin39`, `fin43` and the payment-channel singletons.
+
+## Addendum (2026-08-10, from the E37/E38/E39 cycle)
+
+- **Program 6 is CLOSED, negatively, by the experiment that opened it.** E37 ran items 6.1–6.3 as
+  the loop's first lagged design and no rung survives: **R1 +0.066** (interval through zero, G6
+  flips the sign), **R2 +0.447** but with jackknife retention **0.28** and a **−0.434** reversal in
+  2014→2017, **R3 −0.126** pooled while the three windows read **+0.295 / +0.280 / −0.742**. **Item
+  6.4 (the diagonal-dominance matrix) is withdrawn, not deferred** — a 4×4 matrix of a design whose
+  best cell is a five-country artifact, evaluated at `neff` ≈ 7, is a false-discovery machine. Item
+  **6.5 is answered by E38** (below). Program 6 has no live items.
+- **Two rules for every future pooled-transition design, both learned the hard way in E37.**
+  (i) Report the **country-level** Kish `neff`, not the stacked one: three rows per economy tripled
+  the row-level figure to 22.2 while the honest figure stayed at **7.5**, and the bootstrap must
+  resample **countries carrying all their rows**. (ii) **Always print the per-window terms.** R3's
+  pooled −0.126 was the average of a stable positive relationship and a violent negative one; the
+  pooled number described neither.
+- **Program 1 — the replication debt is now effectively exhausted, and mostly negatively.** E38 ran
+  E5b on both earlier transitions: the partial is **−0.654 / +0.591 / −0.595**, i.e. it reverses
+  between consecutive windows and reverses back, with G6 retentions of 0.41 / 0.05 / 0.05 and every
+  bootstrap interval straddling zero. **E5b fails promotion and is recommended for demotion to
+  `discard`.** Remaining `keep-window` and unreplicated: **E7** (already recommended for demotion by
+  E32) and **E22**. With E23/E24/E25 failed (E35) and E5b failed here, the honest summary is that
+  **only the six E28/E30 rail promotions ever replicated**. **New rule proposed for the next
+  protocol amendment: a promotion requires EVERY tested earlier window to agree in sign, not one of
+  them** — E38's promotion rule passed mechanically on a claim that reverses, and only the standing
+  E4 magnitude rule stopped it.
+- **A distillation is now overdue and has a concrete backlog.** Two demotions are pending and
+  un-executed (**E7**, **E5b**); items 2.2/2.3 are paid for the Δ→Δ and partial families but open
+  for the level→change and gap families; and E39 changes the framing the paper draft is built on.
+  **The next cycle should be a distillation pass, not three new experiments.**
+- **Program 1 item 1.5 is answered, and it is the cycle's keep.** E39: 2021→24 is a real
+  within-country saving episode (**42.1%** of economies ≥ +10pp against a 20.8% previous best,
+  largest unweighted median of the four windows, G5 ok at 1.7pp) — it survives the weighting
+  critique that sank E31/E36. **But each margin peaks in a different window: account ownership
+  2011→14, digital payments 2014→17 (2021→24 is digital payments' WEAKEST window, 21.1%), saving and
+  borrowing 2021→24 (borrowing highest of all, 52.6%).** **New item 1.6:** rewrite the paper draft's
+  Section 4 around a **balance-sheet** window rather than a digital-inclusion one, and check the
+  rails claims (E1/E10/E12) against the fact that the rails themselves were **decelerating** in the
+  window where they correlate best with saving.
+- **Movers do not repeat, and this is now measured.** Consecutive-window Spearman of per-country
+  changes is **≤ +0.07 in all ten pairs and negative in eight** (formal saving −0.413 / −0.350 /
+  +0.070). Together with E37's null this is one fact: nothing observable at t predicts the size of
+  the next move. It is the best available post-hoc account of why the prediction stream closed where
+  it did, and it should be cited whenever anyone proposes reopening it.
+- **B2 note for the next cycle.** `borrow_any_t_d` is now used and **2011→2014 is no longer thin**
+  (E39). Untouched country modules: `fin25` (agenda 4.3, still the best remaining new-ground
+  target), `fin31`, `fin34`, `fin43`, `fin13`, `fin14`, `dig_acc`, `merchant_pay`, plus the blocked
+  `con`. **A micro design was pre-checked and abandoned before registration:** mobile-only vs
+  bank-only accountholders on the untouched `merchantpay_dig` column qualifies only **5 of 77**
+  economies at M2's n ≥ 100 per cell, so that column is pooled-only and badly composition-confounded
+  — do not re-propose it as a within-country design.

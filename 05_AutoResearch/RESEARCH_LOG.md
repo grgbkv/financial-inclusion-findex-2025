@@ -4511,3 +4511,42 @@ is the strongest argument in the ledger for why the prediction stream topped out
 2021 wave was measured in the pandemic period; both are stated and neither is adjusted for, so
 "largest median" is partly a statement about a four-year window competing with three-year ones —
 which, note, works *against* 2021→24 (three years) and in favour of 2017→21.
+
+---
+
+## Cycle wrap-up — 2026-08-10
+
+Working tree clean at start; `coverage.py` run before hypotheses were chosen (rule B1). Three
+country-level experiments, two discards and one keep — and the keep and the discards point the same
+way.
+
+- **E37 — DISCARD, and Program 6 closes.** The sequencing ladder has no rung. Account level → Δ
+  digital payments is **+0.066** with an interval through zero and a G6 sign flip; digital-payment
+  level → Δ formal saving is **+0.447** but loses 72% of its magnitude to drop-top-5 and reverses to
+  **−0.434** in 2014→2017; saving level → Δ borrowing pools to **−0.126** while hiding
+  **+0.295 / +0.280 / −0.742** across the three windows. Items 6.1–6.3 close negatively and 6.4 is
+  withdrawn as a false-discovery machine at `neff` ≈ 7. Two methodological carry-forwards: pooled
+  designs must report the **country-level** Kish `neff` (7.5 here, against a meaningless stacked
+  22.2) and must show per-window terms.
+- **E38 — DISCARD the promotion; E5b recommended for demotion.** The accounts-first partial is
+  **−0.654 / +0.591 / −0.595** across consecutive windows — it reverses and reverses back. All three
+  collapse under G6 (retention 0.41 / 0.05 / 0.05) and all three bootstrap intervals straddle zero.
+  My own promotion rule ("at least one earlier window agrees") mechanically passed while the
+  demotion rule also fired; resolved against promotion under the standing E4 magnitude rule, and the
+  rule is faulted: **a promotion should require every tested earlier window to agree in sign.**
+- **E39 — KEEP, and it reframes the paper.** 2021→24 *is* a genuine within-country saving episode:
+  **42.1% of developing panel economies individually gained ≥10pp of formal saving** against a
+  previous best of 20.8%, with the largest unweighted median (+8.29pp) of the four windows — so it
+  survives the weighting critique that sank E31 and E36. But each margin peaks in a **different**
+  window: account ownership in **2011→14**, digital payments in **2014→17** (2021→24 is its
+  *weakest*), saving and borrowing in **2021→24**. 2021–2024 is a balance-sheet window, not a
+  digitalization one.
+- **Cross-cutting.** E37's null and E39's repeat-mover Spearmans (**≤ +0.07 in all ten consecutive
+  pairs, negative in eight**) are the same fact seen twice: nothing measured at t predicts the size
+  of the next move. That is the cleanest available explanation for why the prediction stream, closed
+  at P28, topped out where it did.
+- **Housekeeping.** Two demotions are now pending and un-executed — **E7** (recommended by E32) and
+  **E5b** (recommended here). They should be applied together in the next distillation rather than
+  accumulating. One micro design was pre-checked and abandoned before registration: the mobile-only
+  vs bank-only comparison on the untouched `merchantpay_dig` column qualifies only **5 of 77**
+  economies at M2's n ≥ 100 per cell.
