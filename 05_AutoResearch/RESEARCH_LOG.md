@@ -4734,3 +4734,64 @@ except E22a is "significant" in the ordinary sense**, and the paper must say so 
 
 **Declared.** No new association is created here; existing ones are recomputed under three lenses.
 E40 adds no keep of its own, is not subject to B4, and changes no status by itself.
+
+### E41 — VERDICT: P1 KEEP (keep-window), P2 DISCARD, 2026-08-11
+
+**The registered joint reading is exactly what happened: P1 passes, P2 fails.** The merchant-payment
+margin is a rail that was not moving in a window where the balance sheet was.
+
+**The column first, since its wording is undocumented.** `merchant_pay` on the developing panel
+(n = 76 with both waves, G4 population share 0.974): pop-weighted level **35.1 → 39.4pp**,
+unweighted mean 22.1 → 27.9, median **13.1 → 20.2**, range 1.1–94.9. A minority margin in the
+typical economy, not a near-universal one — consistent with a *digital* merchant-payment reading
+rather than "made any payment to a merchant", though the repo has no questionnaire and I am not
+asserting the item's wording.
+
+**P1 — the share of economies gaining ≥ +10pp, with the new margin inserted into E39's table:**
+
+| margin | share ≥ +10pp | median Δ | mean Δ (unw) | mean Δ (wtd) |
+|---|---|---|---|---|
+| any borrowing | **52.6%** | +10.59 | +11.41 | +10.20 |
+| formal saving | **42.1%** | +8.29 | +9.14 | +13.72 |
+| **merchant payments** | **26.3%** | +2.99 | +5.78 | +4.36 |
+| account ownership | 24.7% | +4.06 | +4.69 | +5.01 |
+| digital payments | 21.1% | +2.62 | +3.51 | +5.82 |
+
+**26.3% against a bar of < 42.1% — PASS**, with a binomial 95% margin of ±9.9pp that does not reach
+the bar. The margin sorts cleanly into the **digital-rail cluster** (21–26%) and nowhere near the
+balance-sheet cluster (42–53%). E39's reframing was derived from four margins; it now holds on a
+fifth that was chosen after the reframing was written and before its answer was computed. That is
+the cheapest kind of out-of-sample check this loop can run, and the framing survives it.
+
+**P2 — FAIL, and the *way* it fails is the run's second finding.**
+
+| cell | r weighted | r unweighted | G6 drop-top-5 | 95% CI | p_boot |
+|---|---|---|---|---|---|
+| **registered** Δmerchant ~ Δformal saving | **+0.039** | **+0.418** | **+0.421** | [−0.300, +0.855] | 0.739 |
+| context Δmerchant ~ Δdigital payments | +0.383 | +0.484 | +0.413 | [+0.097, +0.757] | 0.008 |
+| context Δmerchant ~ Δany borrowing | +0.259 | +0.111 | +0.083 | [−0.158, +0.635] | 0.288 |
+
+n = 76, Kish `neff` = 7.2 in all three. The registered cell is **+0.039 population-weighted and
++0.418 unweighted**, and dropping the five largest economies moves it to **+0.421** — the jackknife
+and the de-weighting land in the same place, which is what an artifact of a handful of giant
+economies looks like from both directions. **P2 fails on its pre-registered primary and is a
+discard**; the unweighted figure is reported, not promoted, because switching to the lens that
+gives the answer I want after seeing it is exactly the move the pre-registration exists to prevent.
+
+**This is a third instance of E40's claim C, found the same day in a fresh test rather than a
+re-audit.** E40 found two *ledger* rows where de-weighting crosses the 0.30 line (E16, E26); E41
+produces a third, and the largest gap yet (**+0.039 → +0.418**). Agenda item 2.5 is no longer a
+retrospective clean-up item: the population weighting is deciding keep/discard on live experiments,
+in both directions, at a rate of roughly one case per handful of tests. **The honest statement is
+that the ledger's 0.30 threshold is a threshold on a statistic whose value depends on a weighting
+choice that five economies dominate.**
+
+**The context cells are worth one line each.** Merchant payments co-move with the digital-payment
+headline at **+0.383** weighted (CI [+0.097, +0.757], p_boot 0.008, retention 1.08) — related to
+`g20_any` but not a restatement of it, so this was a genuinely new column and not a relabelling.
+Against borrowing the cell is +0.259 weighted, +0.111 unweighted, retention 0.32 — nothing.
+
+**Declared.** Contemporaneous co-movement over one window on a two-wave column. Under B4 this can
+**never** reach `keep-general`, which was registered before the run. The P1 result is a
+distributional description, not an association, so B6 does not bind on it; the binomial interval is
+reported as a courtesy. Nothing here is causal.
