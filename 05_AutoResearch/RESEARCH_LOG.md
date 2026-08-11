@@ -4795,3 +4795,48 @@ Against borrowing the cell is +0.259 weighted, +0.111 unweighted, retention 0.32
 **never** reach `keep-general`, which was registered before the run. The P1 result is a
 distributional description, not an association, so B6 does not bind on it; the binomial interval is
 reported as a courtesy. Nothing here is causal.
+
+---
+
+## Cycle wrap-up — 2026-08-11
+
+Working tree clean at start; `coverage.py` run before hypotheses were chosen (rule B1). Two
+experiments and the distillation the 2026-08-10 wrap-up called for. The prediction stream stayed
+closed (P28), as registered.
+
+- **E40 — KEEP on two of three registered claims.** The first **ledger-wide** BH: thirty-three
+  association tests, six designs, three wave windows, all recomputed from raw frames, **33/33
+  reproducing the r on record** (max deviation 0.0005). **18/20 kept rows survive BH on `p_boot`**
+  and **the only two failures are E7 and E5b — the two demotions already pending**, which the E4
+  retention rule independently selects (0.44 and 0.19). Claim C **failed**: two discards cross 0.30
+  when the population weighting is removed (E16 +0.198/+0.555, **E26 +0.294/+0.364**), against a bar
+  of one. At the true degrees of freedom BH rejects **1 of 33** (median `neff` **7.2** vs median
+  nominal n **71**), against 26 of 33 on nominal n. Sixteen rows are triple-clean and that is the
+  list the paper may carry.
+- **E41 — P1 KEEP, P2 DISCARD, on the untouched `merchant_pay` module (the cycle's B2 cell).**
+  Merchant payments sort with the **digital rails**: **26.3%** of developing panel economies gained
+  ≥ 10pp in 2021→24, against 42.1% for formal saving and 52.6% for borrowing, and 21.1% for digital
+  payments. E39's balance-sheet reframing therefore passes an out-of-sample check on a margin chosen
+  after the reframing was written. The registered co-movement with the saving surge **failed** —
+  and failed instructively: **+0.039 population-weighted against +0.418 unweighted, with drop-top-5
+  at +0.421**. The jackknife and the de-weighting agree that five economies are holding the weighted
+  figure at zero.
+- **The distillation, executed.** **E7 and E5b are demoted to `discard`** (recommended by E32 and
+  E38, confirmed by E40). **E13 is flagged** as weighting-dependent in both of its windows.
+  `PAPER_DRAFT_v2.md` now carries a seven-point **CORRECTIONS OWED** block covering the title's
+  over-generality, Section 4's window framing, the failed rail decomposition, the non-boundary in
+  Section 6, the two demoted findings, the inference that Section 9 said was missing, and the closed
+  forecasting stream. `EXTENSIONS_DRAFT.md` carries a status block. Three protocol rules added:
+  **B8** (promotion requires *every* tested window to agree in sign), **B9** (mandatory unweighted
+  twin; `keep-weighted` when the lenses disagree), **B10** (`neff` beside every n; no significance
+  language on nominal n).
+- **The cross-cutting fact of the day.** Three separate instances of the same problem surfaced
+  within one run — E16, E26 and E41's live cell — where the weighted and unweighted verdicts fall on
+  opposite sides of the 0.30 bar. This is no longer a curiosity about one discard. **At `neff` ≈ 7,
+  the keep/discard threshold is a threshold on a statistic that a handful of economies decide**, and
+  B9 exists so that future keeps have to say which lens they are keeping under.
+- **Housekeeping.** No demotions are left pending. Program 1 is closed (only E22 remains
+  `keep-window`, and its parent E1 is replicated); Program 2 is effectively closed with items 2.5
+  and the new 2.6 as its live residue; Program 6 stayed closed; Program 7 stayed blocked. The
+  natural next cycle is the **v3 rewrite** the corrections block specifies, or `fin31` (four waves ×
+  77 economies, the best-covered untouched block) behind a mandatory mapping pass.
