@@ -4550,3 +4550,127 @@ way.
   accumulating. One micro design was pre-checked and abandoned before registration: the mobile-only
   vs bank-only comparison on the untouched `merchantpay_dig` column qualifies only **5 of 77**
   economies at M2's n ≥ 100 per cell.
+
+---
+
+## Cycle 2026-08-11 — pre-registration (written before any outcome was computed)
+
+Working tree clean at start. `python3 coverage.py` run first (rule B1). The prediction stream is
+CLOSED (P28), so no predictor run. The 2026-08-10 wrap-up called for a **distillation pass rather
+than three new experiments**, so this cycle is **two experiments plus an executed distillation**:
+one meta-experiment that supplies the distillation's evidence (E40) and one new-ground experiment
+that carries the breadth requirement (E41).
+
+**Coverage cells this cycle lands on (rule B2).**
+- **E41** uses the **untouched country module `merchant_pay`** (1 column, 2021 + 2024, 77/76
+  developing panel economies, zero ledger mentions) — the B2 cell for this cycle.
+- **E40** is a meta-experiment over the existing ledger and lands on no new cell by construction;
+  it is explicitly not counted toward B2.
+- Lineage (rule B3): E40's parent is the association ledger as a whole (no single parent, cap not
+  engaged, E32 precedent). E41's parent is **E39**, not the rails chain — E23 → E24 → E25 → E35 is
+  already at the cap.
+
+### E40 — pre-registration: a LEDGER-WIDE false-discovery and de-weighting audit (Program 2, items 2.2 / 2.3 / 2.5; rule B7)
+
+**Why this is owed now.** Rule B7 requires a Benjamini–Hochberg view over the association ledger
+*before* the next distillation into the paper draft, and the distillation is happening in this
+cycle. E32 paid items 2.2/2.3 for the sixteen-test Δ→Δ family and E35 paid them for six partial
+cells; the **level→change family (E5/E9/E17), the gap-change designs (E3/E20), the 2024
+cross-section (E29), the regional split (E22) and the six earlier-window replication cells
+(E28/E30)** have never been through either lens, and no BH has ever been run across the ledger as
+one family.
+
+**The family, declared before computation — thirty-three tests in six blocks.** Every
+population-weighted correlation the ledger reports as evidence for or against a claim, recomputed
+in one file:
+
+1. **Δ→Δ, 2021→2024, `pan_dev`** (E32's sixteen, recomputed here, not copied): E1, E2, E7, E10,
+   E11, E12, E13, E14, E15, E16, E18, E19, E25, E26, E27, E27b.
+2. **Partials, 2021→2024** (E5b, E23, E24) — the original windows, which E35 recomputed but never
+   put through BH alongside the rest.
+3. **Level→change, 2021→2024** (E5 usage intensity → Δaccount; E9 `fing2p_acc` level → Δaccount;
+   E17 saving level → Δsaving).
+4. **Gap-change designs, 2021→2024** (E3 Δgender gap in account ~ Δmobile money; E20 Δincome gap in
+   formal saving ~ Δformal saving), on `pan_grp`.
+5. **The 2024 cross-section** (E29 `internet` ~ `g20_any` level).
+6. **Earlier-window replications, 2017→2021** (E28's three rails→saving cells; E30's E11/E13/E14
+   cells) and **E22's two regional subsamples** (SSA, rest-of-developing, 2021→2024).
+
+Excluded and named as excluded, so the family cannot be gerrymandered after the answer: statistics
+that are **not correlations** (E21 and E34's mean log-odds gaps, E31/E36's share-of-economies
+counts, E39's distributional shares, E33's nine `fh` cells which are correlations but were kept as
+a *family* with its own internal agreement rule, E37/E38's pooled and per-window cells which are
+already reported with intervals and were discarded), and the entire micro stream (different design,
+different weights).
+
+**Computed per test:** population-weighted r, the **unweighted** twin, nominal n, Kish
+`neff = (Σw)²/Σw²`, a 2,000-draw country bootstrap (percentile 95% interval and two-sided
+`p_boot`), `p_nominal` (t on n−2 df), `p_neff` (the same t on neff−2 df), and the G6 drop-top-5
+jackknife with the E4 retention ratio. BH at q = 0.10 over all thirty-three on `p_boot` (primary)
+and on `p_neff` (secondary). Every test carries a **reproduction check** against the r on record;
+a deviation > 0.02 is printed and the cell is reported as unreproduced rather than quietly used.
+
+**Pre-registered claims — three, each with its own bar.**
+- **A (survival).** ≥ 50% of the ledger's currently-`keep*` association rows in this family survive
+  ledger-wide BH at q = 0.10 on `p_boot`.
+- **B (de-weighting, item 2.3).** ≥ 80% of those same rows retain |r_unweighted| ≥ 0.30.
+- **C (the boundary, item 2.5).** At most **one** currently-`discard` row has |r_unweighted| ≥ 0.30
+  while its weighted |r| < 0.30. E32 identified E16 as that one case; if two or more turn up, the
+  weighting has been setting the keep/discard boundary in both directions and the ledger owes a
+  systematic re-examination, which will be recorded as an agenda item rather than acted on today.
+
+**Registered alternative outcome.** A large-scale failure of A is the *informative* result and will
+be logged as a keep in the negative direction: it would mean the ledger's keep list is a
+multiple-testing artifact at the true degrees of freedom, and the distillation must then present
+the surviving claims as a much shorter list than the ledger's status column implies.
+
+**Declared.** This computes no new association; it recomputes existing ones under three extra
+lenses. It adds no keep of its own, is not subject to B4, and changes no status by itself — status
+changes happen in the distillation step, from its output plus the two already-pending demotions.
+
+### E41 — pre-registration: does the untouched merchant-payment margin behave like a rail or like the balance sheet? (Program 4/5 adjacent, new ground; B2 cell)
+
+**Parent:** **E39** (the balance-sheet reframing), not the rails chain.
+**Why.** E39's central result is that 2021→24 is a **balance-sheet** window: saving and borrowing
+peaked there while account ownership (2011→14) and digital payments (2014→17) peaked earlier, and
+2021→24 is digital payments' *weakest* window. That reframing makes a sharp prediction on a margin
+the ledger has never touched. `merchant_pay` is the most *use*-side digital margin in the country
+file — a payment made to a merchant rather than a transfer or a wage — and it exists for exactly
+the two waves the episode spans.
+
+**Frame.** `pan_dev`, `group == "all"`, transition **2021→2024** (the only one available for this
+column: `merchant_pay` is reported in 2021 and 2024 only, 77 and 76 developing panel economies).
+
+**G3 declaration, made honestly.** `merchant_pay` is the sole column in its module and has no
+headline/narrow variant, so no variant choice is being made. But the repo contains **no
+questionnaire**, so the exact item wording — in particular whether the margin is digital-only — is
+not documented (see `HARNESS_V2_NOTES.md` item 5). The claim is therefore worded about "the
+merchant-payment margin **as coded in the country file**", and the item's descriptive statistics
+(level in each wave, dispersion) are reported so a reader can judge the coding for themselves.
+
+**Two pre-registered tests.**
+- **P1 (the E39 prediction, distributional).** Share of developing panel economies with
+  Δ`merchant_pay` ≥ +10pp. **Registered bar: < 42.1%** — i.e. below formal saving's share in the
+  same window. If merchant payments moved *as much as* saving did, the balance-sheet reframing is
+  weaker than E39 claimed and that is recorded against E39.
+- **P2 (the rails test, association).** Population-weighted r(Δ`merchant_pay`, Δ`fin17a_17a1_d`)
+  on the common sample. **Keep threshold: |r| ≥ 0.30**, plus G6 sign-stability with E4 retention
+  ≥ 0.5, plus the B6 inference layer (2,000-draw country bootstrap percentile interval, Kish
+  `neff`, and the unweighted twin reported beside the weighted r). Reported alongside as
+  context, not as separate registered tests: r(Δ`merchant_pay`, Δ`g20_any`) — how much of this
+  margin is the digital-payment headline already in the ledger — and r(Δ`merchant_pay`,
+  Δ`borrow_any_t_d`).
+
+**Registered joint reading.** P1 passing and P2 failing is the E39-consistent outcome: the
+merchant margin is a rail that was *not* moving in a window where the balance sheet was. P1 failing
+is evidence against E39's framing and will be recorded as such. P2 passing on its own is a
+`keep-window` only — `merchant_pay` has two waves, so under B4 it can **never** be promoted to
+`keep-general`, exactly like E29. That limitation is registered up front so a positive result is
+not over-read.
+
+**Gates.** G3 declared above · G4 coverage on the estimation sample · G5 not applicable (no
+official aggregate is published for this column in the file; checked as a coverage question, no
+outcome computed) · G6 with the E4 retention rule · B6 as above.
+
+**Declared.** Contemporaneous co-movement over one window. It identifies nothing, it is not causal,
+and with two waves it cannot be a general regularity under B4 no matter what it returns.
