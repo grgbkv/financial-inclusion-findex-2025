@@ -1,5 +1,45 @@
 # Extensions draft — autoresearch session, 2026-07-11 (branch `autoresearch/jul11`)
 
+> ## STATUS BLOCK — 2026-08-11 distillation. READ BEFORE USING ANY EXTENSION BELOW.
+>
+> Everything after this block was written on **2026-07-11**, at experiment 27. Fourteen
+> experiments have run since, and this file has **not** been rewritten. Under rule B4 an extension
+> may enter the paper as a regularity only if it is `keep-general`; under the new rules B8/B9/B10 it
+> must also agree in sign across every tested window, report its unweighted twin, and carry its Kish
+> `neff`. Applying those rules to this file:
+>
+> **Still standing (the six replicated bivariates, E28/E30).** E1 (mobile money ~ saving, +0.719,
+> replicated +0.454), E10 (wage rail, +0.791 / +0.678), E11 (borrowing ~ saving, +0.403 / +0.616),
+> E12 (digital payments, +0.370 / +0.685), E14 (mobile money ~ digital payments, +0.600 / +0.871).
+> E22's regional split stands (SSA +0.923, rest +0.676) and is the **only** cell in the entire
+> ledger that survives Benjamini–Hochberg at the *true* degrees of freedom (E40) — because
+> excluding the giant economies is what raises `neff` to 9.5.
+>
+> **Standing but flagged.** E13 (FI ~ mobile-money complementarity, +0.435) is `keep-general` but
+> **weighting-dependent in both windows** — unweighted +0.188 and +0.248 (E40). Do not present it
+> as a headline.
+>
+> **WITHDRAWN — do not carry into the paper.**
+> - The **three-separate-rails decomposition** (E23/E24/E25, quoted at length below) **failed its
+>   replication**: 0 of 3 promoted on 2017→2021 (E35), because the rails were near-collinear
+>   (+0.871) in the earlier window. It is a description of the window in which they decoupled.
+> - **E7** (savings as a growing emergency-funds source) and **E5b** (the accounts-first partial)
+>   were **demoted to `discard`** on 2026-08-11 (E32/E38 recommended, E40 confirmed).
+> - The **welfare boundary** (E26) is measure-specific (E33) and weighting-dependent
+>   (+0.294 weighted / +0.364 unweighted, E40). It is not a boundary.
+>
+> **Reframed.** 2021→24 is a **balance-sheet** window, not a digital-inclusion one: account
+> ownership peaked 2011→14, digital payments 2014→17, saving and borrowing 2021→24 (E39), and a
+> fifth margin picked after that reframing — merchant payments — sorts with the rails at 26.3%
+> rather than with the balance sheet (E41). Every "digitalization signature" phrasing below is
+> written about a window in which the digitalization margins were **decelerating**.
+>
+> **The number that governs all of it.** Median Kish `neff` across thirty-three association tests is
+> **7.2** (median nominal n = 71), and ledger-wide BH rejects **1 of 33** at `neff` (E40). These are
+> descriptive regularities on about seven effective observations. Nothing below may be written up
+> with significance language.
+
+
 Candidate material for a working-paper v2, produced by an autonomous pre-registered
 experiment loop over the Findex 2025 panel (protocol: `program_findex.md`; every attempt —
 kept and discarded — is in `findings.tsv` / `results_prediction.tsv`; each experiment is a

@@ -375,3 +375,49 @@ experiment — which is also the natural shape for keeping the paper draft hones
   bank-only accountholders on the untouched `merchantpay_dig` column qualifies only **5 of 77**
   economies at M2's n ≥ 100 per cell, so that column is pooled-only and badly composition-confounded
   — do not re-propose it as a within-country design.
+
+## Addendum (2026-08-11, from the E40/E41 distillation cycle)
+
+- **Rule B7 is PAID and Program 2 is effectively closed.** E40 ran a **ledger-wide** BH over
+  **thirty-three** association tests in six blocks (Δ→Δ, partials, level→change, gap designs, the
+  2024 cross-section, and the earlier-window replications), all recomputed from raw frames —
+  **33/33 reproduced the r on record within 0.02**. Items 2.2 and 2.3 are now paid for **every**
+  association family, not just Δ→Δ and partials. Results: **18/20 kept rows survive BH on `p_boot`**,
+  and **the only two failures are E7 and E5b — exactly the two demotions that were already pending**.
+  **1/33 survives at `neff`** (E22a, SSA, `neff` = 9.5, the highest in the family precisely because
+  it excludes the giants) against **26/33 on nominal n**. Median `neff` **7.2** vs median nominal n
+  **71**. Median de-weighting shift ledger-wide is **−0.051** — E32's "relocates rather than
+  inflates" survives, now measured on six designs instead of one.
+- **Item 2.5 is the live inference item and it has been upgraded from clean-up to structural.**
+  E40's claim C **failed**: two ledger discards cross 0.30 on de-weighting (**E16** +0.198/+0.555,
+  **E26** +0.294/+0.364), and **E41 produced a third the same day in a live test** — +0.039 weighted
+  against **+0.418 unweighted**, with drop-top-5 at **+0.421**. The weighting is deciding
+  keep/discard in both directions at roughly one case per handful of tests. **New rule B9** now
+  requires the unweighted twin on every association keep and a `keep-weighted` status when the two
+  lenses disagree. **New item 2.6:** re-examine E16 and E26 under B9 as candidate `keep-weighted`
+  rows — E26 in particular, because the paper's Section 6 boundary rests on it.
+- **Two demotions executed, one flag raised.** E7 and E5b are now `discard` in `findings.tsv`
+  (recommended by E32 and E38, confirmed independently by E40). **E13 is flagged**: it fails the
+  unweighted lens in **both** windows (+0.188 and, in its E30b replication, +0.248), so its
+  `keep-general` promotion rests on the population weighting twice over. Flagged, not demoted.
+- **Program 1 status — final.** The replication debt is closed. Only **E22** remains `keep-window`
+  and unreplicated (E22 is a 2021→24 regional split of E1, whose parent *is* replicated). The
+  honest ledger summary: **six bivariate co-movements replicated (E1/E10/E11/E12/E13/E14), one of
+  them flagged; every partial and every level→change design that was tested on an earlier window
+  failed.**
+- **E39's balance-sheet reframing passed an out-of-sample check.** E41 inserted a margin chosen
+  *after* the reframing was written — `merchant_pay`, an untouched module — into E39's table and it
+  sorted with the digital rails (**26.3%** of economies gaining ≥ 10pp) rather than the balance
+  sheet (saving 42.1%, borrowing 52.6%). **Item 1.6 is executed**: `PAPER_DRAFT_v2.md` now carries a
+  seven-point CORRECTIONS OWED block and `EXTENSIONS_DRAFT.md` a status block; the v3 rewrite itself
+  is the natural next non-experiment cycle.
+- **B2 note for the next cycle.** `merchant_pay` is now used. Untouched country modules: **`fin25`**
+  (emergency-fund detail — note that only `fin25e2`/`fin25e2b` have 2021 *and* 2024; the other
+  twelve columns are 2024-only, so the agenda's "2021+2024" description of this family was too
+  generous), `fin31` (digital-payment detail, **four waves × 77 economies — the best-covered
+  untouched block left**), `fin34` (wage payment modes, four waves), `fin43` (agricultural payments,
+  four waves), `fin13`/`fin14` (2024, only 27 economies), `dig_acc` (2024-only), plus the blocked
+  `con`. **Caution carried from Program 7:** `fin31`/`fin34`/`fin43` are letter-suffixed items with
+  no questionnaire in the repo, so any experiment on them needs the mandatory mapping pass logged as
+  exploratory first — they are not as free as their wave coverage makes them look. The thinnest
+  remaining *frame* is `urbanicity` (single wave).

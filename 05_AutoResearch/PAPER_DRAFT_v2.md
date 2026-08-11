@@ -11,6 +11,71 @@ principally statistical inference, which this draft does not yet have.
 
 ---
 
+## CORRECTIONS OWED — status as of 2026-08-11 (distillation pass, experiments E28–E41)
+
+**This draft is v2 as written on 2026-08-01 and has not yet been rewritten. Fourteen experiments
+have run since. Six of its statements are now known to be wrong, over-general, or resting on a
+demoted finding, and they are listed here rather than silently patched, so the diff to v3 is
+auditable. Do not quote this draft without reading this block.**
+
+1. **The title is over-general.** "Access converges, use diverges" holds where disadvantage is
+   defined by *resources* and fails where it is defined by *cohort or sex*. The usage gap narrowed
+   too on age (64.5% of economies, E34) and on labour-force status (57.4%, E36), and the `gender`
+   frame is a coin flip on both margins (54.5% / 53.2%, E36). What survives is an ordering of the
+   access-minus-usage asymmetry — income +23.3pp > education +18.0 > laborforce +7.1 > gender +1.3 >
+   age −0.9 — which has never been tested as a monotonicity claim. **Section 5 and the title must be
+   restricted to the income and education axes, or the claim must be re-registered as an ordering.**
+
+2. **Section 4's framing is wrong about what kind of window this was.** Each margin's biggest window
+   is a different one: account ownership peaked in **2011→14**, digital payments in **2014→17**, and
+   saving and borrowing in **2021→24** (E39, all four transitions, unweighted shares of economies
+   gaining ≥ 10pp). **2021→24 is digital payments' *weakest* window (21.1% of economies, against
+   42.1% for saving and 52.6% for borrowing).** E41 added a fifth margin chosen after that
+   reframing was written — merchant payments, an untouched column — and it sorts with the digital
+   rails at 26.3%, not with the balance sheet. **Section 4 must be rewritten around a balance-sheet
+   window, and it must state that the rails it correlates with saving were themselves decelerating
+   in the window where the correlation is measured.**
+
+3. **Section 4's rail *decomposition* failed replication and is a window property.** The three
+   partials (E23 +0.509, E24 +0.583, E25 +0.605) do **not** replicate on 2017→2021 — 0 of 3 promoted
+   (E35) — because the rails were nearly collinear in the earlier window (r(Δmobile money, Δdigital
+   payments) = **+0.871** in 2017→21 against +0.600 in 2021→24). The decomposition describes the
+   window in which the rails **decoupled**. Only six bivariate co-movements ever replicated
+   (E1/E10/E11/E12/E13/E14, via E28/E30), and **E13's promotion is flagged as weighting-dependent in
+   both of its windows** (unweighted +0.188 and +0.248, E40).
+
+4. **Section 6's welfare boundary is not a finding.** It is measure-specific *and* weighting-
+   dependent. The `fh` financial-health family co-moves with all three rails at **0.354–0.705**
+   while being nearly orthogonal to `fin24aSD_ND` (+0.03 to +0.15) (E33), and E26 — the row the
+   boundary rests on — is **+0.294 weighted and +0.364 unweighted** (E40), i.e. it crosses the
+   threshold when the weighting is removed. **Section 6 must be demoted from a boundary claim to a
+   measure-comparison, and the `fh1`/`fh2` polarity is still unresolved** (no welfare *direction*
+   may be asserted until the questionnaire is obtained; `HARNESS_V2_NOTES.md` item 5).
+
+5. **Two findings the draft uses have been demoted to `discard`.** **E7** (savings as a growing
+   emergency-funds source, r = 0.541 — line 219) and **E5b** (the accounts-first partial, −0.595 —
+   line 202) were demoted on 2026-08-11. E5b's partial reads **−0.654 / +0.591 / −0.595** across
+   consecutive windows (E38) and flips to **+0.106 unweighted** (E40). **Both sentences must be
+   deleted, not softened.** The abstract's convergence/divergence pair also needs qualifying: E17's
+   +0.480 has a G6 retention of 0.28 and `p_boot` 0.589 (E40).
+
+6. **The inference Section 9 says is missing now exists, and it is harsh.** Over thirty-three
+   association tests spanning every design in the ledger (E40), Benjamini–Hochberg at q = 0.10
+   rejects **26 of 33 on nominal n** and **1 of 33** on the Kish effective n. Median `neff` is
+   **7.2** against a median nominal n of **71**. **No significance language may be attached to
+   nominal n anywhere in v3.** What survives as the ledger's defensible core is sixteen
+   triple-clean rows (BH on the bootstrap p, |r_unweighted| ≥ 0.30, and G6 retention ≥ 0.5) —
+   presented as descriptive regularities on ~7 effective observations, never as significant results.
+
+7. **Section 8 (forecasting) is final and should say so.** The prediction stream closed at P28 after
+   twenty-eight experiments and six CV→holdout non-transfers. Champion MAE: **account 5.014 /
+   resilience 6.625 / saving 6.831 pp**; skill over persistence **10.1% / 0.8% / 30.1%**. Only
+   saving predicts better than the median country's actual move. The post-hoc account of why is
+   E39's repeat-mover result: consecutive-window Spearman of per-country changes is **≤ +0.07 in all
+   ten pairs and negative in eight**.
+
+---
+
 ## Abstract
 
 Between 2021 and 2024 formal saving in developing economies rose by 13.7 percentage points
