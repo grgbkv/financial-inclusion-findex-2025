@@ -4674,3 +4674,63 @@ outcome computed) · G6 with the E4 retention rule · B6 as above.
 
 **Declared.** Contemporaneous co-movement over one window. It identifies nothing, it is not causal,
 and with two waves it cannot be a general regularity under B4 no matter what it returns.
+
+### E40 — VERDICT: KEEP on A and B, DISCARD on C, 2026-08-11
+
+**Reproduction first: 33/33 cells reproduce the r on record within 0.02, max deviation 0.0005.**
+Thirty-three association tests spanning five years of this ledger, six different designs and three
+wave windows, all recomputed from the raw frames in one file. Nothing in what follows is an
+artifact of a mis-stated construction.
+
+| claim | statistic | bar | result |
+|---|---|---|---|
+| **A** survival under ledger-wide BH (q=0.10, `p_boot`) among kept rows | **18/20 = 90.0%** | ≥ 50% | **PASS** |
+| **B** kept rows retaining \|r_unweighted\| ≥ 0.30 | **16/20 = 80.0%** | ≥ 80% | **PASS** |
+| **C** discards with \|r_u\| ≥ 0.30 while \|r_w\| < 0.30 | **2** (E16, E26) | ≤ 1 | **FAIL** |
+
+**A passes, and the two rows that fail it are exactly the two demotions already pending.** The only
+kept rows that do not survive ledger-wide BH on the bootstrap p are **E7** (p_boot 0.073) and
+**E5b** (0.331) — the rows E32 and E38 independently recommended demoting. Three lenses built at
+different times, on different grounds, select the same two rows. The E4 retention rule agrees:
+E7 0.44 and E5b 0.19 are the only kept rows under 0.5. The distillation in this cycle therefore
+executes those two demotions with a third, pre-registered piece of evidence behind them.
+
+**B passes at exactly its bar, and the near-misses matter more than the pass.** Four kept rows fail
+the unweighted lens: E7 (+0.283), **E13 (+0.188)**, E5b (+0.106) and **E30b (+0.248)**. E30b *is*
+E13's 2017→2021 replication — so the FI-account ~ mobile-money complementarity, which E30 promoted
+to `keep-general`, is **weighting-dependent in both of its windows**. That is new: E32 flagged E13
+on one window and left it standing because the replication was independent evidence, and the
+replication turns out to lean the same way. **E13 is now flagged in the ledger as weighting-
+dependent in both windows**, short of demotion but no longer clean.
+
+**C fails, and the second case is the interesting one.** Two discards clear 0.30 unweighted while
+their population-weighted r sits under it: **E16** (`Δaccount ~ Δformal saving`, +0.198 weighted /
+**+0.555** unweighted, already named by E32) and **E26** (`Δwage digitalization ~ Δresilience`,
++0.294 / **+0.364**). E26 is the row the paper's Section 6 boundary rests on — it missed the 0.30
+bar by 0.006 weighted, and de-weighted it clears. Combined with E33 (the rails *do* co-move with the
+`fh` welfare family at 0.35–0.71), **the "rails do not reach welfare" boundary now depends on both
+the choice of welfare measure and the choice of weighting.** It should not be stated in the paper
+draft as a finding. Item 2.5 stays open and is now sharper: the boundary cuts in both directions.
+
+**The secondary result is the one that has now reproduced four times.** BH on `p_neff` — the same
+t-statistic evaluated at the *true* degrees of freedom implied by the population weights — rejects
+**1 of 33**, and the survivor is **E22a**, the Sub-Saharan-Africa subsample, which has the family's
+highest `neff` (9.5) precisely because it excludes the giant economies. On nominal n, BH rejects
+**26 of 33 and 20 of 20 kept rows**. Median Kish `neff` across the whole family is **7.2** against a
+median nominal n of **71**. E32 found this on 16 tests, E35 on 6, E31/E34 on the gap frames, and
+now it holds across every design the ledger contains.
+
+**A ledger-wide number worth recording: the median de-weighting shift is −0.051.** E32 measured
+**+0.011** on its sixteen and concluded the weighting "relocates rather than inflates". Over
+thirty-three tests spanning all six designs the shift is mildly *negative* — the weighted ledger is,
+on average, slightly stronger than an unweighted one, by about a twentieth of a correlation unit.
+That is small enough to keep E32's conclusion and precise enough to stop the ledger being dismissed
+either way.
+
+**Sixteen rows are triple-clean** — BH-surviving on `p_boot`, |r_u| ≥ 0.30, and E4 retention ≥ 0.5:
+E1, E10, E11, E12, E14, E25, E23, E24, E29, E22a, E22b, E28a, E28b, E28c, E30a, E30c. That is the
+list the distillation carries forward, with the standing caveat that **at `neff` ≈ 7 none of them
+except E22a is "significant" in the ordinary sense**, and the paper must say so in those words.
+
+**Declared.** No new association is created here; existing ones are recomputed under three lenses.
+E40 adds no keep of its own, is not subject to B4, and changes no status by itself.
