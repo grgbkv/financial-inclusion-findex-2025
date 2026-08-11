@@ -135,3 +135,40 @@ existing `Findex.pan_grp` frame:
 
 That is a 13-year within-country inequality panel across six dimensions. Two experiments (E20, E21)
 had used it as of this amendment.
+
+## Amendments (2026-08-11, the distillation pass)
+
+Two demotions that had been standing as recommendations were executed, and three rules are added.
+All existing gates, thresholds and pre-registration rules stand unchanged.
+
+**Executed status changes.**
+
+- **E7** `keep-window` → **`discard`**. Recommended by E32 (BH `p_boot` 0.068; unweighted +0.541 →
+  +0.283; E4 retention 0.44), confirmed by E40's ledger-wide audit.
+- **E5b** `keep-window` → **`discard`**. Recommended by E38 (the partial reads −0.654 / +0.591 /
+  −0.595 across consecutive windows), confirmed by E40 (`p_boot` 0.331, retention 0.19, and an
+  unweighted partial of **+0.106** against a weighted −0.595 — a sign flip on de-weighting).
+- **E13** stays `keep-general` but is **flagged**: E40 found it fails the unweighted lens in *both*
+  windows (+0.188 here, +0.248 in its E30b replication), so its promotion rests on the population
+  weighting twice over.
+
+**B8 — Sign agreement on promotion.** A `keep-window` finding is promoted to `keep-general` only if
+**every** tested earlier window agrees in sign and clears the original threshold. One agreeing
+window is not enough. *(Proposed by E38, where a promotion rule reading "at least one earlier
+window" mechanically passed a partial that reversed between consecutive windows and reversed back;
+only the standing E4 magnitude rule stopped it.)*
+
+**B9 — The unweighted twin is mandatory, and disagreement is a status.** Every association keep must
+report the unweighted correlation beside the population-weighted one. Where the two lenses give
+different verdicts against the 0.30 threshold, the finding is logged **`keep-weighted`** (or
+`discard-weighted`) rather than `keep`/`discard`, and the weighting dependence is stated in the
+claim itself. *(E40 found the weighting crossing the threshold in both directions — E16
++0.198/+0.555 and E26 +0.294/+0.364 — and E41, run the same day, produced a live case at
++0.039/+0.418 with drop-top-5 at +0.421. At `neff` ≈ 7 the 0.30 bar is a bar on a statistic that
+five economies decide.)*
+
+**B10 — `neff` beside every n, and no significance language on nominal n.** Every reported
+association carries its Kish `neff` next to the nominal n, and no write-up may attach significance
+language to nominal n. Across E40's thirty-three tests spanning every design in the ledger, BH at
+q = 0.10 rejects **26 of 33 on nominal n and 1 of 33 on `p_neff`**; median `neff` is **7.2** against
+a median nominal n of **71**. *(Carried from E32 and now established ledger-wide.)*
