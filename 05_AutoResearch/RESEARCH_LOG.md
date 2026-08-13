@@ -4840,3 +4840,114 @@ closed (P28), as registered.
   and the new 2.6 as its live residue; Program 6 stayed closed; Program 7 stayed blocked. The
   natural next cycle is the **v3 rewrite** the corrections block specifies, or `fin31` (four waves ×
   77 economies, the best-covered untouched block) behind a mandatory mapping pass.
+
+---
+
+## Cycle 2026-08-13 — pre-registration (written before any outcome was computed)
+
+Working tree clean at start. `python3 coverage.py` run before hypotheses were chosen (rule B1).
+The prediction stream stays **closed** (P28, 2026-08-09) — no predictor experiment is registered,
+as the closing rule requires a change to the *task* rather than another mechanism.
+
+**Coverage cells this cycle lands on, declared under B1/B2.**
+
+| experiment | frame | wave transitions | modules | B2 status |
+|---|---|---|---|---|
+| E42 | `pan_dev`, group=all | **2011→14, 2014→17**, 2017→21, 2021→24 | `account_t_d`, `fin17a_17a1_d`, `fin32_acc`, `fin24aSD_ND` | thin transitions (2011→14 has 12 ledger mentions, 2014→17 has 44) |
+| E43 | **`pan_grp` — gender, income, education, age_cat, laborforce** | 2021→24 | `fin17a_17a1_d`, `account_t_d` | **B2 CELL: four of the five slice frames are at ≤1 ledger mention** (education 1, age_cat 1, laborforce 1, gender ~1); `urbanicity` is single-wave and is therefore excluded, not skipped |
+
+**Lineage (B3).** E42's parent is **E40** (the ledger-wide audit) — first descendant. E43's parent is
+**E39** (the balance-sheet reframing) — second descendant after E41, inside the cap. Neither takes
+E31/E34/E36 as parent; that chain is exhausted.
+
+---
+
+### E42 — pre-registration: is the *unweighted* ledger a different ledger? (Program 2, item 2.6)
+
+**Why.** E40's claim C failed and E41 produced a third live instance the same day: the population
+weighting is setting the keep/discard boundary in both directions (E16 +0.198w/+0.555u, E26
++0.294w/+0.364u, E41 +0.039w/+0.418u). Rule **B9** now requires a `keep-weighted` / `discard-weighted`
+status when the two lenses disagree. Item 2.6 asks whether E16 and E26 should be re-statused — but a
+re-status alone is bookkeeping. The question worth registering is whether the *unweighted* result is
+a **regularity** or a one-window accident, which is rule **B8** applied to the unweighted lens.
+
+**A coverage fact that shapes the design, checked before registration (no outcome computed).**
+`fin24aSD_ND` exists only in 2021 and 2024, so **E26 can never be replicated on an earlier window** —
+it is unpromotable for the same reason E29 is. `account_t_d` and `fin17a_17a1_d` both have all five
+waves, so **E16 can be tested on three earlier transitions**. The registered generality test therefore
+binds on E16 only, and E26 gets the re-status and nothing more. Declared now so the asymmetry is not
+read later as cherry-picking.
+
+**P1 — re-status under B9 (mechanical, executed either way).** Recompute E16 and E26's 2021→24
+weighted and unweighted correlations from raw frames. PASS if both reproduce E40's figures within
+0.02. On passing, both rows move `discard` → **`discard-weighted`** in `findings.tsv` (discarded, but
+only under the weighted lens), with the weighting dependence stated in the claim text.
+
+**P2 — the registered claim (B8 on the unweighted lens).** *The unweighted account-growth ~
+formal-saving co-movement is a decade regularity, not a 2021–24 artifact of removing the weights.*
+Test: unweighted `r(Δaccount_t_d, Δfin17a_17a1_d)` on the developing panel in **2011→14, 2014→17 and
+2017→21**. KEEP threshold: **r_u ≥ +0.30 with a positive sign in ALL THREE earlier windows** (B8 —
+every tested window must agree, one is not enough). Any window below +0.30, or of the opposite sign,
+is a DISCARD. B6 inference on every cell: 2,000-draw country bootstrap percentile interval, Kish
+`neff`, and the weighted twin printed beside the unweighted statistic. G6/E4 retention reported.
+Registered caveat: 2014→2017 has failed to produce a stable sign in five of six cells across E28/E30
+and is treated as a low-power window — but it still counts against P2, because B8 admits no
+exemptions chosen after the fact.
+
+**P3 — is the divergence one economy?** Leave-one-economy-out on the 2021→24 weighted E16 cell: drop
+each of the ~76 economies in turn and recompute `r_w`. Registered bar: if **max |Δr_w| ≥ 0.20**, the
+weighted/unweighted divergence is a **single-economy artifact** and the economy is named; if every
+single drop moves `r_w` by < 0.20 it is a **distributed weighting effect** and the "five economies
+decide it" language in the ledger needs softening to "the weight distribution decides it".
+
+**Declared.** No new association is created by P1. P2's claim, if it passes, is a descriptive
+co-movement of contemporaneous changes across four windows — it identifies nothing and is not causal.
+An unweighted correlation describes the typical *economy*, not the typical *person*; that difference
+is the finding's content, not a technicality, and the write-up must say so.
+
+---
+
+### E43 — pre-registration: did the 2021–24 saving surge reach every demographic slice? (Program 3, item 3.6 — the cycle's B2 cell)
+
+**Why.** E39 established that 2021→24 is a within-country balance-sheet episode: **42.1%** of
+developing panel economies gained ≥ +10pp in formal saving, against a 20.8% previous best. That is
+the loop's largest surviving finding and it is entirely a `group == "all"` statement. Whether the
+episode reached the poor, the unschooled, the young and the out-of-workforce is a different question
+and the `pan_grp` frame answers it directly. Parent: **E39**.
+
+**Frame.** `Findex.pan_grp`, developing panel economies, five dimensions with two subgroups each:
+`gender` (women / men), `income` (poorest 40% / richest 60%), `education` (prim edu or less /
+secondary edu or more), `age_cat` (ages 15-24 / age 25+), `laborforce` (out of / in laborforce).
+`urbanicity` is **excluded, not skipped**: it exists for 2024 only, so it admits no Δ.
+Disadvantaged group is named per dimension **before** the run, in the order above.
+
+**Outcome.** `fin17a_17a1_d` (formal saving, the E39/E1/E10/E12 headline), Δ 2021→2024.
+
+**Primary statistic, chosen under E31's lesson.** E31 showed population-weighted slice means are
+dominated by a handful of economies while a minority of economies move with them, so the primary is
+the **unweighted share of developing panel economies** meeting each bar, and the population-weighted
+mean is secondary.
+
+**Registered KEEP claim — the surge was broad-based.** For each dimension, two bars:
+  (a) the **disadvantaged** group's population-weighted Δ is **≥ +5.0pp**; and
+  (b) the **unweighted share of economies where the disadvantaged group gained ≥ +10pp is ≥ 25%**
+      (a bar deliberately set near half of E39's 42.1% all-adults headline, so "broad-based" means
+      the surge is visible in the disadvantaged half and not merely non-zero).
+KEEP if both bars hold in **≥ 4 of the 5 dimensions**; DISCARD otherwise, naming the dimensions that
+failed. The dimension-level results are reported in full either way.
+
+**Secondary, registered and reported whichever way the primary goes: did the episode widen or narrow
+within-country gaps?** Per dimension, the unweighted share of economies where the (advantaged −
+disadvantaged) pp gap **narrowed**, against a 50% coin-flip reference, plus the population-weighted
+gap change with G6. No keep hangs on this; it is registered so the direction cannot be picked after
+the fact. E20/E21 found the income gap in saving widening in 2021–24 under a weighted lens; whether
+that holds unweighted and generalises across axes is the open question E31 left.
+
+**B6 inference.** Country bootstrap (2,000 draws, resampling economies with all their subgroup rows)
+for every reported share and weighted mean; Kish `neff` on the **country-level** weights per E37's
+rule (i), not on stacked subgroup rows.
+
+**Declared.** A distributional description of one window across five slices, not an association — the
+0.30 correlation threshold does not apply and is not used. Under **B4** a 2021→24 result is a
+`keep-window` claim at best. Nothing here is causal, and a group's Δ is a change in a cross-sectional
+rate, not a change experienced by the same individuals.
