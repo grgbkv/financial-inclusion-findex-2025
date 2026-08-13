@@ -4951,3 +4951,187 @@ rule (i), not on stacked subgroup rows.
 0.30 correlation threshold does not apply and is not used. Under **B4** a 2021→24 result is a
 `keep-window` claim at best. Nothing here is causal, and a group's Δ is a change in a cross-sectional
 rate, not a change experienced by the same individuals.
+
+---
+
+### E42 — VERDICT: P1 PASS (re-status executed), P2 KEEP, P3 single-economy, 2026-08-13
+
+**P1 — the B9 re-status, and it reproduces exactly.**
+
+| row | r weighted | r unweighted | on record | reproduced | lenses disagree at 0.30 |
+|---|---|---|---|---|---|
+| E16 Δaccount ~ Δformal saving | **+0.198** | **+0.555** | +0.198 / +0.555 | yes | yes |
+| E26 Δwage digitalization ~ Δresilience | **+0.294** | **+0.364** | +0.294 / +0.364 | yes | yes |
+
+Both rows move `discard` → **`discard-weighted`** in `findings.tsv`: discarded, but only under the
+population-weighted lens. **E26 stops there** — `fin24aSD_ND` exists for 2021 and 2024 only, so it
+can never be replicated on an earlier window, exactly as E29 cannot. That was declared before the
+run, not discovered after it.
+
+**P2 — KEEP. The unweighted co-movement is a decade regularity, and all three earlier windows were
+genuinely unknown at registration.**
+
+| window | r weighted | r unweighted | 95% CI (unweighted) | p_boot | G6 | retention |
+|---|---|---|---|---|---|---|
+| 2011→2014 | +0.431 | **+0.470** | [+0.259, +0.641] | 0.0010 | +0.483 | 1.03 |
+| 2014→2017 | +0.736 | **+0.361** | [+0.171, +0.524] | 0.0005 | +0.451 | 1.25 |
+| 2017→2021 | +0.641 | **+0.394** | [+0.171, +0.593] | 0.0010 | +0.320 | 0.81 |
+| 2021→2024 | +0.198 | **+0.555** | [+0.374, +0.701] | 0.0005 | +0.741 | 1.33 |
+
+**3/3 earlier windows clear +0.30 with a positive sign — B8 is satisfied on the unweighted lens**,
+and every interval excludes zero. Under the *weighted* lens the same association clears 0.30 in
+three of the four windows and fails only in 2021→24. So **E16 was not a weak association; it was a
+strong association measured in the one window where the weighting cancels it.**
+
+**Status assigned: `keep-general-unweighted`** (B4 satisfied — three earlier transitions replicate;
+B9's lens qualifier attached because the weighted lens disagrees in one window). This composes both
+facts rather than hiding one, and the symmetric status is proposed as rule **B11** below.
+
+**The peek disclosure this finding owes.** The *choice* of which association to test unweighted was
+informed by E40 having already computed the 2021→24 unweighted value. That cell is therefore
+**peek-informed and carries no evidential weight here**; the keep rests entirely on the three earlier
+windows, whose answers were unknown when the bar was written. Stated so a reader can discount the
+right cell rather than the whole result.
+
+**The de-weighting shift is window-specific and large in both directions:** +0.039 / **−0.375** /
+−0.247 / **+0.357**. On a single association, across four windows, the weighting moves the statistic
+by more than a third of a correlation unit in each direction. E40's ledger-wide median shift of
+−0.051 is an average over cells that individually swing far more than that.
+
+**P3 — SINGLE-ECONOMY ARTIFACT, and the economy is China.**
+
+| drop | Δ r_w | resulting r_w | pop share |
+|---|---|---|---|
+| **China** | **+0.527** | **+0.726** | 26.6% |
+| Nigeria | −0.083 | +0.115 | 3.0% |
+| Bangladesh | −0.079 | +0.119 | 2.8% |
+| India | +0.074 | +0.273 | 24.3% |
+
+Cumulative: r_w = +0.198 → **+0.726 on dropping one economy**, then +0.714 / +0.718 / +0.740 /
++0.741 for two through five. **The entire E16 discard was China.** India, with almost the same
+population weight, moves it by +0.074. The ledger's standing phrase "five economies decide it" is
+wrong for this cell and should be **"one economy decides it"**; the correct general statement is that
+which economies matter is cell-specific, and naming them is cheap.
+
+Worth recording beside it: Kish `neff` is **7.2 with China in and 7.8 with China out**, but **24.6
+once India also goes** — `neff` is not a smooth function of sample size, and a single drop that
+transforms the statistic may barely move `neff`.
+
+**A protocol-level fact this run establishes, and the reason it matters.** E40's headline — BH
+rejects 1 of 33 at `neff` ≈ 7 — is a critique of the **population-weighted** ledger specifically.
+An **unweighted** correlation over 77 economies has `neff` = n = 77, because there are no weights to
+concentrate. The degrees-of-freedom objection therefore **dissolves** for the unweighted lens; it does
+not transfer. Two caveats that do survive and must be stated with it: economies are not independent
+draws (regional clustering is unmodelled), and the unweighted statistic answers a **different
+question** — it describes the typical *economy*, where the weighted one describes the typical
+*person*. Neither is the correct lens; they are two questions, and the ledger has been reporting one
+of them as if it were the answer to both.
+
+**Declared.** Contemporaneous co-movement of changes in four windows. Identifies nothing, is not
+causal, and says nothing about whether account growth produced saving growth in any economy.
+
+---
+
+### E43 — VERDICT: PRIMARY KEEP (`keep-window`), SECONDARY reported and then undercut by its own scale-free twin, 2026-08-13
+
+**PRIMARY — KEEP, 5/5 dimensions. The surge reached every disadvantaged half.**
+
+| dimension | disadvantaged | n | neff | wtd Δ dis | 95% CI | wtd Δ adv | ≥+10pp dis | 95% CI | ≥+10pp adv |
+|---|---|---|---|---|---|---|---|---|---|
+| gender | women | 55 | 5.6 | **+12.79** | [+7.35, +16.95] | +16.21 | **47.3%** | [34.5, 60.0] | 47.3% |
+| income | poorest 40% | 55 | 5.6 | **+10.84** | [+5.68, +15.36] | +16.91 | **32.7%** | [20.0, 45.5] | 58.2% |
+| education | prim edu or less | 55 | 5.6 | **+11.57** | [+2.62, +17.71] | +16.05 | **29.1%** | [18.2, 41.8] | 63.6% |
+| age_cat | ages 15-24 | 55 | 5.6 | **+16.02** | [+10.18, +19.62] | +14.15 | **56.4%** | [43.6, 69.1] | 49.1% |
+| laborforce | out of laborforce | 54 | 5.6 | **+7.40** | [+5.05, +8.74] | +12.85 | **31.5%** | [20.4, 44.4] | 55.6% |
+
+Both registered bars clear in **all five** dimensions against a required four. Every disadvantaged
+group's population-weighted gain exceeds +5pp with an interval well clear of it, and between 29% and
+56% of economies delivered a ≥+10pp gain to the disadvantaged half — against E39's 42.1% all-adults
+reference. **The young are the only slice where the disadvantaged group out-gained the advantaged
+one** (+16.02 vs +14.15 weighted; +11.27 vs +9.31 unweighted median), which is consistent with E34's
+finding that the age axis behaves unlike the resource axes.
+
+**SECONDARY as registered (pp gaps) — the resource gaps widened, and it survives both robustness
+lenses.**
+
+| dimension | economies narrowing | 95% CI | wtd gap 2021 | wtd gap 2024 | wtd change | G6 change | unwtd change |
+|---|---|---|---|---|---|---|---|
+| gender | 45.5% | [32.7, 58.2] | 2.93 | 6.34 | +3.41 | +1.50 | +1.59 |
+| **income** | **23.6%** | [12.7, 34.5] | 14.38 | 20.46 | +6.08 | +3.12 | +3.41 |
+| **education** | **29.1%** | [18.2, 41.8] | 17.62 | 22.10 | +4.48 | +7.19 | +5.85 |
+| age_cat | 49.1% | [36.4, 61.8] | −0.15 | −2.03 | −1.88 | −1.17 | −0.00 |
+| **laborforce** | **25.9%** | [14.8, 37.0] | 9.48 | 14.93 | +5.45 | +3.22 | +4.77 |
+
+Three intervals exclude 50% — income, education and labour force — so on the three resource axes the
+pp gap widened in roughly three economies out of four, and unlike E31 and E36 this **is not a
+big-country artifact**: the jackknife and the unweighted mean agree in sign with the weighted change
+in every one of those three. Gender and age are coin flips.
+
+**EXPLORATORY DIAGNOSTIC (unregistered, logged under the peek rule, no keep hangs on it) — and it
+undercuts the secondary.** E21's lesson is that a pp gap widens mechanically when levels rise from a
+low base, so the scale-free (log-odds) twin is the honest check:
+
+| dimension | narrowed, pp | narrowed, log-odds | wtd Δ log-odds gap | unwtd Δ | G6 |
+|---|---|---|---|---|---|
+| gender | 45.5% | 61.8% | +0.097 | **−0.046** | **−0.011** |
+| income | 23.6% | **52.7%** | +0.109 | **−0.078** | **−0.115** |
+| education | 29.1% | 47.3% | +0.060 | +0.036 | +0.177 |
+| age_cat | 49.1% | 49.1% | −0.076 | +0.013 | −0.018 |
+| laborforce | 25.9% | **40.7%** | +0.103 | +0.060 | **−0.021** |
+
+**On the scale-free measure there is no systematic widening.** Income goes from 23.6% to a 52.7%
+coin flip and its unweighted and G6 changes both turn *negative*; gender and labour force flip sign
+between lenses. **The registered secondary must therefore not be read as "the surge was regressive."**
+It says the *percentage-point* gaps grew, which is close to arithmetic given that formal saving rose
+from a low base everywhere and the advantaged group started higher. This is E21's discard reproduced
+on five axes instead of one, and it is the second time in this ledger that a pp-gap widening has
+failed its own scale-free twin.
+
+**Declared.** A distributional description of one window across five slices, not an association — the
+0.30 threshold was not used. Under **B4** the primary is a **`keep-window`** claim: 2021→24 only,
+promotable if some future cycle replicates it on an earlier transition. Nothing here is causal, and a
+group's Δ is a change in a cross-sectional rate, not a change experienced by the same individuals.
+Country-level `neff` is **5.6** on the slice frame — lower than the 7.2 of the `all` frame, because
+the slice frame covers 55 economies rather than 76 while the same giants carry the weight.
+
+---
+
+## Cycle wrap-up — 2026-08-13
+
+Working tree clean at start; `coverage.py` run before hypotheses were chosen (rule B1). Two
+experiments, six registered claims. The prediction stream stayed **closed** (P28), as its closing
+rule requires.
+
+- **E42 — P1 PASS, P2 KEEP (`keep-general-unweighted`), P3 single-economy.** The B9 re-status is
+  executed: **E16 and E26 are now `discard-weighted`**. The substantive finding is larger than the
+  bookkeeping — the account-growth ~ formal-saving co-movement holds **unweighted in all four wave
+  transitions** (+0.470 / +0.361 / +0.394 / +0.555, every interval excluding zero, all p_boot ≤
+  0.001) and **weighted in three of four** (+0.431 / +0.736 / +0.641 / +0.198). **E16 was never a
+  weak association; it was a strong one measured in the one window where the weighting cancels it.**
+  P3 names the canceller: **China alone** takes r_w from +0.198 to **+0.726**, while India, at
+  almost the same population weight, moves it +0.074.
+- **E43 — PRIMARY KEEP (`keep-window`), on the cycle's B2 cell.** Five `pan_grp` slice frames, four
+  of which sat at ≤1 ledger mention. The 2021–24 saving surge reached **every** disadvantaged half:
+  weighted gains **+7.4 to +16.0pp**, and **29–56%** of developing panel economies delivered a
+  ≥+10pp gain to the disadvantaged group against E39's 42.1% all-adults reference. **The young are
+  the only slice that out-gained its advantaged counterpart** (+16.0 vs +14.2), consistent with
+  E34's age-axis asymmetry.
+- **The cycle's cautionary result, and it is E43's own secondary.** The registered pp-gap secondary
+  said the income, education and labour-force gaps widened in ~3 economies of 4, surviving G6 *and*
+  de-weighting — the two robustness lenses that sank E31 and E36. Its **scale-free log-odds twin
+  showed no systematic widening**: income moved to a **52.7% coin flip** with unweighted (−0.078) and
+  G6 (−0.115) both turning negative. E21's discard, reproduced on five axes at once. A pp gap widens
+  arithmetically when levels rise from a low base, and this ledger has now been caught by that twice.
+- **The line that matters most for the paper.** E40's "BH rejects 1 of 33 at `neff` ≈ 7" is a
+  critique of the **population-weighted** ledger specifically. An unweighted correlation over 77
+  economies has `neff` = n = 77 — the degrees-of-freedom objection does not transfer. What survives
+  is subtler and worse for the write-up as it stands: the repo has been reporting a typical-*person*
+  statistic as though it answered the typical-*economy* question. Regional clustering is unmodelled
+  under either lens and remains a real limitation.
+- **Protocol.** Three additions in `program_findex.md`: **B11** (`keep-unweighted` /
+  `keep-general-unweighted`, the symmetric partner of B9; a bare `keep` now means both lenses agree),
+  **B12** (report the largest leave-one-out effect **and name the economy** beside every G6 figure —
+  "five economies decide it" was a guess and is wrong for the E16 cell), and a standing requirement
+  that every pp-gap claim carry its log-odds twin, with the pp version treated as the artifact where
+  they disagree. Program 2 is now closed; Program 3's live item is **3.9**, the 2017→2021 replication
+  of E43's primary, which is its only route to `keep-general`.

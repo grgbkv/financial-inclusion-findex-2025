@@ -172,3 +172,37 @@ association carries its Kish `neff` next to the nominal n, and no write-up may a
 language to nominal n. Across E40's thirty-three tests spanning every design in the ledger, BH at
 q = 0.10 rejects **26 of 33 on nominal n and 1 of 33 on `p_neff`**; median `neff` is **7.2** against
 a median nominal n of **71**. *(Carried from E32 and now established ledger-wide.)*
+
+## Amendments (2026-08-13, from the E42/E43 cycle)
+
+**B11 — `keep-unweighted` / `keep-general-unweighted`, the symmetric partner of B9.** B9 created
+`keep-weighted` for a finding that keeps under the population-weighted lens and not the unweighted
+one. The mirror case is now live: E42 found an association clearing 0.30 in **all four** transitions
+unweighted and in three of four weighted. Such a finding is logged **`keep-unweighted`**, or
+**`keep-general-unweighted`** where B4's replication requirement is also met, and the lens is named
+in the claim text. A status must always name the lens the keep holds under; a bare `keep` now means
+both lenses agree.
+
+**B12 — name the economies, do not say "five economies".** The ledger's standing phrase "five
+economies decide it" is a *hypothesis about a cell*, not a property of the frame. E42's P3 ran a
+leave-one-economy-out on the E16 cell and found **China alone** moves `r_w` from +0.198 to +0.726,
+while India — with almost the same population weight — moves it by +0.074. Every future G6 report on
+a weighted association must accompany the drop-top-5 figure with the **single largest leave-one-out
+effect and the economy's name**. It costs one loop and it replaces a guess with a fact.
+
+**The `neff` critique does not transfer to the unweighted lens, and write-ups must stop implying it
+does.** E40's headline result — BH rejects 1 of 33 at `neff` ≈ 7 — is a statement about the
+**population-weighted** ledger. An unweighted correlation over 77 economies has `neff` = n = 77,
+because there are no weights to concentrate. Two caveats survive and must be carried with the point:
+economies are not independent draws (regional clustering is unmodelled anywhere in this repo), and
+the unweighted statistic answers a **different question** — it describes the typical *economy*, the
+weighted one the typical *person*. Neither is the correct lens. The ledger has been reporting one of
+them as if it answered both, and B9/B11 exist to stop that.
+
+**A standing requirement for every pp-gap design.** E43's registered pp-gap secondary showed the
+income, education and labour-force gaps widening in ~3 economies out of 4, surviving both G6 and
+de-weighting — and its **scale-free log-odds twin showed no systematic widening at all**, with income
+turning negative on two of three lenses. This is E21's discard reproduced on five axes. **Any gap
+claim must report the log-odds twin beside the pp version, and where they disagree the pp version is
+the artifact** — levels rose from a low base everywhere in this window, and a pp gap widens
+arithmetically under those conditions.

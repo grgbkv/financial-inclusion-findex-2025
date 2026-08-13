@@ -421,3 +421,47 @@ experiment — which is also the natural shape for keeping the paper draft hones
   no questionnaire in the repo, so any experiment on them needs the mandatory mapping pass logged as
   exploratory first — they are not as free as their wave coverage makes them look. The thinnest
   remaining *frame* is `urbanicity` (single wave).
+
+## Addendum (2026-08-13, from the E42/E43 cycle)
+
+- **Program 2 is CLOSED, and item 2.6 resolved in an unexpected direction.** E42 executed the B9
+  re-status (**E16 and E26 → `discard-weighted`**) and then found that the substantive question
+  behind it has a clean answer: the account-growth ~ formal-saving co-movement holds at
+  **+0.470 / +0.361 / +0.394 / +0.555 unweighted across all four transitions**, every bootstrap
+  interval excluding zero, and at **+0.431 / +0.736 / +0.641 / +0.198 weighted** — clearing 0.30 in
+  three of four windows there too. **E16 was never a weak association; it was a strong one measured
+  in the single window where the weighting cancels it, and P3 shows the cancellation is China
+  alone** (drop China: +0.198 → +0.726; drop India: +0.273). New statuses **B11**
+  (`keep-unweighted` / `keep-general-unweighted`) and **B12** (name the economy, never "five
+  economies") are in `program_findex.md`. Item 2.5 is subsumed: the answer to "how much of each
+  result is the weighting" is *cell-specific and sometimes one country*, which is why B12 now
+  requires the leave-one-out by name.
+- **The single most consequential line for the paper draft.** E40's "BH rejects 1 of 33 at
+  `neff` ≈ 7" is a critique of the **population-weighted** ledger only — an unweighted correlation
+  over 77 economies has `neff` = n. The corrections block in `PAPER_DRAFT_v2.md` currently states the
+  `neff` problem without this qualification and should be amended in the v3 rewrite: the honest
+  framing is that the repo has been reporting the typical-*person* statistic as though it answered the
+  typical-*economy* question, not that its associations are undersupported across the board.
+  Regional clustering remains unmodelled under either lens and is a genuine unaddressed limitation.
+- **Program 3 — item 3.6 is answered and it is a `keep-window`.** E43: the 2021–24 saving surge
+  reached **every** disadvantaged half (weighted Δ +7.4 to +16.0pp; 29–56% of economies delivering
+  ≥+10pp to the disadvantaged group against E39's 42.1% all-adults reference), with **the young the
+  only slice to out-gain its counterpart** (+16.0 vs +14.2). **New item 3.9, and it is now this
+  program's highest-value one:** replicate the primary on 2017→2021 — the slice frame supports it and
+  it is the only route to `keep-general` under B4.
+- **A gap-design trap sprung for the second time.** E43's registered pp-gap secondary showed the
+  income, education and labour-force gaps widening in roughly three economies of four, surviving G6
+  *and* de-weighting; its scale-free log-odds twin showed **no systematic widening**, with income at a
+  52.7% coin flip and unweighted/G6 changes turning negative. This is E21's discard reproduced on five
+  axes at once. `program_findex.md` now requires the log-odds twin on every gap claim. **Anyone
+  tempted to write "the surge was regressive" should read E43's diagnostic table first.**
+- **B2 note for the next cycle.** The `education`, `age_cat`, `laborforce` and `gender` slice frames
+  are now properly used (five dimensions in one experiment) and **2011→2014 and 2014→2017 gained a
+  four-window design**. `urbanicity` remains the only untouched frame and is single-wave, so it admits
+  cross-sections only. Untouched country modules are unchanged and still led by **`fin31`** (digital
+  payment detail, four waves × 77 — the best-covered untouched block), then `fin25`, `fin34`, `fin43`,
+  `fin13`, `fin14`, `dig_acc`, plus the blocked `con`. **All of them are letter-suffixed items with no
+  questionnaire in the repo**, so each needs the mandatory exploratory mapping pass first, and
+  `dig_acc` was pre-checked this cycle: it correlates **+0.963** with `g20_any` in the 2024
+  cross-section, so it is close to a restatement of the digital-payment headline and is a poor
+  new-ground target despite being untouched.
