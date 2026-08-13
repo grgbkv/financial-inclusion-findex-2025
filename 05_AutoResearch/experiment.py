@@ -1,42 +1,38 @@
-"""E41 (pre-registered): does the untouched merchant-payment margin behave like a RAIL or like the
-BALANCE SHEET in 2021->2024?
+"""E42 (pre-registered 2026-08-13): is the UNWEIGHTED ledger a different ledger?
 
-B2 BREADTH CELL for this cycle: the country module `merchant_pay` — one column, reported in 2021
-and 2024 only (77 / 76 developing panel economies), **zero ledger mentions**.
+Program 2, item 2.6. Parent: **E40** (the ledger-wide BH + de-weighting audit) — first descendant,
+inside rule B3's cap.
 
-Parent: **E39** (the balance-sheet reframing), NOT the rails chain — E23 -> E24 -> E25 -> E35 is
-already at rule B3's lineage cap.
+WHY. E40's claim C failed and E41 produced a third live instance the same day: the population
+weighting sets the keep/discard boundary in BOTH directions (E16 +0.198w/+0.555u, E26 +0.294w/+0.364u,
+E41 +0.039w/+0.418u). Rule B9 now requires a `keep-weighted`/`discard-weighted` status when the two
+lenses disagree. A re-status alone is bookkeeping; the question worth registering is whether the
+UNWEIGHTED result is a regularity or a one-window accident — rule B8 applied to the unweighted lens.
 
-WHY. E39 found that each margin's biggest window is a different one: account ownership 2011->14,
-digital payments 2014->17, saving and borrowing 2021->24. So 2021-24 is a BALANCE-SHEET window, and
-2021->24 is digital payments' WEAKEST window (21.1% of economies gained >= 10pp, against 42.1% for
-saving and 52.6% for borrowing). That framing makes a sharp prediction on a margin the ledger has
-never touched: `merchant_pay` is the most use-side digital margin in the country file — a payment
-made to a merchant rather than a transfer or a wage — and it exists for exactly the two waves the
-episode spans.
+COVERAGE FACT CHECKED BEFORE REGISTRATION (no outcome computed): `fin24aSD_ND` exists for 2021 and
+2024 only, so E26 can NEVER be replicated on an earlier window (unpromotable, like E29).
+`account_t_d` and `fin17a_17a1_d` have all five waves, so E16 can be tested on three earlier
+transitions. The generality test therefore binds on E16 only. Declared up front.
 
-G3 DECLARATION, made honestly. `merchant_pay` is the sole column in its module and has no
-headline/narrow variant, so no variant choice is being made. But the repo contains NO questionnaire
-(HARNESS_V2_NOTES.md item 5), so the exact item wording — in particular whether the margin is
-digital-only — is not documented. Every claim is worded about "the merchant-payment margin AS CODED
-in the country file", and the item's descriptive statistics (level per wave, dispersion) are printed
-so a reader can judge the coding.
+P1 — RE-STATUS UNDER B9 (mechanical, executed either way). Recompute E16 and E26 in 2021->24 under
+both lenses from raw frames. PASS if both reproduce E40's figures within 0.02; on passing, both rows
+move `discard` -> `discard-weighted`.
 
-TWO PRE-REGISTERED TESTS.
-  P1 (E39's prediction, distributional): share of developing panel economies with
-     d merchant_pay >= +10pp. BAR: < 42.1% (formal saving's share in the same window).
-  P2 (the rails test, association): pop-weighted r(d merchant_pay, d fin17a_17a1_d) on the common
-     sample. KEEP THRESHOLD |r| >= 0.30 + G6 sign-stability with E4 retention >= 0.5 + the B6
-     inference layer (2,000-draw country bootstrap percentile interval, Kish neff, unweighted twin).
-  Context, reported but NOT registered as tests: r vs d g20_any and r vs d borrow_any_t_d.
+P2 — THE REGISTERED CLAIM (B8 on the unweighted lens). Unweighted r(d account_t_d, d fin17a_17a1_d)
+on the developing panel in 2011->14, 2014->17 and 2017->21. KEEP: r_u >= +0.30 AND positive in ALL
+THREE earlier windows. Any window below the bar or of the opposite sign is a DISCARD. 2014->2017 is
+a known low-power window (five of six unstable cells across E28/E30) but still counts — B8 admits no
+exemptions chosen after the fact.
 
-REGISTERED JOINT READING. P1 passing and P2 failing is the E39-consistent outcome. P1 failing is
-evidence against E39's framing and is recorded as such. P2 passing on its own is a `keep-window`
-only: `merchant_pay` has two waves, so under B4 it can NEVER be promoted to keep-general, exactly
-like E29. Registered up front so a positive result is not over-read.
+P3 — IS THE DIVERGENCE ONE ECONOMY? Leave-one-economy-out on the 2021->24 weighted E16 cell.
+BAR: max |d r_w| >= 0.20 => single-economy artifact (name it); every drop < 0.20 => distributed
+weighting effect, and the ledger's "five economies decide it" language needs softening.
 
-DECLARED. Contemporaneous co-movement over one window. Identifies nothing, is not causal, and with
-two waves cannot be a general regularity under B4 whatever it returns.
+B6 on every cell: 2,000-draw country bootstrap percentile interval, Kish neff, both lenses.
+
+DECLARED. P1 creates no new association. P2's claim, if it passes, is a descriptive co-movement of
+contemporaneous changes — it identifies nothing and is not causal. An unweighted correlation
+describes the typical ECONOMY, not the typical PERSON; that difference is the finding's content.
 """
 import numpy as np
 import pandas as pd
@@ -44,17 +40,20 @@ import pandas as pd
 from harness import Findex
 
 BOOT = 2000
-SEED = 41
-BIG_MOVE = 10.0
-P1_BAR = 42.1          # formal saving's share of economies >= +10pp in 2021->24 (E39)
+SEED = 42
 P2_BAR = 0.30
-WINDOW = (2021, 2024)
+P3_BAR = 0.20
 
-MP = "merchant_pay"
-SAV = "fin17a_17a1_d"
-G20 = "g20_any"
-BOR = "borrow_any_t_d"
 ACC = "account_t_d"
+SAV = "fin17a_17a1_d"
+WAGE = "fin32_acc"
+RES = "fin24aSD_ND"
+
+WINDOWS = [(2011, 2014), (2014, 2017), (2017, 2021), (2021, 2024)]
+EARLIER = [(2011, 2014), (2014, 2017), (2017, 2021)]
+
+# E40's figures on record, for the P1 reproduction check
+ON_RECORD = {"E16": (0.198, 0.555), "E26": (0.294, 0.364)}
 
 
 def _kish(w):
@@ -67,20 +66,28 @@ def _ucorr(x, y):
     return float(np.corrcoef(x[m], y[m])[0, 1]) if m.sum() >= 10 else np.nan
 
 
-def delta(fx, col):
-    t0, t1 = WINDOW
+def delta(fx, col, window):
+    t0, t1 = window
     w = fx.country_panel(fx.pan_dev, col, [t0, t1])
     if t0 not in w.columns or t1 not in w.columns:
-        return pd.DataFrame(columns=["l0", "l1", "d", "pop"])
-    return pd.DataFrame({"l0": w[t0], "l1": w[t1], "d": w[t1] - w[t0], "pop": w["pop"]}).dropna()
+        return pd.DataFrame(columns=["d", "pop"])
+    return pd.DataFrame({"d": w[t1] - w[t0], "pop": w["pop"]}).dropna()
 
 
-def boot_r(fx, df, draws=BOOT, seed=SEED):
+def cell(fx, xcol, ycol, window):
+    """Aligned per-country delta pair for one window, indexed by economy name."""
+    dx, dy = delta(fx, xcol, window), delta(fx, ycol, window)
+    return pd.DataFrame({"dx": dx["d"], "dy": dy["d"], "pop": dx["pop"]}).dropna()
+
+
+def boot(fx, df, weighted, draws=BOOT, seed=SEED):
+    """Country bootstrap percentile interval + two-sided p for the null r = 0."""
     rng = np.random.default_rng(seed)
     idx, out = np.arange(len(df)), []
     for _ in range(draws):
         d = df.iloc[rng.choice(idx, size=len(idx), replace=True)]
-        r, _n = fx.weighted_corr(d["dx"], d["dy"], d["pop"])
+        r = fx.weighted_corr(d["dx"], d["dy"], d["pop"])[0] if weighted \
+            else _ucorr(d["dx"].values, d["dy"].values)
         if pd.notna(r):
             out.append(r)
     a = np.asarray(out)
@@ -89,90 +96,103 @@ def boot_r(fx, df, draws=BOOT, seed=SEED):
             float(max(2.0 * tail, 1.0 / draws)))
 
 
-def pair(fx, dmp, other_col):
-    d2 = delta(fx, other_col)
-    return pd.DataFrame({"dx": dmp["d"], "dy": d2["d"], "pop": dmp["pop"]}).dropna(
-        ).reset_index(drop=True)
-
-
-def assoc(fx, df, label):
-    r, n = fx.weighted_corr(df["dx"], df["dy"], df["pop"])
-    ru = _ucorr(df["dx"], df["dy"])
-    lo, hi, p = boot_r(fx, df)
+def report(fx, df, label, weighted_primary=True):
+    rw, n = fx.weighted_corr(df["dx"], df["dy"], df["pop"])
+    ru = _ucorr(df["dx"].values, df["dy"].values)
+    lo, hi, p = boot(fx, df, weighted=weighted_primary)
     g6 = fx.gate_jackknife(df["dx"], df["dy"], df["pop"])
     rd = g6.get("r_droptop")
-    ret = abs(rd) / abs(r) if (rd is not None and pd.notna(rd) and abs(r) > 1e-9) else np.nan
-    print(f"  {label:44s} r_w={r:+.3f}  r_u={ru:+.3f}  n={n:3d}  neff={_kish(df['pop']):4.1f}  "
-          f"CI[{lo:+.3f},{hi:+.3f}]  p_boot={p:.4f}  G6={rd:+.3f} (ret {ret:.2f})")
-    return {"r": r, "ru": ru, "n": n, "neff": _kish(df["pop"]), "lo": lo, "hi": hi,
-            "p": p, "r_droptop": rd, "ret": ret, "g6_ok": g6["ok"]}
+    prim = rw if weighted_primary else ru
+    ret = abs(rd) / abs(prim) if (rd is not None and pd.notna(rd) and abs(prim) > 1e-9) else np.nan
+    lens = "w" if weighted_primary else "u"
+    print(f"  {label:30s} r_w={rw:+.3f}  r_u={ru:+.3f}  n={n:3d}  neff={_kish(df['pop']):5.1f}  "
+          f"CI_{lens}[{lo:+.3f},{hi:+.3f}]  p_boot={p:.4f}  G6={rd:+.3f} (ret {ret:.2f})")
+    return {"r_w": rw, "r_u": ru, "n": n, "neff": _kish(df["pop"]), "lo": lo, "hi": hi,
+            "p": p, "g6": rd, "ret": ret}
 
 
 def run(fx: Findex):
-    print("=" * 108)
-    print("E41 — the untouched `merchant_pay` margin: rail or balance sheet? (2021->2024, pan_dev)")
-    print("=" * 108)
+    print("=" * 112)
+    print("E42 — is the UNWEIGHTED ledger a different ledger? (Program 2 item 2.6; parent E40)")
+    print("=" * 112)
 
-    mp = delta(fx, MP)
-    t0, t1 = WINDOW
+    # ------------------------------------------------------------------ P1
+    print("\nP1 — B9 RE-STATUS: reproduce E16 and E26 in 2021->24 under both lenses")
+    print("     (bar: within 0.02 of E40's figures on record)\n")
+    p1 = {}
+    for name, (xc, yc) in [("E16", (ACC, SAV)), ("E26", (WAGE, RES))]:
+        d = cell(fx, xc, yc, (2021, 2024))
+        res = report(fx, d, f"{name} 2021->24")
+        rec_w, rec_u = ON_RECORD[name]
+        ok = abs(res["r_w"] - rec_w) <= 0.02 and abs(res["r_u"] - rec_u) <= 0.02
+        disagree = (abs(res["r_w"]) < P2_BAR) != (abs(res["r_u"]) < P2_BAR)
+        print(f"     on record r_w={rec_w:+.3f} r_u={rec_u:+.3f} -> reproduced: {ok}; "
+              f"lenses disagree at 0.30: {disagree}")
+        p1[name] = {"ok": ok, "disagree": disagree, **res}
+    p1_pass = all(v["ok"] for v in p1.values())
+    print(f"\n  P1 VERDICT: {'PASS' if p1_pass else 'FAIL'} — both reproduce within 0.02: {p1_pass}")
 
-    # ---- G3/G4: what this column actually looks like, printed before any test is read ---------
-    print(f"\nTHE COLUMN (G3 — sole member of its module, no variant; wording undocumented)")
-    print(f"  n economies with both waves: {len(mp)}")
-    print(f"  {t0} level: pop-weighted {np.average(mp['l0'], weights=mp['pop']):5.1f}pp   "
-          f"unweighted mean {mp['l0'].mean():5.1f}pp   median {mp['l0'].median():5.1f}pp   "
-          f"range {mp['l0'].min():.1f}-{mp['l0'].max():.1f}")
-    print(f"  {t1} level: pop-weighted {np.average(mp['l1'], weights=mp['pop']):5.1f}pp   "
-          f"unweighted mean {mp['l1'].mean():5.1f}pp   median {mp['l1'].median():5.1f}pp   "
-          f"range {mp['l1'].min():.1f}-{mp['l1'].max():.1f}")
-    cov = fx.gate_coverage(fx.pan_dev, MP, 2024)
-    print(f"  G4: {cov['n_countries']} economies, population share {cov['pop_share']:.3f} "
-          f"-> {'ok' if cov['ok'] else 'FAIL'}")
+    # ------------------------------------------------------------------ P2
+    print("\n" + "-" * 112)
+    print("P2 — B8 ON THE UNWEIGHTED LENS: r_u(d account, d formal saving) in every earlier window")
+    print("     (bar: r_u >= +0.30, positive sign, in ALL THREE)\n")
+    p2 = {}
+    for w in WINDOWS:
+        d = cell(fx, ACC, SAV, w)
+        p2[w] = report(fx, d, f"{w[0]}->{w[1]}", weighted_primary=False)
+    passes = {w: (p2[w]["r_u"] >= P2_BAR) for w in EARLIER}
+    print("\n     earlier-window bar (r_u >= +0.30, positive):")
+    for w in EARLIER:
+        print(f"       {w[0]}->{w[1]}  r_u={p2[w]['r_u']:+.3f}  "
+              f"{'PASS' if passes[w] else 'FAIL'}")
+    p2_pass = all(passes.values())
+    print(f"\n  P2 VERDICT: {'KEEP' if p2_pass else 'DISCARD'} — "
+          f"{sum(passes.values())}/3 earlier windows clear the bar")
 
-    # ---- P1: the distributional test --------------------------------------------------------
-    share = float((mp["d"] >= BIG_MOVE).mean()) * 100
-    se = np.sqrt((share / 100) * (1 - share / 100) / len(mp)) * 100
-    print("\n" + "-" * 108)
-    print("P1 — share of developing panel economies gaining >= +10pp, 2021->2024 "
-          "(E39's table, with merchant_pay inserted)")
-    print("-" * 108)
-    print(f"  {'margin':22s} {'share >=+10pp':>14s} {'median d':>10s} {'mean d (unw)':>13s} "
-          f"{'mean d (wtd)':>13s} {'n':>4s}")
-    ref = {}
-    for name, col in [("merchant payments", MP), ("formal saving", SAV), ("any borrowing", BOR),
-                      ("digital payments", G20), ("account ownership", ACC)]:
-        d = delta(fx, col)
-        s = float((d["d"] >= BIG_MOVE).mean()) * 100
-        ref[name] = s
-        print(f"  {name:22s} {s:13.1f}% {d['d'].median():10.2f} {d['d'].mean():13.2f} "
-              f"{np.average(d['d'], weights=d['pop']):13.2f} {len(d):4d}")
-    p1_pass = share < P1_BAR
-    print(f"\n  P1: merchant payments {share:.1f}% (+-{1.96*se:.1f} binomial 95%) vs bar "
-          f"< {P1_BAR}%  ->  {'PASS' if p1_pass else 'FAIL'}")
+    # de-weighting shift per window, reported as context
+    print("\n     de-weighting shift (r_u - r_w) by window:")
+    for w in WINDOWS:
+        print(f"       {w[0]}->{w[1]}  r_w={p2[w]['r_w']:+.3f}  r_u={p2[w]['r_u']:+.3f}  "
+              f"shift={p2[w]['r_u'] - p2[w]['r_w']:+.3f}")
 
-    # ---- P2: the registered association -----------------------------------------------------
-    print("\n" + "-" * 108)
-    print("P2 — registered association, plus the two context cells (B6 inference on all three)")
-    print("-" * 108)
-    p2 = assoc(fx, pair(fx, mp, SAV), "REGISTERED  d merchant_pay ~ d formal saving")
-    ctx_g20 = assoc(fx, pair(fx, mp, G20), "context     d merchant_pay ~ d digital payments")
-    ctx_bor = assoc(fx, pair(fx, mp, BOR), "context     d merchant_pay ~ d any borrowing")
+    # ------------------------------------------------------------------ P3
+    print("\n" + "-" * 112)
+    print("P3 — LEAVE-ONE-ECONOMY-OUT on the 2021->24 weighted E16 cell")
+    print(f"     (bar: max |d r_w| >= {P3_BAR} => single-economy artifact)\n")
+    d = cell(fx, ACC, SAV, (2021, 2024))
+    r_full = fx.weighted_corr(d["dx"], d["dy"], d["pop"])[0]
+    loo = {}
+    for e in d.index:
+        s = d.drop(index=e)
+        loo[e] = fx.weighted_corr(s["dx"], s["dy"], s["pop"])[0] - r_full
+    loo = pd.Series(loo).sort_values(key=abs, ascending=False)
+    print(f"     full-sample r_w = {r_full:+.3f} (r_u = {p2[(2021, 2024)]['r_u']:+.3f}, "
+          f"gap = {p2[(2021, 2024)]['r_u'] - r_full:+.3f})")
+    print("     largest single-economy effects on r_w:")
+    for e, v in loo.head(8).items():
+        pop_share = d.loc[e, "pop"] / d["pop"].sum() * 100
+        print(f"       drop {e:22s} d r_w = {v:+.3f}   -> r_w = {r_full + v:+.3f}   "
+              f"(pop share {pop_share:4.1f}%)")
+    p3_single = abs(loo.iloc[0]) >= P3_BAR
+    print(f"\n  P3 VERDICT: max |d r_w| = {abs(loo.iloc[0]):.3f} ({loo.index[0]}) -> "
+          f"{'SINGLE-ECONOMY ARTIFACT' if p3_single else 'DISTRIBUTED WEIGHTING EFFECT'}")
 
-    p2_pass = (abs(p2["r"]) >= P2_BAR) and p2["g6_ok"] and (p2["ret"] >= 0.5)
-    print(f"\n  P2: |r| = {abs(p2['r']):.3f} vs bar {P2_BAR}; G6 sign-stable "
-          f"{p2['g6_ok']}; E4 retention {p2['ret']:.2f} vs 0.5  ->  "
-          f"{'PASS' if p2_pass else 'FAIL'}")
+    # how many economies must be dropped before r_w reaches the unweighted value?
+    order = d.assign(share=d["pop"] / d["pop"].sum()).sort_values("share", ascending=False)
+    target = p2[(2021, 2024)]["r_u"]
+    print("\n     cumulative drop of the largest economies (E16 2021->24):")
+    for k in range(0, 7):
+        s = d.drop(index=order.index[:k]) if k else d
+        rk = fx.weighted_corr(s["dx"], s["dy"], s["pop"])[0]
+        print(f"       drop top {k}: r_w = {rk:+.3f}   n = {len(s)}   "
+              f"neff = {_kish(s['pop']):5.1f}" + ("   <- unweighted target %+.3f" % target
+                                                  if k == 0 else ""))
 
-    print("\n" + "=" * 108)
-    print("VERDICT INPUTS")
-    print("=" * 108)
-    print(f"  P1 (E39's balance-sheet prediction)  {'PASS' if p1_pass else 'FAIL'}")
-    print(f"  P2 (merchant payments as a rail)     {'PASS' if p2_pass else 'FAIL'}")
-    print("  Registered joint reading: P1 pass + P2 fail = the E39-consistent outcome "
-          "(a rail that was not moving).")
-    print("  B4: two waves only — merchant_pay can never reach keep-general, whatever P2 returns.")
-    return {"share": share, "p1": p1_pass, "p2": p2_pass, "assoc": p2,
-            "ctx_g20": ctx_g20, "ctx_bor": ctx_bor}
+    print("\n" + "=" * 112)
+    print(f"SUMMARY  P1 {'PASS' if p1_pass else 'FAIL'} (re-status E16/E26 -> discard-weighted)  |  "
+          f"P2 {'KEEP' if p2_pass else 'DISCARD'}  |  "
+          f"P3 {'single-economy' if p3_single else 'distributed'}")
+    print("=" * 112)
 
 
 if __name__ == "__main__":
