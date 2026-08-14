@@ -5335,3 +5335,65 @@ same individuals.
 changes — a gap, a difference, or a ratio — must report its log-odds twin, and where they disagree
 the pp version is the artifact.* The existing rule names gaps only; E44's P2 was a ratio, registered
 in good faith as scale-relative, and it failed for the same mechanical reason.
+
+---
+
+### E45 — VERDICT: registered redundancy claim DISCARDED — `fin31` is neither a restatement nor cleanly independent, and one item runs the other way, 2026-08-15
+
+**PART A — mapping pass (exploratory, peek rule; documented in `HARNESS_V2_NOTES.md` item 6 as
+inferred, not authoritative).** Developing-panel population-weighted levels, 2014 / 2017 / 2021 /
+2024:
+
+| column | 2014 | 2017 | 2021 | 2024 | n 2024 |
+|---|---|---|---|---|---|
+| `fin31a_31b` | 7.9 | 14.8 | 18.2 | 17.6 | 71 |
+| `fin31a` | 7.3 | 13.6 | 15.5 | 11.9 | 71 |
+| `fin31b` | 1.1 | 7.0 | 7.9 | 14.5 | 71 |
+| `fin31c` | — | — | — | 0.6 | 71 |
+| **`fin31d`** | **47.1** | **34.1** | **20.5** | **26.6** | 71 |
+| `fin31a_31b_s` / `fin31a_s` / `fin31b_s` / `fin31d_s` | thin | | | 42.0 / 36.7 / 41.6 / 60.7 | 50 / 36 / 44 / 59 |
+| `g20_any` *(headline, for scale)* | 34.3 | 44.6 | 55.9 | 60.9 | 76 |
+
+`fin31c` is 2024-only at 0.6pp and fails the registered coverage floor — excluded. The `_s` family
+thins backwards (as few as 2 economies in 2014) and supports 2021→24 only.
+
+**PART B — the registered screen: DISCARD.** Median |`r_level`| is **0.745 weighted / 0.680
+unweighted** against a 0.80 bar, so the redundancy claim fails on **both** lenses. But **no item meets
+the registered independence definition either** (|r_level| < 0.50 *and* |r_delta| < 0.30 on both
+lenses). The module is a family of *moderately* correlated narrow items — neither a `dig_acc`-style
+restatement (+0.963) nor new ground orthogonal to the headline.
+
+| item | r_level (w) | [95% CI] | G6 | r_level (u) | r_delta (w) | r_delta (u) | neff |
+|---|---|---|---|---|---|---|---|
+| `fin31a_31b` | +0.797 | [+0.637, +0.895] | +0.821 | +0.815 | +0.404 | +0.532 | 7.2 |
+| `fin31a` | +0.708 | [+0.517, +0.826] | +0.648 | +0.626 | +0.378 | +0.270 | 7.2 |
+| `fin31b` | +0.826 | [+0.702, +0.912] | +0.853 | +0.822 | +0.209 | +0.483 | 7.2 |
+| **`fin31d`** | **−0.401** | [−0.585, −0.205] | −0.372 | −0.358 | −0.113 | −0.317 | 7.2 |
+| `fin31a_31b_s` | +0.759 | [+0.466, +0.930] | +0.803 | +0.721 | +0.664 | +0.642 | 5.4 |
+| `fin31a_s` | +0.719 | [+0.394, +0.897] | +0.401 | +0.647 | +0.482 | +0.250 | 11.3 |
+| `fin31b_s` | +0.810 | [+0.652, +0.909] | +0.623 | +0.629 | +0.609 | +0.481 | 14.8 |
+| **`fin31d_s`** | **−0.730** | [−0.893, −0.454] | −0.646 | −0.713 | −0.158 | −0.541 | 6.4 |
+
+**The finding worth carrying forward is the sign.** `fin31d` and `fin31d_s` are the **only two
+columns in the ledger's country file that move *against* the digital-payment headline** — −0.401 and
+−0.730 in levels, on both lenses and through G6. `fin31d`'s level also **falls 47.1 → 26.6** across
+the decade while `g20_any` rises 34.3 → 60.9. The structural reading (inferred, no questionnaire) is
+a **cash / non-digital residual margin**, and it is the first candidate this loop has found for
+measuring the *retreat* of cash rather than the advance of digital payment. Registered here as the
+module's new-ground target even though it does not meet the strict independence definition — that
+definition was written to catch *orthogonal* items and a strongly *negative* one is at least as
+interesting, which is a mis-specification of my own bar worth recording.
+
+**A robustness result that is unusual for this ledger, and it deserves naming (B12).** On
+`fin31a_31b` the weighted and unweighted level correlations are **+0.797 and +0.815**, drop-top-5 is
+**+0.821**, and the **largest single leave-one-economy-out effect is Brazil at −0.042**. After E42's
+China result (+0.198 → +0.726 on one drop) this is the opposite case: a cell where every robustness
+lens agrees and no economy matters much. **`neff` is still 7.2** — which is the point worth teaching
+from it: low `neff` says the *weights* are concentrated, not that the *result* is fragile. The two
+diagnostics answer different questions and this cell separates them cleanly.
+
+**Declared.** Cross-sectional levels plus one Δ window; every `fin31` item is a narrow variant of the
+digital-payment concept under G3 and that overlap is the hypothesis. Nothing causal. A correlation
+between an item and the headline is a statement about measurement redundancy, not behaviour. Item
+meanings are inferred from levels and coverage, never from a questionnaire, and any future experiment
+on this module must repeat that caveat.

@@ -22,3 +22,20 @@
    is fetched into `microdata/`. Structural identification (filter populations, response scales)
    is possible without it; item *meaning* is not, and guessing meaning would be worse than
    leaving the block alone.
+6. **`fin31` mapping (E45, 2026-08-15) — INFERRED from the numbers, NOT authoritative.** The module
+   has no questionnaire in the repo, so this is structural identification only; item *meaning* below
+   is a reading of coverage and levels, and any experiment citing it must repeat that caveat.
+   Developing-panel population-weighted levels, 2014 / 2017 / 2021 / 2024 (n economies in brackets):
+
+   | column | 2014 | 2017 | 2021 | 2024 | reading |
+   |---|---|---|---|---|---|
+   | `fin31a_31b` | 7.9 | 14.8 | 18.2 | 17.6 [71] | composite of a and b; r(composite, `fin31a`) = +0.893 |
+   | `fin31a` | 7.3 | 13.6 | 15.5 | 11.9 | a digital-payment channel, rising then falling |
+   | `fin31b` | 1.1 | 7.0 | 7.9 | 14.5 | a second channel, still rising in 2021→24 |
+   | `fin31c` | — | — | — | 0.6 [71] | **2024-only and at 0.6pp — unusable, fails the coverage floor** |
+   | `fin31d` | 47.1 | 34.1 | 20.5 | 26.6 | **falls while `g20_any` rises 34.3 → 60.9 — reads as a CASH / non-digital residual, and it is the one item that correlates NEGATIVELY with the headline (−0.401 levels)** |
+   | `fin31a_31b_s`, `fin31a_s`, `fin31b_s`, `fin31d_s` | see log | | | 42.0 / 36.7 / 41.6 / 60.7 | the `_s` suffix has different coverage (36–59 economies) and systematically higher levels than its unsuffixed twin — **treat suffixed and unsuffixed as DIFFERENT items, never the same concept measured twice** |
+
+   Coverage note that matters for design: the unsuffixed items are 77 economies × four waves; the
+   suffixed ones thin sharply backwards (2 economies for `fin31b_s` in 2014), so the `_s` family
+   supports 2021→24 only.

@@ -465,3 +465,47 @@ experiment — which is also the natural shape for keeping the paper draft hones
   `dig_acc` was pre-checked this cycle: it correlates **+0.963** with `g20_any` in the 2024
   cross-section, so it is close to a restatement of the digital-payment headline and is a poor
   new-ground target despite being untouched.
+
+## Addendum (2026-08-15, from the E44/E45 cycle)
+
+- **Program 3 — item 3.9 is answered, negatively, and E43's promotion route is closed.** E44 ran
+  E43's bars verbatim on all three earlier transitions: **0/5, 0/5 and 1/5 dimensions** clear them
+  against 5/5 in 2021→24, so **E43 stays `keep-window` and is now on record as having *failed* its
+  promotion test**. The failure is a **magnitude** failure, declared in advance: bar (a) is nearly met
+  in the earlier windows (+4.49 to +6.41pp across slices) while bar (b) — 25% of economies delivering
+  ≥+10pp to the disadvantaged half — is missed everywhere (0.0–36.8% against 29.1–56.4%). E39 had
+  already established 2021→24 as the largest within-country saving episode of the four; **there was no
+  earlier episode of that size for the breadth question to be asked of.** No further replication of
+  E43 should be registered — the answer will not change by re-asking it.
+- **A frame fact for anyone planning `pan_grp` work on earlier waves:** the slice frame covers only
+  **27 / 34 / 38** economies in 2011→14 / 2014→17 / 2017→21 against 55 in 2021→24, at country-level
+  Kish `neff` of **4.2 / 4.6 / 4.8**. The earlier windows are thin in this frame in a way the `all`
+  frame is not, and any design there should be powered accordingly.
+- **New item 1.7, from E44's earlier-window table:** formal saving **declines in every slice** in
+  2014→2017 (weighted Δ −3.65 to +2.35pp, unweighted medians negative in four of five). That is the
+  slice-level counterpart of the `save_any_t_d` 53.1 → 43.6 drop that item 1.4 flags as possibly
+  definitional. **Settling whether the 2014→17 drop is real or a definitional break is now blocking
+  two items** (1.4 and any decade-scale claim on this margin) and should be the next Program-1 slot.
+- **Program 7-adjacent — `fin31` is screened and the module is HALF-open (E45).** It is neither a
+  `dig_acc`-style restatement (median |r_level| **0.745 wtd / 0.680 unwtd** against a 0.80 bar) nor
+  cleanly independent (no item clears the independence definition). **New item 7.6, and it is the best
+  new-ground target this cycle produced:** `fin31d` / `fin31d_s` are the **only country-file columns
+  that move against the digital-payment headline** (−0.401 and −0.730 in 2024 levels, on both lenses,
+  through G6), and `fin31d` **falls 47.1 → 26.6pp** across the decade while `g20_any` rises 34.3 →
+  60.9. Structurally this reads as a **cash / non-digital residual margin** and it is the loop's first
+  candidate for measuring the *retreat of cash* rather than the advance of digital payment — with the
+  standing caveat that all `fin31` item meanings are inferred from levels and coverage
+  (`HARNESS_V2_NOTES.md` item 6), never from a questionnaire. Four waves × 77 economies, so it
+  supports Δ designs and earlier-window replication, unlike most untouched blocks.
+- **A `neff` clarification that changes how results should be read, now rule-level.** E45's
+  `fin31a_31b` cell has the ledger's usual `neff` = 7.2 and is simultaneously the most robust cell in
+  it: weighted +0.797 vs unweighted +0.815, drop-top-5 +0.821, largest leave-one-out **Brazil at
+  −0.042**. A low `neff` says the *weights* are concentrated, not that the *result* is fragile —
+  contrast E42's China cell at the same `neff`. Four diagnostics, four questions.
+- **B2 note for the next cycle.** `fin31` is now used (its `_s` family supports 2021→24 only; the
+  unsuffixed items support all four transitions). Untouched country modules remaining: **`fin34`**
+  (wage payment modes, four waves — now the best-covered untouched block), `fin43` (agricultural
+  payments, four waves), `fin25` (mostly 2024-only), `fin13`/`fin14` (2024, 27 economies), `dig_acc`
+  (2024-only and a near-restatement of the headline), plus the blocked `con`. The `pan_grp` slice
+  frames are now used on **all four** transitions. `urbanicity` remains the only untouched frame and
+  is single-wave.

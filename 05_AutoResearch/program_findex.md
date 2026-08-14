@@ -206,3 +206,23 @@ turning negative on two of three lenses. This is E21's discard reproduced on fiv
 claim must report the log-odds twin beside the pp version, and where they disagree the pp version is
 the artifact** — levels rose from a low base everywhere in this window, and a pp gap widens
 arithmetically under those conditions.
+
+## Amendment (2026-08-15, from the E44/E45 cycle)
+
+**B13 — the log-odds twin requirement extends from gaps to any pp comparison between groups.** The
+2026-08-13 amendment required a scale-free twin beside every *gap* claim. E44 registered a **ratio of
+percentage-point changes** (the "reach ratio", disadvantaged Δ / advantaged Δ) in good faith as a
+scale-relative statistic and it failed for exactly the arithmetic reason gaps fail: while both groups
+are below 50%, equal proportional growth produces **fewer pp** for the lower-starting group. On the
+log-odds twin all five dimensions cleared the same bar (0.845–1.107) where three of five failed on pp
+(0.576–0.721). **Any between-group comparison of percentage-point changes — a gap, a difference, or a
+ratio — must report its log-odds twin, and where the two disagree the pp version is the artifact.**
+This is the third instance of the same trap (E21, E43's secondary, E44's P2).
+
+**A clarification owed on `neff`, from E45.** A low Kish `neff` says the **weights are concentrated**;
+it does not say the **result is fragile**. E45's `fin31a_31b` cell has `neff` = 7.2 — the ledger's
+usual figure — and yet its weighted and unweighted correlations are +0.797 and +0.815, drop-top-5 is
++0.821, and the largest single leave-one-out effect is **Brazil at −0.042**. E42's E16 cell has the
+same `neff` and moves +0.198 → +0.726 on dropping China. `neff`, the unweighted twin, G6 and the
+named leave-one-out are **four different diagnostics**, and write-ups must stop treating a low `neff`
+as though it settled the others.
