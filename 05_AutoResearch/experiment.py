@@ -96,6 +96,26 @@ def slice_panel(fx, dim, col, window):
     return out.dropna(subset=["pop"])
 
 
+def slice_levels(fx, dim, col, window):
+    """EXPLORATORY diagnostic support: the same table but carrying LEVELS, for the log-odds twin."""
+    dis, adv = DIMS[dim]
+    g = fx.pan_grp
+    d = g[(g["incomegroupwb24"] != "High income") & (g["group"] == dim)
+          & (g["year"].isin(window))]
+    wide = d.pivot_table(index="countrynewwb", columns=["year", "group2"], values=col) * 100
+    need = [(window[0], dis), (window[0], adv), (window[1], dis), (window[1], adv)]
+    if any(c not in wide.columns for c in need):
+        return pd.DataFrame()
+    lo = lambda s: np.log(np.clip(s, 0.5, 99.5) / (100 - np.clip(s, 0.5, 99.5)))
+    out = pd.DataFrame({
+        "lo_dis": lo(wide[(window[1], dis)]) - lo(wide[(window[0], dis)]),
+        "lo_adv": lo(wide[(window[1], adv)]) - lo(wide[(window[0], adv)]),
+    }).dropna()
+    pop = g[(g["year"] == 2024) & (g["group"] == "all")].set_index("countrynewwb")["pop_adult"]
+    out["pop"] = pop.reindex(out.index)
+    return out.dropna(subset=["pop"])
+
+
 def wmean(df, col):
     return float(np.average(df[col], weights=df["pop"]))
 
@@ -263,6 +283,27 @@ def run(fx: Findex):
         full, delta, who = loo_named(r["tab"], "d_dis")
         print(f"  {w[0]}->{w[1]}: wtd delta {full:+6.2f}pp   largest drop = {who} "
               f"({delta:+.2f}pp -> {full + delta:+.2f}pp)   n={r['n']}  neff={r['neff']:.1f}")
+
+    # ---------------------------------------------------- exploratory: the log-odds reach twin
+    print("\n" + "=" * 122)
+    print("EXPLORATORY DIAGNOSTIC (unregistered, peek rule — no keep hangs on it): the log-odds twin")
+    print("  a pp delta is baseline-dependent: under EQUAL proportional (log-odds) growth, a group")
+    print("  starting lower gains FEWER pp while both are under 50%. P2's ratio bar inherits that.")
+    print(f"  {'window':12s} {'dimension':11s} {'wtdLO_dis':>9s} {'wtdLO_adv':>9s} {'LO ratio':>9s} "
+          f"{'unwtd LO ratio':>14s} {'econ dis>=adv':>13s}")
+    for w in WINDOWS:
+        for dim in DIMS:
+            t = slice_levels(fx, dim, SAV, w)
+            if t.empty or len(t) < 10:
+                continue
+            a, b = wmean(t, "lo_dis"), wmean(t, "lo_adv")
+            ua, ub = float(t["lo_dis"].median()), float(t["lo_adv"].median())
+            rr = a / b if abs(b) > 0.05 else np.nan
+            ur = ua / ub if abs(ub) > 0.05 else np.nan
+            sh = float((t["lo_dis"] >= t["lo_adv"]).mean() * 100)
+            print(f"  {w[0]}->{w[1]:<7d} {dim:11s} {a:+9.3f} {b:+9.3f} "
+                  f"{rr:9.3f} {ur:14.3f} {sh:12.1f}%")
+        print()
 
     print("\n" + "=" * 122)
     print(f"SUMMARY  P1 {'PROMOTE' if promote else 'FAIL (E43 stays keep-window)'}  |  "
