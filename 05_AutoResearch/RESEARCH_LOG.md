@@ -5135,3 +5135,117 @@ rule requires.
   that every pp-gap claim carry its log-odds twin, with the pp version treated as the artifact where
   they disagree. Program 2 is now closed; Program 3's live item is **3.9**, the 2017→2021 replication
   of E43's primary, which is its only route to `keep-general`.
+
+---
+
+## Cycle 2026-08-15 — pre-registration (written before any outcome was computed)
+
+Working tree clean at start. `python3 coverage.py` run before hypotheses were chosen (rule B1).
+The prediction stream stays **closed** (P28, 2026-08-09): its closing rule requires a change to the
+*task*, not another mechanism, and none is proposed here.
+
+**Coverage cells this cycle lands on, declared under B1/B2.**
+
+| experiment | frame | wave transitions | modules | B2 status |
+|---|---|---|---|---|
+| E44 | `pan_grp` — gender, income, education, age_cat, laborforce | **2011→14, 2014→17, 2017→21** + 2021→24 recomputed in-file | `fin17a_17a1_d` | the slice frames have never been used on any transition other than 2021→24 — this is the frame×transition cell the ledger has never entered |
+| E45 | `pan_dev`, group=all | 2021→24 (+ per-wave levels 2014/2017/2021/2024) | **`fin31` — digital-payment detail, 9 columns, ZERO ledger mentions** | **B2 CELL: an untouched module, and the best-covered one left (four waves × 77 economies)** |
+
+**Lineage (B3).** E44's parent is **E43** — first descendant, and it is the promotion test E43's own
+verdict named (agenda item 3.9). E45's parent is **E41** (the `merchant_pay` out-of-sample insert),
+which is itself the only other untouched-module screening experiment in the ledger — first descendant
+on that line. Neither chain is near the cap.
+
+---
+
+### E44 — pre-registration: did earlier growth episodes also reach every demographic slice? (Program 3, item 3.9 — the B4 promotion test for E43)
+
+**Why.** E43's primary is `keep-window`: in 2021→24 the formal-saving surge reached every
+disadvantaged half (weighted Δ +7.4 to +16.0pp; 29–56% of economies delivering ≥+10pp to the
+disadvantaged group). Under **B4** that is a window claim until replicated, and under **B8**
+promotion requires **every** tested earlier window to agree. This is its only route to
+`keep-general`.
+
+**A fact declared before the run, because it shapes how the result must be read.** E39 established
+that 2021→24 is the largest within-country formal-saving episode of the four transitions (42.1% of
+economies ≥+10pp against a 20.8% previous best, all adults). E43's bar (b) — 25% of economies
+delivering ≥+10pp to the disadvantaged half — is therefore **a bar the earlier windows may well fail
+on magnitude alone, without saying anything about breadth**. Both statistics are registered up front
+so the distinction cannot be drawn after seeing the numbers:
+
+**P1 — the mechanical B4/B8 replication (this is what decides the promotion).** E43's bars applied
+verbatim to each earlier transition, on the same five dimensions, same frame, same weight
+declaration: (a) the disadvantaged group's population-weighted Δ ≥ **+5.0pp**; (b) the unweighted
+share of economies where the disadvantaged group gained ≥ **+10pp** is ≥ **25%**; a dimension passes
+if both hold; a window passes if ≥ **4 of 5** dimensions pass. **PROMOTE E43 to `keep-general` only
+if all three earlier windows pass** (B8: one agreeing window is not enough). Otherwise E43 stays
+`keep-window` and is recorded as having *failed* its promotion test, which is a stronger negative
+than "not attempted" (E35's precedent). Per the E35 rule, **2021→24 is recomputed inside the same
+file** and must reproduce E43's table within 0.1pp before any earlier window is read.
+
+**P2 — the scale-relative claim, registered as a separate keep.** *When formal saving grows in a
+window, it grows for the disadvantaged half roughly in proportion to the advantaged half — breadth is
+a general feature even where magnitude is not.* Statistic: the **reach ratio** = (disadvantaged
+population-weighted Δ) / (advantaged population-weighted Δ) per dimension per window, computed
+**only where the advantaged Δ ≥ +2.0pp** (a ratio on a near-zero denominator is meaningless; the
+filter is declared now, not chosen later, and windows/dimensions excluded by it are printed).
+KEEP if the reach ratio is ≥ **0.75** in ≥ **4 of 5** dimensions in **every** qualifying window.
+Reported beside it, either way: the unweighted median reach ratio and the unweighted share of
+economies where the disadvantaged group's Δ is ≥ the advantaged group's Δ.
+
+**B6/B9/B12 obligations.** 2,000-draw country bootstrap (economies resampled carrying all their
+subgroup rows) on every weighted mean, share and reach ratio; **country-level** Kish `neff` per
+E37's rule (i); the unweighted twin printed beside every weighted statistic; and for the headline
+weighted Δ of each window, the **largest single leave-one-economy-out effect with the economy
+named** (B12).
+
+**Declared.** A distributional description, not an association — the 0.30 correlation threshold does
+not apply. No gap statistic is registered here, deliberately: E43's pp-gap secondary died on its
+log-odds twin and the standing rule now requires that twin, so this experiment asks about *reach*
+(each group's own Δ and their ratio), which is scale-relative by construction. Nothing here is
+causal, and a group's Δ is a change in a cross-sectional rate, not a change experienced by the same
+individuals.
+
+---
+
+### E45 — pre-registration: is the digital-payment *detail* module a restatement of the headline, or does it carry independent variation? (new ground — the cycle's B2 cell)
+
+**Why.** `fin31` is 9 columns × four waves × ~77 developing economies with **zero ledger mentions** —
+the best-covered untouched country module left. It has no questionnaire in the repo, so the mandatory
+mapping pass applies (Program 7's rule, generalised). The precedent that motivates the design is
+`dig_acc`, pre-checked in the E42/E43 cycle: it correlates **+0.963** with `g20_any` in the 2024
+cross-section and is therefore a near-restatement of the digital-payment headline, i.e. an untouched
+module that is not new ground at all. Before this loop spends a cycle building a hypothesis on
+`fin31`, it should establish whether the module is in the same position.
+
+**Part A — MAPPING PASS, logged as EXPLORATORY under the peek rule.** Per `fin31` column: per-wave
+developing-panel country counts and population-weighted levels, plus the item's relation to the
+composites (`fin31a_31b`, and the `_s` suffixed variants against their unsuffixed twins). Labels are
+inferred from the numbers and documented in `HARNESS_V2_NOTES.md` as **inferred, not authoritative**.
+No keep hangs on Part A and nothing in it may be cited as a finding.
+
+**Part B — the registered screening claim, written before any `fin31` value was computed.** *The
+`fin31` module is a restatement of the digital-payment headline and carries no independent
+variation.* Qualifying items: `fin31` columns with ≥ 30 developing-panel economies in **both** 2021
+and 2024. Per qualifying item, two statistics with both lenses (B9): `r_level` = correlation of the
+item's 2024 level with `g20_any`'s 2024 level, and `r_delta` = correlation of the item's Δ2021→24
+with Δ`g20_any`.
+
+- **KEEP the redundancy claim** if the median |`r_level`| across qualifying items is ≥ **0.80** on
+  both lenses **and** no item qualifies as independent.
+- **An item is INDEPENDENT** if |`r_level`| < **0.50** and |`r_delta`| < **0.30** on **both** lenses.
+- **DISCARD the redundancy claim** if the median falls below 0.80 on either lens or any item is
+  independent — in which case the independent items are **named as the new-ground targets** for a
+  later cycle, which is the useful outcome either way.
+
+**B6/B9/B10/B12 obligations.** 2,000-draw country bootstrap percentile interval on every reported
+correlation and on the median; Kish `neff` beside every nominal n, with no significance language
+attached to nominal n; the unweighted twin beside every weighted statistic, and the verdict labelled
+with the lens it holds under; G6 drop-top-5 on every correlation, and for the single most important
+item the **largest leave-one-out effect with the economy named**.
+
+**Declared.** Cross-sectional levels and one Δ window; `g20_any` is the declared headline variant for
+the digital-payment concept under G3, and every `fin31` item is by construction a narrow variant of
+the same concept — that overlap is the hypothesis, not a confound. Nothing here is causal. A high
+correlation between an item and the headline is a statement about measurement redundancy, not about
+behaviour.
