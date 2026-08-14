@@ -1,42 +1,41 @@
-"""E44 (pre-registered 2026-08-15): did EARLIER growth episodes also reach every demographic slice?
+"""E45 (pre-registered 2026-08-15): is the digital-payment DETAIL module (`fin31`) a restatement of
+the headline, or does it carry independent variation?
 
-Program 3, item 3.9 — the B4/B8 promotion test for E43. Parent: **E43** (first descendant).
+New ground — the cycle's B2 cell. `fin31` is 9 columns x four waves x ~77 developing economies with
+ZERO ledger mentions: the best-covered untouched country module left. Parent: **E41** (the
+`merchant_pay` untouched-module insert), first descendant on that line.
 
-B2 CELL FOR THIS CYCLE (E44's half): the `pan_grp` slice frames have never been used on any wave
-transition other than 2021->2024. This runs them on 2011->14, 2014->17 and 2017->21.
+WHY. `dig_acc` was pre-checked in the previous cycle and correlates +0.963 with `g20_any` in the 2024
+cross-section — an untouched module that is not new ground at all. Before the loop spends a cycle
+building a hypothesis on `fin31`, it should establish whether the module is in the same position.
+The module has no questionnaire in the repo, so the mandatory mapping pass applies.
 
-WHY. E43's primary is `keep-window`: in 2021->24 the formal-saving surge reached every disadvantaged
-half. Under B4 that is a window claim until replicated, and under B8 promotion requires EVERY tested
-earlier window to agree. This is its only route to `keep-general`.
+PART A — MAPPING PASS, logged as EXPLORATORY under the peek rule. Per-wave developing-panel country
+counts and population-weighted levels per column, plus the composites against their parts. Labels are
+INFERRED from the numbers, documented as inferred and not authoritative. No keep hangs on Part A.
 
-DECLARED BEFORE THE RUN. E39 established that 2021->24 is the largest within-country formal-saving
-episode of the four transitions (42.1% of economies >= +10pp, all adults, against a 20.8% previous
-best). E43's bar (b) may therefore fail in earlier windows on MAGNITUDE alone, saying nothing about
-BREADTH. Both statistics are registered up front so the distinction cannot be drawn after the fact.
+PART B — THE REGISTERED SCREENING CLAIM (written before any fin31 value was computed):
+"the `fin31` module is a restatement of the digital-payment headline and carries no independent
+variation." Qualifying items: fin31 columns with >= 30 developing-panel economies in BOTH 2021 and
+2024. Per item, two statistics under both lenses (B9):
+  r_level = corr(item 2024 level, g20_any 2024 level)
+  r_delta = corr(item delta 2021->24, g20_any delta 2021->24)
+  KEEP the redundancy claim if median |r_level| across qualifying items >= 0.80 on BOTH lenses AND
+    no item qualifies as independent.
+  An item is INDEPENDENT if |r_level| < 0.50 AND |r_delta| < 0.30 on BOTH lenses.
+  DISCARD otherwise, NAMING the independent items as new-ground targets for a later cycle — which is
+    the useful outcome either way.
 
-P1 — the mechanical B4/B8 replication (this decides the promotion). E43's bars verbatim:
-  (a) disadvantaged group's population-weighted delta >= +5.0pp
-  (b) unweighted share of economies with disadvantaged delta >= +10pp is >= 25%
-  dimension passes if both; window passes if >= 4 of 5 dimensions pass.
-  PROMOTE E43 to `keep-general` only if ALL THREE earlier windows pass. Per the E35 rule, 2021->24 is
-  recomputed inside this file and must reproduce E43's table within 0.1pp before anything else is read.
+B6/B9/B10/B12: 2,000-draw country bootstrap on every correlation and on the median; Kish neff beside
+every nominal n with no significance language on nominal n; unweighted twin beside every weighted
+statistic and the verdict labelled with the lens; G6 drop-top-5 on every correlation; and the largest
+leave-one-economy-out effect, with the economy NAMED, for the single most important item.
 
-P2 — the scale-relative claim, a separate keep. "When formal saving grows in a window, it grows for
-  the disadvantaged half roughly in proportion to the advantaged half." Reach ratio = (disadvantaged
-  weighted delta) / (advantaged weighted delta), computed ONLY where the advantaged delta >= +2.0pp
-  (declared now; excluded cells are printed). KEEP if the ratio is >= 0.75 in >= 4 of 5 dimensions in
-  EVERY qualifying window.
-
-B6/B9/B12: 2,000-draw country bootstrap (economies resampled carrying all their subgroup rows);
-country-level Kish neff per E37's rule (i); the unweighted twin beside every weighted statistic; and
-the largest single leave-one-economy-out effect on each window's headline weighted delta, with the
-economy NAMED (B12).
-
-DECLARED. A distributional description, not an association — the 0.30 threshold does not apply. No
-gap statistic is registered: E43's pp-gap secondary died on its log-odds twin, so this experiment
-asks about REACH (each group's own delta, and their ratio), which is scale-relative by construction.
-Nothing here is causal, and a group's delta is a change in a cross-sectional rate, not a change
-experienced by the same individuals.
+DECLARED. Cross-sectional levels and one delta window. `g20_any` is the declared headline variant of
+the digital-payment concept under G3 and every fin31 item is by construction a narrow variant of the
+same concept — that overlap IS the hypothesis, not a confound. Nothing here is causal. A high
+correlation between an item and the headline is a statement about measurement redundancy, not about
+behaviour.
 """
 import numpy as np
 import pandas as pd
@@ -44,32 +43,17 @@ import pandas as pd
 from harness import Findex
 
 BOOT = 2000
-SEED = 44
-BIG_MOVE = 10.0        # E43/E39 "large gain" bar, pp
-BAR_A = 5.0            # disadvantaged pop-weighted delta, pp
-BAR_B = 25.0           # unweighted share of economies with disadvantaged delta >= +10pp, %
-N_DIMS_REQUIRED = 4    # of 5
-RATIO_BAR = 0.75       # P2 reach ratio
-RATIO_MIN_ADV = 2.0    # advantaged delta floor for a meaningful ratio, pp
+SEED = 45
+MIN_C = 30            # qualifying coverage, economies, in BOTH 2021 and 2024
+RED_BAR = 0.80        # median |r_level| for the redundancy claim
+IND_LEVEL = 0.50      # independence: |r_level| below this ...
+IND_DELTA = 0.30      # ... and |r_delta| below this, on BOTH lenses
 
-SAV = "fin17a_17a1_d"
-WINDOWS = [(2011, 2014), (2014, 2017), (2017, 2021), (2021, 2024)]
-ORIGINAL = (2021, 2024)
-
-# disadvantaged group named FIRST (E43's declaration, unchanged)
-DIMS = {
-    "gender":     ("women", "men"),
-    "income":     ("poorest 40%", "richest 60%"),
-    "education":  ("prim edu or less", "secondary edu or more"),
-    "age_cat":    ("ages 15-24", "age 25+"),
-    "laborforce": ("out of laborforce", "in laborforce"),
-}
-
-# E43's published 2021->24 primary table, for the E35 in-file reproduction check
-E43_WD_DIS = {"gender": 12.79, "income": 10.84, "education": 11.57,
-              "age_cat": 16.02, "laborforce": 7.40}
-E43_SH_DIS = {"gender": 47.3, "income": 32.7, "education": 29.1,
-              "age_cat": 56.4, "laborforce": 31.5}
+HEAD = "g20_any"
+WAVES = [2014, 2017, 2021, 2024]
+WINDOW = (2021, 2024)
+FIN31 = ["fin31a_31b", "fin31a", "fin31b", "fin31c", "fin31d",
+         "fin31a_31b_s", "fin31a_s", "fin31b_s", "fin31d_s"]
 
 
 def _kish(w):
@@ -77,237 +61,200 @@ def _kish(w):
     return float(w.sum() ** 2 / (w ** 2).sum())
 
 
-def slice_panel(fx, dim, col, window):
-    """Per-economy table: both groups' levels at both waves, deltas, and the country weight."""
-    dis, adv = DIMS[dim]
-    g = fx.pan_grp
-    d = g[(g["incomegroupwb24"] != "High income") & (g["group"] == dim)
-          & (g["year"].isin(window))]
-    wide = d.pivot_table(index="countrynewwb", columns=["year", "group2"], values=col) * 100
-    need = [(window[0], dis), (window[0], adv), (window[1], dis), (window[1], adv)]
-    if any(c not in wide.columns for c in need):
-        return pd.DataFrame()
-    out = pd.DataFrame({
-        "d_dis": wide[(window[1], dis)] - wide[(window[0], dis)],
-        "d_adv": wide[(window[1], adv)] - wide[(window[0], adv)],
-    }).dropna()
-    pop = g[(g["year"] == 2024) & (g["group"] == "all")].set_index("countrynewwb")["pop_adult"]
-    out["pop"] = pop.reindex(out.index)
-    return out.dropna(subset=["pop"])
+def corr(x, y, w=None):
+    """Weighted (w given) or unweighted correlation over the common non-missing support."""
+    m = pd.notna(x) & pd.notna(y)
+    if w is not None:
+        m &= pd.notna(w)
+    x, y = x[m], y[m]
+    if len(x) < 10:
+        return np.nan, int(len(x))
+    ww = np.ones(len(x)) if w is None else np.asarray(w[m], dtype=float)
+    mx, my = np.average(x, weights=ww), np.average(y, weights=ww)
+    sx = np.sqrt(np.average((x - mx) ** 2, weights=ww))
+    sy = np.sqrt(np.average((y - my) ** 2, weights=ww))
+    if sx == 0 or sy == 0:
+        return np.nan, int(len(x))
+    return float(np.average((x - mx) * (y - my), weights=ww) / (sx * sy)), int(len(x))
 
 
-def slice_levels(fx, dim, col, window):
-    """EXPLORATORY diagnostic support: the same table but carrying LEVELS, for the log-odds twin."""
-    dis, adv = DIMS[dim]
-    g = fx.pan_grp
-    d = g[(g["incomegroupwb24"] != "High income") & (g["group"] == dim)
-          & (g["year"].isin(window))]
-    wide = d.pivot_table(index="countrynewwb", columns=["year", "group2"], values=col) * 100
-    need = [(window[0], dis), (window[0], adv), (window[1], dis), (window[1], adv)]
-    if any(c not in wide.columns for c in need):
-        return pd.DataFrame()
-    lo = lambda s: np.log(np.clip(s, 0.5, 99.5) / (100 - np.clip(s, 0.5, 99.5)))
-    out = pd.DataFrame({
-        "lo_dis": lo(wide[(window[1], dis)]) - lo(wide[(window[0], dis)]),
-        "lo_adv": lo(wide[(window[1], adv)]) - lo(wide[(window[0], adv)]),
-    }).dropna()
-    pop = g[(g["year"] == 2024) & (g["group"] == "all")].set_index("countrynewwb")["pop_adult"]
-    out["pop"] = pop.reindex(out.index)
-    return out.dropna(subset=["pop"])
-
-
-def wmean(df, col):
-    return float(np.average(df[col], weights=df["pop"]))
-
-
-def boot_stat(df, fn, draws=BOOT, seed=SEED):
+def boot_ci(df, fn, draws=BOOT, seed=SEED):
     rng = np.random.default_rng(seed)
     idx, out = np.arange(len(df)), []
     for _ in range(draws):
         v = fn(df.iloc[rng.choice(idx, size=len(idx), replace=True)])
         if pd.notna(v) and np.isfinite(v):
             out.append(v)
+    if len(out) < draws // 4:
+        return np.nan, np.nan, np.nan
     a = np.asarray(out)
-    return float(np.percentile(a, 2.5)), float(np.percentile(a, 97.5))
+    p_boot = 2 * min((a <= 0).mean(), (a >= 0).mean())
+    return float(np.percentile(a, 2.5)), float(np.percentile(a, 97.5)), float(p_boot)
 
 
-def loo_named(df, col):
-    """B12: largest single leave-one-economy-out effect on a weighted mean, and the economy."""
-    full = wmean(df, col)
-    best, who = 0.0, None
-    for c in df.index:
-        v = wmean(df.drop(index=c), col)
-        if abs(v - full) > abs(best):
-            best, who = v - full, c
-    return full, best, who
+def build(fx):
+    """Per-economy table: fin31 levels/deltas, headline levels/deltas, population weight."""
+    dev = fx.pan_dev
+    cols = FIN31 + [HEAD]
+    d = dev[dev["year"].isin(WAVES)]
+    tab = {}
+    for c in cols:
+        w = d.pivot_table(index="countrynewwb", columns="year", values=c) * 100
+        for y in WAVES:
+            tab[(c, y)] = w[y] if y in w.columns else pd.Series(dtype=float)
+    out = pd.DataFrame(tab)
+    pop = dev[dev["year"] == 2024].set_index("countrynewwb")["pop_adult"]
+    out[("pop", 0)] = pop.reindex(out.index)
+    return out
 
 
-def window_table(fx, window):
+def part_a(fx, tab):
+    print("=" * 122)
+    print("PART A — MAPPING PASS (EXPLORATORY, peek rule; labels INFERRED, not authoritative; "
+          "no keep hangs on this)")
+    print("=" * 122)
+    print(f"  {'column':14s} " + " ".join(f"{y:>18d}" for y in WAVES))
+    print(f"  {'':14s} " + " ".join(f"{'n / wtd level pp':>18s}" for _ in WAVES))
+    for c in FIN31 + [HEAD]:
+        cells = []
+        for y in WAVES:
+            s = tab[(c, y)].dropna()
+            if s.empty:
+                cells.append(f"{'—':>18s}")
+                continue
+            w = tab[("pop", 0)].reindex(s.index)
+            m = pd.notna(w)
+            lvl = float(np.average(s[m], weights=w[m])) if m.any() else np.nan
+            cells.append(f"{len(s):5d} /{lvl:11.1f}")
+        print(f"  {c:14s} " + " ".join(cells))
+
+    print("\n  composite relations, 2024 (developing panel, population-weighted levels):")
+    for a, parts in [("fin31a_31b", ["fin31a", "fin31b"]),
+                     ("fin31a_31b_s", ["fin31a_s", "fin31b_s"])]:
+        s = tab[(a, 2024)].dropna()
+        if s.empty:
+            continue
+        w = tab[("pop", 0)].reindex(s.index)
+        lvl = float(np.average(s, weights=w))
+        ps = []
+        for p in parts:
+            q = tab[(p, 2024)].dropna()
+            if q.empty:
+                continue
+            wq = tab[("pop", 0)].reindex(q.index)
+            ps.append(f"{p}={float(np.average(q, weights=wq)):.1f}")
+        r_a, _ = corr(tab[(a, 2024)], tab[(parts[0], 2024)], tab[("pop", 0)])
+        print(f"    {a} = {lvl:.1f}   parts: {', '.join(ps)}   r({a},{parts[0]}) = {r_a:+.3f}")
+
+    print("\n  INFERRED reading (documented in HARNESS_V2_NOTES.md as inferred): the `_s` suffix "
+          "carries a\n  systematically different level from its unsuffixed twin and different "
+          "coverage — treat suffixed and\n  unsuffixed as DIFFERENT items, never as the same "
+          "concept measured twice.")
+
+
+def part_b(fx, tab):
+    print("\n" + "=" * 122)
+    print("PART B — THE REGISTERED SCREENING CLAIM: is `fin31` a restatement of the headline?")
+    print("=" * 122)
+    pop = tab[("pop", 0)]
+    head24, headd = tab[(HEAD, 2024)], tab[(HEAD, 2024)] - tab[(HEAD, 2021)]
+
     rows = []
-    for dim in DIMS:
-        t = slice_panel(fx, dim, SAV, window)
-        if t.empty or len(t) < 10:
-            rows.append({"dim": dim, "n": len(t), "empty": True})
+    for c in FIN31:
+        n21 = tab[(c, 2021)].notna().sum()
+        n24 = tab[(c, 2024)].notna().sum()
+        if n21 < MIN_C or n24 < MIN_C:
+            rows.append({"col": c, "qual": False, "n21": int(n21), "n24": int(n24)})
             continue
-        wd_dis, wd_adv = wmean(t, "d_dis"), wmean(t, "d_adv")
-        sh_dis = float((t["d_dis"] >= BIG_MOVE).mean() * 100)
-        sh_adv = float((t["d_adv"] >= BIG_MOVE).mean() * 100)
-        lo_a, hi_a = boot_stat(t, lambda d: wmean(d, "d_dis"))
-        lo_b, hi_b = boot_stat(t, lambda d: (d["d_dis"] >= BIG_MOVE).mean() * 100)
-        a_ok, b_ok = wd_dis >= BAR_A, sh_dis >= BAR_B
-        ratio = wd_dis / wd_adv if wd_adv >= RATIO_MIN_ADV else np.nan
-        lo_r, hi_r = ((np.nan, np.nan) if pd.isna(ratio) else
-                      boot_stat(t, lambda d: (wmean(d, "d_dis") / wmean(d, "d_adv")
-                                              if wmean(d, "d_adv") >= RATIO_MIN_ADV else np.nan)))
-        rows.append({
-            "dim": dim, "n": len(t), "neff": _kish(t["pop"]), "empty": False,
-            "wd_dis": wd_dis, "wd_adv": wd_adv, "ci_a": (lo_a, hi_a),
-            "sh_dis": sh_dis, "sh_adv": sh_adv, "ci_b": (lo_b, hi_b),
-            "a_ok": a_ok, "b_ok": b_ok, "both": a_ok and b_ok,
-            "u_dis": float(t["d_dis"].median()), "u_adv": float(t["d_adv"].median()),
-            "ratio": ratio, "ci_r": (lo_r, hi_r),
-            "u_ratio": (float(t["d_dis"].median() / t["d_adv"].median())
-                        if t["d_adv"].median() >= RATIO_MIN_ADV else np.nan),
-            "sh_dis_ge_adv": float((t["d_dis"] >= t["d_adv"]).mean() * 100),
-            "tab": t,
-        })
-    return rows
+        lvl, dlt = tab[(c, 2024)], tab[(c, 2024)] - tab[(c, 2021)]
+        d_lvl = pd.DataFrame({"x": lvl, "y": head24, "w": pop}).dropna()
+        d_dlt = pd.DataFrame({"x": dlt, "y": headd, "w": pop}).dropna()
 
+        rw_l, n_l = corr(d_lvl["x"], d_lvl["y"], d_lvl["w"])
+        ru_l, _ = corr(d_lvl["x"], d_lvl["y"])
+        rw_d, n_d = corr(d_dlt["x"], d_dlt["y"], d_dlt["w"])
+        ru_d, _ = corr(d_dlt["x"], d_dlt["y"])
 
-def print_window(window, rows):
-    print(f"\n{'-' * 122}")
-    print(f"WINDOW {window[0]}->{window[1]}")
-    print(f"  {'dimension':11s} {'disadvantaged':21s} {'n':>3s} {'neff':>5s} "
-          f"{'wtdD_dis':>9s} {'[95% CI]':>17s} {'wtdD_adv':>9s} "
-          f"{'>=10pp dis':>10s} {'[95% CI]':>15s} {'>=10pp adv':>10s}  bars")
-    for r in rows:
-        if r["empty"]:
-            print(f"  {r['dim']:11s} {DIMS[r['dim']][0]:21s} {r['n']:3d}   —  insufficient cells")
-            continue
-        print(f"  {r['dim']:11s} {DIMS[r['dim']][0]:21s} {r['n']:3d} {r['neff']:5.1f} "
-              f"{r['wd_dis']:+9.2f} [{r['ci_a'][0]:+6.2f},{r['ci_a'][1]:+6.2f}] {r['wd_adv']:+9.2f} "
-              f"{r['sh_dis']:9.1f}% [{r['ci_b'][0]:5.1f},{r['ci_b'][1]:5.1f}] {r['sh_adv']:9.1f}%  "
-              f"a={'Y' if r['a_ok'] else 'N'} b={'Y' if r['b_ok'] else 'N'}")
-    print("  unweighted median delta (typical economy), dis vs adv:  " + "   ".join(
-        f"{r['dim']}: {r['u_dis']:+.2f}/{r['u_adv']:+.2f}" for r in rows if not r["empty"]))
-    ok = [r for r in rows if not r["empty"]]
-    n_pass = sum(r["both"] for r in ok)
-    print(f"  WINDOW VERDICT: {n_pass}/{len(ok)} dimensions clear both bars "
-          f"(required {N_DIMS_REQUIRED}) -> {'PASS' if n_pass >= N_DIMS_REQUIRED else 'FAIL'}")
-    return n_pass >= N_DIMS_REQUIRED, n_pass, ok
+        lo_l, hi_l, p_l = boot_ci(d_lvl, lambda f: corr(f["x"], f["y"], f["w"])[0])
+        lo_d, hi_d, p_d = boot_ci(d_dlt, lambda f: corr(f["x"], f["y"], f["w"])[0])
+
+        big = d_lvl.nlargest(5, "w").index
+        g6_l = corr(d_lvl.drop(index=big)["x"], d_lvl.drop(index=big)["y"],
+                    d_lvl.drop(index=big)["w"])[0]
+        bigd = d_dlt.nlargest(5, "w").index
+        g6_d = corr(d_dlt.drop(index=bigd)["x"], d_dlt.drop(index=bigd)["y"],
+                    d_dlt.drop(index=bigd)["w"])[0]
+
+        indep = (abs(rw_l) < IND_LEVEL and abs(ru_l) < IND_LEVEL
+                 and abs(rw_d) < IND_DELTA and abs(ru_d) < IND_DELTA)
+        rows.append({"col": c, "qual": True, "n21": int(n21), "n24": int(n24),
+                     "n_l": n_l, "neff_l": _kish(d_lvl["w"]), "n_d": n_d,
+                     "neff_d": _kish(d_dlt["w"]),
+                     "rw_l": rw_l, "ru_l": ru_l, "ci_l": (lo_l, hi_l), "p_l": p_l, "g6_l": g6_l,
+                     "rw_d": rw_d, "ru_d": ru_d, "ci_d": (lo_d, hi_d), "p_d": p_d, "g6_d": g6_d,
+                     "indep": indep, "tab_l": d_lvl})
+
+    q = [r for r in rows if r["qual"]]
+    skipped = [r for r in rows if not r["qual"]]
+    if skipped:
+        print("  items failing the coverage floor (>= %d economies in BOTH 2021 and 2024): " % MIN_C
+              + ", ".join(f"{r['col']} ({r['n21']}/{r['n24']})" for r in skipped))
+
+    print(f"\n  LEVELS — corr(item 2024, {HEAD} 2024)")
+    print(f"  {'item':14s} {'n':>3s} {'neff':>5s} {'r_wtd':>7s} {'[95% CI]':>17s} {'p_boot':>7s} "
+          f"{'G6':>7s} {'r_unwtd':>8s}")
+    for r in q:
+        print(f"  {r['col']:14s} {r['n_l']:3d} {r['neff_l']:5.1f} {r['rw_l']:+7.3f} "
+              f"[{r['ci_l'][0]:+6.3f},{r['ci_l'][1]:+6.3f}] {r['p_l']:7.3f} {r['g6_l']:+7.3f} "
+              f"{r['ru_l']:+8.3f}")
+
+    print(f"\n  CHANGES — corr(item d2021->24, {HEAD} d2021->24)")
+    print(f"  {'item':14s} {'n':>3s} {'neff':>5s} {'r_wtd':>7s} {'[95% CI]':>17s} {'p_boot':>7s} "
+          f"{'G6':>7s} {'r_unwtd':>8s}")
+    for r in q:
+        print(f"  {r['col']:14s} {r['n_d']:3d} {r['neff_d']:5.1f} {r['rw_d']:+7.3f} "
+              f"[{r['ci_d'][0]:+6.3f},{r['ci_d'][1]:+6.3f}] {r['p_d']:7.3f} {r['g6_d']:+7.3f} "
+              f"{r['ru_d']:+8.3f}")
+
+    med_w = float(np.median([abs(r["rw_l"]) for r in q]))
+    med_u = float(np.median([abs(r["ru_l"]) for r in q]))
+    indep_items = [r["col"] for r in q if r["indep"]]
+    keep = med_w >= RED_BAR and med_u >= RED_BAR and not indep_items
+
+    print(f"\n  median |r_level|: weighted {med_w:.3f}   unweighted {med_u:.3f}   "
+          f"(redundancy bar {RED_BAR})")
+    print(f"  items meeting the INDEPENDENCE definition (|r_level| < {IND_LEVEL} and "
+          f"|r_delta| < {IND_DELTA} on BOTH lenses): "
+          f"{', '.join(indep_items) if indep_items else 'none'}")
+    print(f"\n  VERDICT: redundancy claim {'KEPT' if keep else 'DISCARDED'} — "
+          f"{'the module restates the headline' if keep else 'the module carries independent variation'}")
+    if indep_items:
+        print(f"  NEW-GROUND TARGETS NAMED: {', '.join(indep_items)}")
+
+    # ---- B12: named leave-one-out on the module's flagship item (widest 2024 coverage)
+    flag = max(q, key=lambda r: (r["n_l"], -FIN31.index(r["col"])))
+    d = flag["tab_l"]
+    full = corr(d["x"], d["y"], d["w"])[0]
+    best, who = 0.0, None
+    for c in d.index:
+        v = corr(d.drop(index=c)["x"], d.drop(index=c)["y"], d.drop(index=c)["w"])[0]
+        if pd.notna(v) and abs(v - full) > abs(best):
+            best, who = v - full, c
+    print(f"\n  B12 — largest single leave-one-economy-out on {flag['col']} (levels, widest "
+          f"coverage): r_w {full:+.3f}, drop {who} -> {full + best:+.3f} ({best:+.3f}); "
+          f"drop-top-5 {flag['g6_l']:+.3f}; neff {flag['neff_l']:.1f} vs n {flag['n_l']}")
+    return keep, indep_items
 
 
 def run(fx: Findex):
-    print("=" * 122)
-    print("E44 — did earlier growth episodes also reach every demographic slice? "
-          "(pan_grp x three untouched transitions; parent E43, agenda 3.9)")
-    print("=" * 122)
-    print(f"outcome {SAV}, developing panel economies, five slice dimensions")
-    print(f"P1 bars (E43 verbatim): (a) disadvantaged wtd delta >= +{BAR_A}pp   "
-          f"(b) share of economies with disadvantaged delta >= +{BIG_MOVE}pp is >= {BAR_B}%; "
-          f"window passes at >= {N_DIMS_REQUIRED}/5")
-    print(f"P2 bar: reach ratio (wtd dis / wtd adv) >= {RATIO_BAR} in >= {N_DIMS_REQUIRED}/5 dims in "
-          f"EVERY window where wtd adv delta >= +{RATIO_MIN_ADV}pp")
-
-    results = {}
-    for w in WINDOWS:
-        rows = window_table(fx, w)
-        passed, n_pass, ok = print_window(w, rows)
-        results[w] = {"passed": passed, "n_pass": n_pass, "rows": ok}
-
-    # ---------------------------------------------------- E35 rule: reproduce the original window
+    tab = build(fx)
+    print("E45 — the fin31 digital-payment detail module: restatement, or new ground? "
+          "(B2 cell, zero prior mentions; parent E41)\n")
+    part_a(fx, tab)
+    keep, indep = part_b(fx, tab)
     print("\n" + "=" * 122)
-    print("E35 RULE — in-file reproduction of E43's original 2021->24 window (must match within 0.1pp)")
-    devs = []
-    for r in results[ORIGINAL]["rows"]:
-        d1 = abs(r["wd_dis"] - E43_WD_DIS[r["dim"]])
-        d2 = abs(r["sh_dis"] - E43_SH_DIS[r["dim"]])
-        devs += [d1, d2]
-        print(f"  {r['dim']:11s} wtdD_dis {r['wd_dis']:+7.2f} vs E43 {E43_WD_DIS[r['dim']]:+7.2f} "
-              f"(dev {d1:.3f})   share {r['sh_dis']:5.1f}% vs E43 {E43_SH_DIS[r['dim']]:5.1f}% "
-              f"(dev {d2:.3f})")
-    repro = max(devs) <= 0.1
-    print(f"  reproduction: {'OK' if repro else 'FAILED'} (max deviation {max(devs):.3f}pp) — "
-          f"{'earlier windows may be read' if repro else 'STOP, the join is defective'}")
-
-    # ---------------------------------------------------- P1 verdict
-    print("\n" + "=" * 122)
-    print("P1 — the B4/B8 promotion test for E43")
-    earlier = [w for w in WINDOWS if w != ORIGINAL]
-    for w in earlier:
-        print(f"  {w[0]}->{w[1]}: {results[w]['n_pass']}/5 dims -> "
-              f"{'PASS' if results[w]['passed'] else 'FAIL'}")
-    promote = repro and all(results[w]["passed"] for w in earlier)
-    verdict1 = ("PROMOTE E43 to keep-general" if promote else
-                "E43 STAYS keep-window — promotion test FAILED "
-                "(recorded as a failure, not as not-attempted)")
-    print(f"  P1 VERDICT: {verdict1}")
-
-    # ---------------------------------------------------- P2 verdict: the reach ratio
-    print("\n" + "=" * 122)
-    print("P2 — the reach ratio: does growth reach the disadvantaged half in proportion?")
-    print(f"  {'window':12s} {'dimension':11s} {'wtdD_dis':>9s} {'wtdD_adv':>9s} {'ratio':>7s} "
-          f"{'[95% CI]':>17s} {'unwtd ratio':>11s} {'econ dis>=adv':>13s}  bar")
-    qualifying = []
-    for w in WINDOWS:
-        ok_dims = 0
-        usable = 0
-        for r in results[w]["rows"]:
-            if pd.isna(r["ratio"]):
-                print(f"  {w[0]}->{w[1]:<7d} {r['dim']:11s} {r['wd_dis']:+9.2f} {r['wd_adv']:+9.2f} "
-                      f"{'—':>7s} {'excluded: adv delta < +' + str(RATIO_MIN_ADV) + 'pp':>17s}")
-                continue
-            usable += 1
-            hit = r["ratio"] >= RATIO_BAR
-            ok_dims += hit
-            print(f"  {w[0]}->{w[1]:<7d} {r['dim']:11s} {r['wd_dis']:+9.2f} {r['wd_adv']:+9.2f} "
-                  f"{r['ratio']:7.3f} [{r['ci_r'][0]:7.3f},{r['ci_r'][1]:7.3f}] "
-                  f"{r['u_ratio']:11.3f} {r['sh_dis_ge_adv']:12.1f}%  {'Y' if hit else 'N'}")
-        if usable:
-            qualifying.append((w, ok_dims, usable))
-        print()
-    p2 = bool(qualifying) and all(k >= N_DIMS_REQUIRED for _, k, _ in qualifying)
-    for w, k, u in qualifying:
-        print(f"  {w[0]}->{w[1]}: {k}/{u} usable dimensions at ratio >= {RATIO_BAR}")
-    print(f"  P2 VERDICT: {'KEEP' if p2 else 'DISCARD'} "
-          f"(required >= {N_DIMS_REQUIRED} of 5 in every qualifying window)")
-
-    # ---------------------------------------------------- B12 leave-one-out, by name
-    print("\n" + "=" * 122)
-    print("B12 — largest single leave-one-economy-out effect on each window's headline weighted "
-          "delta (income slice, disadvantaged half)")
-    for w in WINDOWS:
-        r = next((x for x in results[w]["rows"] if x["dim"] == "income"), None)
-        if r is None:
-            continue
-        full, delta, who = loo_named(r["tab"], "d_dis")
-        print(f"  {w[0]}->{w[1]}: wtd delta {full:+6.2f}pp   largest drop = {who} "
-              f"({delta:+.2f}pp -> {full + delta:+.2f}pp)   n={r['n']}  neff={r['neff']:.1f}")
-
-    # ---------------------------------------------------- exploratory: the log-odds reach twin
-    print("\n" + "=" * 122)
-    print("EXPLORATORY DIAGNOSTIC (unregistered, peek rule — no keep hangs on it): the log-odds twin")
-    print("  a pp delta is baseline-dependent: under EQUAL proportional (log-odds) growth, a group")
-    print("  starting lower gains FEWER pp while both are under 50%. P2's ratio bar inherits that.")
-    print(f"  {'window':12s} {'dimension':11s} {'wtdLO_dis':>9s} {'wtdLO_adv':>9s} {'LO ratio':>9s} "
-          f"{'unwtd LO ratio':>14s} {'econ dis>=adv':>13s}")
-    for w in WINDOWS:
-        for dim in DIMS:
-            t = slice_levels(fx, dim, SAV, w)
-            if t.empty or len(t) < 10:
-                continue
-            a, b = wmean(t, "lo_dis"), wmean(t, "lo_adv")
-            ua, ub = float(t["lo_dis"].median()), float(t["lo_adv"].median())
-            rr = a / b if abs(b) > 0.05 else np.nan
-            ur = ua / ub if abs(ub) > 0.05 else np.nan
-            sh = float((t["lo_dis"] >= t["lo_adv"]).mean() * 100)
-            print(f"  {w[0]}->{w[1]:<7d} {dim:11s} {a:+9.3f} {b:+9.3f} "
-                  f"{rr:9.3f} {ur:14.3f} {sh:12.1f}%")
-        print()
-
-    print("\n" + "=" * 122)
-    print(f"SUMMARY  P1 {'PROMOTE' if promote else 'FAIL (E43 stays keep-window)'}  |  "
-          f"P2 {'KEEP' if p2 else 'DISCARD'}  |  reproduction {'OK' if repro else 'FAILED'}")
+    print(f"SUMMARY  registered redundancy claim: {'KEEP' if keep else 'DISCARD'}  |  "
+          f"independent items: {', '.join(indep) if indep else 'none'}")
     print("=" * 122)
 
 
