@@ -5397,3 +5397,49 @@ digital-payment concept under G3 and that overlap is the hypothesis. Nothing cau
 between an item and the headline is a statement about measurement redundancy, not behaviour. Item
 meanings are inferred from levels and coverage, never from a questionnaire, and any future experiment
 on this module must repeat that caveat.
+
+---
+
+## Cycle wrap-up — 2026-08-15
+
+Working tree clean at start; `coverage.py` run before hypotheses were chosen (rule B1). Two
+experiments, three registered claims, **zero keeps** — the first cycle in this ledger to return
+none. The prediction stream stayed **closed** (P28), as its closing rule requires.
+
+- **E44 — P1 FAIL, P2 DISCARD. E43's promotion route is closed and the closure is honest.** E43's
+  bars, run verbatim on all three earlier transitions, clear **0/5, 0/5 and 1/5** dimensions against
+  **5/5** in 2021→24 (the original window reproduced in-file to within **0.036pp** before anything
+  else was read, per the E35 rule). **E43 stays `keep-window`, recorded as having *failed* its
+  promotion test rather than not attempted it.** The failure is one of **magnitude, not breadth**:
+  bar (a) is nearly met in the earlier windows, bar (b) — 25% of economies delivering ≥+10pp to the
+  disadvantaged half — is missed everywhere. E39 had already established there was no earlier saving
+  episode of comparable size, and the pre-registration said so in advance.
+- **The cycle's methodological result, and it is E44's own registered secondary.** The reach ratio
+  (disadvantaged Δ / advantaged Δ) failed at **2/5** dimensions in 2021→24 — and its **log-odds twin
+  clears the same bar in all five** (0.845–1.107 against 0.576–1.133 on pp). So in *proportional*
+  terms the surge was close to even across every slice, and the pp shortfall for the poorer,
+  less-schooled and out-of-workforce halves is what even proportional growth from a lower base looks
+  like. **Third instance of the same trap** (E21, E43's secondary, now this) and the first to bite a
+  statistic that was *registered* as scale-relative. **Rule B13** now extends the log-odds
+  requirement from gaps to any gap, difference **or ratio** of pp changes.
+- **E45 — DISCARD on the registered screen, and the module is half-open.** `fin31` (9 columns, four
+  waves, **zero prior ledger mentions** — the cycle's B2 cell) is **neither** a `dig_acc`-style
+  restatement of `g20_any` (median |r_level| **0.745 wtd / 0.680 unwtd** against a 0.80 bar, failing
+  on both lenses) **nor** cleanly independent (no item clears the independence definition). The
+  independence bar was **mis-specified** — written to catch orthogonal items, it cannot see a
+  strongly *negative* one — and that is recorded as an error of mine rather than a property of the
+  data.
+- **The best thing this cycle found is a sign.** `fin31d` and `fin31d_s` are the **only columns in
+  the country file that move against the digital-payment headline** (−0.401 and −0.730 in 2024
+  levels, on both lenses and through G6), and `fin31d` falls **47.1 → 26.6pp** across the decade
+  while `g20_any` rises 34.3 → 60.9. Inferred structurally (no questionnaire) as a **cash /
+  non-digital residual margin** — the loop's first candidate for measuring the *retreat of cash*
+  rather than the advance of digital payment, on four waves × 77 economies. Logged as agenda item
+  **7.6**.
+- **A `neff` clarification, now in `program_findex.md`.** E45's `fin31a_31b` cell has `neff` = **7.2**
+  — the ledger's usual figure — and is simultaneously its most robust cell: weighted **+0.797** vs
+  unweighted **+0.815**, drop-top-5 **+0.821**, largest single leave-one-out **Brazil at −0.042**.
+  E42's E16 cell has the same `neff` and moves +0.198 → +0.726 on dropping China. **A low `neff` says
+  the weights are concentrated, not that the result is fragile**; `neff`, the unweighted twin, G6 and
+  the named leave-one-out are four diagnostics answering four questions, and the write-ups have been
+  conflating them.
