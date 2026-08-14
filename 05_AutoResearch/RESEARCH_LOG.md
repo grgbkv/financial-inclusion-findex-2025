@@ -5249,3 +5249,89 @@ the digital-payment concept under G3, and every `fin31` item is by construction 
 the same concept — that overlap is the hypothesis, not a confound. Nothing here is causal. A high
 correlation between an item and the headline is a statement about measurement redundancy, not about
 behaviour.
+
+---
+
+### E44 — VERDICT: P1 FAIL (E43's promotion test fails; it stays `keep-window`), P2 DISCARD — and the discard is a third instance of the pp-baseline trap, 2026-08-15
+
+**The E35 reproduction check passed first, before any earlier window was read**: the 2021→24 table
+recomputed inside this file matches E43's published figures to a **maximum deviation of 0.036pp**
+across all ten cells. The earlier windows were therefore readable.
+
+**P1 — the B4/B8 promotion test FAILS, and it fails on magnitude, exactly as the pre-registration
+warned it might.**
+
+| window | n (income slice) | neff | dims clearing both bars | verdict |
+|---|---|---|---|---|
+| 2011→2014 | 27 | 4.2 | **0/5** | FAIL |
+| 2014→2017 | 34 | 4.6 | **0/5** | FAIL |
+| 2017→2021 | 38 | 4.8 | **1/5** (age_cat) | FAIL |
+| 2021→2024 *(original, recomputed)* | 55 | 5.6 | **5/5** | PASS |
+
+**E43 stays `keep-window` and is now on record as having failed its promotion test** — a stronger
+negative than "not attempted" (E35's precedent). Under **B8** one agreeing window would not have been
+enough anyway; here none agrees.
+
+**What the failure is, and is not.** Bar (a) — the disadvantaged half's weighted Δ ≥ +5pp — is *nearly*
+met in the earlier windows (2011→14: +4.49 to +5.52pp across the five slices; 2017→21: +0.32 to
++6.41pp). Bar (b) — 25% of economies delivering ≥ +10pp to the disadvantaged half — is missed by a
+wide margin everywhere (**0.0–17.9%** in 2011→14, **0.0–2.9%** in 2014→17, **13.5–36.8%** in 2017→21,
+against **29.1–56.4%** in 2021→24). The bars are magnitude bars, and E39 already established that
+2021→24 is the largest within-country saving episode of the four. **The right reading is that E43's
+claim is inseparable from the size of the episode it describes: there was no earlier episode of that
+size for the breadth question to be asked of.**
+
+**2014→2017 is a decline window on this margin in every slice** (weighted Δ −3.65 to +2.35pp;
+unweighted medians negative in four of five), which is the slice-level counterpart of the
+`save_any_t_d` 53.1 → 43.6 drop that agenda item 1.4 flags as possibly definitional. Nothing here
+resolves that; it is noted so the 0/5 is not read as evidence about breadth.
+
+**P2 — the reach ratio: DISCARD.**
+
+| window | usable dims | dims at ratio ≥ 0.75 |
+|---|---|---|
+| 2011→2014 | 4 (education excluded, advantaged Δ +1.77pp) | 3/4 |
+| 2014→2017 | **0** — every dimension excluded by the registered +2.0pp denominator filter | — |
+| 2017→2021 | 4 (laborforce excluded, +0.66pp) | 4/4 |
+| 2021→2024 | 5 | **2/5** |
+
+The registered bar required ≥ 4 of 5 in **every** qualifying window and 2021→24 returns 2/5 —
+gender 0.789 and age_cat 1.133 clear it, income **0.641**, education **0.721** and laborforce
+**0.576** do not. **DISCARD.**
+
+**EXPLORATORY DIAGNOSTIC (unregistered, logged under the peek rule, no keep hangs on it) — and it
+says the P2 bar was mis-specified.** A ratio of *percentage-point* deltas is not scale-free: while
+both groups are below 50%, equal proportional (log-odds) growth mechanically produces **fewer** pp
+for the lower-starting group. The log-odds twin of the same statistic, 2021→2024:
+
+| dimension | pp ratio | **log-odds ratio** | economies where dis ≥ adv (log-odds) |
+|---|---|---|---|
+| gender | 0.789 | **0.875** | 61.8% |
+| income | 0.641 | **0.864** | 52.7% |
+| education | 0.721 | **0.918** | 47.3% |
+| age_cat | 1.133 | **1.107** | 49.1% |
+| laborforce | 0.576 | **0.845** | 40.7% |
+
+**On the log-odds lens all five dimensions clear 0.75** (0.845–1.107), and the two lenses disagree on
+three of five. So the honest statement of the 2021→24 window is: **in proportional terms the surge
+was close to even across every slice, and the pp shortfall for the poorer, less-schooled and
+out-of-workforce halves is what even proportional growth from a lower base looks like.** This is the
+**third** time this ledger has been caught by the same arithmetic (E21, E43's secondary, now E44's
+P2), and the first time it has bitten a statistic that was *registered* as scale-relative. The
+standing pp-gap rule in `program_findex.md` should be widened from "gap" to **any ratio or difference
+of pp changes between groups at different baselines** — proposed as **B13** below.
+
+**B12 — the leave-one-out, by name.** On the income slice's disadvantaged-half weighted Δ, the
+largest single drop is **China in all four windows**: +4.90 → +0.42pp (2011→14), −3.38 → +1.35pp
+(2014→17), +5.57 → +0.61pp (2017→21), +10.84 → +7.37pp (2021→24). The slice frame's country-level
+Kish `neff` runs **4.2 / 4.6 / 4.8 / 5.6** against nominal n of 27 / 34 / 38 / 55 — lower than the
+`all` frame's 7.2, and in the earlier windows the frame covers barely half the economies.
+
+**Declared.** Distributional description across four windows; no association, no 0.30 threshold, no
+causal content. A group's Δ is a change in a cross-sectional rate, not a change experienced by the
+same individuals.
+
+**Proposed rule B13 (for the amendment block).** *Any between-group comparison of percentage-point
+changes — a gap, a difference, or a ratio — must report its log-odds twin, and where they disagree
+the pp version is the artifact.* The existing rule names gaps only; E44's P2 was a ratio, registered
+in good faith as scale-relative, and it failed for the same mechanical reason.
