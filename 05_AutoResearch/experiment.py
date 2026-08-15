@@ -216,6 +216,31 @@ def main():
           f"formal in {(dfml<0).mean()*100:.1f}%, residual in {(dres<0).mean()*100:.1f}% "
           f"(n={int(m.sum())})")
 
+    # ------------------------------------------- POST-HOC (labelled, not registered)
+    print("\n" + "-" * 108)
+    print("POST-HOC DIAGNOSTIC (not pre-registered; labelled as such) — B12: who carries the "
+          "weighted 2014->17 drop?")
+    print("-" * 108)
+    d = (ptot_dev[2017] - ptot_dev[2014]).dropna()
+    w = ptot_dev["pop"].reindex(d.index).dropna()
+    d = d.reindex(w.index)
+    full = wmean(d, w)
+    loo = sorted(((wmean(d.drop(c), w.drop(c)) - full, c) for c in d.index),
+                 key=lambda t: -abs(t[0]))[:5]
+    print(f"  weighted mean delta {full:.2f}pp | unweighted mean {d.mean():.2f}pp | "
+          f"unweighted median {d.median():.2f}pp")
+    print("  largest leave-one-economy-out effects on the weighted mean:")
+    for eff, c in loo:
+        print(f"    drop {c:<22s} -> {full + eff:>7.2f}pp  ({eff:+.2f})")
+    dtop5 = d.drop(w.sort_values(ascending=False).index[:5])
+    wtop5 = w.drop(w.sort_values(ascending=False).index[:5])
+    print(f"  drop-top-5 by population: weighted mean {wmean(dtop5, wtop5):.2f}pp "
+          f"(n={len(dtop5)})")
+    hd = (ptot_hi[2017] - ptot_hi[2014]).dropna()
+    print(f"  high-income counterpart in the same window: weighted mean "
+          f"{wmean(hd, ptot_hi['pop'].reindex(hd.index)):.2f}pp, "
+          f"unweighted median {hd.median():.2f}pp (n={len(hd)})")
+
     # ---------------------------------------------------------------- verdict
     print("\n" + "=" * 108)
     if a_pass and b_pass and c_pass:

@@ -5593,3 +5593,74 @@ dynamic one, which is exactly the distinction the ledger has repeatedly failed a
 third factor. `fin31d` is a narrow, unregistered variant under G3 whose meaning is **inferred from
 levels and coverage** (`HARNESS_V2_NOTES.md` item 6) and that caveat is carried into any claim.
 `fin31d_s` is excluded from the Δ design: E45 recorded it as supporting 2021→24 only.
+
+---
+
+### E46 — VERDICT: INCONCLUSIVE under the fixed rule (1 of 3 diagnostics passes) — but the definitional-break reading is REJECTED and agenda item 1.4 is answered in the negative, 2026-08-15
+
+**E35 rule.** The ledger's published levels reproduced in-file before anything else was read:
+2014 = **53.1** (ledger 53.1), 2017 = **43.6** (ledger 43.6). **(e) G5 passes** (max deviation 1.52pp
+against a 2.5pp tolerance) so the experiment is not void.
+
+**The four waves, developing panel, population-weighted:**
+
+| series | 2014 | 2017 | 2021 | 2024 |
+|---|---|---|---|---|
+| `save_any_t_d` (developing) | 53.1 | **43.6** | 42.4 | **53.0** |
+| `fin17a_17a1_d` formal (developing) | 22.2 | 21.0 | 24.3 | 38.0 |
+| `save_any_t_d` (**high income**, the untouched frame) | 69.0 | **70.7** | 75.8 | 57.4 † |
+
+† the high-income panel has only **5** economies reporting this column in 2024 — that cell is
+uninterpretable and is not used anywhere below.
+
+**The registered diagnostics.**
+
+| # | diagnostic | bar | result | |
+|---|---|---|---|---|
+| (a) | universality | ≥ 80% of dev economies falling **and** ≥ 20pp above the best other window | **62.3%** [51.9, 72.7] vs 50.6% in 2017→21 — margin **11.7pp** | **FAIL** |
+| (b) | high-income contamination | ≥ 70% of high-income economies also falling | **45.0%** [30.0, 60.0]; weighted mean Δ **+1.65pp**, unweighted median **+1.38pp** | **FAIL** |
+| (c) | component decoupling | ≥ 70% of the pp drop in the non-formal residual | **90.2%** (Δtotal −9.27, Δformal −0.91, Δresidual −8.36) | **PASS** |
+| (d) | persistence | never returns within 5pp of 2014 | 2024 is **0.1pp** from the 2014 level | **FAIL** |
+| (e) | G5 official | within 2.5pp | 1.52pp | **PASS** |
+
+Verdict rule: (a)∧(b)∧(c) → definitional; (a)∧¬(b)∧¬(c) → real decline; else inconclusive.
+**1 of 3 → INCONCLUSIVE**, as registered.
+
+**What the pattern nonetheless settles, and it is what item 1.4 was blocked on.** Two of the three
+failures are failures *of the definitional hypothesis*, not ambiguities. A questionnaire change is
+common to both income groups, and high-income economies **rose** in this window (+1.65pp weighted,
++1.38pp unweighted median, only 45% falling). A questionnaire change is also a **level shift under a
+fixed instrument**, and the developing series returns to **53.0 in 2024 — 0.1pp from its 2014 value**
+after passing through 43.6 and 42.4. An instrument does not un-break itself. **The 2014→2017 drop
+should not be treated as a definitional break, and the decade series on `save_any_t_d` may be read as
+continuous.** Item 1.4 is answered; item 1.7's slice-level decline is a real feature of the window,
+not an artifact of the instrument.
+
+**Why it is nevertheless not a clean "real decline" either — and this is diagnostic (c)'s content.**
+The drop is **entirely in the non-formal residual**: formal saving moved −0.91pp while the residual
+moved −8.36pp, i.e. **90.2%** of it. Per economy, total saving fell in 62.3% but formal saving in only
+49.4% — a coin flip. So whatever happened in 2014→17 happened to saving *outside* financial
+institutions and left the formal margin alone. That is consistent with a real contraction in
+informal/at-home saving, and also with a change in how the non-formal channels were enumerated; this
+design cannot separate those two, and the log should stop implying the question is binary.
+
+**POST-HOC DIAGNOSTIC (labelled, not pre-registered; B12).** The weighted −9.27pp is **half China**:
+
+| drop | weighted mean Δ 2014→17 | effect |
+|---|---|---|
+| — (full) | **−9.27pp** | |
+| **China** | **−4.72pp** | **+4.55** |
+| India | −10.68pp | −1.41 |
+| Brazil | −9.80pp | −0.53 |
+| drop-top-5 by population | −6.00pp (n = 72) | |
+
+Unweighted mean **−4.72pp**, unweighted median **−5.08pp** — the typical economy fell about half as
+far as the weighted figure says, and dropping China alone moves the weighted mean exactly onto the
+unweighted one. This is E42's China cell again on a different margin.
+
+**Declared.** Descriptive measurement diagnostics; nothing causal. Country-level Kish `neff` **7.5**
+against nominal n **77** on the developing panel and **9.2** against n **40** on the high-income
+frame; no significance language attaches to nominal n (B10). "Definitional break" was and remains a
+claim about the **instrument** that this repo cannot verify — there is no questionnaire here
+(`HARNESS_V2_NOTES.md` items 5–6) — so the finding is stated as *the definitional reading is
+inconsistent with the data*, never as *the questionnaire did not change*.
