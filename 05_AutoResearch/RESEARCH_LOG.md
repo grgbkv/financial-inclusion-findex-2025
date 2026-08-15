@@ -5443,3 +5443,153 @@ none. The prediction stream stayed **closed** (P28), as its closing rule require
   the weights are concentrated, not that the result is fragile**; `neff`, the unweighted twin, G6 and
   the named leave-one-out are four diagnostics answering four questions, and the write-ups have been
   conflating them.
+
+---
+
+## Cycle 2026-08-15b — pre-registration (E46, E47, E48)
+
+Working tree clean at start. `python3 coverage.py` run **before** hypotheses were chosen (rule B1);
+its output is the basis for the coverage-cell declarations below. The prediction stream stays
+**CLOSED** (P28's closing rule) — no predictor experiment this cycle.
+
+**Coverage cells this cycle lands on (rule B2).**
+
+| exp | module | transition | frame | status of cell |
+|---|---|---|---|---|
+| E46 | `fin17` (4/12 cols used), `save_any_t_d` | **2014→2017** (54 mentions) + all four | `pan_dev` **and a high-income contrast frame** (`pan_all` minus `pan_dev`, 40 economies) — a frame the ledger has never used | thin |
+| E47 | **`fin34`** (wage payment modes, 8 cols, **0 ledger mentions**) | 2024 cross-section + 2014→2024 | `pan_dev` all | **UNTOUCHED module — this is the cycle's B2 cell** |
+| E48 | `fin31` (9 cols, 9 mentions, one experiment) | **2014→17 and 2017→21** primary, 2021→24 as peeked reference, plus the 2014→2024 long difference | `pan_dev` all | thin module, unpeeked transitions |
+
+**Lineage (rule B3).** E46's parent is **E39/E44 item 1.7** (the slice-level formal-saving decline in
+2014→17). E47 has **no parent finding** — it is a breadth draw from the B2 note. E48's parent is
+**E45** (agenda item 7.6); that is the second consecutive experiment descending from E45 (E47 does
+not count, having a different parent), so the cap is not approached.
+
+---
+
+### E46 — PRE-REGISTRATION: is the 2014→2017 fall in `save_any_t_d` (53.1 → 43.6) a definitional break or a real decline?
+
+**Why now.** Agenda item 1.4 has flagged this since the agenda opened, and E44's item 1.7 made it
+blocking: formal saving declines in **every** demographic slice in 2014→17, which is the slice-level
+counterpart of the same drop. Two agenda items and any decade-scale claim on the saving margin are
+waiting on this. It is a **measurement** question, not an association, so no 0.30 threshold applies;
+the pre-registered object is a **verdict rule over five diagnostics**, fixed below before any of them
+is computed.
+
+**Hypothesis.** The 2014→2017 fall in total saving is a **questionnaire/definitional break**, not a
+behavioural decline: the 2017 wave measures "saved any money" over a narrower set of channels than
+2014 did.
+
+**The five diagnostics, and the bar each must clear for "definitional".**
+
+- **(a) Universality.** Share of developing-panel economies with Δ`save_any_t_d` < 0 in 2014→17,
+  compared with the same share in 2017→21 and 2021→24. *Bar: ≥ 80% falling in 2014→17 AND at least
+  20pp above the highest of the other windows.* A behavioural decline is heterogeneous; an
+  instrument change is not.
+- **(b) High-income contamination.** The same share computed on the **high-income panel frame**
+  (`pan_all` minus `pan_dev`, ~40 economies) — a frame with no ledger mentions. The questionnaire is
+  common to both groups; a developing-world savings shock is not. *Bar: ≥ 70% of high-income
+  economies also falling.*
+- **(c) Component decoupling.** Decompose Δ`save_any_t_d` into Δ formal (`fin17a_17a1_d`) and the
+  **residual** (total minus formal, i.e. saving reported through non-formal channels). *Bar: ≥ 70% of
+  the pp drop sits in the residual*, i.e. the formal component is close to flat while the "other
+  methods" component collapses.
+- **(d) Persistence.** A definitional break is a level shift that does not reverse under the same
+  instrument. Report the 2017 / 2021 / 2024 levels. *Bar: the series does not return to within 5pp of
+  its 2014 level in any later wave.*
+- **(e) Official cross-check (G5).** The official *Developing economies* aggregate must show the same
+  drop within the 2.5pp tolerance. This is a computation check, not evidence either way — if it
+  **fails**, the whole experiment is void and is reported as a harness/frame defect.
+
+**Verdict rule, fixed in advance.**
+`definitional-break consistent` if **(a) AND (b) AND (c)** pass and (e) holds ·
+`real decline` if **(a)** passes but **both (b) and (c)** fail ·
+`inconclusive` otherwise. (d) is reported for all three verdicts and does not enter the rule, because
+a real decline can also persist.
+
+**Also reported (rules B6, B10, B12).** Country bootstrap (2,000 draws, percentile interval) on each
+share in (a) and (b); Kish `neff` beside every nominal n; the per-window unweighted median Δ beside
+the population-weighted mean Δ (rule B9's spirit applied to a level claim). **Following the E35 rule,
+the file recomputes the ledger's published 2014 and 2017 levels (53.1 / 43.6) inside itself before
+any diagnostic is read**, and aborts on a mismatch > 0.2pp.
+
+**Declared.** `save_any_t_d` and `fin17a_17a1_d` are headline variants under G3. Descriptive
+measurement diagnostics only; nothing causal, and "definitional break" is a claim about the
+**instrument**, offered as the reading most consistent with five signatures, never as a documented
+fact about the questionnaire (the repo has no questionnaire — `HARNESS_V2_NOTES.md` items 5 and 6).
+
+---
+
+### E47 — PRE-REGISTRATION: `fin34` (wage payment modes) — the cycle's untouched-module draw
+
+**Part A — mapping pass (exploratory, peek rule).** Population-weighted developing-panel levels of
+all eight `fin34` columns for 2014 / 2017 / 2021 / 2024 with per-wave economy counts, exactly as E45
+did for `fin31`. Logged as **exploratory** before Part B's verdict is read, and written into
+`HARNESS_V2_NOTES.md` as **inferred from levels and coverage, never from a questionnaire**. This part
+was computed before the registration below was written and is disclosed as such.
+
+**Part B — the orientation screen (registered).** For each of the four unsuffixed items
+(`fin34a`–`fin34d`), the 2024 cross-sectional level correlation against the digital-payment headline
+`g20_any` and against `account_t_d`, on the developing panel: weighted and unweighted (B9), G6
+drop-top-5, a 2,000-draw country bootstrap interval (B6), Kish `neff` (B10), and the **named** single
+largest leave-one-economy-out effect (B12).
+
+Each item is classified into a **four-way** scheme — this fixes the bar E45 recorded as
+mis-specified, which could not see a strongly negative item:
+`restatement` |r| ≥ 0.80 · `aligned` +0.30 ≤ r < 0.80 · **`counter-moving` r ≤ −0.30** ·
+`independent` |r| < 0.30. Classification requires **both lenses to agree**; where they disagree the
+item is logged `mixed-lens` under B9/B11.
+
+**Registered claim (the keep/discard object).** *At least one `fin34` item counter-moves the
+digital-payment headline at `r_level` ≤ −0.30 on **both** lenses in the 2024 cross-section.* KEEP if
+so; DISCARD if not. Coverage floor: an item is screened only if it has ≥ 30 developing-panel
+economies in 2024 and a weighted level ≥ 1.0pp (an item at 0.1pp of adults is a floor, not a margin).
+
+**Declared.** Cross-sectional 2024 levels; no trend language on Part B. Every `fin34` item is a
+narrow variant of the wage/payment-mode concept under G3, unregistered in `INDICATORS`, and declared
+as narrow. Item meanings are inferred. A correlation between an item and the headline is a statement
+about **measurement orientation**, not behaviour.
+
+---
+
+### E48 — PRE-REGISTRATION: does the cash margin retreat where digital payment advances? (agenda item 7.6)
+
+**Parent.** E45, which found `fin31d` (level 47.1 → 34.1 → 20.5 → 26.6 across 2014–2024) and
+`fin31d_s` to be the only country-file columns whose 2024 level runs **against** `g20_any` (−0.401 and
+−0.730, both lenses, through G6), and read them structurally — inferred, no questionnaire — as a
+**cash / non-digital residual** margin.
+
+**Disclosure (peek rule).** E45 already computed the **2021→24** Δ→Δ cell for these two items
+(`fin31d` r_delta −0.113 weighted / −0.317 unweighted; `fin31d_s` −0.158 / −0.541). That window is
+therefore **peeked** and cannot support a `keep` here; it is reported as a known reference only. The
+primary below is registered on transitions whose answer is genuinely unknown.
+
+**Hypothesis.** If `fin31d` is a cash/non-digital residual rather than an idiosyncratic item, then
+**economies whose digital-payment headline rose faster saw this margin fall faster** — a negative
+Δ→Δ association, present in more than one window.
+
+**Primary (registered).** `r(Δfin31d, Δg20_any)` on the developing panel in **2014→2017** and
+**2017→2021**, and on the **2014→2024 long difference**. Threshold: **r ≤ −0.30**, in the predicted
+direction, on **both** lenses (B9/B11), in **at least two of the three** registered cells. Full B6/
+B10/B12 reporting on every cell: 2,000-draw bootstrap, `neff` beside n, G6, named leave-one-out. Under
+B4 a pass on the earlier transitions plus the long difference is registered as **`keep-general`** if
+the 2021→24 reference agrees in sign, and **`keep-window`** if it does not (B8's sign-agreement rule
+applied in the direction it was written for).
+
+**Secondary (registered) — cross-module cash coherence.** If `fin31d` measures a general cash margin
+rather than one module's quirk, it should co-move with a cash margin in a **different** module.
+Correlate the 2014→2024 long difference of `fin31d` against the 2014→2024 long difference of **each of
+the four `fin34` items** — all four, no selection on E47's outcome — weighted and unweighted, with
+**Benjamini–Hochberg at q = 0.10** over the four tests (rule B7). Registered claim: *at least one pair
+clears |r| ≥ 0.30 in the direction that has both margins retreating together, on both lenses, and
+survives BH.* This is the falsifiable version of "there is a cash dimension in this data".
+
+**Registered null-result reading, stated in advance so it cannot be written after the fact.** A
+failure of the primary does **not** rehabilitate the digital headline — it says the counter-moving
+*level* correlation E45 found is a cross-sectional composition fact rather than a within-country
+dynamic one, which is exactly the distinction the ledger has repeatedly failed at (E31, E36).
+
+**Declared.** Δ→Δ co-movement across the same window identifies nothing; both margins may move with a
+third factor. `fin31d` is a narrow, unregistered variant under G3 whose meaning is **inferred from
+levels and coverage** (`HARNESS_V2_NOTES.md` item 6) and that caveat is carried into any claim.
+`fin31d_s` is excluded from the Δ design: E45 recorded it as supporting 2021→24 only.
