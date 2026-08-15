@@ -157,13 +157,24 @@ def main():
     print("  (the 2021->2024 row is PEEKED — E45 — and is a sign reference only, never a keep)")
 
     passes = [r for r in rows if r["r_w"] <= BAR and r["r_u"] <= BAR]
+    w_only = [r for r in rows if r["r_w"] <= BAR]
+    u_only = [r for r in rows if r["r_u"] <= BAR]
     print(f"\n  cells clearing {BAR:+.2f} on BOTH lenses: {len(passes)} of {len(rows)} "
           f"({', '.join(r['label'] for r in passes) if passes else 'none'})")
+    print(f"  weighted lens alone:   {len(w_only)} of {len(rows)} "
+          f"({', '.join(r['label'] for r in w_only) if w_only else 'none'})")
+    print(f"  unweighted lens alone: {len(u_only)} of {len(rows)} "
+          f"({', '.join(r['label'] for r in u_only) if u_only else 'none'})")
     prim = len(passes) >= NEED
+    lens_split = (len(w_only) >= NEED) != (len(u_only) >= NEED)
     if prim:
         status = "keep-general" if np.sign(ref["r_w"]) < 0 else "keep-window"
         print(f"  -> PRIMARY KEEP ({status}; the peeked reference "
               f"{'agrees' if np.sign(ref['r_w']) < 0 else 'disagrees'} in sign)")
+    elif lens_split:
+        print("  -> PRIMARY DISCARD-WEIGHTED (rule B9): the weighted lens would have kept this "
+              f"({len(w_only)}/{len(rows)} cells) and the unweighted one would not "
+              f"({len(u_only)}/{len(rows)}). The lens dependence is part of the finding.")
     else:
         print("  -> PRIMARY DISCARD")
 
@@ -178,7 +189,7 @@ def main():
         if r:
             srows.append(r)
     show(srows, "")
-    ps = sorted(((r["p_boot"], r) for r in srows))
+    ps = sorted(((r["p_boot"], r) for r in srows), key=lambda t: t[0])
     m = len(ps)
     print(f"\n  Benjamini-Hochberg, q = {Q}, m = {m} tests (on p_boot, the weighted lens):")
     bh_ok = set()
@@ -192,19 +203,44 @@ def main():
     idx = [i for i, (p, r) in enumerate(ps, start=1) if p <= Q * i / m]
     bh_ok = {r["label"] for i, (p, r) in enumerate(ps, start=1) if i <= (max(idx) if idx else 0)}
 
+    # The REGISTERED direction: "both margins retreating together" => POSITIVE r, since a fall in
+    # fin31d must pair with a fall in the fin34 item. A negative r is the OPPOSITE pattern
+    # (displacement) and does not count toward the registered claim, however large.
     coherent = [r for r in srows
-                if abs(r["r_w"]) >= 0.30 and abs(r["r_u"]) >= 0.30
-                and np.sign(r["r_w"]) == np.sign(r["r_u"]) and r["label"] in bh_ok]
-    print(f"\n  pairs clearing |r| >= 0.30 on BOTH lenses with agreeing signs AND surviving BH: "
+                if r["r_w"] >= 0.30 and r["r_u"] >= 0.30 and r["label"] in bh_ok]
+    opposite = [r for r in srows
+                if r["r_w"] <= -0.30 and r["r_u"] <= -0.30 and r["label"] in bh_ok]
+    print(f"\n  REGISTERED direction (both margins retreating together => POSITIVE r), "
+          f"|r| >= 0.30 on BOTH lenses AND surviving BH: "
           f"{', '.join(r['label'] for r in coherent) if coherent else 'NONE'}")
-    if coherent:
-        print("  (sign reading: fin31d and the fin34 item both fall together => POSITIVE r, "
-              "since both deltas are negative where cash retreats)")
+    print(f"  OPPOSITE direction (fin31d falls where the fin34 item RISES => negative r), "
+          f"same bars: {', '.join(r['label'] for r in opposite) if opposite else 'none'}")
     sec = bool(coherent)
     print(f"  -> SECONDARY {'KEEP' if sec else 'DISCARD'}")
 
+    # --------------------- POST-HOC (labelled, not pre-registered): common-trend check
+    print("\n" + "-" * 128)
+    print("POST-HOC DIAGNOSTIC (labelled, NOT pre-registered) — is the fin31d~fin34c co-movement "
+          "more than both being negatively")
+    print("related to the same rising headline? Partial correlation controlling for d g20_any. "
+          "(E35 warned partials are weighting-fragile.)")
+    sub = T[[f"{CASH}@2014", f"{CASH}@2024", "fin34c@2014", "fin34c@2024",
+             f"{HEAD}@2014", f"{HEAD}@2024", "pop"]].dropna()
+    dx = sub[f"{CASH}@2024"] - sub[f"{CASH}@2014"]
+    dy = sub["fin34c@2024"] - sub["fin34c@2014"]
+    dz = sub[f"{HEAD}@2024"] - sub[f"{HEAD}@2014"]
+    for lens, ww in (("weighted", sub["pop"]), ("unweighted", None)):
+        rxy, _ = corr(dx, dy, ww)
+        rxz, _ = corr(dx, dz, ww)
+        ryz, _ = corr(dy, dz, ww)
+        part = (rxy - rxz * ryz) / np.sqrt((1 - rxz ** 2) * (1 - ryz ** 2))
+        print(f"  {lens:11s} r(dx,dy) {rxy:+.3f} | r(dx,dz) {rxz:+.3f} | r(dy,dz) {ryz:+.3f} "
+              f"-> PARTIAL {part:+.3f}")
+    print(f"  n = {len(sub)}, neff = {kish(sub['pop']):.1f}")
+
     print("\n" + "=" * 128)
-    print(f"E48 VERDICT: PRIMARY {'KEEP' if prim else 'DISCARD'} | "
+    prim_label = "KEEP" if prim else ("DISCARD-WEIGHTED" if lens_split else "DISCARD")
+    print(f"E48 VERDICT: PRIMARY {prim_label} | "
           f"SECONDARY {'KEEP' if sec else 'DISCARD'}")
     if not prim:
         print("  Registered null reading (written before the answer): this does NOT rehabilitate the")

@@ -5728,3 +5728,76 @@ of the wage/payment-mode concept under G3. **Item meanings are inferred from lev
 only**; "wage payment modes" is the module label, and which mode `fin34c` is remains unknown. A
 correlation between an item and the headline is a statement about measurement orientation, not
 behaviour. `neff` = 7.2 against nominal n = 71 on every cell (B10).
+
+---
+
+### E48 — VERDICT: PRIMARY `discard-weighted` (rule B9) · SECONDARY KEEP — the cash margin does not retreat where digital advances, but it does retreat *with the other cash margin*, 2026-08-15
+
+**E35 rule.** E45's peeked cell reproduced in-file before any registered cell was read:
+r_w **−0.113** (E45 published −0.113), r_u **−0.317** (E45 published −0.317).
+
+**PRIMARY (registered): r(Δ`fin31d`, Δ`g20_any`), bar r ≤ −0.30 on both lenses in ≥ 2 of 3 cells.**
+
+| cell | r_w | [95% CI] | p_boot | G6 | r_u | n | neff | wtd Δcash / Δhead | largest LOO |
+|---|---|---|---|---|---|---|---|---|---|
+| 2014→2017 | −0.400 | [−0.704, **+0.239**] | 0.354 | −0.137 | **−0.159** | 77 | 7.5 | −13.01 / +10.32 | **China +0.412** |
+| 2017→2021 | **−0.759** | [−0.857, −0.431] | 0.000 | −0.555 | **−0.352** | 77 | 7.5 | −13.57 / +11.35 | China +0.170 |
+| 2014→2024 (long diff) | −0.336 | [−0.627, +0.010] | 0.062 | −0.450 | **−0.266** | 71 | 7.2 | −14.26 / +23.59 | Viet Nam +0.117 |
+| *2021→2024 (PEEKED, reference only)* | *−0.113* | *[−0.647, +0.269]* | *0.513* | *−0.462* | *−0.317* | *71* | *7.2* | *−0.28 / +7.48* | *India −0.409* |
+
+Both lenses clear the bar in **1 of 3** cells — below the registered 2 — so the primary does not keep.
+But the split is exactly the case rule B9 was written for: **the weighted lens clears all three
+(−0.400 / −0.759 / −0.336) and the unweighted lens clears one (−0.159 / −0.352 / −0.266)**. Logged
+**`discard-weighted`**, with the lens dependence stated as part of the finding rather than buried.
+Note the 2014→17 cell is a pure big-country cell — **China alone is worth +0.412**, and G6 takes it
+from −0.400 to −0.137.
+
+**The registered null reading, written before the answer and reproduced verbatim.** This does not
+rehabilitate the digital headline. It says E45's counter-moving **level** correlation is a
+cross-sectional composition fact — cash-heavy economies are digital-poor economies — rather than a
+within-country dynamic one. Where digital payment grew fastest over 2014–2024 is only weakly where
+this margin fell fastest, and on the typical-economy lens barely at all.
+
+**SECONDARY (registered): cross-module cash coherence, Δ 2014→2024, all four `fin34` items, BH q = 0.10.**
+
+| pair | r_w | [95% CI] | p_boot | G6 | r_u | BH | direction |
+|---|---|---|---|---|---|---|---|
+| `fin34a` | **−0.744** | [−0.887, −0.529] | 0.000 | −0.832 | −0.701 | REJECT | **opposite** (cash falls where this rises) |
+| `fin34b` | **−0.799** | [−0.892, −0.550] | 0.000 | −0.738 | −0.629 | REJECT | **opposite** |
+| **`fin34c`** | **+0.515** | [+0.216, +0.726] | 0.001 | +0.443 | **+0.389** | **REJECT** | **registered — both retreating together** |
+| `fin34d` | +0.154 | [−0.078, +0.455] | 0.182 | +0.092 | +0.403 | — | mixed-lens, fails BH |
+
+BH at q = 0.10 over m = 4 rejects the first three (0.0000 / 0.0000 / 0.0010 against 0.0250 / 0.0500 /
+0.0750). **The registered claim passes on `fin34c` and only `fin34c`** — the one item that satisfies
+the pre-registered *direction*. `fin34a` and `fin34b` are larger in magnitude but point the other way,
+and the pre-registration does not let them count; they are reported because the **displacement**
+pattern they draw is the more interesting half of the table. Where `fin31d` fell across the decade,
+`fin34a` and `fin34b` **rose** (−0.744, −0.799) and `fin34c` **fell** (+0.515) — the two
+digital-aligned wage modes and the counter-moving one sorting on opposite sides of the same axis, with
+E47 having identified `fin34c`'s orientation independently and by a different statistic.
+
+**POST-HOC DIAGNOSTIC (labelled, not pre-registered) — is the coherence just two things both hanging
+off the same rising headline?** Partial correlation of Δ`fin31d` and Δ`fin34c` controlling for
+Δ`g20_any`, 2014→2024:
+
+| lens | r(Δcash, Δfin34c) | r(Δcash, Δhead) | r(Δfin34c, Δhead) | **partial** |
+|---|---|---|---|---|
+| weighted | +0.515 | −0.336 | **+0.128** | **+0.597** |
+| unweighted | +0.389 | −0.266 | **−0.077** | **+0.383** |
+
+The partial **strengthens** on both lenses, so the co-movement is not a common-trend artifact. The
+line that does the work is r(Δ`fin34c`, Δ`g20_any`) = **+0.128 / −0.077**: `fin34c`'s *level* is
+strongly counter-moving to the headline (E47: −0.552 / −0.486) while its *change* is essentially
+unrelated to the headline's change. That is the level-vs-change distinction the primary's registered
+null reading anticipated, showing up in the secondary as well. E35's warning that partials are
+weighting-fragile is noted; this one is not — both lenses agree in sign and magnitude class.
+
+**Declared.** Δ→Δ co-movement inside the same window identifies nothing; both margins may move with a
+third factor, and the partial above rules out only one specific third factor. `fin31d` and the
+`fin34` items are narrow, `INDICATORS`-unregistered variants under G3 whose **meanings are inferred
+from levels and coverage** (`HARNESS_V2_NOTES.md` items 5–6), never from a questionnaire — "the two
+cash margins" is a structural reading of two negative signs, not a documented fact about what either
+question asked. `fin31d_s` was excluded from the Δ design as registered. `neff` 7.2–7.5 against
+nominal n 71–77 on every cell (B10); no significance language attaches to nominal n. The secondary is
+a **single Δ cell** (the 2014→2024 long difference) and is logged **`keep-window`** on that basis —
+per-window replication of the `fin31d`~`fin34c` pair is its promotion route.
