@@ -137,7 +137,7 @@ def main():
     for c in SCREEN + HEADS:
         w = d.pivot_table(index="countrynewwb", columns="year", values=c) * 100
         for y in WAVES:
-            tab[(c, y)] = w[y] if y in w.columns else pd.Series(dtype=float)
+            tab[f"{c}@{y}"] = w[y] if y in w.columns else pd.Series(dtype=float)
     T = pd.DataFrame(tab)
     T["pop"] = dev[dev["year"] == 2024].set_index("countrynewwb")["pop_adult"].reindex(T.index)
 
@@ -162,7 +162,7 @@ def main():
         print(f"  {'item':10s}{'r_w':>9s}{'[95% CI]':>20s}{'p_boot':>9s}{'G6':>9s}"
               f"{'r_u':>9s}{'n':>5s}{'neff':>7s}  {'classification':<28s}{'largest LOO'}")
         for c, _, _ in qualifying:
-            sub = T[[(c, 2024), (head, 2024), "pop"]].dropna()
+            sub = T[[f"{c}@2024", f"{head}@2024", "pop"]].dropna()
             sub.columns = ["x", "y", "w"]
             rw, n = corr(sub["x"], sub["y"], sub["w"])
             ru, _ = corr(sub["x"], sub["y"])
@@ -177,6 +177,23 @@ def main():
             if head == "g20_any":
                 hits.append((c, rw, ru, cls))
         print()
+
+    # ------------------------------- POST-HOC (labelled, not pre-registered)
+    print("-" * 120)
+    print("POST-HOC DIAGNOSTIC (labelled, NOT pre-registered) — is the orientation stable across "
+          "waves, or a 2024 fact?")
+    print(f"  {'item':10s}" + "".join(f"{y:>26d}" for y in WAVES))
+    print(f"  {'':10s}" + "".join(f"{'r_w / r_u vs g20_any':>26s}" for _ in WAVES))
+    for c, _, _ in qualifying:
+        cells = []
+        for y in WAVES:
+            sub = T[[f"{c}@{y}", f"g20_any@{y}", "pop"]].dropna()
+            sub.columns = ["x", "y", "w"]
+            rw, _ = corr(sub["x"], sub["y"], sub["w"])
+            ru, _ = corr(sub["x"], sub["y"])
+            cells.append(f"{rw:+.3f} / {ru:+.3f} (n={len(sub)})")
+        print(f"  {c:10s}" + "".join(f"{s:>26s}" for s in cells))
+    print()
 
     # -------------------------------------------------------------- verdict
     counter = [h for h in hits if h[1] <= -ALIGN and h[2] <= -ALIGN]

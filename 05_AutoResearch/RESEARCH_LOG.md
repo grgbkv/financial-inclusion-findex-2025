@@ -5664,3 +5664,67 @@ frame; no significance language attaches to nominal n (B10). "Definitional break
 claim about the **instrument** that this repo cannot verify — there is no questionnaire here
 (`HARNESS_V2_NOTES.md` items 5–6) — so the finding is stated as *the definitional reading is
 inconsistent with the data*, never as *the questionnaire did not change*.
+
+---
+
+### E47 — VERDICT: registered claim KEPT — `fin34c` is a second, independent counter-moving margin, and its orientation *emerges* across the decade, 2026-08-15
+
+**PART A — mapping pass (exploratory, peek rule; labels INFERRED from levels and coverage, never
+authoritative — the repo holds no questionnaire).** Developing-panel population-weighted levels:
+
+| column | 2014 | 2017 | 2021 | 2024 | n 2024 |
+|---|---|---|---|---|---|
+| `fin34a` | 8.3 | 13.1 | 18.3 | 14.1 | 71 |
+| `fin34b` | 0.4 | 3.9 | 3.0 | 8.1 | 71 |
+| **`fin34c`** | **15.9** | **11.8** | **8.0** | **15.2** | 71 |
+| `fin34d` | 6.0 | 1.0 | 0.4 | **0.1** | 71 |
+| `fin34a_s` / `fin34b_s` / `fin34c_s` / `fin34d_s` | thin — 27/–/51/13 economies in 2014 | | | 42 / 19 / 30 / — | |
+| `g20_any` *(headline, for scale)* | 35.1 | 45.4 | 56.4 | 60.9 | 76 |
+| `account_t_d` *(headline, for scale)* | 55.7 | 65.2 | 70.7 | 75.3 | 77 |
+
+`fin34d` collapses 6.0 → 0.1pp and fails the registered 1.0pp floor — excluded as a floor, not a
+margin. The `_s` family is thin in the early waves and `fin34d_s` exists only in 2014.
+
+**PART B — the registered screen: KEEP.** Three items qualify. Against `g20_any`, 2024:
+
+| item | r_w | [95% CI] | p_boot | G6 | r_u | n | neff | classification | largest LOO |
+|---|---|---|---|---|---|---|---|---|---|
+| `fin34a` | +0.751 | [+0.586, +0.862] | 0.000 | +0.684 | +0.665 | 71 | 7.2 | aligned | Brazil −0.060 |
+| `fin34b` | +0.832 | [+0.695, +0.923] | 0.000 | +0.837 | +0.723 | 71 | 7.2 | **mixed-lens** (restatement / aligned) | Pakistan +0.044 |
+| **`fin34c`** | **−0.552** | **[−0.745, −0.309]** | 0.000 | **−0.553** | **−0.486** | 71 | 7.2 | **counter-moving** | Brazil +0.096 |
+
+Against `account_t_d`, 2024: `fin34a` +0.413/+0.693, `fin34b` +0.453/+0.621, and **`fin34c`
++0.024 weighted against −0.416 unweighted — `mixed-lens`, with India alone worth −0.597**. That cell
+is the cycle's sharpest B12 illustration and no claim is made on it.
+
+**The registered claim passes on `fin34c`: −0.552 weighted and −0.486 unweighted, both past −0.30,
+with G6 at −0.553 and the largest single leave-one-out (Brazil) worth +0.096.** Every lens agrees.
+This is the **second** counter-moving margin the loop has found, in a **different module** from E45's
+`fin31d`, and the four-way classification introduced here is what made it visible — E45's
+independence definition would have missed it exactly as it missed `fin31d_s`.
+
+**POST-HOC DIAGNOSTIC (labelled, not pre-registered) — the orientation is not a 2024 fact, it
+emerges.** `r(item level, g20_any level)` by wave, weighted / unweighted:
+
+| item | 2014 | 2017 | 2021 | 2024 |
+|---|---|---|---|---|
+| `fin34a` | +0.801 / +0.776 | +0.890 / +0.803 | +0.938 / +0.826 | +0.751 / +0.665 |
+| `fin34b` | +0.270 / +0.337 | +0.772 / +0.531 | +0.119 / +0.481 | +0.832 / +0.723 |
+| **`fin34c`** | **+0.028 / −0.122** | **−0.419 / −0.323** | **−0.690 / −0.367** | **−0.552 / −0.486** |
+
+`fin34c` starts **orthogonal** to the digital headline in 2014 and turns counter-moving from 2017 on,
+clearing −0.30 on both lenses in three consecutive waves. So the negative orientation is not a
+one-wave coincidence, and it is not present at the start of the decade — it **develops as digital
+payment spreads**. That is the shape a *displaced* margin would have, and it is the strongest reason
+to carry `fin34c` forward alongside `fin31d`. Note also that both candidate margins share an unusual
+level trajectory: a decade-long fall followed by a **rebound in the last window**
+(`fin34c` 15.9 → 8.0 → 15.2; `fin31d` 47.1 → 20.5 → 26.6).
+
+**Declared.** 2024 cross-section for the registered claim; the wave table is a labelled post-hoc
+diagnostic and carries no keep. Rule B4's replication ladder does not apply in its usual form — this
+is a level-orientation claim, not a Δ-window association — so the finding is logged `keep` on the
+lens agreement, not `keep-general`. Every `fin34` item is a narrow, `INDICATORS`-unregistered variant
+of the wage/payment-mode concept under G3. **Item meanings are inferred from levels and coverage
+only**; "wage payment modes" is the module label, and which mode `fin34c` is remains unknown. A
+correlation between an item and the headline is a statement about measurement orientation, not
+behaviour. `neff` = 7.2 against nominal n = 71 on every cell (B10).
