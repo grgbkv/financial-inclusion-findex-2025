@@ -1,39 +1,39 @@
-"""E46 (pre-registered 2026-08-15b): is the 2014->2017 fall in `save_any_t_d` (53.1 -> 43.6) a
-DEFINITIONAL BREAK in the instrument or a real behavioural decline?
+"""E47 (pre-registered 2026-08-15b): `fin34` (wage payment modes) — the cycle's UNTOUCHED-MODULE draw.
 
-Agenda items 1.4 and 1.7. Parent: E39 / E44 item 1.7 (formal saving declines in EVERY demographic
-slice in 2014->17, the slice-level counterpart of this drop). Two agenda items and any decade-scale
-claim on the saving margin are blocked on this question.
+`fin34` is 8 columns x four waves x ~77 developing economies with ZERO ledger mentions: after E45
+took `fin31`, it is the best-covered untouched country module left. No parent finding — this is a
+breadth draw from the B2 note, not a descendant of anything.
 
-This is a MEASUREMENT question, not an association: no 0.30 threshold applies. The pre-registered
-object is a verdict rule over five diagnostics, fixed before any of them was computed.
+PART A — MAPPING PASS (EXPLORATORY, peek rule). Per-wave developing-panel country counts and
+population-weighted levels for all eight columns. Labels are INFERRED from levels and coverage and
+are documented as inferred, never authoritative — the repo holds no questionnaire. Part A was
+computed before the Part B registration was written and is disclosed as such. No keep hangs on it.
 
-  (a) UNIVERSALITY   share of dev-panel economies with delta save_any < 0 in 2014->17 vs the other
-                     windows. BAR: >= 80% falling AND >= 20pp above the highest other window.
-  (b) HIGH-INCOME    the same share on the HIGH-INCOME panel frame (pan_all minus pan_dev, ~40
-      CONTAMINATION  economies) — a frame with zero ledger mentions. BAR: >= 70% also falling.
-  (c) COMPONENT      decompose delta save_any into delta formal (fin17a_17a1_d) and the RESIDUAL
-      DECOUPLING     (total minus formal). BAR: >= 70% of the pp drop sits in the residual.
-  (d) PERSISTENCE    2017 / 2021 / 2024 levels. BAR: never returns within 5pp of 2014. Reported for
-                     every verdict; does NOT enter the rule (a real decline can persist too).
-  (e) G5 OFFICIAL    the official Developing-economies aggregate must show the same drop within
-                     2.5pp. A computation check: if it FAILS the experiment is VOID.
+PART B — THE REGISTERED ORIENTATION SCREEN. For each of the four unsuffixed items (fin34a-fin34d),
+the 2024 cross-sectional level correlation against the digital-payment headline `g20_any` and against
+`account_t_d`, on the developing panel. Four-way classification, fixing the bar E45 recorded as
+mis-specified (it was written to catch ORTHOGONAL items and could not see a strongly negative one):
 
-  VERDICT RULE (fixed in advance):
-    definitional-break consistent  if (a) AND (b) AND (c) pass, and (e) holds
-    real decline                   if (a) passes but BOTH (b) and (c) fail
-    inconclusive                   otherwise
+    restatement    |r| >= 0.80
+    aligned        +0.30 <= r < 0.80
+    counter-moving      r <= -0.30
+    independent    |r| < 0.30
 
-B6/B9/B10: 2,000-draw country bootstrap on each share; Kish neff beside every nominal n and no
-significance language on nominal n; unweighted median delta beside the population-weighted mean.
+Classification requires BOTH lenses to agree; where they disagree the item is `mixed-lens` (B9/B11).
 
-E35 RULE: the file recomputes the ledger's published 2014/2017 levels (53.1 / 43.6) BEFORE any
-diagnostic is read, and aborts on a mismatch > 0.2pp.
+REGISTERED CLAIM (the keep/discard object): "at least one fin34 item counter-moves the
+digital-payment headline at r_level <= -0.30 on BOTH lenses in the 2024 cross-section."
+Coverage floor: >= 30 developing-panel economies in 2024 AND a weighted level >= 1.0pp (an item at
+0.1pp of adults is a floor, not a margin).
 
-DECLARED. `save_any_t_d` and `fin17a_17a1_d` are headline variants under G3. Descriptive measurement
-diagnostics only, nothing causal. "Definitional break" is a claim about the INSTRUMENT, offered as
-the reading most consistent with the signatures — the repo holds no questionnaire
-(HARNESS_V2_NOTES.md items 5 and 6), so it can never be a documented fact here.
+B6/B9/B10/B12 on every cell: 2,000-draw country bootstrap percentile interval, unweighted twin,
+Kish neff beside nominal n with no significance language on nominal n, G6 drop-top-5, and the NAMED
+largest single leave-one-economy-out effect.
+
+DECLARED. Cross-sectional 2024 levels; no trend language on Part B. Every fin34 item is a narrow
+variant of the wage/payment-mode concept under G3, unregistered in INDICATORS, and declared narrow.
+A correlation between an item and the headline is a statement about MEASUREMENT ORIENTATION, not
+behaviour.
 """
 import numpy as np
 import pandas as pd
@@ -41,18 +41,17 @@ import pandas as pd
 from harness import Findex
 
 BOOT = 2000
-SEED = 46
+SEED = 47
 WAVES = [2014, 2017, 2021, 2024]
-TOTAL = "save_any_t_d"
-FORMAL = "fin17a_17a1_d"
+FIN34 = ["fin34a", "fin34b", "fin34c", "fin34d",
+         "fin34a_s", "fin34b_s", "fin34c_s", "fin34d_s"]
+SCREEN = ["fin34a", "fin34b", "fin34c", "fin34d"]
+HEADS = ["g20_any", "account_t_d"]
 
-BAR_A_SHARE = 0.80      # (a) share of dev economies falling in 2014->17
-BAR_A_MARGIN = 20.0     # (a) pp above the highest other window
-BAR_B_SHARE = 0.70      # (b) share of high-income economies falling
-BAR_C_RESID = 0.70      # (c) fraction of the drop sitting in the residual
-BAR_D_RETURN = 5.0      # (d) pp of 2014 the series must never return within
-
-LEDGER_2014, LEDGER_2017 = 53.1, 43.6
+MIN_C = 30           # coverage floor: developing-panel economies in 2024
+MIN_LEVEL = 1.0      # coverage floor: weighted 2024 level in pp
+RESTATE = 0.80
+ALIGN = 0.30
 
 
 def kish(w):
@@ -60,202 +59,140 @@ def kish(w):
     return float(w.sum() ** 2 / (w ** 2).sum())
 
 
-def boot_share(vals, draws=BOOT, seed=SEED):
-    """Percentile interval for the share of economies below zero, resampling economies."""
-    a = np.asarray(vals, dtype=float)
-    a = a[np.isfinite(a)]
-    if len(a) < 10:
-        return np.nan, np.nan
+def corr(x, y, w=None):
+    m = pd.notna(x) & pd.notna(y)
+    if w is not None:
+        m &= pd.notna(w)
+    x, y = x[m], y[m]
+    if len(x) < 10:
+        return np.nan, int(len(x))
+    ww = np.ones(len(x)) if w is None else np.asarray(w[m], dtype=float)
+    mx, my = np.average(x, weights=ww), np.average(y, weights=ww)
+    sx = np.sqrt(np.average((x - mx) ** 2, weights=ww))
+    sy = np.sqrt(np.average((y - my) ** 2, weights=ww))
+    if sx == 0 or sy == 0:
+        return np.nan, int(len(x))
+    return float(np.average((x - mx) * (y - my), weights=ww) / (sx * sy)), int(len(x))
+
+
+def boot_ci(df, fn, draws=BOOT, seed=SEED):
     rng = np.random.default_rng(seed)
-    sh = [(a[rng.integers(0, len(a), len(a))] < 0).mean() for _ in range(draws)]
-    return float(np.percentile(sh, 2.5)), float(np.percentile(sh, 97.5))
+    idx, out = np.arange(len(df)), []
+    for _ in range(draws):
+        v = fn(df.iloc[rng.choice(idx, size=len(idx), replace=True)])
+        if pd.notna(v) and np.isfinite(v):
+            out.append(v)
+    if len(out) < draws // 4:
+        return np.nan, np.nan, np.nan
+    a = np.asarray(out)
+    return (float(np.percentile(a, 2.5)), float(np.percentile(a, 97.5)),
+            float(2 * min((a <= 0).mean(), (a >= 0).mean())))
 
 
-def panel(frame, col):
-    w = frame[frame["year"].isin(WAVES)].pivot_table(
-        index="countrynewwb", columns="year", values=col) * 100
-    pop = frame[frame["year"] == 2024].set_index("countrynewwb")["pop_adult"]
-    w["pop"] = pop.reindex(w.index)
-    return w
-
-
-def wmean(s, w):
-    m = pd.notna(s) & pd.notna(w)
-    return float(np.average(s[m], weights=w[m])) if m.sum() else np.nan
+def classify(rw, ru):
+    def one(r):
+        if not np.isfinite(r):
+            return "n/a"
+        if abs(r) >= RESTATE:
+            return "restatement"
+        if r <= -ALIGN:
+            return "counter-moving"
+        if r >= ALIGN:
+            return "aligned"
+        return "independent"
+    a, b = one(rw), one(ru)
+    return a if a == b else f"mixed-lens ({a} / {b})"
 
 
 def main():
     fx = Findex()
     dev = fx.pan_dev
-    hi = fx.pan_all[fx.pan_all["incomegroupwb24"] == "High income"].copy()
+    d = dev[dev["year"].isin(WAVES)]
 
-    print("=" * 108)
-    print("E46 — the 2014->2017 saving drop: definitional break or real decline?")
-    print("=" * 108)
+    print("=" * 120)
+    print("E47 — fin34 (wage payment modes): the cycle's untouched-module draw")
+    print("=" * 120)
 
-    # ---------------------------------------------------------------- E35 rule
-    tot_dev = fx.series(dev, TOTAL, WAVES)
-    d14, d17 = tot_dev[2014], tot_dev[2017]
-    print(f"\nE35 RULE — reproduce the ledger before reading anything: "
-          f"2014 {d14:.1f} (ledger {LEDGER_2014}) | 2017 {d17:.1f} (ledger {LEDGER_2017})")
-    for got, want, lab in ((d14, LEDGER_2014, "2014"), (d17, LEDGER_2017, "2017")):
-        assert abs(got - want) <= 0.2, f"ABORT: {lab} is {got:.2f}, ledger says {want}"
-    print("  reproduced within 0.2pp — proceeding.")
+    # -------------------------------------------------------------- PART A
+    print("\n" + "=" * 120)
+    print("PART A — MAPPING PASS (EXPLORATORY, peek rule; labels INFERRED from levels and coverage, "
+          "NOT authoritative)")
+    print("=" * 120)
+    print(f"  {'column':14s}" + "".join(f"{y:>20d}" for y in WAVES))
+    print(f"  {'':14s}" + "".join(f"{'n / wtd level pp':>20s}" for _ in WAVES))
+    levels = {}
+    for c in FIN34 + HEADS:
+        cells = []
+        for y in WAVES:
+            dy = d[d["year"] == y]
+            n = int(dy[c].notna().sum())
+            v = Findex.wmean(dy, c) * 100 if n else np.nan
+            levels[(c, y)] = (n, v)
+            cells.append(f"{n:>3d} / {v:>8.1f}" if n else f"{'—':>14s}")
+        star = "  <-- headline" if c in HEADS else ""
+        print(f"  {c:14s}" + "".join(f"{s:>20s}" for s in cells) + star)
 
-    # ------------------------------------------------------- (e) G5, run first
-    print("\n" + "-" * 108)
-    print("(e) G5 OFFICIAL CROSS-CHECK — a computation check; failure VOIDS the experiment")
-    print("-" * 108)
-    g5 = fx.gate_official(tot_dev, "developing", TOTAL)
-    off = fx.official_series("developing", TOTAL, WAVES)
-    print(f"  computed (dev panel): " + "  ".join(f"{y}={tot_dev[y]:.1f}" for y in tot_dev.index))
-    print(f"  official  (Developing economies): " +
-          "  ".join(f"{y}={off[y]:.1f}" for y in off.index))
-    print(f"  {g5}")
-    if not g5["ok"]:
-        print("\n  *** VOID: computed aggregate does not track the official one. ***")
-        return
+    # -------------------------------------------------------------- panel
+    tab = {}
+    for c in SCREEN + HEADS:
+        w = d.pivot_table(index="countrynewwb", columns="year", values=c) * 100
+        for y in WAVES:
+            tab[(c, y)] = w[y] if y in w.columns else pd.Series(dtype=float)
+    T = pd.DataFrame(tab)
+    T["pop"] = dev[dev["year"] == 2024].set_index("countrynewwb")["pop_adult"].reindex(T.index)
 
-    # ------------------------------------------------------------ (d) levels
-    print("\n" + "-" * 108)
-    print("(d) PERSISTENCE — dev-panel population-weighted levels, all four waves")
-    print("-" * 108)
-    fml_dev = fx.series(dev, FORMAL, WAVES)
-    tot_hi = fx.series(hi, TOTAL, WAVES)
-    print(f"  {'series':34s}" + "".join(f"{y:>10d}" for y in WAVES))
-    for lab, s in (("save_any_t_d (developing)", tot_dev),
-                   ("fin17a_17a1_d formal (developing)", fml_dev),
-                   ("save_any_t_d (HIGH INCOME)", tot_hi)):
-        print(f"  {lab:34s}" + "".join(
-            f"{s[y]:>10.1f}" if y in s.index else f"{'—':>10s}" for y in WAVES))
-    later = [tot_dev[y] for y in (2017, 2021, 2024) if y in tot_dev.index]
-    closest = min(abs(v - d14) for v in later)
-    d_pass = closest > BAR_D_RETURN
-    print(f"\n  closest later wave to the 2014 level: {closest:.1f}pp away "
-          f"(bar: never within {BAR_D_RETURN}pp) -> "
-          f"{'PASS (level shift persists)' if d_pass else 'FAIL (series recovers)'}")
+    # -------------------------------------------------------------- PART B
+    print("\n" + "=" * 120)
+    print("PART B — REGISTERED ORIENTATION SCREEN (2024 cross-section)")
+    print("=" * 120)
+    qualifying, skipped = [], []
+    for c in SCREEN:
+        n, v = levels[(c, 2024)]
+        (qualifying if (n >= MIN_C and np.isfinite(v) and v >= MIN_LEVEL) else skipped).append(
+            (c, n, v))
+    for c, n, v in skipped:
+        print(f"  EXCLUDED {c}: n={n}, 2024 weighted level {v:.1f}pp "
+              f"(floors: n >= {MIN_C}, level >= {MIN_LEVEL}pp)")
+    print(f"  qualifying items: {', '.join(c for c, _, _ in qualifying)}\n")
 
-    # -------------------------------------------------- (a) and (b) shares
-    ptot_dev, ptot_hi = panel(dev, TOTAL), panel(hi, TOTAL)
-    windows = [(2014, 2017), (2017, 2021), (2021, 2024)]
+    hits = []
+    for head in HEADS:
+        print("-" * 120)
+        print(f"  vs {head}")
+        print(f"  {'item':10s}{'r_w':>9s}{'[95% CI]':>20s}{'p_boot':>9s}{'G6':>9s}"
+              f"{'r_u':>9s}{'n':>5s}{'neff':>7s}  {'classification':<28s}{'largest LOO'}")
+        for c, _, _ in qualifying:
+            sub = T[[(c, 2024), (head, 2024), "pop"]].dropna()
+            sub.columns = ["x", "y", "w"]
+            rw, n = corr(sub["x"], sub["y"], sub["w"])
+            ru, _ = corr(sub["x"], sub["y"])
+            lo, up, pb = boot_ci(sub, lambda s: corr(s["x"], s["y"], s["w"])[0])
+            g6 = fx.gate_jackknife(sub["x"], sub["y"], sub["w"])
+            loo = sorted(((corr(sub.drop(i)["x"], sub.drop(i)["y"], sub.drop(i)["w"])[0] - rw, i)
+                          for i in sub.index), key=lambda t: -abs(t[0]))[0]
+            cls = classify(rw, ru)
+            print(f"  {c:10s}{rw:>9.3f}{f'[{lo:+.3f}, {up:+.3f}]':>20s}{pb:>9.3f}"
+                  f"{g6['r_droptop']:>9.3f}{ru:>9.3f}{n:>5d}{kish(sub['w']):>7.1f}  "
+                  f"{cls:<28s}{loo[1]} {loo[0]:+.3f}")
+            if head == "g20_any":
+                hits.append((c, rw, ru, cls))
+        print()
 
-    def share_table(p, label):
-        rows = []
-        for a, b in windows:
-            if a not in p.columns or b not in p.columns:
-                continue
-            d = (p[b] - p[a]).dropna()
-            w = p["pop"].reindex(d.index)
-            lo, up = boot_share(d.values)
-            rows.append({
-                "window": f"{a}->{b}", "n": len(d), "neff": kish(w.dropna()),
-                "share_neg": float((d < 0).mean()), "ci": (lo, up),
-                "wmean": wmean(d, w), "umedian": float(d.median()),
-            })
-        print(f"\n  {label}")
-        print(f"    {'window':12s}{'n':>5s}{'neff':>7s}{'% falling':>11s}"
-              f"{'[95% CI]':>20s}{'wtd mean d':>12s}{'unwtd med d':>13s}")
-        for r in rows:
-            ci = f"[{r['ci'][0]*100:.1f}, {r['ci'][1]*100:.1f}]"
-            print(f"    {r['window']:12s}{r['n']:>5d}{r['neff']:>7.1f}"
-                  f"{r['share_neg']*100:>10.1f}%{ci:>20s}"
-                  f"{r['wmean']:>12.2f}{r['umedian']:>13.2f}")
-        return {r["window"]: r for r in rows}
-
-    print("\n" + "-" * 108)
-    print("(a) UNIVERSALITY / (b) HIGH-INCOME CONTAMINATION — share of economies with a FALLING "
-          "total-saving rate")
-    print("-" * 108)
-    sd = share_table(ptot_dev, "developing panel (77 economies)")
-    sh = share_table(ptot_hi, "HIGH-INCOME panel (frame with zero prior ledger mentions)")
-
-    a_share = sd["2014->2017"]["share_neg"]
-    other_max = max(sd[k]["share_neg"] for k in sd if k != "2014->2017")
-    a_pass = a_share >= BAR_A_SHARE and (a_share - other_max) * 100 >= BAR_A_MARGIN
-    print(f"\n  (a) 2014->17 {a_share*100:.1f}% vs best other window {other_max*100:.1f}% "
-          f"(margin {(a_share-other_max)*100:.1f}pp; bars {BAR_A_SHARE*100:.0f}% and "
-          f"{BAR_A_MARGIN:.0f}pp) -> {'PASS' if a_pass else 'FAIL'}")
-
-    b_share = sh["2014->2017"]["share_neg"]
-    b_pass = b_share >= BAR_B_SHARE
-    print(f"  (b) high income 2014->17 {b_share*100:.1f}% falling "
-          f"(bar {BAR_B_SHARE*100:.0f}%) -> {'PASS' if b_pass else 'FAIL'}")
-
-    # ------------------------------------------------ (c) component decoupling
-    print("\n" + "-" * 108)
-    print("(c) COMPONENT DECOUPLING — where does the drop sit: formal saving, or the "
-          "non-formal residual?")
-    print("-" * 108)
-    pf = panel(dev, FORMAL)
-    common = ptot_dev.index.intersection(pf.index)
-    tt, ff = ptot_dev.loc[common], pf.loc[common]
-    print(f"  {'window':12s}{'d total':>10s}{'d formal':>11s}{'d residual':>12s}"
-          f"{'resid share':>13s}{'n':>6s}{'neff':>7s}")
-    c_pass = None
-    for a, b in windows:
-        m = pd.notna(tt[a]) & pd.notna(tt[b]) & pd.notna(ff[a]) & pd.notna(ff[b])
-        w = tt.loc[m, "pop"]
-        dt = wmean(tt.loc[m, b] - tt.loc[m, a], w)
-        df_ = wmean(ff.loc[m, b] - ff.loc[m, a], w)
-        dr = dt - df_
-        rs = dr / dt if dt != 0 else np.nan
-        print(f"  {a}->{b:<7d}{dt:>10.2f}{df_:>11.2f}{dr:>12.2f}{rs*100:>12.1f}%"
-              f"{int(m.sum()):>6d}{kish(w.dropna()):>7.1f}")
-        if (a, b) == (2014, 2017):
-            c_pass = bool(dt < 0 and rs >= BAR_C_RESID)
-            c_resid_share = rs
-    print(f"\n  (c) residual carries {c_resid_share*100:.1f}% of the 2014->17 drop "
-          f"(bar {BAR_C_RESID*100:.0f}%) -> {'PASS' if c_pass else 'FAIL'}")
-
-    # per-economy version of (c): does formal saving fall in the same economies?
-    m = pd.notna(tt[2014]) & pd.notna(tt[2017]) & pd.notna(ff[2014]) & pd.notna(ff[2017])
-    dtot = (tt.loc[m, 2017] - tt.loc[m, 2014])
-    dfml = (ff.loc[m, 2017] - ff.loc[m, 2014])
-    dres = dtot - dfml
-    print(f"  per-economy 2014->17: total falls in {(dtot<0).mean()*100:.1f}% of economies, "
-          f"formal in {(dfml<0).mean()*100:.1f}%, residual in {(dres<0).mean()*100:.1f}% "
-          f"(n={int(m.sum())})")
-
-    # ------------------------------------------- POST-HOC (labelled, not registered)
-    print("\n" + "-" * 108)
-    print("POST-HOC DIAGNOSTIC (not pre-registered; labelled as such) — B12: who carries the "
-          "weighted 2014->17 drop?")
-    print("-" * 108)
-    d = (ptot_dev[2017] - ptot_dev[2014]).dropna()
-    w = ptot_dev["pop"].reindex(d.index).dropna()
-    d = d.reindex(w.index)
-    full = wmean(d, w)
-    loo = sorted(((wmean(d.drop(c), w.drop(c)) - full, c) for c in d.index),
-                 key=lambda t: -abs(t[0]))[:5]
-    print(f"  weighted mean delta {full:.2f}pp | unweighted mean {d.mean():.2f}pp | "
-          f"unweighted median {d.median():.2f}pp")
-    print("  largest leave-one-economy-out effects on the weighted mean:")
-    for eff, c in loo:
-        print(f"    drop {c:<22s} -> {full + eff:>7.2f}pp  ({eff:+.2f})")
-    dtop5 = d.drop(w.sort_values(ascending=False).index[:5])
-    wtop5 = w.drop(w.sort_values(ascending=False).index[:5])
-    print(f"  drop-top-5 by population: weighted mean {wmean(dtop5, wtop5):.2f}pp "
-          f"(n={len(dtop5)})")
-    hd = (ptot_hi[2017] - ptot_hi[2014]).dropna()
-    print(f"  high-income counterpart in the same window: weighted mean "
-          f"{wmean(hd, ptot_hi['pop'].reindex(hd.index)):.2f}pp, "
-          f"unweighted median {hd.median():.2f}pp (n={len(hd)})")
-
-    # ---------------------------------------------------------------- verdict
-    print("\n" + "=" * 108)
-    if a_pass and b_pass and c_pass:
-        verdict = "DEFINITIONAL-BREAK CONSISTENT"
-    elif a_pass and not b_pass and not c_pass:
-        verdict = "REAL DECLINE"
+    # -------------------------------------------------------------- verdict
+    counter = [h for h in hits if h[1] <= -ALIGN and h[2] <= -ALIGN]
+    print("=" * 120)
+    print("E47 REGISTERED CLAIM: at least one fin34 item counter-moves g20_any at r_level <= -0.30 "
+          "on BOTH lenses (2024)")
+    if counter:
+        print(f"  -> KEEP. Counter-moving items: "
+              f"{', '.join(f'{c} ({rw:+.3f} wtd / {ru:+.3f} unwtd)' for c, rw, ru, _ in counter)}")
     else:
-        verdict = "INCONCLUSIVE"
-    print(f"E46 VERDICT: {verdict}")
-    print(f"  (a) universality        {'PASS' if a_pass else 'FAIL'}")
-    print(f"  (b) high-income contam. {'PASS' if b_pass else 'FAIL'}")
-    print(f"  (c) component decoupling{'PASS' if c_pass else 'FAIL'}")
-    print(f"  (d) persistence         {'PASS' if d_pass else 'FAIL'}   (reported, not in the rule)")
-    print(f"  (e) G5 official         PASS")
-    print("=" * 108)
+        print("  -> DISCARD. No qualifying item reaches -0.30 on both lenses.")
+        best = min(hits, key=lambda h: h[1]) if hits else None
+        if best:
+            print(f"     most negative item: {best[0]} at {best[1]:+.3f} wtd / {best[2]:+.3f} unwtd "
+                  f"({best[3]})")
+    print("=" * 120)
 
 
 if __name__ == "__main__":
