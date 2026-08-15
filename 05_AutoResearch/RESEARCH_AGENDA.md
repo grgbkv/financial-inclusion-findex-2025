@@ -509,3 +509,65 @@ experiment — which is also the natural shape for keeping the paper draft hones
   (2024-only and a near-restatement of the headline), plus the blocked `con`. The `pan_grp` slice
   frames are now used on **all four** transitions. `urbanicity` remains the only untouched frame and
   is single-wave.
+
+## Addendum (2026-08-15b, from the E46/E47/E48 cycle)
+
+- **Program 1 — item 1.4 is ANSWERED and item 1.7 is unblocked.** E46 ran five pre-registered
+  diagnostics on the 2014→2017 `save_any_t_d` drop (53.1 → 43.6) with the verdict rule fixed in
+  advance. The rule returns **inconclusive** (1 of 3 pass), but **two of the three failures are
+  failures of the definitional hypothesis**: high-income economies **rose** in the same window
+  (+1.65pp weighted, only 45.0% falling, against a 70% bar) under the *same* questionnaire, and the
+  developing series returns to **53.0 in 2024 — 0.1pp from its 2014 value** after passing through
+  43.6 and 42.4. An instrument does not un-break itself. **Treat the decade series on this margin as
+  continuous; stop hedging decade-scale saving claims on a suspected definitional break.** What
+  diagnostic (c) adds and no future write-up should drop: **90.2% of the drop sits in the non-formal
+  residual** (Δformal −0.91pp against Δresidual −8.36pp; per economy, total falls in 62.3% but formal
+  in 49.4%). Whatever happened in 2014→17 happened to saving *outside* financial institutions. The
+  design cannot separate a real informal-saving contraction from a change in how non-formal channels
+  were enumerated, and it should not pretend to. **Program 1 now has no live items.**
+- **A frame fact worth carrying:** the **high-income panel** (`pan_all` minus `pan_dev`, 40 economies,
+  `neff` 9.2 — the highest in the ledger, precisely because it excludes the giants) is now used and is
+  a cheap, powerful **placebo frame** for any "did the instrument change?" question. Caveat: it holds
+  only **5** economies reporting `save_any_t_d` in 2024, so it supports early-wave contrasts, not 2024
+  ones.
+- **Programs 7-adjacent — a second counter-moving margin, and the module screen that found it.** E47
+  drew **`fin34`** (wage payment modes, 8 cols × four waves, **zero prior mentions**) and its
+  registered screen **keeps**: **`fin34c` correlates −0.552 wtd / −0.486 unwtd with `g20_any`** in the
+  2024 cross-section, through G6 (−0.553), largest leave-one-out **Brazil +0.096**. The screen used a
+  **four-way classification** (restatement / aligned / **counter-moving** / independent, both lenses
+  agreeing or else `mixed-lens`) that directly fixes the bar E45 logged as mis-specified against
+  itself — **and it earned its keep on first use**: E45's independence definition would have missed
+  `fin34c` exactly as it missed `fin31d_s`. **This screen is now the recommended first move on any
+  untouched module**, replacing the redundancy/independence pair.
+- **The orientation EMERGES, which is the part worth following.** `fin34c` vs `g20_any` by wave:
+  **+0.028/−0.122 (2014) → −0.419/−0.323 (2017) → −0.690/−0.367 (2021) → −0.552/−0.486 (2024)**. It
+  starts orthogonal and turns counter-moving as digital payment spreads. Both candidate cash margins
+  also share an odd trajectory: a decade-long fall then a **rebound in the last window** (`fin34c`
+  15.9 → 8.0 → 15.2; `fin31d` 47.1 → 20.5 → 26.6). **New item 7.8: what is the 2021→24 rebound?** It
+  is common to two items in two modules and is unexplained.
+- **Item 7.6 is answered in two halves, and the split is the finding.** E48's **primary is
+  `discard-weighted`**: r(Δ`fin31d`, Δ`g20_any`) clears −0.30 on both lenses in **1 of 3** registered
+  cells — the weighted lens would have kept 3/3 (−0.400 / −0.759 / −0.336), the unweighted 1/3
+  (−0.159 / −0.352 / −0.266). **E45's counter-moving level correlation is a cross-sectional
+  composition fact — cash-heavy economies are digital-poor economies — not a within-country dynamic
+  one.** The **secondary keeps** (`keep-window`): the two counter-moving margins **retreat together**,
+  r(Δ`fin31d`, Δ`fin34c`) = **+0.515 / +0.389** over 2014→2024, surviving BH at q = 0.10 over four
+  registered pairs, with a partial controlling for Δ`g20_any` that **strengthens to +0.597 / +0.383**.
+  The two digital-aligned modes run the other way (`fin34a` −0.744, `fin34b` −0.799), so all four
+  items sort onto opposite sides of one axis. **New item 7.7, the promotion route for E48b:**
+  replicate the `fin31d`~`fin34c` pair **per window** (2014→17, 2017→21, 2021→24) — it is currently a
+  single long-difference cell.
+- **A registered *direction* did real work, and this is a design lesson.** E48's secondary named the
+  predicted sign in advance. `fin34a` and `fin34b` came back **larger** than the keep pair (−0.744,
+  −0.799) and were **not eligible**, because they point the opposite way. Without the direction in the
+  registration, the obvious write-up would have been "three of four pairs cohere at |r| ≥ 0.30" — a
+  sentence that describes two contradictory patterns as one. **Every future multi-item family test
+  should register the sign, not just the magnitude.**
+- **B2 note for the next cycle.** `fin34` is now used, and the **high-income panel frame** is now
+  used. Untouched country modules remaining: **`fin43`** (agricultural payments, four waves × 71 — now
+  the best-covered untouched block and the natural next four-way screen), `fin25` (mostly 2024-only),
+  `fin13`/`fin14` (2024, 27 economies), `dig_acc` (2024-only, a near-restatement), plus the blocked
+  `con`. The largest untouched surface in the repo is still the **micro** side: `con` (52 cols),
+  `fin48`/`fin49` (12), and `fin22`/`fin24`/`fin31`/`fin34`/`fin39`/`fin43` — **154 micro columns in
+  19 families, zero mentions**, and the micro stream has not run since U21. `urbanicity` remains the
+  only untouched frame and is single-wave.

@@ -5801,3 +5801,53 @@ question asked. `fin31d_s` was excluded from the Δ design as registered. `neff`
 nominal n 71–77 on every cell (B10); no significance language attaches to nominal n. The secondary is
 a **single Δ cell** (the 2014→2024 long difference) and is logged **`keep-window`** on that basis —
 per-window replication of the `fin31d`~`fin34c` pair is its promotion route.
+
+---
+
+## Cycle wrap-up — 2026-08-15b
+
+Working tree clean at start; `coverage.py` run before hypotheses were chosen (rule B1). Three
+experiments, five registered claims: **two keeps, one `discard-weighted`, one inconclusive-but-
+decisive**. The prediction stream stayed **closed** (P28), as its closing rule requires. B2 was
+satisfied twice over — `fin34` had zero ledger mentions and the high-income panel frame had none
+either. Lineage (B3): E46 ← E39/E44, E47 ← nothing (a breadth draw), E48 ← E45 (second on that line).
+
+- **E46 — INCONCLUSIVE under the fixed rule (1 of 3), and it still answers the blocking question.**
+  Two of the three failures are failures *of the definitional hypothesis*: under the same
+  questionnaire, high-income economies **rose** in the same window (**+1.65pp** weighted, only
+  **45.0%** falling against a 70% bar), and the developing series returns to **53.0 in 2024 — 0.1pp
+  from its 2014 value** after passing through 43.6 and 42.4. An instrument does not un-break itself.
+  **Agenda item 1.4 is answered in the negative: the decade series on `save_any_t_d` may be read as
+  continuous**, and items 1.4 and 1.7 are unblocked. The one diagnostic that *passed* is the one to
+  carry: **90.2%** of the drop sits in the **non-formal residual** (Δformal −0.91pp vs Δresidual
+  −8.36pp), so whatever happened in 2014→17 happened to saving outside financial institutions. The
+  design cannot separate a real informal-saving contraction from a change in how those channels were
+  enumerated, and says so.
+- **E47 — KEEP, and the cycle's B2 cell paid immediately.** `fin34` (wage payment modes, **zero
+  prior mentions**) contains a **second counter-moving margin**: `fin34c` at **−0.552 weighted /
+  −0.486 unwtd** against `g20_any` in 2024, G6 **−0.553**, largest leave-one-out **Brazil +0.096** —
+  every lens agrees. The screen that found it used a **four-way classification** (restatement /
+  aligned / **counter-moving** / independent) written specifically to fix the bar E45 logged as
+  mis-specified against itself, **and E45's old definition would have missed `fin34c` exactly as it
+  missed `fin31d_s`**. A labelled post-hoc wave table shows the orientation **emerges**: +0.028/−0.122
+  (2014) → −0.419/−0.323 (2017) → −0.690/−0.367 (2021) → −0.552/−0.486 (2024).
+- **E48 — the split verdict is the substance.** The **primary is `discard-weighted`**: r(Δ`fin31d`,
+  Δ`g20_any`) clears −0.30 on both lenses in **1 of 3** registered cells, where the weighted lens
+  would have kept **3/3** (−0.400 / −0.759 / −0.336) and the unweighted **1/3** (−0.159 / −0.352 /
+  −0.266). So **E45's counter-moving level correlation is a cross-sectional composition fact —
+  cash-heavy economies are digital-poor economies — and not a within-country dynamic one.** That
+  reading was written into the pre-registration *before* the answer, which is the only reason it can
+  be stated now without suspicion. The **secondary keeps** (`keep-window`): the two counter-moving
+  margins **retreat together**, **+0.515 / +0.389** over 2014→2024, surviving BH at q = 0.10 over four
+  registered pairs, with a partial controlling for Δ`g20_any` that **strengthens to +0.597 / +0.383**.
+- **The cycle's design lesson: register the SIGN, not just the magnitude.** E48's secondary named the
+  predicted direction in advance. `fin34a` and `fin34b` came back **larger** than the keep pair
+  (−0.744 and −0.799) and were **ineligible**, because they point the other way — the two
+  digital-aligned wage modes *rise* where the cash margin falls. Without the direction in the
+  registration the natural write-up would have been "three of four pairs cohere at |r| ≥ 0.30", a
+  sentence that folds two contradictory patterns into one claim. Logged as a standing recommendation
+  for every multi-item family test.
+- **A frame worth reusing.** The **high-income panel** (`pan_all` minus `pan_dev`, 40 economies) had
+  zero prior mentions and carries the ledger's **highest Kish `neff` — 9.2 against nominal n 40** —
+  precisely because it excludes the giants. It is a cheap **placebo frame** for any "did the
+  instrument change?" question. Caveat: only 5 of its economies report `save_any_t_d` in 2024.
