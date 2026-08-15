@@ -226,3 +226,138 @@ usual figure — and yet its weighted and unweighted correlations are +0.797 and
 same `neff` and moves +0.198 → +0.726 on dropping China. `neff`, the unweighted twin, G6 and the
 named leave-one-out are **four different diagnostics**, and write-ups must stop treating a low `neff`
 as though it settled the others.
+
+---
+
+# Amendment (2026-08-15c) — the enforcement pass
+
+Eight changes, adopted after a two-week review of the ledger rather than after a single experiment.
+They are **additive**: every gate, threshold and pre-registration rule above stands unchanged. Six
+are new rules (B14–B19); two are documentation obligations. `make_index.py` enforces B19 and B14 mechanically (`python3 make_index.py --check` exits non-zero). The review's findings that motivate each
+are named, because a rule whose reason is not recorded gets dropped by the next cycle that finds it
+inconvenient.
+
+## B14 — a single adjacent-wave Δ→Δ may not be an experiment's PRIMARY
+
+**The rule.** The primary of any country-level association experiment must be **either**
+
+- a **long difference** (a span of two or more transitions), reported with rule B16's wave path, **or**
+- an **all-windows design** in which the registered claim must hold in **every** tested transition,
+  not a majority.
+
+A single adjacent-window Δ→Δ is a **diagnostic**: it may be reported, it may support a primary, and
+it may not by itself produce a `keep`. Existing single-window keeps are grandfathered at their current
+status and are **not** promotable without satisfying this rule.
+
+**Why.** E39 measured the autocorrelation of country-level change directly: the Spearman correlation
+between an economy's change in one window and its change in the next is **≤ +0.07 in all ten pairs
+tested and negative in eight** (formal saving −0.413 / −0.350 / +0.070). Country-level wave-to-wave Δ
+is dominated by wave-specific variation. The replication record is the same fact seen from the other
+side: partials **0 of 3** (E35), E5b reversing **−0.654 / +0.591 / −0.595** between consecutive
+windows (E38), lagged designs **0 of 3** (E37), E43's breadth bars **0/5, 0/5, 1/5** (E44), and E48a
+splitting 3/3 weighted against 1/3 unweighted. What survived did so *because* it was tested across
+windows — the six bivariate rails (E28/E30) and E42's four-transition account~saving result.
+
+## B15 — register the SIGN, not just the magnitude
+
+Every pre-registration that tests a **family** of items, or any single claim with a directional
+reading, must state the **predicted sign** as part of the bar. A result of the right magnitude and the
+wrong sign is **not** partial confirmation and may not be counted toward a keep; it is reported
+separately and labelled as the opposite pattern.
+
+**Why.** E48's secondary registered the direction. Two of the four pairs returned **larger** than the
+keep pair (−0.744 and −0.799 against +0.515) while pointing the **other way** — the digital-aligned
+wage modes rise where the cash margin falls. Without the sign in the registration the natural
+write-up is "three of four pairs cohere at |r| ≥ 0.30", a sentence that folds two contradictory
+patterns into one claim.
+
+## B16 — path before span
+
+Any claim resting on a **long difference** must print the **intermediate wave levels** beside it, and
+any **non-monotone** path must be stated in the claim text itself.
+
+**Why.** Both counter-moving margins fall and then rebound — `fin31d` **47.1 → 34.1 → 20.5 → 26.6**
+and `fin34c` **15.9 → 11.8 → 8.0 → 15.2**. A 2014→2024 difference reports a fall of ~14 and ~1 points
+respectively and erases the reversal completely. B14 pushes the loop toward long differences; B16 is
+the cost of that move and is not optional.
+
+## B17 — the micro stream carries a quota
+
+At least **one micro-stream (`U`) experiment every three cycles**, tracked the same way rule B2's
+breadth cell is. A cycle that skips it must say so and why.
+
+**Why.** **23 of the ledger's keeps are micro** — the most productive stream per experiment — and it
+has not run since **U21 (2026-08-09)**. Meanwhile **154 micro columns in 19 families have zero
+mentions**, which is the largest *reachable* untouched surface in the repo now that `con` is blocked
+for want of a questionnaire. B2 forces breadth on the country side and nothing forces it here, so the
+country side is where every cycle goes.
+
+## B18 — the distillation TRIGGER (a rule, not a recommendation)
+
+When `PAPER_DRAFT_v2.md`'s CORRECTIONS OWED block reaches **five or more items**, or when **ten or
+more experiments** have run since the last distillation, **the next cycle is a distillation/rewrite
+cycle and registers no new experiments.** The trigger is checked at the same point as rule B1's
+coverage run, and the check is recorded in the pre-registration.
+
+**Why.** The 2026-08-10 wrap-up recommended exactly this. Five days and eight experiments later the
+draft still carried **six** known-wrong statements and the v3 rewrite had not happened. A
+recommendation the loop is free to decline is not a mechanism; this one has a threshold and a
+consequence.
+
+## B19 — every new `findings.tsv` row carries its structured fields
+
+The ledger schema now begins:
+
+`id · stream · commit · status · design · windows · frame · n · neff · r_w · r_u · parent ·
+claim · test · effect · gates · note`
+
+The eight inserted fields are **mandatory on every new row**. Where a field does not apply, write
+`na`; where it applies but is genuinely unknown, write `?` — **never leave it blank and never guess**.
+Historical rows are backfilled mechanically where the value was recoverable from the prose and left
+empty where it was not; an empty cell in a pre-2026-08-15 row means *not recovered*, not *zero*.
+
+**Why.** The five free-text columns had grown to a median `note` of ~400 characters and a maximum of
+**1,352**, ~99 KB of prose in a file whose purpose is to be queried. E40's ledger-wide audit had to
+recompute all thirty-three statistics from raw frames because they could not be parsed out of the
+ledger that recorded them.
+
+## Documentation obligation 1 — `LEDGER_INDEX.md` replaces `RESEARCH_LOG.md` as required reading
+
+`RESEARCH_LOG.md` is **449 KB / ~5,900 lines** and is listed in the run instructions as required
+reading at the start of every cycle. It is not readable at that size, and cycles have in practice been
+reading its tail and inferring the rest. **`LEDGER_INDEX.md` — one line per experiment, regenerated by
+`python3 make_index.py` — is now the required read.** The log stays exactly as it is: the append-only
+record, consulted by `grep` for a specific experiment, never front to back.
+
+## Documentation obligation 2 — the four-way module screen is the standard first move
+
+The mandatory mapping pass on an untouched module is followed by the **four-way orientation screen**,
+not by E45's redundancy/independence pair:
+
+`restatement` |r| ≥ 0.80 · `aligned` +0.30 ≤ r < 0.80 · `counter-moving` r ≤ −0.30 ·
+`independent` |r| < 0.30 — **both lenses must agree**, else `mixed-lens` (B9/B11).
+
+**Why.** E45 logged its own independence definition as mis-specified: written to catch *orthogonal*
+items, it could not see a strongly *negative* one and discarded `fin31d_s` at −0.730. The four-way
+screen was written as the fix and returned a keep on first use (E47, `fin34c` at −0.552 / −0.486).
+
+## The status vocabulary, in one table
+
+Previously defined across five separate amendment blocks (B4, B8, B9, B11, B13). This table is now
+authoritative; where it and an earlier block disagree, this table wins.
+
+| status | meaning | promoted by | demoted by |
+|---|---|---|---|
+| `keep` | threshold and all gates pass; **both lenses agree** | — (see `keep-window` for Δ claims) | failed replication, or a later audit failing a lens |
+| `keep-window` | a kept Δ association on **one** transition (or one long-difference cell) | replication on every tested earlier transition, all agreeing in sign (B4 + B8) → `keep-general` | a failed replication → `discard`, or → stays `keep-window` and is recorded as *failed*, never as *not attempted* |
+| `keep-general` | replicated across transitions with sign agreement | — | a later window disagreeing in sign |
+| `keep-weighted` | keeps under the **population-weighted** lens only; the claim text must say so (B9) | agreement appearing under both lenses | — |
+| `keep-unweighted` | keeps under the **unweighted** lens only (B11) | as above | — |
+| `keep-general-unweighted` | B11 + B4: replicated across transitions, unweighted lens (B11) | — | — |
+| `keep-exploratory` | the answer was peeked before registration (peek rule, 2026-07-11) | never — re-register on fresh data | — |
+| `discard` | threshold or a gate fails on both lenses | — | — |
+| `discard-weighted` | the two lenses **disagree** and the finding fails as registered; the lens dependence is part of the result (B9) | — | — |
+| `inconclusive` | a registered **diagnostic** whose fixed verdict rule returns neither branch | — | — |
+
+**A bare `keep` means both lenses agree.** Any status that keeps under one lens must name the lens in
+the claim text, not only in the status field.

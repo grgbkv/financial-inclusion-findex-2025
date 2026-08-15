@@ -5851,3 +5851,50 @@ either. Lineage (B3): E46 ← E39/E44, E47 ← nothing (a breadth draw), E48 ←
   zero prior mentions and carries the ledger's **highest Kish `neff` — 9.2 against nominal n 40** —
   precisely because it excludes the giants. It is a cheap **placebo frame** for any "did the
   instrument change?" question. Caveat: only 5 of its economies report `save_any_t_d` in 2024.
+
+---
+
+## 2026-08-15c — enforcement pass (no experiments; protocol, tooling and documentation only)
+
+Prompted by a two-week review rather than by an experiment. Eight changes, all additive; every
+existing gate, threshold and pre-registration rule stands.
+
+**Rules added to `program_findex.md`** — B14 (a single adjacent-wave Δ→Δ may not be a primary),
+B15 (register the sign), B16 (path before span), B17 (micro-stream quota, one in three cycles),
+B18 (the distillation trigger, now a rule with a threshold), B19 (structured ledger fields).
+Plus two documentation obligations — `LEDGER_INDEX.md` replaces `RESEARCH_LOG.md` as the required
+cycle read, and the four-way orientation screen becomes the standard first move on an untouched
+module — and **one status table** consolidating a vocabulary that had been defined across five
+separate amendment blocks.
+
+**Tooling.** New `make_index.py` (loop-owned, extendable; `harness.py` / `micro.py` / `coverage.py`
+remain fixed). It regenerates `LEDGER_INDEX.md` and **enforces B19 and B14 mechanically** —
+`python3 make_index.py --check` exits non-zero on a blank structured field, an unknown design family,
+or a single-window Δ→Δ logged as a keep. Currently: **73 experiments, 36 keeps, 0 problems.**
+
+**Ledger migration.** `findings.tsv` gained eight columns after `status` — `design`, `windows`,
+`frame`, `n`, `neff`, `r_w`, `r_u`, `parent`. All 73 records and the status distribution are
+unchanged (verified before and after: discard 33 / keep 20 / keep-window 9 / keep-general 6 /
+discard-weighted 3 / keep-general-unweighted 1 / inconclusive 1), and `coverage.py` — which reads the
+ledger as raw text, not positionally — still parses it. `design` and `windows` were backfilled **by
+hand from a full read of all 73 test strings**, not by regex; `neff` and `parent` by regex; `n`,
+`r_w`, `r_u` were left empty on historical rows. **An empty cell in a pre-2026-08-15 row means NOT
+RECOVERED, never zero.** Rows from E46 on are fully populated.
+
+**Cycle shape rewritten** in `RESEARCH_AGENDA.md` and in the run instructions. The old shape —
+*"one Program-1 replication + one new-ground experiment + one prediction experiment"* — had **two of
+its three slots pointing at closed programs**: Program 1 closed 2026-08-15 (E46 answered 1.4/1.7),
+Program 2 closed 2026-08-13 (E42), Program 6 closed 2026-08-10 (E37), and the prediction stream
+closed 2026-08-09 (P28). New shape: untouched-module four-way screen · micro experiment (B17) ·
+replication or inference pass on a standing keep (B14-compliant).
+
+**The prediction stream stays closed, with its reopening condition now written down.** P28's rule
+allows reopening only by a change to the **task**. The one recommended change is an **earlier holdout
+wave** — train ≤ 2017, predict 2021 — because the champion has been evaluated on exactly one holdout,
+so account **5.014** / resilience **6.625** / saving **6.831** carry no error bar and nobody knows
+whether those are properties of the method or of the 2024 wave. That is a validation of a closed
+champion, not a new attempt to beat it.
+
+**New agenda items opened:** 7.7 (per-window replication of the `fin31d`~`fin34c` pair, E48b's
+promotion route), 7.8 (the unexplained 2021→24 rebound common to both counter-moving margins),
+3.10 (`fin43` as the next untouched-module screen).

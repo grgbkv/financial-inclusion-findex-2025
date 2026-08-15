@@ -571,3 +571,59 @@ experiment — which is also the natural shape for keeping the paper draft hones
   `fin48`/`fin49` (12), and `fin22`/`fin24`/`fin31`/`fin34`/`fin39`/`fin43` — **154 micro columns in
   19 families, zero mentions**, and the micro stream has not run since U21. `urbanicity` remains the
   only untouched frame and is single-wave.
+
+---
+
+# Cycle shape — REWRITTEN 2026-08-15c (the old one aimed a third of every run at closed programs)
+
+**The old shape is dead and must not be used.** It read *"one Program-1 replication + one new-ground
+experiment + one prediction experiment, with Programs 1 and 2 interleaved every third cycle."*
+**Program 1 closed on 2026-08-15** (E46 answered its last live item, 1.4/1.7). **Program 2 closed on
+2026-08-13** (E42). **The prediction stream closed at P28 on 2026-08-09.** Two of the three slots
+named point at nothing.
+
+## The current shape
+
+| slot | what goes in it | the rule behind it |
+|---|---|---|
+| 1 | **an untouched-module pass**: mandatory mapping (exploratory) + the four-way orientation screen | B2 + Documentation obligation 2 |
+| 2 | **a micro-stream (`U`) experiment**, at least every third cycle | **B17** |
+| 3 | **a replication, promotion test, or inference pass on a standing keep** — under B14 this is now a long difference or an all-windows design, never a fresh single adjacent window | **B14**, B4/B8 |
+
+**Before slot 1 is chosen:** run `python3 coverage.py` (B1), regenerate and read
+`LEDGER_INDEX.md` (`python3 make_index.py`), and **check the B18 distillation trigger**. If the
+trigger has fired, the whole cycle is a rewrite cycle and none of the three slots is used.
+
+## Live programs, as of 2026-08-15c
+
+- **Programs 1, 2 and 6 are CLOSED.** Do not register against them.
+- **Program 3** (`pan_grp` inequality panel): items 3.1, 3.2, 3.5, 3.8 live; 3.6/3.9 closed by E44.
+- **Program 4** (welfare margin): item **4.3** (`fin25` emergency-fund sources) live; **4.5** (obtain
+  the `fh1`/`fh2` labels) blocked on the questionnaire.
+- **Program 5** (connectivity): item **5.5** live (the within-country version of 5.3).
+- **Program 7** (consumer protection): **BLOCKED** on the questionnaire. Its adjacent items **7.7**
+  and **7.8**, below, are not.
+- **New item 7.7** — the promotion route for E48b: replicate the `fin31d`~`fin34c` pair **per window**
+  (2014→17, 2017→21, 2021→24). Currently a single long-difference cell.
+- **New item 7.8** — **what is the 2021→24 rebound?** Both counter-moving margins fall for a decade
+  and then turn: `fin31d` 47.1 → 34.1 → 20.5 → **26.6**, `fin34c` 15.9 → 11.8 → 8.0 → **15.2**. Common
+  to two items in two modules, and unexplained.
+- **New item 3.10** — the best remaining untouched *country* module is **`fin43`** (agricultural
+  payments, four waves × 71). It is the natural next slot-1 four-way screen.
+
+## The prediction stream — the ONE condition that reopens it
+
+P28's closing rule says the stream may reopen only by a change to the **task**, never by another
+mechanism on this one. The strongest available task change, and the only one currently recommended:
+
+> **An earlier holdout wave.** Train on history ≤ 2017 and predict 2021, scoring with the same
+> evaluator. The champion has been evaluated on **exactly one** holdout, so its MAEs — account
+> **5.014**, resilience **6.625**, saving **6.831** — have no error bar, and nobody knows whether
+> 5.014 is a property of the method or of the 2024 wave. This is estimable entirely from data the
+> current rules already allow, and it is a *validation* of the closed champion rather than a new
+> attempt to beat it.
+
+Everything else stays closed. In particular, **do not** register another shrinkage-operator variant:
+adaptive `k` (P24/P25), basin center (P22/P23), the global constant (P9), resolution (P26), stage
+count (P19–P21) and basin drift (P28) are all tested and rejected, and there have been **six
+CV→holdout non-transfers**, one of them after passing P26's shape screen.
