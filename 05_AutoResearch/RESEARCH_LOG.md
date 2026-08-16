@@ -5927,3 +5927,57 @@ v2 so the trigger reads the live draft from here on; and the agenda's live-item 
 three failed promotions (E23/E24/E25 via E35, E43 via E44, E5b via E38) are already recorded as
 *failed* rather than *not attempted*; E13's weighting flag stands and is not a demotion. The ledger
 and the draft were out of sync, not the ledger and itself.
+
+### The rewrite, executed — 2026-08-16
+
+**`PAPER_DRAFT_v3.md` is written and all seven corrections are discharged.** Appendix B of v3 maps
+each v2 error to the section that fixes it. In summary:
+
+1. **Title and organising claim restricted.** "Access converges, use diverges" is demoted from title
+   to a subsection of §9 and restricted to the **resource** axes. The cohort and sex axes are stated
+   as the counter-cases (usage gap narrowed on age 64.5% and labour force 57.4%; gender a coin flip at
+   54.5% / 53.2%), and the five-axis asymmetry ordering is reported as **not yet tested** as a
+   monotonicity claim rather than as a finding. New title is balance-sheet framed.
+2. **§4 rewritten around the balance-sheet window**, with the deceleration stated in the same
+   section as the co-movements it qualifies: 2021→24 is digital payments' weakest window (21.1% of
+   economies ≥ +10pp) against saving 42.1% and borrowing 52.6%, and E41's merchant-payment margin is
+   presented as the out-of-sample check that the reframing passed.
+3. **The three-rails decomposition withdrawn as a general claim** (§5), with E35's mechanism —
+   r(Δmm, Δdigpay) +0.871 in 2017→21 against +0.600 in 2021→24 — given as the reason, so the reader
+   learns why it is a window property rather than being told that it is.
+4. **§7 demoted from a boundary to a measure comparison.** Both failure modes are stated: E33's
+   `fh` family co-moving with the rails at 0.354–0.705 while orthogonal to `fin24aSD_ND`, and E26's
+   `discard-weighted` status at +0.294 / +0.364.
+5. **E7 and E5b deleted, not softened**, and E17's +0.480 is no longer used as evidence (retention
+   0.28, p_boot 0.589).
+6. **A new §10 carries the inference**, with E40's 26/33-vs-1/33 result, the E42/B11 qualification
+   that the `neff` critique is a statement about the *weighted* lens only, the median de-weighting
+   shift of −0.051, the four-diagnostics point (China vs Brazil at identical `neff` 7.2), and the
+   sixteen triple-clean rows.
+7. **§11 states the forecasting stream is final**, with the one reopening condition.
+
+**Material added that post-dates v2 entirely:** E42's all-four-window account~saving result (the
+ledger's best-supported country-level regularity, and absent from v2 because in v2's single window it
+reads +0.198 weighted), E46's decade-continuity finding, E43/E44's breadth-and-failed-replication
+pair, U21's connectivity row in the access-absorption ruler, and E47/E48's counter-moving cash
+margins as a new §8 — written under B16 with the full wave path and the rebound stated in the text.
+
+**Two things the rewrite forced that were not on the correction list.** (i) §5 now carries the
+**design-level** result — seven level-to-change experiments, zero keeps — as a finding in its own
+right, because it is the common cause of the failed partials, the failed lagged designs and the
+closed prediction stream, and it was scattered across three sections in v2. (ii) The **undocumented
+items** caveat is promoted from a footnote to a numbered limitation and to the top of the extension
+agenda: three separate lines of work are blocked on a questionnaire that is not in the repo.
+
+**Companion updates.** `PAPER_DRAFT_v2.md` header replaced with a SUPERSEDED block, its corrections
+block closed and frozen at zero outstanding. `EXTENSIONS_DRAFT.md` marked absorbed into v3, with the
+three known-wrong passages named. `program_findex.md` B18 amended: the trigger reads the
+highest-numbered `PAPER_DRAFT_v*.md`, the count branch resets at each distillation, and the
+observation that the two branches measure different debts (volume vs known falsity) is recorded.
+`RESEARCH_AGENDA.md` addendum written.
+
+**Carried to the next cycle, in priority order.** (1) **B17 is unpaid** — the micro stream has not run
+since U21 and the next cycle must open with a `U` experiment; agenda item **5.5** is the natural draw.
+(2) The design base rates are now on record and `level-to-change` at 0/7 should not be re-registered
+without a stated difference from the seven failures. (3) No coverage was consumed this cycle, so the
+B2 cell is wide open, with `fin43` the best-covered untouched country module.

@@ -304,6 +304,21 @@ draft still carried **six** known-wrong statements and the v3 rewrite had not ha
 recommendation the loop is free to decline is not a mechanism; this one has a threshold and a
 consequence.
 
+**B18 amendment, 2026-08-16 — the trigger reads the CURRENT draft, whatever its version number.**
+B18 fired on its first cycle in force (seven items against a threshold of five) and the resulting
+rewrite produced `PAPER_DRAFT_v3.md`; `PAPER_DRAFT_v2.md` is marked SUPERSEDED and its corrections
+block is closed and frozen. **The trigger is evaluated against the highest-numbered
+`PAPER_DRAFT_v*.md` in `05_AutoResearch/`, not against the literal filename `PAPER_DRAFT_v2.md`.**
+The experiment-count branch resets at each distillation: the counter runs from the last completed
+rewrite (now 2026-08-16, experiment count 73).
+
+**One thing the first firing revealed and the rule should carry.** The two branches measure different
+debts. The count branch measures *volume* — how much new evidence the draft has not seen. The
+corrections branch measures *known falsity* — how many statements the loop already knows are wrong
+and has left standing. On 2026-08-16 the second fired at 7 while the first stood at 7 of 10, i.e. the
+draft went stale by being **wrong**, not by being **behind**. A cycle that fires on the corrections
+branch alone is still a full rewrite cycle; do not discount it because the experiment count is low.
+
 ## B19 — every new `findings.tsv` row carries its structured fields
 
 The ledger schema now begins:

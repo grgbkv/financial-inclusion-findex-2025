@@ -1,6 +1,25 @@
 # Extensions draft — autoresearch session, 2026-07-11 (branch `autoresearch/jul11`)
 
-> ## STATUS BLOCK — 2026-08-11 distillation. READ BEFORE USING ANY EXTENSION BELOW.
+> ## STATUS BLOCK — 2026-08-16 distillation. THIS FILE IS ABSORBED INTO `PAPER_DRAFT_v3.md`.
+>
+> **Everything in this file that still stands is now written into `PAPER_DRAFT_v3.md` (2026-08-16),
+> which supersedes both `PAPER_DRAFT_v2.md` and this extensions file as the place candidate material
+> is carried.** The prose below dates from **2026-07-11, at experiment 27**, and forty-six
+> experiments have run since; it is retained as the audit trail for what was proposed and when, not
+> as a live backlog. **Do not lift any passage below into a write-up without checking it against v3.**
+>
+> Specifically, three things in the text below are known-wrong and are corrected in v3: the
+> three-separate-rails decomposition (failed replication, §5), the welfare "boundary" (demoted to a
+> measure comparison, §7), and every "digitalization signature" phrasing (the window is a
+> balance-sheet window, §4). Two demoted findings — E7 and E5b — appear below and are discards.
+>
+> New candidate material produced after this file was written lives in v3 §8 (the counter-moving
+> cash margins) and v3 §13 (the live extension agenda). **Live agenda items are tracked in
+> `RESEARCH_AGENDA.md`, not here.**
+>
+> ---
+>
+> ### Previous status block — 2026-08-11 distillation (historical)
 >
 > Everything after this block was written on **2026-07-11**, at experiment 27. Fourteen
 > experiments have run since, and this file has **not** been rewritten. Under rule B4 an extension

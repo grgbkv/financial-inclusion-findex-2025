@@ -627,3 +627,47 @@ Everything else stays closed. In particular, **do not** register another shrinka
 adaptive `k` (P24/P25), basin center (P22/P23), the global constant (P9), resolution (P26), stage
 count (P19–P21) and basin drift (P28) are all tested and rejected, and there have been **six
 CV→holdout non-transfers**, one of them after passing P26's shape screen.
+
+---
+
+## Addendum (2026-08-16, the B18 distillation cycle — no experiments)
+
+**The cycle registered nothing.** Rule B18 fired on its first cycle in force: `PAPER_DRAFT_v2.md`
+carried **seven** CORRECTIONS OWED against a threshold of five. The count branch had *not* fired
+(seven experiments since the 2026-08-11 distillation, against a threshold of ten), so the draft was
+stale by being **wrong**, not by being **behind**. Output: **`PAPER_DRAFT_v3.md`**, which executes all
+seven corrections and folds in E42–E48; v2 marked SUPERSEDED with its corrections block frozen;
+`EXTENSIONS_DRAFT.md` marked absorbed into v3; B18 amended to read the highest-numbered draft file.
+
+- **The micro quota (B17) is UNPAID and is carried.** The micro stream has not run since **U21
+  (2026-08-09)**, which is now two cycles. **The next cycle must open with a `U` experiment** — this
+  is the single most binding constraint on the next run, ahead of the B2 breadth cell. The reason has
+  not changed and has strengthened: the micro stream holds **14 of the ledger's 36 keeps** on 23
+  experiments (a 61% keep rate against 44% country-side), and **154 micro columns in 19 families have
+  zero mentions**.
+- **A design-family fact the rewrite surfaced, and it belongs in the agenda rather than only in the
+  paper.** Grouping the ledger by *design* rather than by topic gives base rates that no single
+  experiment shows: **`level-to-change` is 0 keeps in 7 attempts**, while `micro-cross-section` is
+  14/23 and `delta-delta-multi` (the all-windows design B14 now requires) is 3/4. Read the 0/7 as a
+  property of the *instrument on this panel*, not of the seven hypotheses — it is the same fact as
+  E39's repeat-mover null (consecutive-window Spearman ≤ +0.07 in all ten pairs, negative in eight)
+  seen from the design side. **Do not register another level-to-change design without first stating
+  what makes it different from the seven that failed.**
+- **The distillation confirmed the agenda's live-item list is accurate.** No status changes were
+  owed: the E7/E5b demotions were executed 2026-08-11, the failed promotions (E23/E24/E25, E43, E5b)
+  are recorded as *failed* rather than *not attempted*, and E13's weighting flag stands. The ledger
+  was in sync with itself; only the draft was behind it.
+- **Live items, unchanged by this cycle:** 3.1, 3.2, 3.5, 3.8 (`pan_grp`); 4.3 (`fin25`); 5.5
+  (within-country connectivity gaps — **the natural B17 micro draw for the next cycle**); 7.7
+  (per-window replication of the `fin31d`~`fin34c` co-retreat); 7.8 (the unexplained 2021→24 rebound);
+  3.10 (`fin43` as the next untouched-module screen). Programs 1, 2 and 6 stay closed; Program 7 stays
+  blocked on the questionnaire; the prediction stream stays closed with one reopening condition (an
+  earlier holdout wave).
+- **A non-analytical item promoted to the top of v3's agenda, because three separate lines of work are
+  blocked on it:** obtain the Findex questionnaire. It blocks the `fh1`/`fh2` polarity (Program 4),
+  the `fin31`/`fin34` cash-margin labels (items 7.6–7.8, currently structural inference only), and the
+  entire `con` module (Program 7, 133 country columns and 52 micro columns).
+- **B2 note for the next cycle.** No new coverage was consumed — the cycle computed no outcome.
+  Country modules untouched: `con` (blocked), `fin` (93 cols), `fin13`, `fin25`, `fin14`, `fin43`,
+  `inactive_t_d_s`. `urbanicity` remains the only unused frame and is single-wave. Transition mention
+  counts remain lopsided at 19 / 64 / 127 / **286** across 2011→14 / 14→17 / 17→21 / 21→24.

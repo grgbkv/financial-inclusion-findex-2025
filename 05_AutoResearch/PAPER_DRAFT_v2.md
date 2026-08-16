@@ -11,12 +11,20 @@ principally statistical inference, which this draft does not yet have.
 
 ---
 
-## CORRECTIONS OWED — status as of 2026-08-11 (distillation pass, experiments E28–E41)
+## SUPERSEDED — 2026-08-16. Read `PAPER_DRAFT_v3.md` instead.
 
-**This draft is v2 as written on 2026-08-01 and has not yet been rewritten. Fourteen experiments
-have run since. Six of its statements are now known to be wrong, over-general, or resting on a
-demoted finding, and they are listed here rather than silently patched, so the diff to v3 is
-auditable. Do not quote this draft without reading this block.**
+**This file is retained unaltered below as the historical artifact and as the audit trail for the v3
+diff. It must not be quoted. All seven corrections listed here were executed in
+`PAPER_DRAFT_v3.md` on 2026-08-16 (rule B18 distillation cycle); Appendix B of v3 maps each item to
+the section that discharges it. The B18 trigger now reads v3's corrections block, not this one —
+this block is closed and its count is frozen at zero outstanding.**
+
+## CORRECTIONS OWED — CLOSED 2026-08-16 (raised 2026-08-11, distillation pass, experiments E28–E41)
+
+**Historical text follows, unedited.** *This draft is v2 as written on 2026-08-01 and has not yet
+been rewritten. Fourteen experiments have run since. Six of its statements are now known to be wrong,
+over-general, or resting on a demoted finding, and they are listed here rather than silently patched,
+so the diff to v3 is auditable. Do not quote this draft without reading this block.*
 
 1. **The title is over-general.** "Access converges, use diverges" holds where disadvantage is
    defined by *resources* and fails where it is defined by *cohort or sex*. The usage gap narrowed
