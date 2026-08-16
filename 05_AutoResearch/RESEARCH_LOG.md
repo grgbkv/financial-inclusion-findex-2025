@@ -5898,3 +5898,32 @@ champion, not a new attempt to beat it.
 **New agenda items opened:** 7.7 (per-window replication of the `fin31d`~`fin34c` pair, E48b's
 promotion route), 7.8 (the unexplained 2021→24 rebound common to both counter-moving margins),
 3.10 (`fin43` as the next untouched-module screen).
+
+---
+
+## Cycle 2026-08-16 — B18 DISTILLATION CYCLE (no experiments registered)
+
+**The trigger check, run at the point rule B1's coverage run happens, as B18 requires.**
+
+- `python3 make_index.py` → 73 experiments, 36 keeps, **0 rule problems** (`--check` exits 0).
+- `python3 coverage.py` → country file 48/429 columns touched (11%), micro 35/192 (18%); untouched
+  country modules `con` (blocked), `fin`, `fin13`, `fin25`, `fin14`, `fin43`, `inactive_t_d_s`; all
+  four wave transitions used; `urbanicity` the only unused frame (single-wave).
+- **B18 trigger — FIRED.** `PAPER_DRAFT_v2.md`'s CORRECTIONS OWED block carries **seven** items
+  against a threshold of five. The second branch (ten experiments since the last distillation) has
+  **not** fired: the last distillation was 2026-08-11 (E40/E41) and seven experiments have run since
+  (E42–E48). One branch is enough.
+
+**Consequence, per B18: this cycle registers NO new experiments.** The three cycle slots
+(untouched-module screen, micro `U` experiment, replication/promotion pass) are all skipped. The
+micro quota (B17) is therefore **not** met this cycle and is explicitly carried: the micro stream has
+not run since U21 (2026-08-09), and rule B17 obliges the next cycle to open with a `U` experiment.
+
+**What this cycle produces instead:** `PAPER_DRAFT_v3.md`, a full rewrite that executes all seven
+corrections and folds in E42–E48; a rewritten `EXTENSIONS_DRAFT.md` status; a `SUPERSEDED` header on
+v2 so the trigger reads the live draft from here on; and the agenda's live-item list updated.
+
+**No status changes are owed.** The two pending demotions (E7, E5b) were executed on 2026-08-11; the
+three failed promotions (E23/E24/E25 via E35, E43 via E44, E5b via E38) are already recorded as
+*failed* rather than *not attempted*; E13's weighting flag stands and is not a demotion. The ledger
+and the draft were out of sync, not the ledger and itself.
