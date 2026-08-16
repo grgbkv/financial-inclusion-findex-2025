@@ -668,6 +668,27 @@ seven corrections and folds in E42–E48; v2 marked SUPERSEDED with its correcti
   the `fin31`/`fin34` cash-margin labels (items 7.6–7.8, currently structural inference only), and the
   entire `con` module (Program 7, 133 country columns and 52 micro columns).
 - **B2 note for the next cycle.** No new coverage was consumed — the cycle computed no outcome.
-  Country modules untouched: `con` (blocked), `fin` (93 cols), `fin13`, `fin25`, `fin14`, `fin43`,
-  `inactive_t_d_s`. `urbanicity` remains the only unused frame and is single-wave. Transition mention
-  counts remain lopsided at 19 / 64 / 127 / **286** across 2011→14 / 14→17 / 17→21 / 21→24.
+  Country modules untouched: `con` (blocked), **`fin` (93 cols — see the correction below)**,
+  `fin13`, `fin25`, `fin14`, `fin43`, `inactive_t_d_s`. `urbanicity` remains the only unused frame and
+  is single-wave. Transition mention counts remain lopsided at 19 / 64 / 127 / **286** across
+  2011→14 / 14→17 / 17→21 / 21→24.
+
+- **CORRECTION, same day — every B2 note since 2026-08-05 has named the wrong "best remaining
+  untouched block", and this one did too until it was checked.** The notes have rotated through
+  `fin25` → `fin31` → `fin34` → `fin43`, each crowned "the best-covered untouched block left", while
+  the **93-column `fin` catch-all sat unopened** because the module summary lists it as one anonymous
+  family and no cycle ran `coverage.py --module fin`. Opened on 2026-08-16, it contains **24 columns
+  with at least three waves at ≥70 developing economies**, of which **`fin10` and `fin2_t_d` have all
+  five waves × 77 economies** — better wave coverage than any indicator the ledger has ever used
+  outside the headline set, and far better than `fin43` (6 cols, four waves × 71). Also present with
+  usable Δ coverage: `fin30` and `fin37` (four waves × 77), the `fin37_39*` family (five columns, four
+  waves), the `fin37_38*` and `fin38*` families (three waves × 77), and `fin26a` (three waves).
+  **`fin10` / `fin2_t_d` are now the recommended slot-1 draw, ahead of item 3.10's `fin43`**, subject
+  to the standing rule that an untouched module gets the mandatory exploratory mapping pass and the
+  four-way orientation screen first — and to the standing caveat that item *meaning* is inferred from
+  levels and coverage, never from a questionnaire.
+  **The process lesson is the reusable part:** a module-level coverage summary hides a catch-all, and
+  five consecutive cycles inherited the previous cycle's B2 note instead of re-deriving it — the same
+  seeded-from-the-last-cycle failure the 2026-08-01 audit created rule B1 to stop, reappearing one
+  level up in the *instrument's own summary line*. **Every cycle must run `coverage.py --module` on
+  the largest untouched family before naming a target, not read the family count and move on.**
