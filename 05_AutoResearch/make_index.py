@@ -51,7 +51,12 @@ DESIGNS = {
 
 STATUS_ORDER = ["keep-general", "keep-general-unweighted", "keep", "keep-window",
                 "keep-weighted", "keep-unweighted", "keep-exploratory",
-                "inconclusive", "discard-weighted", "discard"]
+                "inconclusive", "discard-weighted", "discard",
+                # added 2026-08-17 (E49x): a mandatory mapping pass on an untouched module is
+                # logged under the peek rule but asserts no claim, so it is neither a keep nor a
+                # discard. `keep-exploratory` is the wrong slot for it -- that status is for a
+                # finding whose answer was peeked, not for an instrument description.
+                "exploratory"]
 
 
 def load(path):

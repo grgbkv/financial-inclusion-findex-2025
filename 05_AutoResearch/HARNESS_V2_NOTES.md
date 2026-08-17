@@ -63,3 +63,41 @@
    the counter-moving finding is a level/composition fact plus a cross-module change fact, and
    explicitly NOT a "digital displaces cash within countries" fact.** The structural label "cash" is a
    reading of two negative signs and nothing more.
+9. **`fin` catch-all mapping (E49, 2026-08-17) — EXPLORATORY, INFERRED from the numbers, NOT
+   authoritative.** Same caveat as items 6 and 7: no questionnaire in the repo, so this is structural
+   identification only, and the module has no label at all in `coverage.py` — it is the residue left
+   after every `finNN` prefix with a label is stripped out. **93 columns, of which 24 clear ≥ 3 waves
+   at ≥ 70 developing economies**; the other 69 are 2024-only, 27-economy, or `_s`-suffixed and thin.
+   Developing-panel population-weighted levels (countries in brackets), and the 2024 four-way
+   orientation against `g20_any` (weighted / unweighted):
+
+   | column | waves | 2011 | 2014 | 2017 | 2021 | 2024 | vs `g20_any` 2024 | class |
+   |---|---|---|---|---|---|---|---|---|
+   | `fin2_t_d` | **5** | 24.0 | 32.9 | 41.6 | 44.7 | 50.5 [77] | +0.883 / +0.669 | `mixed-lens` restatement/aligned |
+   | `fin10` | **5** | 6.9 | 10.0 | 10.7 | 16.5 | 18.3 [77] | +0.847 / +0.516 | `mixed-lens` restatement/aligned (drop China −0.267) |
+   | `fin26a` | 3 | — | — | 16.3 | 29.1 | 34.6 [76] | +0.933 / +0.852 | **`restatement`** — a re-description of the digital headline; do not use as an independent margin |
+   | `fin30` | 4 | — | 57.0 | 54.2 | 49.1 | 45.3 [71] | +0.254 / +0.306 | `mixed-lens` independent/aligned — **the module's one large declining margin** (−11.7pp over the decade) and it is *not* counter-moving |
+   | `fin42` | 4 | — | 24.6 | 14.7 | 10.8 | 13.4 [71] | −0.001 / −0.089 | `independent` — falls 24.6 → 10.8 then rebounds to 13.4, the same last-window rebound as `fin31d`/`fin34c` (agenda 7.8) |
+   | `fin42_acc` | 4 | — | 2.1 | 2.8 | 2.6 | 4.0 [71] | +0.435 / +0.477 | `aligned` |
+   | `fin37` | 4 | — | 13.0 | 12.4 | 16.6 | 16.6 [71] | +0.317 / +0.395 | `aligned` |
+   | `fin37_38` | 3 | — | — | 16.4 | 20.1 | 20.1 [71] | +0.376 / +0.486 | `aligned` |
+   | `fin38` | 3 | — | — | 7.0 | 6.9 | 5.5 [71] | +0.288 / +0.339 | `mixed-lens` independent/aligned |
+   | `fin37_39_acc` / `fin37_38_39_acc` / `fin38_39_acc` | 4/3/3 | — | 7.2 | 7.8 / 10.4 / 4.9 | 10.6 / 13.1 / 5.1 | 11.8 / 14.3 / 4.2 [71] | +0.436 / +0.502 / +0.414 (wtd) | all `aligned` |
+   | `fin37_39a` / `fin37_38_39a` / `fin38_39a` | 4/3/3 | — | 4.9 | 6.6 / 8.9 / 4.4 | 9.0 / 11.3 / 4.7 | 10.5 / 12.9 / 3.9 [71] | +0.403 / +0.461 / +0.424 | all `aligned` |
+   | `fin37_39b` / `fin37_38_39b` / `fin38_39b` | 4/3/3 | — | 0.2 | 0.6 / 0.8 / 0.3 | 2.2 / 2.4 / 0.6 | 2.4 / 2.8 / 0.8 [71] | +0.716 / +0.719 / +0.445 | all `aligned`, the `b` items being the module's fastest risers off a near-zero base |
+   | `fin37_39c` / `fin37_38_39c` / `fin38_39c` | 4/3/3 | — | 4.8 | 2.2 / 3.1 / 1.4 | 2.6 / 3.0 / 0.8 | 2.2 / 2.6 / 0.7 [71] | −0.131 / −0.135 / −0.083 | all `independent` — the **only** items with a negative weighted sign, and none reaches −0.30 on either lens |
+   | `fin37_39d` / `fin37_38_39d` / `fin38_39d` | 4/3/3 | — | 3.6 | 1.1 / 1.3 / 0.4 | 0.8 / 1.0 / 0.2 | 0.5 / 0.6 / 0.2 [71] | +0.071 / +0.090 / +0.012 | `independent`, but **all three are at or below a 1.0pp weighted level in 2024 and fail the `fin34d` usability floor** |
+
+   **Structure that is safe to state.** The `fin37` / `fin38` / `fin39` items compose: `fin37_38`,
+   `fin37_39x`, `fin38_39x` and `fin37_38_39x` are intersections or unions of the base items, which
+   is why they classify together and why their correlations are not independent tests. **Any future
+   experiment on this family must pick ONE level of the composition and say which**; correlating a
+   parent with its own component is the redundancy trap E45 was written to catch. The `a`/`b`/`c`/`d`
+   suffixes behave consistently across all three composites (a and b rise and are aligned, c and d
+   fall and are independent-to-slightly-negative), which is the strongest structural evidence in the
+   table that the letters are the same four categories throughout.
+
+   **What the screen did NOT find.** No `fin` item is counter-moving against the digital headline on
+   both lenses. Against `account_t_d` the `c` items go further negative on the weighted lens
+   (`fin37_39c` −0.283, `fin37_38_39c` −0.261) and stay near zero unweighted (−0.119, −0.101), with
+   **India alone worth +0.19 and +0.16** — a weighting artifact, not a margin.
