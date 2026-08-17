@@ -6132,3 +6132,70 @@ No bar (E35: partials are the most weighting-fragile design in the ledger); a di
 **B6/B9/B10/B12 on every cell.** **Declared:** Δ→Δ co-movement inside a window identifies nothing;
 both margins may move with a third factor. Item meanings are inferred, never read from a
 questionnaire.
+
+---
+
+# Cycle 2026-08-17 — VERDICTS
+
+**U22 — KEEP.** The connectivity axis of the access-absorption ruler is a **within-country
+regularity**. Among accountholders in the 56 economies qualifying on M2 in both cells, the median
+internet-user-minus-non-user gap in `anydigpayment` is **+10.62pp**, positive in **55 of 56 (98.2%)**
+— both registered bars cleared, sign as registered. Pooled over the *same* 56 economies the gap is
++15.20pp, so the **composition wedge is +4.58pp (30.1% of the pooled gap)** — the largest of the
+three ruler axes tested this way (U19 22%, U20 28%), which is what one expects on the axis where
+economies differ most, and still leaves 70% of the pooled gap inside economies. The secondary turns
+U21's pooled absorption figure into a within-country one: **median 65.0%** of the all-adult
+connectivity gap is absorbed by account holding (IQR 31.4–83.5%, positive in 53/56), against U21's
+pooled 55.5% — the pooled number was, if anything, an understatement of the typical economy.
+**Coverage caveat, stated because it bounds the claim:** requiring ≥100 unweighted respondents in
+*both* cells qualifies only 56 of 140 economies holding 40.8% of accountholding respondents, because
+in high-internet economies the *offline* accountholder cell is thin. The qualifying set is tilted
+toward lower-connectivity economies. The two flattest cases are the saturated ones — Kenya +0.3 and
+Malawi +0.1, both at 97–99% on **both** sides — which is the gap closing where digital payment is
+universal rather than the gradient failing.
+
+**E49 — DISCARD (registered), with a large exploratory mapping deliverable (E49x).** The B2 breadth
+cell. The 93-column `fin` catch-all yields **24 columns at ≥3 waves × ≥70 developing economies**, of
+which `fin10` and `fin2_t_d` carry all five waves. The registered four-way orientation screen against
+`g20_any` in the 2024 cross-section returns **0 of 24 counter-moving on both lenses** — the keep
+condition is not met. The family is **12 aligned, 7 independent, 4 mixed-lens and 1 outright
+restatement**. The most negative item is `fin37_38_39c` at **−0.135 weighted / −0.101 unweighted**,
+not within 0.16 of the bar on either lens. At the other end `fin26a` is a **restatement at +0.933 /
++0.852 through G6 (+0.850)** — under B15's registered sign that is the opposite result, not partial
+confirmation, and `fin26a` should not be used as an independent margin. `fin2_t_d` (+0.883/+0.669)
+and `fin10` (+0.847/+0.516) are `mixed-lens` restatement/aligned, both moved by China alone (−0.140,
+−0.267). **The consequence for the ledger: `fin31d` and `fin34c` remain the only two counter-moving
+country-file margins the loop has found, now out of three modules screened identically — they are
+rarer than two hits in two modules suggested.** Three structural facts from the mapping are written
+to `HARNESS_V2_NOTES.md` item 9: (i) the `fin37`/`fin38`/`fin39` items **compose** — `fin37_38`,
+`fin37_39x`, `fin38_39x`, `fin37_38_39x` are intersections or unions of the base items, so their
+correlations are not independent tests and any future experiment must pick one level of the
+composition and say which; (ii) the `a`/`b`/`c`/`d` suffixes behave consistently across all three
+composites, which is the strongest available evidence that the letters are the same four categories
+throughout; (iii) `fin30` **falls 57.0 → 45.3** across the decade and is *not* counter-moving
+(+0.254/+0.306), which separates "declining margin" from "counter-moving margin" — a distinction the
+loop had not previously had a case for.
+
+**E50 — DISCARD-WEIGHTED on the promotion; E48b stays `keep-window` and is now on record as having
+FAILED its promotion test.** The all-windows design (B14) reproduces E48b's long-difference cell
+exactly (+0.515/+0.389) and then splits: r(Δ`fin31d`, Δ`fin34c`) is **+0.795 / +0.650 / +0.615**
+weighted across 2014→17 / 2017→21 / 2021→24 — **3/3 clearing +0.30, every bootstrap interval
+excluding zero, G6 sign intact (+0.463 / +0.320 / +0.374)** — against **+0.431 / +0.243 / +0.263**
+unweighted, **1/3**. Under B9 that is `discard-weighted`. Two things distinguish this from the
+ledger's other failed promotions and both were registered in advance. **It is not a reversal**: all
+six lens-windows are positive, so this is a magnitude failure of the 0.30 bar, unlike E5b's
+−0.654 / +0.591 / −0.595. And **it reproduces E48's primary lens split exactly — weighted 3/3,
+unweighted 1/3 — on a different pair of margins in the same two modules**; two independent designs
+now say the same thing about this cell, that the weighted lens sees a per-window regularity where
+the unweighted lens sees the largest economies (China −0.275 and −0.215 in the two earlier windows,
+India −0.239 in the last). The secondary partial controlling for Δ`g20_any` **exceeds the raw
+correlation in the first and last windows on both lenses** (+0.754/+0.413 and +0.720/+0.274) and
+collapses in the middle one (+0.422/+0.150), so the co-retreat is not the two margins sharing the
+headline's trend — except in 2017→21. B16 path: `fin31d` 48.3 → 34.6 → 20.5 → 26.6, `fin34c`
+15.9 → 11.8 → 8.0 → 15.2, `g20_any` 35.1 → 45.4 → 56.4 → 60.9.
+
+**Cycle bookkeeping.** B18 checked and not fired (v3 carries zero corrections owed; zero experiments
+since the 2026-08-16 rewrite). B17 **paid** by U22 after two unpaid cycles. B2 cell consumed: the
+`fin` catch-all, 93 columns, now touched. B3 lineage: no chain exceeds two. `make_index.py` gained an
+`exploratory` status so a mapping pass is neither a keep nor a discard; `--check` passes at 77 rows,
+0 problems.

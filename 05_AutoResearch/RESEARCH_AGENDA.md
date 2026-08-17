@@ -692,3 +692,61 @@ seven corrections and folds in E42–E48; v2 marked SUPERSEDED with its correcti
   seeded-from-the-last-cycle failure the 2026-08-01 audit created rule B1 to stop, reappearing one
   level up in the *instrument's own summary line*. **Every cycle must run `coverage.py --module` on
   the largest untouched family before naming a target, not read the family count and move on.**
+
+## Addendum (2026-08-17, from the U22/E49/E50 cycle)
+
+- **Program 5 — item 5.5 is ANSWERED and the program's micro half is now closed.** U22 keeps: the
+  connectivity gap in digital-payment use among accountholders has a **median of +10.62pp within
+  economies, positive in 55 of 56 (98.2%)**, with a composition wedge of **+4.58pp (30.1% of the
+  pooled gap)** — the largest wedge of the three ruler axes given this test (U19 22%, U20 28%) and
+  still a minority of the pooled figure. U21's pooled 55.5% absorption of the connectivity gap by
+  account holding becomes a **median 65.0% within economies**, so the pooled number understated the
+  typical economy. **A frame fact for anyone planning micro within-country work:** M2 on *both* cells
+  of a connectivity split qualifies only **56 of 140 economies holding 40.8% of accountholding
+  respondents**, because the offline accountholder cell is thin wherever internet use is high. The
+  qualifying set is tilted toward lower-connectivity economies and any median computed on it is a
+  statement about them. The saturated cases (Kenya +0.3, Malawi +0.1, both 97–99% on both sides)
+  show the gradient closing where digital payment is universal.
+- **The `fin` catch-all is OPENED and it is not a source of counter-moving margins.** E49 screened
+  all **24 eligible columns** (≥3 waves × ≥70 developing economies, out of 93) and returned
+  **0 counter-moving, 12 aligned, 7 independent, 4 mixed-lens, 1 restatement**. `fin26a` at
+  **+0.933 / +0.852** is a re-description of the digital headline and must not be used as an
+  independent margin — a second `dig_acc`. `fin2_t_d` and `fin10`, the two five-wave columns the
+  2026-08-16 correction recommended as the best untouched draw, are both `mixed-lens`
+  restatement/aligned and both moved by **China alone**. **The consequence: `fin31d` and `fin34c`
+  remain the ONLY counter-moving country-file margins in the ledger, now out of three modules
+  screened identically.**
+- **Three structural facts recorded in `HARNESS_V2_NOTES.md` item 9, and one is a standing rule.**
+  (i) The `fin37`/`fin38`/`fin39` items **compose** — `fin37_38`, `fin37_39x`, `fin38_39x` and
+  `fin37_38_39x` are intersections or unions of the base items. **Any future experiment on this
+  family must pick ONE level of the composition and say which**; correlating a parent with its own
+  component is exactly the redundancy trap E45 was written to catch, and this family makes it easy to
+  fall into. (ii) The `a`/`b`/`c`/`d` suffixes behave consistently across all three composites (a, b
+  rise and are aligned; c, d fall and are independent-to-slightly-negative), the strongest available
+  structural evidence that the letters are the same four categories throughout. (iii) **`fin30` falls
+  57.0 → 45.3 across the decade and is NOT counter-moving** (+0.254/+0.306) — the loop's first clean
+  case separating a *declining* margin from a *counter-moving* one, and a caution against reading
+  the two as the same thing.
+- **Item 7.7 is ANSWERED and E48b's promotion route is closed.** E50's all-windows test gives
+  weighted **+0.795 / +0.650 / +0.615** (3/3) against unweighted **+0.431 / +0.243 / +0.263** (1/3),
+  so the promotion is `discard-weighted` and **E48b stays `keep-window`, recorded as FAILED**. Two
+  registered observations survive the failure. It is **not a reversal** — all six lens-windows are
+  positive, a magnitude failure of the 0.30 bar rather than an E5b-style sign flip. And it
+  **reproduces E48's primary lens split exactly (weighted 3/3, unweighted 1/3) on a different pair of
+  margins in the same two modules**, with China and India carrying it. **New item 7.9:** the cash
+  margins' cell is now the ledger's clearest standing case of a *stable* weighted/unweighted
+  disagreement — the same split from two designs — and it deserves a B12 leave-one-out sweep rather
+  than another correlation. Do not re-register the promotion; the answer will not change.
+- **Item 7.8 (the 2021→24 rebound) is UNANSWERED and gained a third instance.** `fin42` in the `fin`
+  catch-all falls **24.6 → 14.7 → 10.8** and rebounds to **13.4**, the same shape as `fin31d`
+  (47.1 → 20.5 → 26.6) and `fin34c` (15.9 → 8.0 → 15.2). Three items in three modules now share it.
+  This is the best-supported unexplained pattern in the repo and should be the next cycle's slot-3
+  or slot-1 draw.
+- **B2 note for the next cycle — re-derived, not inherited.** `fin` is now used. Country modules
+  still untouched: **`fin43`** (agricultural payments, 6 cols × four waves × 71 — now genuinely the
+  best-covered untouched country block, and this note was checked with `coverage.py --module`
+  rather than read off the family count), `fin25` (mostly 2024-only), `fin13`/`fin14` (2024,
+  27 economies), plus the blocked `con`. **The largest untouched surface in the repo remains the
+  micro side**: `con` (52 cols), `fin48`/`fin49` (12), and `fin22`/`fin24`/`fin31`/`fin34`/`fin39`/
+  `fin43` — ~150 micro columns in 18 families, zero mentions. `urbanicity` remains the only unused
+  frame and is single-wave. **B17 is PAID this cycle (U22) and next falls due in three cycles.**

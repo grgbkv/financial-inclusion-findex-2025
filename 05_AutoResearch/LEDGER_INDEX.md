@@ -4,7 +4,7 @@
 
 This file is the required cycle read (rule: Documentation obligation 1, 2026-08-15c). `RESEARCH_LOG.md` stays the append-only record and is consulted by `grep` for one experiment at a time, never front to back.
 
-**76 logged experiments** · 37 keeps · 38 prediction rows
+**77 logged experiments** · 37 keeps · 38 prediction rows
 
 ## Status counts
 
@@ -15,7 +15,7 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `keep` | 21 |
 | `keep-window` | 9 |
 | `inconclusive` | 1 |
-| `discard-weighted` | 3 |
+| `discard-weighted` | 4 |
 | `discard` | 34 |
 | `exploratory` | 1 |
 
@@ -28,8 +28,8 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `level-to-change` | 7 | 0 |
 | `partial` | 6 | 3 |
 | `gap-trajectory` | 6 | 2 |
+| `delta-delta-multi` | 5 | 3 |
 | `measurement` | 5 | 1 |
-| `delta-delta-multi` | 4 | 3 |
 | `audit` | 2 | 1 |
 | `level-cross-section` | 1 | 1 |
 | `distribution` | 1 | 1 |
@@ -133,6 +133,7 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E48b` | keep-window | long-difference | 2014->2024 | pan_dev | E45 | The two counter-moving margins the loop has found, in two different modules and identified by two differ… |
 | `E49x` | exploratory | measurement | 2011-2024 | pan_dev | na | EXPLORATORY mapping pass on the untouched 93-column `fin` catch-all: 24 columns clear >=3 waves at >=70 … |
 | `E49` | discard | measurement | 2024 | pan_dev | na | Registered four-way orientation screen on the `fin` catch-all REJECTS its keep condition: none of the 24… |
+| `E50` | discard-weighted | delta-delta-multi | 2014-2017 / 2017-2021 / 2021-2024 | pan_dev | E48b | E48b FAILS its all-windows promotion test on the UNWEIGHTED lens and is left at `keep-window`: r(d fin31… |
 | `M1` | keep | micro-cross-section | 2024 | micro | — | Not enough money (fin11a) barrier among unbanked adults is an income-graded reason, most cited by the po… |
 | `U1` | discard | micro-cross-section | 2024 | micro | — | Gender gap in account ownership is wider among the poorest income quintile than the richest (2024 wave, … |
 | `M2` | keep | micro-cross-section | 2024 | micro | — | Mobile-only accountholders are younger and less educated than bank-only accountholders (2024 wave) |
