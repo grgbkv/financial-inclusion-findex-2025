@@ -1,57 +1,63 @@
-"""E48 (pre-registered 2026-08-15b): does the cash margin RETREAT where digital payment ADVANCES?
-Agenda item 7.6. Parent: E45 (second descendant on that line; E47 has a different parent).
+"""E49 (pre-registered 2026-08-17): the `fin` catch-all — mandatory mapping pass plus the
+four-way orientation screen.
 
-E45 found `fin31d` (level 47.1 -> 34.1 -> 20.5 -> 26.6) and `fin31d_s` to be the only country-file
-columns whose 2024 LEVEL runs against `g20_any`, and read them — inferred, no questionnaire — as a
-cash / non-digital residual margin. A level correlation is a cross-sectional composition fact. This
-experiment asks the within-country dynamic question the level fact does not answer.
+B2 BREADTH CELL. `fin` is a 93-column catch-all family with ZERO ledger mentions — the largest
+reachable untouched block in the country file, and the one the 2026-08-16 correction found had been
+hidden behind five consecutive B2 notes that crowned smaller families instead. No parent: a new
+module.
 
-PEEK DISCLOSURE. E45 already computed the 2021->24 delta cell for both items (fin31d -0.113 wtd /
--0.317 unwtd; fin31d_s -0.158 / -0.541). That window is PEEKED and cannot support a keep here; it is
-reported as a known reference only. The primary is registered on cells whose answer is unknown.
+PART A — MAPPING PASS, logged as EXPLORATORY under the peek rule (2026-07-11). For every `fin`
+column with >= 3 waves at >= 70 developing economies, print the population-weighted level by wave and
+the country count. Item MEANINGS ARE INFERRED from levels and coverage only; there is no
+questionnaire in the repo (HARNESS_V2_NOTES.md items 5-6) and that caveat travels with every claim
+made here.
 
-PRIMARY (registered): r(d fin31d, d g20_any) on the developing panel in 2014->2017, 2017->2021, and
-the 2014->2024 LONG DIFFERENCE. Threshold r <= -0.30 in the predicted direction on BOTH lenses
-(B9/B11) in AT LEAST TWO of the three registered cells. Under B4/B8: keep-general if the 2021->24
-reference also agrees in sign, keep-window if it does not.
+PART B — THE FOUR-WAY ORIENTATION SCREEN (Documentation obligation 2, 2026-08-15c), the registered
+primary. Each eligible item against the digital-payment headline `g20_any` in the 2024
+developing-panel cross-section (E45/E47's anchor, so the results are comparable), BOTH lenses:
 
-SECONDARY (registered) — CROSS-MODULE CASH COHERENCE. If fin31d measures a general cash margin rather
-than one module's quirk, it should co-move with a cash margin in a DIFFERENT module. Correlate the
-2014->2024 long difference of fin31d against the long difference of EACH of the four fin34 items —
-all four, NO selection on E47's outcome — both lenses, with Benjamini-Hochberg at q = 0.10 over the
-four tests (rule B7). Registered claim: at least one pair clears |r| >= 0.30 in the direction that has
-both margins retreating together, on both lenses, and survives BH.
+    restatement    |r| >= 0.80
+    aligned        +0.30 <= r < 0.80
+    counter-moving r <= -0.30
+    independent    |r| < 0.30
+    both lenses must AGREE, else `mixed-lens` (B9/B11)
 
-REGISTERED NULL READING, stated in advance so it cannot be written after the fact: a failure of the
-primary does NOT rehabilitate the digital headline. It says E45's counter-moving LEVEL correlation is
-a cross-sectional composition fact rather than a within-country dynamic one — exactly the distinction
-this ledger has repeatedly failed at (E31, E36).
+REGISTERED KEEP CONDITION: at least one item classifies as `counter-moving` on BOTH lenses, survives
+G6 with the sign intact, and has a bootstrap interval (2,000 country draws) excluding zero. A screen
+returning only restatement/aligned items is a DISCARD — the module would then be a re-description of
+the headline, as `dig_acc` was found to be.
 
-B6/B9/B10/B12 on every cell. fin31d_s is EXCLUDED from the delta design: E45 recorded it as
-supporting 2021->24 only.
+REGISTERED SIGN (B15): the keep direction is NEGATIVE. An item at r >= +0.80 is a restatement and is
+the OPPOSITE result, not partial confirmation.
 
-DECLARED. Delta->delta co-movement inside the same window identifies nothing; both margins may move
-with a third factor. fin31d is a narrow, INDICATORS-unregistered variant under G3 whose meaning is
-INFERRED from levels and coverage (HARNESS_V2_NOTES.md item 6), and that caveat travels with any
-claim made here.
+SECONDARY (registered, no bar): the same screen against `account_t_d`, for every eligible item. It
+distinguishes "counter-moves with digital payment" from "counter-moves with financial access in
+general" — the distinction E47 drew on `fin34c`.
+
+B6/B9/B10/B12 on every cell: weighted and unweighted r, bootstrap percentile interval and p_boot,
+Kish neff beside nominal n, G6 drop-top-5, and the LARGEST SINGLE LEAVE-ONE-OUT effect with the
+economy NAMED.
+
+DECLARED. A 2024 cross-sectional LEVEL correlation is a COMPOSITION statement about economies, not a
+within-country dynamic one — E48's primary is the standing proof that the two come apart. No delta
+claim is registered here. G3: every `fin` item is an unregistered narrow variant.
 """
 import numpy as np
 import pandas as pd
 
+from coverage import _module_of          # read-only instrument; module classification only
 from harness import Findex
 
 BOOT = 2000
-SEED = 48
-WAVES = [2014, 2017, 2021, 2024]
-CASH = "fin31d"
+SEED = 49
+YEARS = [2011, 2014, 2017, 2021, 2024]
 HEAD = "g20_any"
-FIN34 = ["fin34a", "fin34b", "fin34c", "fin34d"]
+ACCT = "account_t_d"
 
-REG_CELLS = [(2014, 2017), (2017, 2021), (2014, 2024)]   # registered, unpeeked
-REF_CELL = (2021, 2024)                                  # peeked (E45) — reference only
-BAR = -0.30
-NEED = 2            # at least two of the three registered cells
-Q = 0.10            # BH level on the secondary
+MIN_WAVES = 3          # registered eligibility
+MIN_COUNTRIES = 70     # registered eligibility
+RESTATE = 0.80
+BAR = 0.30
 
 
 def kish(w):
@@ -89,164 +95,175 @@ def boot_ci(df, fn, draws=BOOT, seed=SEED):
             float(2 * min((a <= 0).mean(), (a >= 0).mean())))
 
 
-def cell(T, xcol, ycol, a, b, fx, label):
-    """One delta->delta cell with the full B6/B9/B10/B12 reporting block."""
-    sub = T[[f"{xcol}@{a}", f"{xcol}@{b}", f"{ycol}@{a}", f"{ycol}@{b}", "pop"]].dropna()
+def classify(rw, ru):
+    """The four-way screen. Both lenses must agree, else mixed-lens."""
+    def one(r):
+        if pd.isna(r):
+            return "na"
+        if abs(r) >= RESTATE:
+            return "restatement"
+        if r >= BAR:
+            return "aligned"
+        if r <= -BAR:
+            return "counter-moving"
+        return "independent"
+    a, b = one(rw), one(ru)
+    return a if a == b else f"mixed-lens ({a}/{b})", a, b
+
+
+def screen_cell(T, col, anchor, fx, full=True):
+    sub = T[[col, anchor, "pop"]].dropna()
     if len(sub) < 10:
         return None
-    out = pd.DataFrame({"x": sub[f"{xcol}@{b}"] - sub[f"{xcol}@{a}"],
-                        "y": sub[f"{ycol}@{b}"] - sub[f"{ycol}@{a}"],
-                        "w": sub["pop"]})
-    rw, n = corr(out["x"], out["y"], out["w"])
-    ru, _ = corr(out["x"], out["y"])
-    lo, up, pb = boot_ci(out, lambda s: corr(s["x"], s["y"], s["w"])[0])
-    g6 = fx.gate_jackknife(out["x"], out["y"], out["w"])
-    loo = sorted(((corr(out.drop(i)["x"], out.drop(i)["y"], out.drop(i)["w"])[0] - rw, i)
-                  for i in out.index), key=lambda t: -abs(t[0]))[0]
-    return {"label": label, "r_w": rw, "ci": (lo, up), "p_boot": pb,
-            "g6": g6["r_droptop"], "r_u": ru, "n": n, "neff": kish(out["w"]),
-            "loo": loo, "wmean_x": float(np.average(out["x"], weights=out["w"])),
-            "wmean_y": float(np.average(out["y"], weights=out["w"]))}
+    x, y, w = sub[col], sub[anchor], sub["pop"]
+    rw, n = corr(x, y, w)
+    ru, _ = corr(x, y)
+    cls, cw, cu = classify(rw, ru)
+    out = {"col": col, "r_w": rw, "r_u": ru, "n": n, "neff": kish(w), "class": cls,
+           "cls_w": cw, "cls_u": cu}
+    if full:
+        d = pd.DataFrame({"x": x, "y": y, "w": w})
+        lo, up, pb = boot_ci(d, lambda s: corr(s["x"], s["y"], s["w"])[0])
+        g6 = fx.gate_jackknife(x, y, w)
+        loo = sorted(((corr(d.drop(i)["x"], d.drop(i)["y"], d.drop(i)["w"])[0] - rw, i)
+                      for i in d.index), key=lambda t: -abs(t[0]))[0]
+        out.update({"ci": (lo, up), "p_boot": pb, "g6": g6["r_droptop"], "loo": loo})
+    return out
 
 
-def show(rows, header):
-    print(f"  {'cell':14s}{'r_w':>9s}{'[95% CI]':>20s}{'p_boot':>9s}{'G6':>9s}{'r_u':>9s}"
-          f"{'n':>5s}{'neff':>7s}  {'wtd d x / d y':>18s}  largest LOO")
+def show(rows, title):
+    print(f"\n{title}")
+    print(f"  {'item':22s}{'r_w':>8s}{'[95% CI]':>20s}{'p_boot':>8s}{'G6':>8s}{'r_u':>8s}"
+          f"{'n':>5s}{'neff':>7s}  {'largest LOO':>26s}  class")
     for r in rows:
         ci = f"[{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}]"
-        dd = f"{r['wmean_x']:+.2f} / {r['wmean_y']:+.2f}"
-        print(f"  {r['label']:14s}{r['r_w']:>9.3f}{ci:>20s}{r['p_boot']:>9.3f}"
-              f"{r['g6']:>9.3f}{r['r_u']:>9.3f}{r['n']:>5d}{r['neff']:>7.1f}  {dd:>18s}  "
-              f"{r['loo'][1]} {r['loo'][0]:+.3f}")
+        loo = f"{r['loo'][1]} {r['loo'][0]:+.3f}"
+        print(f"  {r['col']:22s}{r['r_w']:>8.3f}{ci:>20s}{r['p_boot']:>8.3f}"
+              f"{r['g6']:>8.3f}{r['r_u']:>8.3f}{r['n']:>5d}{r['neff']:>7.1f}  {loo:>26s}  "
+              f"{r['class']}")
 
 
 def main():
     fx = Findex()
     dev = fx.pan_dev
-    d = dev[dev["year"].isin(WAVES)]
+    skip = {"year", "pop_adult", "group", "group2", "countrynewwb", "codewb",
+            "regionwb24_hi", "incomegroupwb24"}
+    fin_cols = sorted(c for c in fx.raw.columns
+                      if c not in skip and _module_of(c) == "fin")
 
-    tab = {}
-    for c in [CASH, HEAD] + FIN34:
-        w = d.pivot_table(index="countrynewwb", columns="year", values=c) * 100
-        for y in WAVES:
-            tab[f"{c}@{y}"] = w[y] if y in w.columns else pd.Series(dtype=float)
-    T = pd.DataFrame(tab)
-    T["pop"] = dev[dev["year"] == 2024].set_index("countrynewwb")["pop_adult"].reindex(T.index)
+    print("=" * 132)
+    print("E49 — the untouched `fin` catch-all: mapping pass (EXPLORATORY) + four-way "
+          "orientation screen (REGISTERED)")
+    print(f"      {len(fin_cols)} columns in the family, zero prior ledger mentions")
+    print("=" * 132)
 
-    print("=" * 128)
-    print("E48 — does the cash margin retreat where digital payment advances? (agenda item 7.6)")
-    print("=" * 128)
+    # ------------------------------------------------------- PART A: mapping (EXPLORATORY)
+    print("\n" + "-" * 132)
+    print("PART A — MAPPING PASS (EXPLORATORY, peek rule). Weighted level by wave, developing "
+          "panel; countries reporting in brackets.")
+    print("Item meanings are INFERRED from levels and coverage. There is no questionnaire in "
+          "the repo.")
+    print("-" * 132)
+    rows = []
+    for c in fin_cols:
+        lv, nc = {}, {}
+        for y in YEARS:
+            d = dev[(dev["year"] == y)].dropna(subset=[c, "pop_adult"])
+            nc[y] = int(d["countrynewwb"].nunique())
+            lv[y] = (float(np.average(d[c], weights=d["pop_adult"])) * 100
+                     if len(d) else np.nan)
+        good = sum(1 for y in YEARS if nc[y] >= MIN_COUNTRIES)
+        rows.append({"col": c, "waves_ok": good, **{f"lv{y}": lv[y] for y in YEARS},
+                     **{f"n{y}": nc[y] for y in YEARS}})
+    M = pd.DataFrame(rows)
+    elig = M[M["waves_ok"] >= MIN_WAVES].sort_values("waves_ok", ascending=False)
+    print(f"  {'item':22s}{'waves':>6s}   " +
+          "".join(f"{y:>16d}" for y in YEARS))
+    for _, r in elig.iterrows():
+        cells = "".join(
+            ("      --      " if pd.isna(r[f'lv{y}']) or r[f'n{y}'] < MIN_COUNTRIES
+             else f"{r[f'lv{y}']:8.1f} [{int(r[f'n{y}']):2d}]").rjust(16) for y in YEARS)
+        print(f"  {r['col']:22s}{int(r['waves_ok']):>6d}   {cells}")
+    print(f"\n  ELIGIBLE (>= {MIN_WAVES} waves at >= {MIN_COUNTRIES} developing economies): "
+          f"{len(elig)} of {len(fin_cols)} columns")
+    ineligible = M[M["waves_ok"] < MIN_WAVES]
+    print(f"  ineligible (thin or single-wave): {len(ineligible)} columns — "
+          f"{', '.join(ineligible['col'].head(20))}{' ...' if len(ineligible) > 20 else ''}")
 
-    # E35 rule: reproduce E45's published 2021->24 cell before reading anything registered.
-    ref = cell(T, CASH, HEAD, *REF_CELL, fx, "2021->2024 REF")
-    print(f"\nE35 RULE — reproduce E45's peeked cell first: r_w {ref['r_w']:+.3f} "
-          f"(E45 published -0.113), r_u {ref['r_u']:+.3f} (E45 published -0.317)")
-    assert abs(ref["r_w"] - (-0.113)) <= 0.02 and abs(ref["r_u"] - (-0.317)) <= 0.02, "ABORT"
-    print("  reproduced within 0.02 — proceeding.")
+    # ------------------------------------------------------- PART B: the registered screen
+    y24 = dev[dev["year"] == 2024]
+    tab = y24.set_index("countrynewwb")
+    T = pd.DataFrame({c: tab[c] * 100 for c in list(elig["col"]) + [HEAD, ACCT]})
+    T["pop"] = tab["pop_adult"]
 
-    # ---------------------------------------------------------------- PRIMARY
-    print("\n" + "-" * 128)
-    print("PRIMARY (registered): r(d fin31d, d g20_any). Bar: r <= -0.30 on BOTH lenses in "
-          ">= 2 of the 3 registered cells")
-    print("-" * 128)
-    rows = [cell(T, CASH, HEAD, a, b, fx, f"{a}->{b}") for a, b in REG_CELLS]
-    rows = [r for r in rows if r]
-    show(rows, "")
-    print("  " + "-" * 124)
-    show([ref], "")
-    print("  (the 2021->2024 row is PEEKED — E45 — and is a sign reference only, never a keep)")
+    print("\n" + "-" * 132)
+    print("PART B — FOUR-WAY ORIENTATION SCREEN (REGISTERED PRIMARY) vs the digital-payment "
+          "headline `g20_any`, 2024 levels")
+    print(f"  restatement |r|>={RESTATE} · aligned +{BAR}<=r<{RESTATE} · counter-moving "
+          f"r<=-{BAR} · independent |r|<{BAR} · both lenses must agree")
+    print("-" * 132)
+    g4 = fx.gate_coverage(dev, HEAD, 2024)
+    print(f"  G4 on the anchor: {g4}")
 
-    passes = [r for r in rows if r["r_w"] <= BAR and r["r_u"] <= BAR]
-    w_only = [r for r in rows if r["r_w"] <= BAR]
-    u_only = [r for r in rows if r["r_u"] <= BAR]
-    print(f"\n  cells clearing {BAR:+.2f} on BOTH lenses: {len(passes)} of {len(rows)} "
-          f"({', '.join(r['label'] for r in passes) if passes else 'none'})")
-    print(f"  weighted lens alone:   {len(w_only)} of {len(rows)} "
-          f"({', '.join(r['label'] for r in w_only) if w_only else 'none'})")
-    print(f"  unweighted lens alone: {len(u_only)} of {len(rows)} "
-          f"({', '.join(r['label'] for r in u_only) if u_only else 'none'})")
-    prim = len(passes) >= NEED
-    lens_split = (len(w_only) >= NEED) != (len(u_only) >= NEED)
-    if prim:
-        status = "keep-general" if np.sign(ref["r_w"]) < 0 else "keep-window"
-        print(f"  -> PRIMARY KEEP ({status}; the peeked reference "
-              f"{'agrees' if np.sign(ref['r_w']) < 0 else 'disagrees'} in sign)")
-    elif lens_split:
-        print("  -> PRIMARY DISCARD-WEIGHTED (rule B9): the weighted lens would have kept this "
-              f"({len(w_only)}/{len(rows)} cells) and the unweighted one would not "
-              f"({len(u_only)}/{len(rows)}). The lens dependence is part of the finding.")
-    else:
-        print("  -> PRIMARY DISCARD")
-
-    # -------------------------------------------------------------- SECONDARY
-    print("\n" + "-" * 128)
-    print("SECONDARY (registered): cross-module cash coherence — d fin31d (2014->2024) vs "
-          "d fin34x (2014->2024), all four, BH q=0.10")
-    print("-" * 128)
-    srows = []
-    for c in FIN34:
-        r = cell(T, CASH, c, 2014, 2024, fx, c)
+    cells = []
+    for c in elig["col"]:
+        r = screen_cell(T, c, HEAD, fx, full=True)
         if r:
-            srows.append(r)
-    show(srows, "")
-    ps = sorted(((r["p_boot"], r) for r in srows), key=lambda t: t[0])
-    m = len(ps)
-    print(f"\n  Benjamini-Hochberg, q = {Q}, m = {m} tests (on p_boot, the weighted lens):")
-    bh_ok = set()
-    for i, (p, r) in enumerate(ps, start=1):
-        crit = Q * i / m
-        mark = "REJECT" if p <= crit else "  --  "
-        if p <= crit:
-            bh_ok.add(r["label"])
-        print(f"    {i}. {r['label']:10s} p_boot {p:.4f}  vs  {crit:.4f}   {mark}")
-    # BH step-up: everything up to the largest rejecting index
-    idx = [i for i, (p, r) in enumerate(ps, start=1) if p <= Q * i / m]
-    bh_ok = {r["label"] for i, (p, r) in enumerate(ps, start=1) if i <= (max(idx) if idx else 0)}
+            cells.append(r)
+    cells.sort(key=lambda r: r["r_w"])
+    show(cells, "vs g20_any (2024 developing-panel levels):")
 
-    # The REGISTERED direction: "both margins retreating together" => POSITIVE r, since a fall in
-    # fin31d must pair with a fall in the fin34 item. A negative r is the OPPOSITE pattern
-    # (displacement) and does not count toward the registered claim, however large.
-    coherent = [r for r in srows
-                if r["r_w"] >= 0.30 and r["r_u"] >= 0.30 and r["label"] in bh_ok]
-    opposite = [r for r in srows
-                if r["r_w"] <= -0.30 and r["r_u"] <= -0.30 and r["label"] in bh_ok]
-    print(f"\n  REGISTERED direction (both margins retreating together => POSITIVE r), "
-          f"|r| >= 0.30 on BOTH lenses AND surviving BH: "
-          f"{', '.join(r['label'] for r in coherent) if coherent else 'NONE'}")
-    print(f"  OPPOSITE direction (fin31d falls where the fin34 item RISES => negative r), "
-          f"same bars: {', '.join(r['label'] for r in opposite) if opposite else 'none'}")
-    sec = bool(coherent)
-    print(f"  -> SECONDARY {'KEEP' if sec else 'DISCARD'}")
+    counts = pd.Series([r["class"].split(" ")[0] for r in cells]).value_counts()
+    print("\n  classification counts: " +
+          ", ".join(f"{k} {v}" for k, v in counts.items()))
 
-    # --------------------- POST-HOC (labelled, not pre-registered): common-trend check
-    print("\n" + "-" * 128)
-    print("POST-HOC DIAGNOSTIC (labelled, NOT pre-registered) — is the fin31d~fin34c co-movement "
-          "more than both being negatively")
-    print("related to the same rising headline? Partial correlation controlling for d g20_any. "
-          "(E35 warned partials are weighting-fragile.)")
-    sub = T[[f"{CASH}@2014", f"{CASH}@2024", "fin34c@2014", "fin34c@2024",
-             f"{HEAD}@2014", f"{HEAD}@2024", "pop"]].dropna()
-    dx = sub[f"{CASH}@2024"] - sub[f"{CASH}@2014"]
-    dy = sub["fin34c@2024"] - sub["fin34c@2014"]
-    dz = sub[f"{HEAD}@2024"] - sub[f"{HEAD}@2014"]
-    for lens, ww in (("weighted", sub["pop"]), ("unweighted", None)):
-        rxy, _ = corr(dx, dy, ww)
-        rxz, _ = corr(dx, dz, ww)
-        ryz, _ = corr(dy, dz, ww)
-        part = (rxy - rxz * ryz) / np.sqrt((1 - rxz ** 2) * (1 - ryz ** 2))
-        print(f"  {lens:11s} r(dx,dy) {rxy:+.3f} | r(dx,dz) {rxz:+.3f} | r(dy,dz) {ryz:+.3f} "
-              f"-> PARTIAL {part:+.3f}")
-    print(f"  n = {len(sub)}, neff = {kish(sub['pop']):.1f}")
+    # registered keep condition
+    cm = [r for r in cells if r["class"] == "counter-moving"]
+    cm_ok = [r for r in cm
+             if pd.notna(r["g6"]) and r["g6"] <= 0 and r["ci"][1] < 0]
+    print(f"\n  counter-moving on BOTH lenses: "
+          f"{', '.join(r['col'] for r in cm) if cm else 'NONE'}")
+    print(f"  ... of which survive G6 with the sign intact AND a CI excluding zero: "
+          f"{', '.join(r['col'] for r in cm_ok) if cm_ok else 'NONE'}")
+    keep = bool(cm_ok)
 
-    print("\n" + "=" * 128)
-    prim_label = "KEEP" if prim else ("DISCARD-WEIGHTED" if lens_split else "DISCARD")
-    print(f"E48 VERDICT: PRIMARY {prim_label} | "
-          f"SECONDARY {'KEEP' if sec else 'DISCARD'}")
-    if not prim:
-        print("  Registered null reading (written before the answer): this does NOT rehabilitate the")
-        print("  digital headline. It says E45's counter-moving LEVEL correlation is a cross-sectional")
-        print("  composition fact, not a within-country dynamic one.")
-    print("=" * 128)
+    # ------------------------------------------------------- SECONDARY vs account_t_d
+    print("\n" + "-" * 132)
+    print("SECONDARY (registered, no bar) — the same screen vs `account_t_d`: counter-moving "
+          "with DIGITAL PAYMENT or with ACCESS in general?")
+    print("-" * 132)
+    a_cells = []
+    for c in elig["col"]:
+        r = screen_cell(T, c, ACCT, fx, full=True)
+        if r:
+            a_cells.append(r)
+    order = {r["col"]: i for i, r in enumerate(cells)}
+    a_cells.sort(key=lambda r: order.get(r["col"], 999))
+    show(a_cells, "vs account_t_d (2024 developing-panel levels):")
+    a_by = {r["col"]: r for r in a_cells}
+    print("\n  side by side for every counter-moving item:")
+    for r in cm:
+        a = a_by.get(r["col"])
+        print(f"    {r['col']:22s} vs g20_any {r['r_w']:+.3f}/{r['r_u']:+.3f} ({r['class']})"
+              f"   |   vs account_t_d {a['r_w']:+.3f}/{a['r_u']:+.3f} ({a['class']})")
+
+    # ------------------------------------------------------- VERDICT
+    print("\n" + "=" * 132)
+    print("E49 VERDICT (pre-registered)")
+    print(f"  registered keep condition: >= 1 item `counter-moving` on both lenses, through G6, "
+          f"CI excluding zero -> {'MET' if keep else 'NOT MET'}")
+    print(f"  B15 registered sign: NEGATIVE. Items at r >= +{RESTATE} are restatements and are the "
+          f"opposite result, not partial confirmation "
+          f"({sum(1 for r in cells if r['class'] == 'restatement')} such items).")
+    print(f"  -> E49 {'KEEP' if keep else 'DISCARD'}")
+    if not keep:
+        print("     Registered null reading: the `fin` catch-all would then contain no margin that")
+        print("     runs against the digital-payment headline in the 2024 cross-section, and the")
+        print("     two counter-moving margins found so far (fin31d, fin34c) stay the only ones.")
+    print("=" * 132)
+    print("\nEXPLORATORY MAPPING is written to HARNESS_V2_NOTES.md. Every meaning below is "
+          "INFERRED from levels\nand coverage; none is read from a questionnaire (the repo has "
+          "none). Part A is logged as exploratory.")
 
 
 if __name__ == "__main__":
