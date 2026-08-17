@@ -5981,3 +5981,154 @@ since U21 and the next cycle must open with a `U` experiment; agenda item **5.5*
 (2) The design base rates are now on record and `level-to-change` at 0/7 should not be re-registered
 without a stated difference from the seven failures. (3) No coverage was consumed this cycle, so the
 B2 cell is wide open, with `fin43` the best-covered untouched country module.
+
+---
+
+# Cycle 2026-08-17 — PRE-REGISTRATION (U22, E49, E50)
+
+## B18 distillation-trigger check (rule B18, amended 2026-08-16 — read the highest-numbered draft)
+
+Highest-numbered draft: `PAPER_DRAFT_v3.md`. Its header reads **CORRECTIONS OWED: none outstanding**
+(0 items against a threshold of 5). Experiment count at the last distillation: **73** (2026-08-16);
+`make_index.py` reports **73 logged experiments** now, so **0 experiments** have run since the
+rewrite against a threshold of 10. **Neither branch fires. This is a normal experiment cycle.**
+
+## B1 coverage run (done before any hypothesis was chosen)
+
+`python3 coverage.py` — country file 49/429 columns touched (11%); untouched families **`con`
+(blocked), `fin` (93 cols, ZERO touched), `fin13`, `fin25`, `fin14`, `fin43`**. Micro file 35/192
+touched (18%), 150 untouched columns in 18 families. Transitions 19 / 64 / 127 / 286 across
+2011→14 / 14→17 / 17→21 / 21→24. `urbanicity` is the only untouched frame and is single-wave.
+`python3 coverage.py --module fin` confirms the 2026-08-16 correction: **`fin10` and `fin2_t_d` carry
+all five waves × 77 developing economies**, with `fin30`/`fin37`/`fin37_39*` at four waves and
+`fin37_38*`/`fin38*`/`fin26a` at three. The `fin` catch-all is the largest reachable untouched block
+in the repo and is this cycle's B2 breadth cell.
+
+## Cycle shape (2026-08-15c shape; B17 first because it is carried and unpaid)
+
+| slot | experiment | rule it satisfies |
+|---|---|---|
+| 2 | **U22** — within-country connectivity gaps (agenda 5.5) | **B17** micro quota, unpaid for two cycles |
+| 1 | **E49** — mapping pass + four-way orientation screen on the untouched `fin` catch-all | **B2** breadth cell + Documentation obligation 2 |
+| 3 | **E50** — per-window replication of the `fin31d`~`fin34c` co-retreat (agenda 7.7) | **B14** all-windows design, B4/B8 promotion test |
+
+Parents: U22 ← U21 (first descendant). E49 ← none (new module). E50 ← E48b (first descendant).
+No lineage exceeds B3's cap of three.
+
+---
+
+## U22 (slot 2, B17) — is the connectivity gap in digital-payment use a WITHIN-COUNTRY regularity?
+
+**Agenda item 5.5.** Parent: **U21**. Micro stream, 2024 wave, cross-sectional — no trend language.
+
+**Why.** U21 established two pooled facts: among accountholders the offline-vs-online gap in
+`anydigpayment` is **+13.6pp**, and account holding absorbs **55.5%** of the unconditional +30.5pp
+connectivity gap — an absorption share unlike any resource axis. Both are POOLED figures over 140
+economies and could be a between-country composition artifact: economies with low internet use are
+also economies with low digital payment use. U19 and U20 ran exactly this test on the education and
+income axes and both kept. Connectivity is the axis where the composition worry is largest, because
+it is the axis on which economies differ most.
+
+**Design (U19/U20 design verbatim, connectivity substituted).** For every economy with **≥ 100
+unweighted respondents in BOTH cells** (M2) among accountholders (`account == 1`), compute the
+weighted gap `anydigpayment(internet_use==1) − anydigpayment(internet_use==0)`. Report the median,
+IQR, sign count, range with economy names, the qualifying economies' share of accountholding
+respondents, the pooled gap over the SAME qualifying set, and the **composition wedge**
+(pooled − median).
+
+**Registered claims and bars, both required for a keep:**
+- **C1** the median within-economy gap is **≥ +5.0pp** (the standing micro gap threshold), and
+- **C2** the gap is **positive in ≥ 80% of qualifying economies** (U19 96–98%, U20 89%).
+
+**Registered sign (B15):** positive — online accountholders use digital payments *more*.
+
+**Secondary, registered:** the same within-country decomposition of U21's **absorption** result —
+per economy, the connectivity gap among accountholders as a fraction of the connectivity gap among
+all adults, reported as a median. This has no bar and is logged as a diagnostic; it exists so that
+U21's headline 55.5% is not left as a pooled-only number.
+
+**Gates.** M1 (enforced by `micro.py`). M2 on every reported cell, ≥ 100 unweighted per cell.
+M3 against the country file on `account` and `anydigpayment`, tolerance 1pp.
+
+**Declared.** `internet_use` is self-reported internet USE, co-determined with digital payment use —
+a person may report using the internet *because* they pay digitally, and one cross-section cannot
+separate the directions (U21's caveat, carried). Conditioning on account holding is post-treatment.
+Single wave: no trend language. A within-country regularity is still an association, not a mechanism.
+
+---
+
+## E49 (slot 1, B2) — the `fin` catch-all: mandatory mapping pass + four-way orientation screen
+
+**No parent — a new module.** B2 breadth cell: **`fin`, 93 columns, zero ledger mentions**, the
+largest reachable untouched country block (the 2026-08-16 correction).
+
+**Part A — MAPPING PASS, logged as EXPLORATORY under the peek rule.** For every `fin` column with
+**≥ 3 waves at ≥ 70 developing economies**, print the weighted level by wave and the country count.
+Meanings are INFERRED from levels and coverage only — there is no questionnaire in the repo
+(`HARNESS_V2_NOTES.md` items 5–6) — and that caveat travels with everything below. The mapping is
+written to `HARNESS_V2_NOTES.md` before the screen is read.
+
+**Part B — the FOUR-WAY ORIENTATION SCREEN (Documentation obligation 2), the registered primary.**
+Each eligible item is correlated against the digital-payment headline `g20_any` in the **2024
+developing-panel cross-section** (E45/E47's anchor, so the results are comparable), both lenses:
+
+- `restatement` |r| ≥ 0.80 · `aligned` +0.30 ≤ r < 0.80 · `counter-moving` r ≤ −0.30 ·
+  `independent` |r| < 0.30 — **both lenses must agree**, else `mixed-lens` (B9/B11).
+
+**Registered keep condition:** at least one item classifies as **`counter-moving`** on both lenses,
+survives **G6** with the sign intact, and has a bootstrap interval (2,000 country draws) excluding
+zero. A screen returning only `restatement`/`aligned` items is a **discard** — the module would then
+be a re-description of the headline, as `dig_acc` was found to be.
+
+**Registered sign (B15):** the keep direction is **negative** (counter-moving). An item at
+r ≥ +0.80 is a restatement and is the opposite result, not partial confirmation.
+
+**Secondary, registered:** the same screen against `account_t_d`, reported for every eligible item.
+No bar; it exists to distinguish "counter-moves with digital payment" from "counter-moves with
+financial access in general" — the distinction E47 drew on `fin34c`.
+
+**B6/B9/B10/B12 on every cell:** weighted and unweighted r, bootstrap percentile interval and
+`p_boot`, Kish `neff` beside nominal n, G6 drop-top-5, and the **largest single leave-one-out effect
+with the economy named**.
+
+**Declared.** A 2024 cross-sectional level correlation is a **composition** statement about
+economies, not a within-country dynamic one — E48's primary is the standing proof that the two come
+apart. No Δ claim is registered here. G3: every `fin` item is an unregistered narrow variant.
+
+---
+
+## E50 (slot 3, B14) — does the cash co-retreat hold in EVERY window? (agenda item 7.7)
+
+**Parent: E48b** (`keep-window`, first descendant). **B14-compliant: an all-windows design** — the
+registered claim must hold in **every** tested transition, not a majority.
+
+**Why.** E48b is a single long-difference cell: r(Δ`fin31d`, Δ`fin34c`) = **+0.515 weighted /
++0.389 unweighted** over 2014→2024, G6 +0.443, partial controlling for Δ`g20_any` +0.597 / +0.383.
+Under B4/B8 it cannot be promoted until every earlier window agrees in sign and clears the bar. E39
+established that country-level Δ does not autocorrelate, so a long difference can be carried by one
+sub-window; this experiment finds out which.
+
+**Design.** r(Δ`fin31d`, Δ`fin34c`) on the developing panel in **2014→2017, 2017→2021 and
+2021→2024**, both lenses, with the 2014→2024 long difference recomputed inside the file first
+(the E35 rule: every replication file reproduces its parent's cell before any verdict is read; abort
+if it does not reproduce within 0.02).
+
+**Registered bar and sign (B15).** **r ≥ +0.30 on BOTH lenses in ALL THREE windows** →
+**`keep-general`** (B4 + B8). Any window failing the bar, or agreeing in magnitude but with a
+**negative** sign, → E48b **stays `keep-window` and is recorded as having FAILED its promotion
+test**, never as "not attempted". A lens split (weighted passes 3/3, unweighted does not) →
+`discard-weighted` on the promotion, with E48b left at `keep-window`.
+
+**B16 — path before span.** The experiment prints the intermediate wave levels for both margins.
+Known non-monotonicity, from E47: `fin31d` 47.1 → 34.1 → 20.5 → **26.6** and `fin34c`
+15.9 → 11.8 → 8.0 → **15.2** — both fall for a decade and rebound in the last window (agenda item
+7.8). The rebound is *in* the 2021→24 window this design tests, so that window is the informative
+one and its result is registered in advance as such either way.
+
+**Secondary, registered:** the partial controlling for Δ`g20_any`, per window, both lenses — E48b's
+partial strengthened on the long difference and the question is whether it does so in each window.
+No bar (E35: partials are the most weighting-fragile design in the ledger); a diagnostic.
+
+**B6/B9/B10/B12 on every cell.** **Declared:** Δ→Δ co-movement inside a window identifies nothing;
+both margins may move with a third factor. Item meanings are inferred, never read from a
+questionnaire.
