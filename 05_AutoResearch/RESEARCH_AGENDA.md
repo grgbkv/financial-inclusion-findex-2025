@@ -802,8 +802,8 @@ seven corrections and folds in E42–E48; v2 marked SUPERSEDED with its correcti
   another adjacent-window Δ→Δ**; the most promising shape is a *distribution* design in E39's mould
   (is the rebound within-country or compositional?) crossed with cross-item co-occurrence, since
   single-item mean reversion explains a V-shape but not four V-shapes in the same window.
-- **B2 note for the next cycle — re-derived.** The country file is now **67/429 columns (16%)**
-  touched. **Every untouched country family that clears the eligibility floor is gone**: what remains
+- **B2 note for the next cycle — re-derived.** The country file is now **69/429 columns (16%)**
+  touched (`coverage.py` counts all six `fin43` columns, the two unusable `_s` ones included). **Every untouched country family that clears the eligibility floor is gone**: what remains
   is `con` (133 cols, 2024-only, blocked for want of a questionnaire), `fin25` (14, mostly 2024-only),
   `fin13`/`fin14` (38 cols, 2024, 27 economies). **The B2 breadth cell therefore has to move to the
   micro side or to the frames**: 112 untouched micro columns in 17 families, and `urbanicity` remains

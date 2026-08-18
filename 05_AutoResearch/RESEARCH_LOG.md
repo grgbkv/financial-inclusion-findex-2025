@@ -6448,9 +6448,36 @@ natural registered test here, and this cycle cannot claim it because this cycle 
 
 **Cycle bookkeeping.** B18 checked and not fired (v3 carries zero corrections owed; 4 experiments
 since the 2026-08-16 rewrite against a threshold of 10). B2 cell consumed: **`fin43`**, 6 columns,
-now touched — the country file goes from 63 to 67 of 429 columns (16%). B17 **not paid and the
+now touched — the country file goes from 63 to 69 of 429 columns (16%), and `coverage.py` now lists only four untouched families (185 columns), all of them 2024-only or 27-economy. B17 **not paid and the
 skip is declared**: U22 paid it on 2026-08-17, one cycle ago, and it next falls due in two cycles;
 the micro side remains the largest untouched surface in the repo. B3 lineage: the longest chain is
 E48b → E50 → E52, two consecutive descendants, under the cap of three. B14 not engaged — E51 is a
 cross-sectional screen and E52 registers no association. `make_index.py --check` passes at 80 rows,
 0 problems.
+
+---
+
+## Wrap-up — 2026-08-18
+
+1. **E51 DISCARD (registered).** The untouched `fin43` agricultural-payments module contains no
+   counter-moving margin: 2 aligned, 2 independent, **0 of 4** against `g20_any`. After four modules
+   screened with the same instrument, `fin31d` and `fin34c` remain the ledger's **only** two
+   counter-moving country-file margins.
+2. **E51x (exploratory) delivered two structural facts.** The `_s` suffix is a *conditional*
+   denominator (`fin43c` 8.8% of adults vs `fin43c_s` 77.8% on 30 economies) and must never share a
+   correlation with its base item; and `fin43c` **21.5 → 10.7 → 6.6 → 8.8** is a **fourth** instance
+   of agenda item 7.8's fall-then-rebound, in a fourth module.
+3. **E52 INCONCLUSIVE (registered).** Neither candidate mechanism for the cash cell's standing
+   weighted/unweighted disagreement fires. **Leverage is rejected 0/4** — a p90 weight cap takes
+   `neff` from 7.2 to ~32 and leaves r_w at +0.42 to +0.59 — and the *binary* heterogeneity pattern
+   fires 2/4 only because the bottom population tercile also clears the bar twice; the top tercile
+   clears it **4/4**.
+4. **The cycle's most transferable result is a reporting asymmetry, not a correlation.** Fragility
+   depth (weighted) is **5 / 2 / 2 / 3** named economies, while ascent depth (unweighted) is
+   **0 / 2 / 1 / 0** — **Bulgaria alone flips the unweighted 2021→24 verdict**. G6 and B12 examine
+   only the largest economies, so the ledger has been reporting one-sided stability evidence.
+5. **Bookkeeping.** B18 not fired (0 corrections owed, 4 experiments since the rewrite). B2 paid by
+   `fin43`; **no untouched country family clears the eligibility floor any more**, so B2 must move to
+   the micro side or the `urbanicity` frame next. B17 skipped with the declaration required, due in
+   two cycles. Longest lineage E48b → E50 → E52 (two descendants, cap three). Prediction stream
+   unchanged and CLOSED: `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
