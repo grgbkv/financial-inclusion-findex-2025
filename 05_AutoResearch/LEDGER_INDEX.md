@@ -4,7 +4,7 @@
 
 This file is the required cycle read (rule: Documentation obligation 1, 2026-08-15c). `RESEARCH_LOG.md` stays the append-only record and is consulted by `grep` for one experiment at a time, never front to back.
 
-**77 logged experiments** · 37 keeps · 38 prediction rows
+**80 logged experiments** · 37 keeps · 38 prediction rows
 
 ## Status counts
 
@@ -14,10 +14,10 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `keep-general-unweighted` | 1 |
 | `keep` | 21 |
 | `keep-window` | 9 |
-| `inconclusive` | 1 |
+| `inconclusive` | 2 |
 | `discard-weighted` | 4 |
-| `discard` | 34 |
-| `exploratory` | 1 |
+| `discard` | 35 |
+| `exploratory` | 2 |
 
 ## Design families
 
@@ -26,11 +26,11 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `micro-cross-section` | 24 | 15 |
 | `delta-delta` | 19 | 9 |
 | `level-to-change` | 7 | 0 |
+| `measurement` | 7 | 1 |
 | `partial` | 6 | 3 |
 | `gap-trajectory` | 6 | 2 |
 | `delta-delta-multi` | 5 | 3 |
-| `measurement` | 5 | 1 |
-| `audit` | 2 | 1 |
+| `audit` | 3 | 1 |
 | `level-cross-section` | 1 | 1 |
 | `distribution` | 1 | 1 |
 | `long-difference` | 1 | 1 |
@@ -134,6 +134,9 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E49x` | exploratory | measurement | 2011-2024 | pan_dev | na | EXPLORATORY mapping pass on the untouched 93-column `fin` catch-all: 24 columns clear >=3 waves at >=70 … |
 | `E49` | discard | measurement | 2024 | pan_dev | na | Registered four-way orientation screen on the `fin` catch-all REJECTS its keep condition: none of the 24… |
 | `E50` | discard-weighted | delta-delta-multi | 2014-2017 / 2017-2021 / 2021-2024 | pan_dev | E48b | E48b FAILS its all-windows promotion test on the UNWEIGHTED lens and is left at `keep-window`: r(d fin31… |
+| `E51x` | exploratory | measurement | 2014-2024 | pan_dev | na | EXPLORATORY mapping pass on the untouched 6-column `fin43` agricultural-payments module: 4 of 6 columns … |
+| `E51` | discard | measurement | 2024 | pan_dev | na | Registered four-way orientation screen on the untouched `fin43` agricultural-payments module REJECTS its… |
+| `E52` | inconclusive | audit | 2014-2017 / 2017-2021 / 2021-2024 / 2014-2024 | pan_dev | E48b | INCONCLUSIVE under the registered rule: NEITHER candidate mechanism for the standing weighted/unweighted… |
 | `M1` | keep | micro-cross-section | 2024 | micro | — | Not enough money (fin11a) barrier among unbanked adults is an income-graded reason, most cited by the po… |
 | `U1` | discard | micro-cross-section | 2024 | micro | — | Gender gap in account ownership is wider among the poorest income quintile than the richest (2024 wave, … |
 | `M2` | keep | micro-cross-section | 2024 | micro | — | Mobile-only accountholders are younger and less educated than bank-only accountholders (2024 wave) |

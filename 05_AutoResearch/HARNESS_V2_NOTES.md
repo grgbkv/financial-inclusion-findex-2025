@@ -101,3 +101,43 @@
    both lenses. Against `account_t_d` the `c` items go further negative on the weighted lens
    (`fin37_39c` −0.283, `fin37_38_39c` −0.261) and stay near zero unweighted (−0.119, −0.101), with
    **India alone worth +0.19 and +0.16** — a weighting artifact, not a margin.
+
+---
+
+## 10. The `fin43` agricultural-payments module, mapped (E51x, 2026-08-18) — and the `_s` suffix
+
+`fin43` was the last untouched country family with four waves at ≥70 developing economies. E51's
+mapping pass covers all six columns; the screen (E51) returned **no counter-moving margin**.
+
+| item | waves ≥70c | 2014 | 2017 | 2021 | 2024 [n] | r vs `g20_any` (w / u) | class |
+|---|---|---|---|---|---|---|---|
+| `fin43a` | 4 | 1.7 | 2.1 | 2.1 | 2.9 [71] | +0.370 / +0.492 | `aligned` |
+| `fin43b` | 3 | — | 1.0 | 0.9 | 2.2 [71] | +0.431 / +0.391 | `aligned` |
+| `fin43c` | 4 | 21.5 | 10.7 | 6.6 | 8.8 [71] | −0.146 / −0.234 | `independent` — but **counter-moving with `account_t_d` on both lenses** (−0.389 / −0.322) |
+| `fin43d` | 3 | — | 0.2 | 0.1 | 0.0 [71] | −0.023 / −0.135 | `independent`; below the `fin34d` usability floor at 0.0pp |
+| `fin43b_s` | 0 | — | 33.2 [2] | 41.3 [3] | 46.8 [3] | — | ineligible, 2–3 economies |
+| `fin43c_s` | 0 | 87.3 [52] | 76.6 [37] | 81.4 [29] | 77.8 [30] | — | ineligible, 29–52 economies |
+
+**The `_s` suffix is the CONDITIONAL version of its base item, and this is new structure the ledger
+did not have.** `fin43c` is 8.8% of all adults in 2024 while `fin43c_s` is 77.8% on the 30 economies
+that report it; `fin43b` is 2.2% against `fin43b_s` at 46.8%. An order-of-magnitude level jump on a
+much smaller country set is the signature of a denominator change — a share among *recipients* rather
+than among *adults*. **Any future experiment must not mix the two denominators in one correlation**,
+and the `_s` columns are unusable at 2–52 economies regardless. (`inactive_t_d_s`, the only other `_s`
+column the ledger has met, has the same shape at 3–5 economies.)
+
+**No composition trap here.** Unlike the `fin37` family (item 9), no `fin43` item is near the sum of
+the others — `fin43c` is 8.8 against 5.1 for the rest combined — so the four eligible items can be
+screened as four items.
+
+**Inferred meanings, from levels and coverage only (there is no questionnaire in the repo):**
+`fin43c` behaves like the **cash** mode of agricultural payments — 21.5% of adults in 2014 falling to
+6.6% in 2021 — and `fin43a` / `fin43b` like account and mobile modes rising off a near-zero base.
+This reading is consistent with the anchor split: `fin43c` is *independent* of the digital-payment
+headline and *counter-moving with account ownership*, the exact mirror of `fin34c` (E47), which
+counter-moved with digital payment and not with access.
+
+**Agenda item 7.8 gains a fourth instance.** `fin43c` runs **21.5 → 10.7 → 6.6 → 8.8** — a decade of
+decline and a 2021→24 rebound, the same path as `fin31d` (47.1 → 20.5 → 26.6), `fin34c`
+(15.9 → 8.0 → 15.2) and `fin42` (24.6 → 10.8 → 13.4). Four items in four modules. Every cash-side
+margin the loop has mapped turns up in the last window.

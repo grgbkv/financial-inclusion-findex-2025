@@ -750,3 +750,62 @@ seven corrections and folds in E42–E48; v2 marked SUPERSEDED with its correcti
   micro side**: `con` (52 cols), `fin48`/`fin49` (12), and `fin22`/`fin24`/`fin31`/`fin34`/`fin39`/
   `fin43` — ~150 micro columns in 18 families, zero mentions. `urbanicity` remains the only unused
   frame and is single-wave. **B17 is PAID this cycle (U22) and next falls due in three cycles.**
+
+## Addendum (2026-08-18, from the E51/E52 cycle)
+
+- **`fin43` is OPENED and the counter-moving margin count stays at two.** E51's four-way screen on
+  the agricultural-payments module returns **0 of 4 counter-moving** against the digital headline:
+  `fin43a` +0.370/+0.492 and `fin43b` +0.431/+0.391 are `aligned`, `fin43c` −0.146/−0.234 and
+  `fin43d` −0.023/−0.135 are `independent`. **Four modules have now been screened with the same
+  instrument (`fin31`, `fin34`, `fin`, `fin43`) and `fin31d` and `fin34c` are still the only
+  counter-moving country-file margins in the ledger.** `fin43` was the best remaining prior for a
+  third — payments in the part of the economy where cash persists longest — so the two-margin count
+  is now hard to read as a sampling accident.
+- **NEW ITEM 7.10 — the anchor split on `fin43c`, the loop's best-specified unregistered lead.**
+  `fin43c` is *independent* of `g20_any` (−0.146/−0.234) and **counter-moving with `account_t_d` on
+  both lenses** (−0.389 / −0.322, G6 −0.273, CI [−0.653, +0.035]). That is the **mirror image of
+  `fin34c`**, which counter-moves with digital payment and not with access. E51's secondary carried
+  no registered bar and the interval includes zero, so this is a **lead, not a finding**. The
+  registered version is a primary against `account_t_d` with a Δ design or a long difference — note
+  `fin43c` carries four waves — and it should say in advance which anchor a "cash margin" is supposed
+  to run against, because the two known cases disagree.
+- **`_s` columns are CONDITIONAL versions and must never share a correlation with their base item.**
+  `fin43c` 8.8% of adults vs `fin43c_s` 77.8% on 30 economies; `fin43b` 2.2% vs `fin43b_s` 46.8% on 3.
+  Recorded as `HARNESS_V2_NOTES.md` item 10. All `_s` columns in the country file are unusable on
+  coverage grounds anyway (2–52 economies).
+- **Item 7.9 is ANSWERED and the answer is "neither mechanism", which is itself the result.** E52's
+  weight-structure sweep on the `fin31d`~`fin34c` cell returns **INCONCLUSIVE** under its registered
+  rule. **Leverage is rejected 0/4**: winsorizing the weights at the 90th percentile lifts `neff`
+  from 7.2 to ~32 and leaves r_w at **+0.591 / +0.466 / +0.418 / +0.476**; even a median cap
+  (`neff` ≈ 60) gives +0.468 / +0.294 / +0.292 / +0.403. **The binary heterogeneity pattern fires
+  only 2/4**, and it fails because the *bottom* population tercile also clears +0.30 in two cells,
+  not because the top fails — the top tercile clears the bar in **4 of 4**.
+- **NEW ITEM 2.1b (inference layer) — the graded size gradient, and it must be registered fresh.**
+  E52's within-tercile unweighted r rises with population size in **4 of 4 cells** (mean
+  top-minus-bottom **+0.253**, monotone across all three terciles in 3 of 4). This is the natural
+  registered form of the heterogeneity hypothesis and **E52 cannot claim it, having looked first**.
+  A clean registration would test the gradient on a *different* cell — the six bivariate rails
+  (E28/E30) are the obvious candidates and would say whether population-graded association strength
+  is a property of this cash cell or of the ledger.
+- **NEW ITEM 2.2b — ASCENT DEPTH belongs beside G6 in every write-up.** E52's mirror statistic to
+  fragility depth shows the **unweighted** verdict on this cell is decided by one or two *small*
+  economies: **removing Bulgaria alone lifts the 2021→24 unweighted r above +0.30**, and Ukraine plus
+  Bulgaria does it for 2017→21 — exactly the two windows that produced E50's lens split. Fragility
+  depth on the weighted side is 5 / 2 / 2 / 3 named economies. **G6 and B12 look only at the largest
+  economies by construction, so the ledger has been reporting one-sided stability evidence.** The
+  cheap fix is to report both depths on any cell where the lenses disagree; the loop should adopt it
+  as a reporting habit before it becomes a rule.
+- **Item 7.8 (the 2021→24 rebound) gains a FOURTH instance and is now the repo's clearest unexplained
+  pattern.** `fin43c` runs 21.5 → 10.7 → 6.6 → **8.8**, joining `fin31d` (47.1 → 20.5 → 26.6),
+  `fin34c` (15.9 → 8.0 → 15.2) and `fin42` (24.6 → 10.8 → 13.4). Four items, four modules, all
+  cash-side, all rebounding in the same window. It still needs a **B14-compliant primary that is not
+  another adjacent-window Δ→Δ**; the most promising shape is a *distribution* design in E39's mould
+  (is the rebound within-country or compositional?) crossed with cross-item co-occurrence, since
+  single-item mean reversion explains a V-shape but not four V-shapes in the same window.
+- **B2 note for the next cycle — re-derived.** The country file is now **67/429 columns (16%)**
+  touched. **Every untouched country family that clears the eligibility floor is gone**: what remains
+  is `con` (133 cols, 2024-only, blocked for want of a questionnaire), `fin25` (14, mostly 2024-only),
+  `fin13`/`fin14` (38 cols, 2024, 27 economies). **The B2 breadth cell therefore has to move to the
+  micro side or to the frames**: 112 untouched micro columns in 17 families, and `urbanicity` remains
+  the only untouched country frame (single-wave). **B17 falls due in two cycles and the next cycle
+  should pay it early**, since micro is now also where B2 has to point.
