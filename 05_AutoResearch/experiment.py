@@ -1,75 +1,81 @@
-"""E51 (pre-registered 2026-08-18): the untouched `fin43` agricultural-payments module —
-mandatory mapping pass plus the four-way orientation screen.
+"""E52 (pre-registered 2026-08-18): agenda item 7.9 — a B12 weight-structure sweep on the
+`fin31d`~`fin34c` cash cell. WHY do the two lenses disagree?
 
-B2 BREADTH CELL. `fin43` has ZERO ledger mentions. It is small (6 columns) but it is the only
-untouched country family carrying FOUR WAVES at >= 70 developing economies; every other untouched
-family is 2024-only (`con`, `fin25`) or covers 27 economies (`fin13`, `fin14`). No parent: a new
-module.
+Parent: E48b / E50 (second descendant). THIS IS AN INFERENCE/AUDIT PASS, NOT AN ASSOCIATION
+EXPERIMENT, so B14's long-difference-or-all-windows requirement does not bind: no new co-movement is
+registered. Every cell touched here is already in the ledger.
 
-PART A — MAPPING PASS, logged as EXPLORATORY under the peek rule (2026-07-11). Population-weighted
-developing-panel level by wave with the country count, for every `fin43` column. Item MEANINGS ARE
-INFERRED from levels and coverage only; there is no questionnaire in the repo (HARNESS_V2_NOTES.md
-items 5-6) and that caveat travels with every claim made here.
+WHY. The fin31d~fin34c cash cell is the ledger's clearest STABLE weighted/unweighted disagreement.
+E48's primary split weighted 3/3 against unweighted 1/3; E50 reproduced that split EXACTLY on a
+different pair of margins in the same two modules (weighted +0.795 / +0.650 / +0.615, unweighted
++0.431 / +0.243 / +0.263). Two designs now agree that something systematic separates the lenses, and
+the ledger's standing explanation is the phrase B12 was written to ban: "the big economies decide
+it". B12 replaced the guess with a NAMED economy; this experiment replaces the named economy with a
+MECHANISM. Two candidates, with different consequences:
 
-A COMPOSITION WARNING, carried from E49x (HARNESS_V2_NOTES item 9(i)) and registered before the run:
-in the fin37/fin38/fin39 family the suffixed items COMPOSE, so correlating a parent with its own
-component is a redundancy artifact rather than a test. `fin43a`-`fin43d` may be a base item plus
-payment modes in exactly that shape. Part A prints all four; if the levels are consistent with
-composition, the screen is still reported for all four but any CLAIM names ONE level and says which.
+  HETEROGENEITY — the association really IS stronger in large economies. Then the weighted statistic
+  is correct about the typical PERSON and the unweighted one about the typical ECONOMY (the
+  2026-08-13 amendment), and the disagreement is a finding about population size, not a defect.
 
-PART B — THE FOUR-WAY ORIENTATION SCREEN (Documentation obligation 2, 2026-08-15c), the registered
-primary. Each eligible item against the digital-payment headline `g20_any` in the 2024
-developing-panel cross-section (E45/E47/E49's anchor, so the numbers are comparable), BOTH lenses:
+  LEVERAGE — a handful of enormous weights carry the weighted number with no size gradient
+  underneath. Then the weighted statistic is an artifact of the weight distribution and should not be
+  reported as a developing-world regularity at all.
 
-    restatement    |r| >= 0.80
-    aligned        +0.30 <= r < 0.80
-    counter-moving r <= -0.30
-    independent    |r| < 0.30
-    both lenses must AGREE, else `mixed-lens` (B9/B11)
+DESIGN. Pair (d fin31d, d fin34c) on the developing panel in FOUR cells: 2014->17, 2017->21,
+2021->24 and the 2014->2024 long difference. E50's cells are recomputed first (the E35 rule: abort if
+the long difference does not reproduce +0.515 / +0.389 within 0.02). Per cell:
 
-REGISTERED ELIGIBILITY: >= 3 waves at >= 70 developing economies (E49's thresholds, unchanged).
+  1. WEIGHT-TERCILE UNWEIGHTED correlations. Economies split into terciles by 2024 adult population;
+     r_u computed WITHIN each tercile. The heterogeneity test — it uses no weights at all, so it
+     cannot be produced by leverage.
+  2. WINSORIZED-WEIGHT correlation. r_w recomputed with weights capped at the 90th percentile (a
+     second cut at the median is a diagnostic). The leverage test — capping changes only the weight
+     vector, never the sample.
+  3. FRAGILITY DEPTH. The minimum number of economies whose greedy removal drives r_w below +0.30,
+     with the economies NAMED. Searched to a cap of 10.
+  4. ASCENT DEPTH. The mirror for the unweighted lens: minimum greedy removals lifting r_u above
+     +0.30, named, capped at 10.
+  5. B6/B10/B12 on every cell: bootstrap interval and p_boot for each tercile and each capped-weight
+     correlation, Kish neff, and the FIVE largest single leave-one-out effects with economies named.
 
-REGISTERED KEEP CONDITION: at least one item classifies as `counter-moving` on BOTH lenses, survives
-G6 with the sign intact, and has a bootstrap interval (2,000 country draws) excluding zero. A screen
-returning only restatement/aligned/independent items is a DISCARD.
+REGISTERED VERDICT RULE (fixed before the run, evaluated over the four cells):
+  HETEROGENEITY fires if in >= 3 of 4 cells the TOP-population-tercile r_u >= +0.30 AND the
+    BOTTOM-tercile r_u < +0.30.
+  LEVERAGE fires if in >= 3 of 4 cells the 90th-percentile-capped r_w < +0.30.
+  exactly one fires -> `keep`, claim names that mechanism.
+  both fire        -> `keep`, claim names both (they are not mutually exclusive).
+  neither fires    -> `inconclusive` (status table: a registered diagnostic whose fixed verdict rule
+                      returns neither branch).
 
-REGISTERED SIGN (B15): the keep direction is NEGATIVE. An item at r >= +0.80 is a restatement and is
-the OPPOSITE result, not partial confirmation.
+REGISTERED SIGN (B15): every correlation in this cell is positive in every lens-window measured so
+far, so the heterogeneity branch is registered POSITIVE. A top-tercile r_u at or below -0.30 is the
+OPPOSITE pattern, reported separately and never as partial confirmation.
 
-WHAT IS AT STAKE, stated in advance. After three modules screened identically (fin31, fin34, fin),
-`fin31d` and `fin34c` are the ONLY counter-moving country-file margins in the ledger. `fin43` is a
-payments module in an agricultural setting — the part of the economy where cash persists longest —
-so it is the best remaining prior for a third. A discard makes the two-margin count harder to read
-as a sampling accident.
+B16 — PATH BEFORE SPAN for the long-difference cell: the file prints the wave levels. Both margins
+are NON-MONOTONE, falling for a decade and rebounding in the last window (agenda item 7.8).
 
-SECONDARY (registered, no bar): the same screen against `account_t_d`, every eligible item — E47's
-distinction between counter-moving with DIGITAL PAYMENT and counter-moving with ACCESS in general.
-
-B6/B9/B10/B12 on every cell: weighted and unweighted r, bootstrap percentile interval and p_boot,
-Kish neff beside nominal n, G6 drop-top-5, and the LARGEST SINGLE LEAVE-ONE-OUT effect with the
-economy NAMED.
-
-DECLARED. A 2024 cross-sectional LEVEL correlation is a COMPOSITION statement about economies, not a
-within-country dynamic one — E48's primary is the standing proof that the two come apart. No delta
-claim is registered here. G3: every `fin43` item is an unregistered narrow variant.
+DECLARED, and it bounds every branch. Tercile correlations run on ~24 economies each; small-n
+correlations are noisy and the intervals will be wide, which is why the verdict rule asks for a
+PATTERN ACROSS FOUR CELLS rather than significance in any one. Nothing here is causal. Nothing here
+rehabilitates or demotes E48b — its status is fixed at `keep-window`, FAILED promotion. This
+experiment explains a disagreement; it does not resolve it in either lens's favour.
 """
 import numpy as np
 import pandas as pd
 
-from coverage import _module_of          # read-only instrument; module classification only
 from harness import Findex
 
 BOOT = 2000
-SEED = 51
-YEARS = [2011, 2014, 2017, 2021, 2024]
-HEAD = "g20_any"
-ACCT = "account_t_d"
-MODULE = "fin43"
+SEED = 52
+WAVES = [2014, 2017, 2021, 2024]
+A = "fin31d"
+B = "fin34c"
 
-MIN_WAVES = 3          # registered eligibility
-MIN_COUNTRIES = 70     # registered eligibility
-RESTATE = 0.80
+CELLS = [(2014, 2017), (2017, 2021), (2021, 2024), (2014, 2024)]
+LONG = (2014, 2024)
 BAR = 0.30
+CAP_Q = 0.90        # registered winsorization point
+DEPTH_CAP = 10      # registered search cap for both depth statistics
 
 
 def kish(w):
@@ -93,11 +99,12 @@ def corr(x, y, w=None):
     return float(np.average((x - mx) * (y - my), weights=ww) / (sx * sy)), int(len(x))
 
 
-def boot_ci(df, fn, draws=BOOT, seed=SEED):
+def boot_ci(d, weighted, draws=BOOT, seed=SEED):
     rng = np.random.default_rng(seed)
-    idx, out = np.arange(len(df)), []
+    idx, out = np.arange(len(d)), []
     for _ in range(draws):
-        v = fn(df.iloc[rng.choice(idx, size=len(idx), replace=True)])
+        s = d.iloc[rng.choice(idx, size=len(idx), replace=True)]
+        v = corr(s["x"], s["y"], s["w"] if weighted else None)[0]
         if pd.notna(v) and np.isfinite(v):
             out.append(v)
     if len(out) < draws // 4:
@@ -107,171 +114,219 @@ def boot_ci(df, fn, draws=BOOT, seed=SEED):
             float(2 * min((a <= 0).mean(), (a >= 0).mean())))
 
 
-def classify(rw, ru):
-    """The four-way screen. Both lenses must agree, else mixed-lens."""
-    def one(r):
-        if pd.isna(r):
-            return "na"
-        if abs(r) >= RESTATE:
-            return "restatement"
-        if r >= BAR:
-            return "aligned"
-        if r <= -BAR:
-            return "counter-moving"
-        return "independent"
-    a, b = one(rw), one(ru)
-    return (a if a == b else f"mixed-lens ({a}/{b})"), a, b
+def greedy_depth(d, weighted, direction, cap=DEPTH_CAP):
+    """Minimum greedy removals to push r past the +0.30 bar.
+    direction 'down': remove the economy that most REDUCES r, stop when r < BAR.
+    direction 'up'  : remove the economy that most RAISES  r, stop when r > BAR.
+    Returns (k, names, r_trace). k = None if the bar is not crossed within `cap`."""
+    cur = d.copy()
+    names, trace = [], []
+    for k in range(cap):
+        r = corr(cur["x"], cur["y"], cur["w"] if weighted else None)[0]
+        if direction == "down" and r < BAR:
+            return k, names, trace
+        if direction == "up" and r > BAR:
+            return k, names, trace
+        best = None
+        for i in cur.index:
+            sub = cur.drop(i)
+            if len(sub) < 12:
+                continue
+            rv = corr(sub["x"], sub["y"], sub["w"] if weighted else None)[0]
+            if pd.isna(rv):
+                continue
+            if best is None or (rv < best[0] if direction == "down" else rv > best[0]):
+                best = (rv, i)
+        if best is None:
+            break
+        cur = cur.drop(best[1])
+        names.append(best[1])
+        trace.append(best[0])
+    r = corr(cur["x"], cur["y"], cur["w"] if weighted else None)[0]
+    if (direction == "down" and r < BAR) or (direction == "up" and r > BAR):
+        return cap, names, trace
+    return None, names, trace
 
 
-def screen_cell(T, col, anchor, fx):
-    sub = T[[col, anchor, "pop"]].dropna()
-    if len(sub) < 10:
-        return None
-    x, y, w = sub[col], sub[anchor], sub["pop"]
-    rw, n = corr(x, y, w)
-    ru, _ = corr(x, y)
-    cls, cw, cu = classify(rw, ru)
-    d = pd.DataFrame({"x": x, "y": y, "w": w})
-    lo, up, pb = boot_ci(d, lambda s: corr(s["x"], s["y"], s["w"])[0])
-    g6 = fx.gate_jackknife(x, y, w)
-    loo = sorted(((corr(d.drop(i)["x"], d.drop(i)["y"], d.drop(i)["w"])[0] - rw, i)
-                  for i in d.index), key=lambda t: -abs(t[0]))[0]
-    return {"col": col, "r_w": rw, "r_u": ru, "n": n, "neff": kish(w), "class": cls,
-            "cls_w": cw, "cls_u": cu, "ci": (lo, up), "p_boot": pb,
-            "g6": g6["r_droptop"], "loo": loo}
-
-
-def show(rows, title):
-    print(f"\n{title}")
-    print(f"  {'item':16s}{'r_w':>8s}{'[95% CI]':>20s}{'p_boot':>8s}{'G6':>8s}{'r_u':>8s}"
-          f"{'n':>5s}{'neff':>7s}  {'largest LOO':>26s}  class")
-    for r in rows:
-        ci = f"[{r['ci'][0]:+.3f}, {r['ci'][1]:+.3f}]"
-        loo = f"{r['loo'][1]} {r['loo'][0]:+.3f}"
-        print(f"  {r['col']:16s}{r['r_w']:>8.3f}{ci:>20s}{r['p_boot']:>8.3f}"
-              f"{r['g6']:>8.3f}{r['r_u']:>8.3f}{r['n']:>5d}{r['neff']:>7.1f}  {loo:>26s}  "
-              f"{r['class']}")
+def build_cell(T, a, b):
+    cols = [f"{A}@{a}", f"{A}@{b}", f"{B}@{a}", f"{B}@{b}", "pop"]
+    sub = T[cols].dropna()
+    return pd.DataFrame({"x": sub[f"{A}@{b}"] - sub[f"{A}@{a}"],
+                         "y": sub[f"{B}@{b}"] - sub[f"{B}@{a}"],
+                         "w": sub["pop"]})
 
 
 def main():
     fx = Findex()
     dev = fx.pan_dev
-    skip = {"year", "pop_adult", "group", "group2", "countrynewwb", "codewb",
-            "regionwb24_hi", "incomegroupwb24"}
-    cols = sorted(c for c in fx.raw.columns
-                  if c not in skip and _module_of(c) == MODULE)
+    d0 = dev[dev["year"].isin(WAVES)]
 
-    print("=" * 132)
-    print(f"E51 — the untouched `{MODULE}` agricultural-payments module: mapping pass "
-          f"(EXPLORATORY) + four-way orientation screen (REGISTERED)")
-    print(f"      {len(cols)} columns in the family, zero prior ledger mentions")
-    print("=" * 132)
+    tab = {}
+    for c in [A, B]:
+        w = d0.pivot_table(index="countrynewwb", columns="year", values=c) * 100
+        for y in WAVES:
+            tab[f"{c}@{y}"] = w[y] if y in w.columns else pd.Series(dtype=float)
+    T = pd.DataFrame(tab)
+    T["pop"] = dev[dev["year"] == 2024].set_index("countrynewwb")["pop_adult"].reindex(T.index)
 
-    # ------------------------------------------------------- PART A: mapping (EXPLORATORY)
-    print("\n" + "-" * 132)
-    print("PART A — MAPPING PASS (EXPLORATORY, peek rule). Weighted level by wave, developing "
-          "panel; countries reporting in brackets.")
-    print("Item meanings are INFERRED from levels and coverage. There is no questionnaire in "
-          "the repo.")
-    print("-" * 132)
-    rows = []
-    for c in cols:
-        lv, nc = {}, {}
-        for y in YEARS:
-            d = dev[dev["year"] == y].dropna(subset=[c, "pop_adult"])
-            nc[y] = int(d["countrynewwb"].nunique())
-            lv[y] = (float(np.average(d[c], weights=d["pop_adult"])) * 100
-                     if len(d) else np.nan)
-        good = sum(1 for y in YEARS if nc[y] >= MIN_COUNTRIES)
-        rows.append({"col": c, "waves_ok": good, **{f"lv{y}": lv[y] for y in YEARS},
-                     **{f"n{y}": nc[y] for y in YEARS}})
-    M = pd.DataFrame(rows)
-    print(f"  {'item':16s}{'waves':>6s}   " + "".join(f"{y:>16d}" for y in YEARS))
-    for _, r in M.iterrows():
-        cells = "".join(
-            ("      --      " if pd.isna(r[f'lv{y}']) or r[f'n{y}'] == 0
-             else f"{r[f'lv{y}']:8.1f} [{int(r[f'n{y}']):2d}]").rjust(16) for y in YEARS)
-        print(f"  {r['col']:16s}{int(r['waves_ok']):>6d}   {cells}")
+    print("=" * 134)
+    print("E52 — WHY do the lenses disagree on the fin31d~fin34c cash cell? "
+          "(agenda 7.9; parent E48b/E50; inference pass, B12)")
+    print("=" * 134)
 
-    elig = M[M["waves_ok"] >= MIN_WAVES].sort_values("waves_ok", ascending=False)
-    print(f"\n  ELIGIBLE (>= {MIN_WAVES} waves at >= {MIN_COUNTRIES} developing economies): "
-          f"{len(elig)} of {len(cols)} — {', '.join(elig['col'])}")
-    inel = M[M["waves_ok"] < MIN_WAVES]
-    print(f"  ineligible (thin or single-wave): {len(inel)} — {', '.join(inel['col'])}")
+    # --------------------------------------------------- B16: path before span
+    print("\nB16 — PATH BEFORE SPAN. Weighted developing-panel levels (pp):")
+    for c in [A, B]:
+        s = fx.series(dev, c, WAVES)
+        print(f"  {c:10s} " + "  ".join(f"{y}: {s[y]:5.1f}" for y in WAVES if y in s.index))
+    print("  BOTH margins are NON-MONOTONE: a decade of decline and a rebound in 2021->24 "
+          "(agenda item 7.8, unexplained).")
 
-    # composition diagnostic (registered in Part A): is one item ~ the sum of the others?
-    print("\n  COMPOSITION DIAGNOSTIC (E49x / HARNESS_V2_NOTES item 9(i)) — 2024 weighted levels:")
-    lv24 = {r["col"]: r["lv2024"] for _, r in M.iterrows() if pd.notna(r["lv2024"])}
-    for c, v in lv24.items():
-        others = sum(x for k, x in lv24.items() if k != c and not k.endswith("_s"))
-        print(f"    {c:16s}{v:7.1f}   sum of the other non-_s items: {others:7.1f}")
-    print("    (read as a SHAPE check only — a base item near the sum of the rest is the "
-          "composition signature)")
+    # --------------------------------------------------- E35 rule: reproduce the parent
+    ref = build_cell(T, *LONG)
+    rw_ref = corr(ref["x"], ref["y"], ref["w"])[0]
+    ru_ref = corr(ref["x"], ref["y"])[0]
+    print(f"\nE35 RULE — reproduce E48b/E50's published long-difference cell first: "
+          f"r_w {rw_ref:+.3f} (published +0.515), r_u {ru_ref:+.3f} (published +0.389)")
+    assert abs(rw_ref - 0.515) <= 0.02 and abs(ru_ref - 0.389) <= 0.02, "ABORT — no reproduce"
+    print("  reproduced within 0.02 — proceeding.")
 
-    # ------------------------------------------------------- PART B: the registered screen
-    y24 = dev[dev["year"] == 2024].set_index("countrynewwb")
-    T = pd.DataFrame({c: y24[c] * 100 for c in list(elig["col"]) + [HEAD, ACCT]})
-    T["pop"] = y24["pop_adult"]
+    # --------------------------------------------------- the sweep
+    results = []
+    for a, b in CELLS:
+        d = build_cell(T, a, b)
+        label = f"{a}->{b}" + (" (LONG)" if (a, b) == LONG else "")
+        rw, n = corr(d["x"], d["y"], d["w"])
+        ru, _ = corr(d["x"], d["y"])
 
-    print("\n" + "-" * 132)
-    print("PART B — FOUR-WAY ORIENTATION SCREEN (REGISTERED PRIMARY) vs the digital-payment "
-          "headline `g20_any`, 2024 levels")
-    print(f"  restatement |r|>={RESTATE} · aligned +{BAR}<=r<{RESTATE} · counter-moving "
-          f"r<=-{BAR} · independent |r|<{BAR} · both lenses must agree")
-    print("-" * 132)
-    print(f"  G4 on the anchor: {fx.gate_coverage(dev, HEAD, 2024)}")
+        # 1. weight terciles, UNWEIGHTED correlation within each
+        q = d["w"].rank(pct=True)
+        terc = {}
+        for name, mask in (("bottom", q <= 1 / 3), ("middle", (q > 1 / 3) & (q <= 2 / 3)),
+                           ("top", q > 2 / 3)):
+            sub = d[mask]
+            r_t, n_t = corr(sub["x"], sub["y"])
+            lo, up, pb = boot_ci(sub, weighted=False) if n_t >= 10 else (np.nan,) * 3
+            terc[name] = {"r": r_t, "n": n_t, "ci": (lo, up), "p": pb,
+                          "popmin": float(sub["w"].min()) if len(sub) else np.nan,
+                          "popmax": float(sub["w"].max()) if len(sub) else np.nan}
 
-    cells = [c for c in (screen_cell(T, c, HEAD, fx) for c in elig["col"]) if c]
-    cells.sort(key=lambda r: r["r_w"])
-    show(cells, "vs g20_any (2024 developing-panel levels):")
-    counts = pd.Series([r["class"].split(" ")[0] for r in cells]).value_counts()
-    print("\n  classification counts: " + ", ".join(f"{k} {v}" for k, v in counts.items()))
+        # 2. winsorized weights
+        caps = {}
+        for qq, tag in ((CAP_Q, "p90"), (0.50, "median")):
+            capv = float(d["w"].quantile(qq))
+            dc = d.copy()
+            dc["w"] = dc["w"].clip(upper=capv)
+            r_c, _ = corr(dc["x"], dc["y"], dc["w"])
+            lo, up, pb = boot_ci(dc, weighted=True)
+            caps[tag] = {"r": r_c, "cap_m": capv / 1e6, "ci": (lo, up), "p": pb,
+                         "neff": kish(dc["w"])}
 
-    cm = [r for r in cells if r["class"] == "counter-moving"]
-    cm_ok = [r for r in cm if pd.notna(r["g6"]) and r["g6"] <= 0 and r["ci"][1] < 0]
-    print(f"\n  counter-moving on BOTH lenses: "
-          f"{', '.join(r['col'] for r in cm) if cm else 'NONE'}")
-    print(f"  ... of which survive G6 with the sign intact AND a CI excluding zero: "
-          f"{', '.join(r['col'] for r in cm_ok) if cm_ok else 'NONE'}")
-    keep = bool(cm_ok)
+        # 3/4. depths
+        k_down, nm_down, tr_down = greedy_depth(d, weighted=True, direction="down")
+        k_up, nm_up, tr_up = greedy_depth(d, weighted=False, direction="up")
 
-    # ------------------------------------------------------- SECONDARY vs account_t_d
-    print("\n" + "-" * 132)
-    print("SECONDARY (registered, no bar) — the same screen vs `account_t_d`: counter-moving "
-          "with DIGITAL PAYMENT or with ACCESS in general?")
-    print("-" * 132)
-    a_cells = [c for c in (screen_cell(T, c, ACCT, fx) for c in elig["col"]) if c]
-    order = {r["col"]: i for i, r in enumerate(cells)}
-    a_cells.sort(key=lambda r: order.get(r["col"], 999))
-    show(a_cells, "vs account_t_d (2024 developing-panel levels):")
-    a_by = {r["col"]: r for r in a_cells}
-    print("\n  side by side, every eligible item:")
-    for r in cells:
-        a = a_by.get(r["col"])
-        print(f"    {r['col']:16s} vs g20_any {r['r_w']:+.3f}/{r['r_u']:+.3f} ({r['class']})"
-              f"   |   vs account_t_d {a['r_w']:+.3f}/{a['r_u']:+.3f} ({a['class']})")
+        # 5. five largest single leave-one-out effects on r_w
+        loo = sorted(((corr(d.drop(i)["x"], d.drop(i)["y"], d.drop(i)["w"])[0] - rw, i)
+                      for i in d.index), key=lambda t: -abs(t[0]))[:5]
 
-    # ------------------------------------------------------- VERDICT
-    print("\n" + "=" * 132)
-    print("E51 VERDICT (pre-registered)")
-    print(f"  registered keep condition: >= 1 item `counter-moving` on both lenses, through G6, "
-          f"CI excluding zero -> {'MET' if keep else 'NOT MET'}")
-    print(f"  B15 registered sign: NEGATIVE. Items at r >= +{RESTATE} are restatements and are "
-          f"the opposite result, not partial confirmation "
-          f"({sum(1 for r in cells if r['class'] == 'restatement')} such items).")
-    print(f"  -> E51 {'KEEP' if keep else 'DISCARD'}")
-    if not keep:
-        print("     Registered null reading: `fin43` then contains no margin that moves against "
-              "the digital")
-        print("     headline, and `fin31d`/`fin34c` remain the only two counter-moving "
-              "country-file margins in")
-        print("     the ledger after FOUR modules screened identically. The screen is the same "
-              "instrument that")
-        print("     returned a keep on first use (E47), so a null here is informative about the "
-              "module, not about")
-        print("     the screen.")
-    print("=" * 132)
-    return "keep" if keep else "discard"
+        results.append({"label": label, "r_w": rw, "r_u": ru, "n": n, "neff": kish(d["w"]),
+                        "terc": terc, "caps": caps, "k_down": k_down, "nm_down": nm_down,
+                        "tr_down": tr_down, "k_up": k_up, "nm_up": nm_up, "tr_up": tr_up,
+                        "loo": loo, "wshare_top5": float(
+                            d["w"].nlargest(5).sum() / d["w"].sum())})
+
+    # --------------------------------------------------- reporting
+    print("\n" + "-" * 134)
+    print("THE CELL, as it stands in the ledger")
+    print("-" * 134)
+    print(f"  {'cell':18s}{'r_w':>9s}{'r_u':>9s}{'n':>5s}{'neff':>7s}"
+          f"{'top-5 weight share':>21s}")
+    for r in results:
+        print(f"  {r['label']:18s}{r['r_w']:>9.3f}{r['r_u']:>9.3f}{r['n']:>5d}"
+              f"{r['neff']:>7.1f}{r['wshare_top5']:>20.1%}")
+
+    print("\n" + "-" * 134)
+    print("1. HETEROGENEITY TEST — UNWEIGHTED r within population terciles (no weights used "
+          "anywhere in this block)")
+    print("-" * 134)
+    print(f"  {'cell':18s}{'bottom r_u':>12s}{'n':>4s}{'middle r_u':>12s}{'n':>4s}"
+          f"{'top r_u':>12s}{'n':>4s}   top-tercile 95% CI")
+    for r in results:
+        t = r["terc"]
+        ci = (f"[{t['top']['ci'][0]:+.3f}, {t['top']['ci'][1]:+.3f}]"
+              if pd.notna(t['top']['ci'][0]) else "n/a")
+        print(f"  {r['label']:18s}{t['bottom']['r']:>12.3f}{t['bottom']['n']:>4d}"
+              f"{t['middle']['r']:>12.3f}{t['middle']['n']:>4d}"
+              f"{t['top']['r']:>12.3f}{t['top']['n']:>4d}   {ci}")
+    het = [r for r in results
+           if pd.notna(r["terc"]["top"]["r"]) and pd.notna(r["terc"]["bottom"]["r"])
+           and r["terc"]["top"]["r"] >= BAR and r["terc"]["bottom"]["r"] < BAR]
+    print(f"\n  cells with top-tercile r_u >= +{BAR:.2f} AND bottom-tercile r_u < +{BAR:.2f}: "
+          f"{len(het)}/4 ({', '.join(r['label'] for r in het) if het else 'none'})")
+    wrong = [r for r in results if pd.notna(r["terc"]["top"]["r"])
+             and r["terc"]["top"]["r"] <= -BAR]
+    print(f"  B15 WRONG-SIGN cells (top-tercile r_u <= -{BAR:.2f}): "
+          f"{', '.join(r['label'] for r in wrong) if wrong else 'none'}")
+
+    print("\n" + "-" * 134)
+    print("2. LEVERAGE TEST — r_w with the weight vector WINSORIZED (same sample, capped weights)")
+    print("-" * 134)
+    print(f"  {'cell':18s}{'r_w full':>10s}{'r_w cap p90':>13s}{'[95% CI]':>20s}{'p_boot':>8s}"
+          f"{'neff p90':>10s}{'r_w cap median':>16s}{'neff med':>10s}{'r_u':>9s}")
+    for r in results:
+        c9, cm = r["caps"]["p90"], r["caps"]["median"]
+        ci = f"[{c9['ci'][0]:+.3f}, {c9['ci'][1]:+.3f}]"
+        print(f"  {r['label']:18s}{r['r_w']:>10.3f}{c9['r']:>13.3f}{ci:>20s}{c9['p']:>8.3f}"
+              f"{c9['neff']:>10.1f}{cm['r']:>16.3f}{cm['neff']:>10.1f}{r['r_u']:>9.3f}")
+    lev = [r for r in results if pd.notna(r["caps"]["p90"]["r"])
+           and r["caps"]["p90"]["r"] < BAR]
+    print(f"\n  cells whose p90-capped r_w falls below +{BAR:.2f}: "
+          f"{len(lev)}/4 ({', '.join(r['label'] for r in lev) if lev else 'none'})")
+
+    print("\n" + "-" * 134)
+    print("3/4. DEPTH — how many economies decide each lens's verdict (greedy, cap 10, named)")
+    print("-" * 134)
+    for r in results:
+        kd = "none within 10" if r["k_down"] is None else f"{r['k_down']}"
+        ku = "none within 10" if r["k_up"] is None else f"{r['k_up']}"
+        print(f"  {r['label']:18s}")
+        print(f"      fragility depth (weighted r_w -> below +{BAR:.2f}): {kd}"
+              f"   removals: {', '.join(f'{n} ({t:+.3f})' for n, t in zip(r['nm_down'], r['tr_down'])) or '—'}")
+        print(f"      ascent depth   (unweighted r_u -> above +{BAR:.2f}): {ku}"
+              f"   removals: {', '.join(f'{n} ({t:+.3f})' for n, t in zip(r['nm_up'], r['tr_up'])) or '—'}")
+
+    print("\n" + "-" * 134)
+    print("5. B12 — the five largest single leave-one-out effects on r_w, economies named")
+    print("-" * 134)
+    for r in results:
+        print(f"  {r['label']:18s}" +
+              "   ".join(f"{n} {v:+.3f}" for v, n in r["loo"]))
+
+    # --------------------------------------------------- VERDICT
+    het_fires = len(het) >= 3
+    lev_fires = len(lev) >= 3
+    print("\n" + "=" * 134)
+    print("E52 VERDICT (pre-registered rule, evaluated over the four cells)")
+    print(f"  HETEROGENEITY branch (top-tercile r_u >= +{BAR:.2f} and bottom < +{BAR:.2f} in "
+          f">=3 of 4): {len(het)}/4 -> {'FIRES' if het_fires else 'does not fire'}")
+    print(f"  LEVERAGE branch (p90-capped r_w < +{BAR:.2f} in >=3 of 4): "
+          f"{len(lev)}/4 -> {'FIRES' if lev_fires else 'does not fire'}")
+    if het_fires and lev_fires:
+        verdict, mech = "keep", "BOTH mechanisms are present"
+    elif het_fires:
+        verdict, mech = "keep", "HETEROGENEITY: the association is genuinely size-graded"
+    elif lev_fires:
+        verdict, mech = "keep", "LEVERAGE: a handful of enormous weights carry the weighted number"
+    else:
+        verdict, mech = "inconclusive", "neither branch fires"
+    print(f"  -> E52 {verdict.upper()} — {mech}")
+    print("  Registered reading, written before the answer: this experiment explains the "
+          "disagreement, it does")
+    print("  not resolve it in either lens's favour, and E48b's status is fixed at "
+          "`keep-window`, FAILED promotion.")
+    print("=" * 134)
+    return verdict
 
 
 if __name__ == "__main__":
