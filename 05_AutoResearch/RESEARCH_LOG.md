@@ -6199,3 +6199,181 @@ since the 2026-08-16 rewrite). B17 **paid** by U22 after two unpaid cycles. B2 c
 `fin` catch-all, 93 columns, now touched. B3 lineage: no chain exceeds two. `make_index.py` gained an
 `exploratory` status so a mapping pass is neither a keep nor a discard; `--check` passes at 77 rows,
 0 problems.
+
+---
+
+# Cycle 2026-08-18 — PRE-REGISTRATION (E51, E52)
+
+## B18 distillation-trigger check (rule B18, amended 2026-08-16 — read the highest-numbered draft)
+
+Highest-numbered draft: `PAPER_DRAFT_v3.md`. Its header reads **CORRECTIONS OWED: none outstanding**
+(0 items against a threshold of 5). Experiment count at the last distillation: **73** (2026-08-16);
+`make_index.py` now reports **77 logged experiments**, so **4 experiments** have run since the
+rewrite against a threshold of 10. **Neither branch fires. This is a normal experiment cycle.**
+
+## B1 coverage run (done before any hypothesis was chosen)
+
+`python3 coverage.py` — country file **63/429 columns touched (15%)** after E49 opened `fin`.
+Untouched country families: **`con`** (133 cols, 2024-only, blocked for want of a questionnaire),
+**`fin13`** (30 cols, 2024-only, 27 developing economies), **`fin25`** (14 cols, mostly 2024-only),
+**`fin14`** (8 cols, 2024-only, 27 economies), **`fin43`** (6 cols, **four waves × 71–77
+developing economies**). `python3 coverage.py --module fin43` confirms the 2026-08-17 B2 note:
+`fin43a` and `fin43c` carry 2014/2017/2021/2024 at 71–77 economies, `fin43b` and `fin43d` carry
+2017/2021/2024, and the two `_s` subset columns are thin (2–52 economies) and therefore ineligible.
+**`fin43` is the best-covered untouched country block left and is this cycle's B2 breadth cell.**
+Micro file 41/192 touched (21%); 112 untouched columns in 17 families. Transitions 19 / 66 / 129 /
+288 across 2011→14 / 14→17 / 17→21 / 21→24. `urbanicity` remains the only untouched frame and is
+single-wave.
+
+## Cycle shape (2026-08-15c shape)
+
+| slot | experiment | rule it satisfies |
+|---|---|---|
+| 1 | **E51** — mapping pass + four-way orientation screen on the untouched `fin43` agricultural-payments module | **B2** breadth cell + Documentation obligation 2 |
+| 3 | **E52** — B12 weight-structure sweep on the `fin31d`~`fin34c` cash cell (agenda item **7.9**) | inference pass on a standing keep; **not** another correlation |
+
+**Slot 2 (micro) is deliberately skipped and this is the required statement of why (B17).** B17 asks
+for one `U` experiment every three cycles; **U22 paid it on 2026-08-17**, one cycle ago, so the quota
+next falls due in two more cycles. The micro side remains the largest untouched surface in the repo
+and the next cycle should draw from it.
+
+Parents: **E51 ← none** (new module). **E52 ← E48b/E50** (second descendant in that chain: E48b →
+E50 → E52). No chain reaches B3's cap of three consecutive descendants.
+
+**Agenda items 7.8 (the three-instance 2021→24 rebound) is NOT drawn this cycle** even though the
+2026-08-17 addendum named it a candidate: it needs a B14-compliant primary that is not another
+adjacent-window Δ→Δ, and designing that is a cycle's work on its own. It stays first in line.
+
+---
+
+## E51 (slot 1, B2) — the untouched `fin43` agricultural-payments module: mapping pass plus the
+four-way orientation screen
+
+**B2 breadth cell.** `fin43` has **zero ledger mentions**. It is small (6 columns, 4 eligible) but it
+is the only untouched country family with **four waves at ≥70 developing economies**; every other
+untouched family is 2024-only or covers 27 economies. **Parent: none** (a new module).
+
+**PART A — MAPPING PASS, logged as EXPLORATORY under the peek rule (2026-07-11).** For every `fin43`
+column, the population-weighted developing-panel level by wave with the country count. **Item
+meanings are INFERRED from levels and coverage only**; there is no questionnaire in the repo
+(`HARNESS_V2_NOTES.md` items 5–6) and that caveat travels with every claim made here.
+
+**A composition warning carried forward from E49x (HARNESS_V2_NOTES item 9(i)), registered before the
+run.** In the `fin37`/`fin38`/`fin39` family the loop found that suffixed items **compose** —
+parents are unions or intersections of their components — so correlating a parent with a component is
+a redundancy artifact, not a test. `fin43a`–`fin43d` may be a base item plus payment modes in exactly
+that shape. Part A prints the wave levels for all four; **if the levels are consistent with
+composition (a base item whose level is approximately the sum or the maximum of the others), the
+screen result is reported for all four but any claim names ONE level of the composition and says
+which.**
+
+**PART B — THE FOUR-WAY ORIENTATION SCREEN (Documentation obligation 2), the registered primary.**
+Each eligible item against the digital-payment headline `g20_any` in the **2024 developing-panel
+cross-section** (E45/E47/E49's anchor, so the numbers are comparable), **both lenses**:
+
+    restatement    |r| >= 0.80
+    aligned        +0.30 <= r < 0.80
+    counter-moving r <= -0.30
+    independent    |r| < 0.30
+    both lenses must AGREE, else `mixed-lens` (B9/B11)
+
+**Registered eligibility:** ≥3 waves at ≥70 developing economies (E49's thresholds, unchanged).
+
+**REGISTERED KEEP CONDITION:** at least one item classifies as **`counter-moving` on BOTH lenses**,
+survives **G6** with the sign intact, and has a **bootstrap interval (2,000 country draws) excluding
+zero**. A screen returning only restatement/aligned/independent items is a **DISCARD**.
+
+**REGISTERED SIGN (B15): the keep direction is NEGATIVE.** An item at r ≥ +0.80 is a restatement and
+is the **opposite** result, not partial confirmation.
+
+**What is at stake, stated in advance.** After three modules screened identically (`fin31`, `fin34`,
+`fin`), `fin31d` and `fin34c` are the **only** counter-moving country-file margins in the ledger.
+`fin43` is a payments module in an agricultural setting, i.e. the part of the economy where cash
+persists longest, so it is the best remaining prior for a third. A discard here makes the
+two-margin count harder still to read as a sampling accident.
+
+**SECONDARY (registered, no bar):** the same screen against `account_t_d`, every eligible item — the
+E47 distinction between "counter-moves with digital payment" and "counter-moves with financial access
+in general".
+
+**B6/B9/B10/B12 on every cell:** weighted and unweighted r, bootstrap percentile interval and
+`p_boot`, Kish `neff` beside nominal n, G6 drop-top-5, and the **largest single leave-one-out effect
+with the economy named**.
+
+**Declared.** A 2024 cross-sectional **level** correlation is a **composition** statement about
+economies, not a within-country dynamic one — E48's primary is the standing proof that the two come
+apart. No Δ claim is registered here. G3: every `fin43` item is an unregistered narrow variant.
+
+---
+
+## E52 (slot 3, agenda item 7.9) — B12 weight-structure sweep: WHY do the two lenses disagree on the
+cash cell?
+
+**Parent: E48b / E50** (second descendant). **This is an inference/audit pass, not an association
+experiment**, so B14's long-difference-or-all-windows requirement does not bind: no new co-movement
+is registered here. Every cell it touches is already in the ledger.
+
+**Why.** The `fin31d`~`fin34c` cash cell is the ledger's clearest **stable** weighted/unweighted
+disagreement. E48's primary split weighted 3/3 against unweighted 1/3; E50 reproduced that split
+**exactly** on a different pair of margins in the same two modules (weighted **+0.795 / +0.650 /
++0.615**, unweighted **+0.431 / +0.243 / +0.263**). Two designs now agree that something systematic
+separates the lenses here, and the ledger's standing explanation is the phrase B12 was written to
+ban: "the big economies decide it". **B12 replaced the guess with a named economy; this experiment
+replaces the named economy with a mechanism.** There are two candidate mechanisms and they have
+different consequences:
+
+- **HETEROGENEITY** — the association really is stronger in large economies. Then the weighted
+  statistic is *correct about the typical person* and the unweighted one is *correct about the
+  typical economy*, exactly as the 2026-08-13 amendment says, and the disagreement is a finding
+  about population size rather than a defect.
+- **LEVERAGE** — a handful of enormous weights carry the weighted number and there is no size
+  gradient underneath. Then the weighted statistic is an artifact of the weight distribution and
+  should not be reported as a developing-world regularity at all.
+
+**Design.** Pair (Δ`fin31d`, Δ`fin34c`) on the developing panel in **four cells**: 2014→17, 2017→21,
+2021→24 and the 2014→2024 long difference. E50's cell values are recomputed inside the file first
+(**the E35 rule**: reproduce the parent's published numbers before reading anything registered;
+**abort** if the long difference does not reproduce +0.515 / +0.389 within 0.02). Per cell:
+
+1. **Weight-tercile unweighted correlations.** Economies split into terciles by 2024 adult
+   population; `r_u` computed *within* each tercile. This is the heterogeneity test and it uses **no
+   weights at all**, so it cannot be produced by leverage.
+2. **Winsorized-weight correlation.** `r_w` recomputed with weights capped at the **90th percentile**
+   of the weight distribution (a second cut at the median is reported as a diagnostic). This is the
+   leverage test: capping changes only the weight vector, never the sample.
+3. **Fragility depth.** The minimum number of economies whose greedy removal drives `r_w` below
+   +0.30, with the economies **named** — the ledger's first direct answer to "how many economies
+   decide a weighted keep". Searched to a cap of 10.
+4. **Ascent depth.** The mirror statistic for the unweighted lens: the minimum greedy removals that
+   lift `r_u` above +0.30, also named and capped at 10.
+5. Full B6/B10/B12 reporting on every cell: bootstrap interval and `p_boot` for each tercile
+   correlation and each capped-weight correlation, Kish `neff`, and the five largest single
+   leave-one-out effects with the economies named.
+
+**REGISTERED VERDICT RULE (fixed before the run, evaluated over the four cells):**
+
+- **HETEROGENEITY** fires if in **≥3 of 4 cells** the **top**-population-tercile `r_u` ≥ **+0.30**
+  **and** the **bottom**-tercile `r_u` < **+0.30**.
+- **LEVERAGE** fires if in **≥3 of 4 cells** the **90th-percentile-capped** `r_w` < **+0.30**.
+- Exactly one fires → **`keep`**, and the audit's claim names that mechanism.
+- Both fire → **`keep`**, and the claim names both (they are not mutually exclusive: a size gradient
+  and a few dominating weights can coexist).
+- Neither fires → **`inconclusive`** under the status table's definition (a registered diagnostic
+  whose fixed verdict rule returns neither branch).
+
+**REGISTERED SIGN (B15).** All correlations in this cell are positive in every lens-window measured
+so far, so the heterogeneity branch is registered with a **positive** sign: a top-tercile `r_u`
+at or below **−0.30** would be the opposite pattern and is reported separately, never as partial
+confirmation.
+
+**B16 — path before span** applies to the long-difference cell and the file prints the wave levels:
+`fin31d` 48.3 → 34.6 → 20.5 → 26.6 and `fin34c` 15.9 → 11.8 → 8.0 → 15.2 (E50), **both non-monotone,
+falling for a decade and rebounding in the last window** (agenda item 7.8, unexplained).
+
+**Declared, and it bounds every branch.** Tercile correlations run on ~24 economies each; small-n
+correlations are noisy and the bootstrap intervals will be wide, which is why the verdict rule asks
+for a **pattern across four cells** rather than significance in any one. Nothing here is causal, and
+nothing here rehabilitates or demotes E48b — its status is fixed at `keep-window`, FAILED promotion.
+This experiment explains a disagreement; it does not resolve it in either lens's favour.
+
+---
