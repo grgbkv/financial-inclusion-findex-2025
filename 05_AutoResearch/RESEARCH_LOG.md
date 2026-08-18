@@ -6407,3 +6407,50 @@ the sum of the others (`fin43c` 8.8 against 5.1). **A fact for agenda item 7.8: 
 FOURTH instance of fall-then-rebound** — 21.5 → 10.7 → 6.6 → **8.8** — after `fin31d`, `fin34c` and
 `fin42`, and in a fourth module. Every cash-side margin the loop has mapped in four modules turns up
 in 2021→24.
+
+**E52 — INCONCLUSIVE under the registered rule, and the two branches fail for opposite reasons.**
+Agenda item 7.9. The E35 reproduce-the-parent check passes exactly (+0.515 / +0.389, zero deviation).
+**Neither registered mechanism fires.** The **leverage** branch fires **0 of 4**: winsorizing the
+weights at their 90th percentile raises Kish `neff` from **7.2–7.5 to ~32** and leaves
+r_w at **+0.591 / +0.466 / +0.418 / +0.476** — above the bar in every cell. Capping at the *median*
+(`neff` ≈ 60, a 4-fold de-concentration) still gives **+0.468 / +0.294 / +0.292 / +0.403**. The
+**heterogeneity** branch fires **2 of 4**, and it fails for a reason worth stating precisely: the
+**top** population tercile clears +0.30 in **4 of 4** cells (+0.546 / +0.356 / +0.482 / +0.544, the
+interval excluding zero in three); what breaks the registered pattern is that the **bottom** tercile
+*also* clears it in two cells (+0.369 and +0.391). The rule asked for a binary gradient and the data
+returned a graded one.
+
+**Two registered results survive the inconclusive verdict.**
+
+*(i) "Five economies decide it" is false for this cell in the leverage sense and true in a different
+sense, and the two senses now have numbers.* De-concentrating the weights fourfold costs the
+correlation 0.10–0.20 and never crosses the bar — so the weighted statistic is not an artifact of the
+weight vector. But the **fragility depth** — the minimum greedy removals that drive r_w below the bar
+— is **5 (China, Indonesia, Pakistan, Egypt, Russia) / 2 (China, Pakistan) / 2 (India, Philippines) /
+3 (Brazil, Viet Nam, Turkiye)**. Few economies *do* decide the verdict; they do not decide it *by
+carrying disproportionate weight*. This is E45's clarification — a low `neff` is not the same claim as
+a fragile result — measured from both sides in one cell for the first time.
+
+*(ii) The unweighted lens is decided by small economies just as tightly, and nobody names them.* The
+**ascent depth** — the minimum greedy removals that lift r_u *above* the bar — is **0 / 2 (Ukraine,
+Bulgaria) / 1 (Bulgaria) / 0**. **Removing Bulgaria alone flips the unweighted 2021→24 verdict**, and
+Ukraine plus Bulgaria flips 2017→21: those are precisely the two windows that produced E50's lens
+split. The ledger's standing worry is that China and India decide weighted results. On this cell the
+unweighted lens is no more stable — it is unstable in economies the write-ups never mention, because
+G6 and B12 both look at the *largest* economies by construction.
+
+**The unregistered pattern, recorded as a candidate for a later registration and not as a finding.**
+Within-tercile unweighted r **rises with population size in 4 of 4 cells** (mean top-minus-bottom
+**+0.253**) and is monotone across all three terciles in 3 of 4. A graded size gradient is the
+natural registered test here, and this cycle cannot claim it because this cycle looked first.
+**E48b's status is unchanged: `keep-window`, FAILED promotion.** B16 path reprinted: `fin31d`
+48.3 → 34.6 → 20.5 → 26.6, `fin34c` 15.9 → 11.8 → 8.0 → 15.2.
+
+**Cycle bookkeeping.** B18 checked and not fired (v3 carries zero corrections owed; 4 experiments
+since the 2026-08-16 rewrite against a threshold of 10). B2 cell consumed: **`fin43`**, 6 columns,
+now touched — the country file goes from 63 to 67 of 429 columns (16%). B17 **not paid and the
+skip is declared**: U22 paid it on 2026-08-17, one cycle ago, and it next falls due in two cycles;
+the micro side remains the largest untouched surface in the repo. B3 lineage: the longest chain is
+E48b → E50 → E52, two consecutive descendants, under the cap of three. B14 not engaged — E51 is a
+cross-sectional screen and E52 registers no association. `make_index.py --check` passes at 80 rows,
+0 problems.
