@@ -6377,3 +6377,33 @@ nothing here rehabilitates or demotes E48b — its status is fixed at `keep-wind
 This experiment explains a disagreement; it does not resolve it in either lens's favour.
 
 ---
+
+# Cycle 2026-08-18 — VERDICTS
+
+**E51 — DISCARD as registered, with an exploratory mapping deliverable (E51x) and one unregistered
+signal worth a future primary.** The B2 breadth cell. `fin43` yields **4 eligible columns of 6**
+(`fin43a`, `fin43b`, `fin43c`, `fin43d`; the two `_s` columns are the *conditional* versions of their
+base items — 33–47% and 77–87% against base levels of 2.2% and 8.8% — reported on 2–52 economies and
+therefore ineligible). The registered four-way screen against `g20_any` in the 2024 cross-section
+returns **0 of 4 counter-moving**: the module is **2 aligned** (`fin43a` +0.370/+0.492,
+`fin43b` +0.431/+0.391) and **2 independent** (`fin43c` −0.146/−0.234, `fin43d` −0.023/−0.135).
+The keep condition is not met. **`fin31d` and `fin34c` remain the only counter-moving country-file
+margins in the ledger, now after four modules screened identically** — and `fin43` was the best
+remaining prior for a third, being payments in the part of the economy where cash persists longest.
+
+**The one signal worth carrying, and it is UNREGISTERED.** The two anchors disagree on `fin43c`. It
+is *independent* of the digital-payment headline (−0.146/−0.234) and **counter-moving with account
+ownership on both lenses** (−0.389/−0.322, G6 −0.273) — the exact mirror of E47's `fin34c`, which
+counter-moved with digital payment and *not* with access. The secondary carried no registered bar and
+its bootstrap interval includes zero ([−0.653, +0.035]), so this cannot be a keep and is not logged
+as one; it is a candidate primary for a later cycle. `fin43d` is `mixed-lens` on the same anchor.
+
+**E51x, the mapping (exploratory).** Weighted developing-panel levels: `fin43a` 1.7 → 2.1 → 2.1 →
+2.9, `fin43b` — → 1.0 → 0.9 → 2.2, `fin43c` **21.5 → 10.7 → 6.6 → 8.8**, `fin43d` — → 0.2 → 0.1 →
+0.0. Inferred from levels and coverage only (no questionnaire in the repo): `fin43c` behaves like the
+**cash** mode of agricultural payments and `fin43a`/`fin43b` like account and mobile modes rising
+from near zero. The composition trap of the `fin37` family does **not** apply here — no item is near
+the sum of the others (`fin43c` 8.8 against 5.1). **A fact for agenda item 7.8: `fin43c`'s path is a
+FOURTH instance of fall-then-rebound** — 21.5 → 10.7 → 6.6 → **8.8** — after `fin31d`, `fin34c` and
+`fin42`, and in a fourth module. Every cash-side margin the loop has mapped in four modules turns up
+in 2021→24.
