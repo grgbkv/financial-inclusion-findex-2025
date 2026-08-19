@@ -6481,3 +6481,105 @@ cross-sectional screen and E52 registers no association. `make_index.py --check`
    the micro side or the `urbanicity` frame next. B17 skipped with the declaration required, due in
    two cycles. Longest lineage E48b → E50 → E52 (two descendants, cap three). Prediction stream
    unchanged and CLOSED: `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-19 — pre-registration
+
+**B18 distillation trigger CHECKED and NOT FIRED.** The trigger reads the highest-numbered draft,
+`PAPER_DRAFT_v3.md` (B18 amendment 2026-08-16): its corrections block reads *"CORRECTIONS OWED: none
+outstanding"* — **0 items against a threshold of 5**. The count branch: the last distillation was
+2026-08-16 at experiment count 73; the ledger now stands at **80**, i.e. **7 experiments since the
+rewrite against a threshold of 10**. Neither branch fires, so this is a normal experiment cycle.
+
+**B1 coverage run (before any hypothesis was chosen).** Country file **69 of 429 columns (16%)**.
+Four untouched country families remain and **none clears the eligibility floor**: `con` (133 cols,
+2024-only, still blocked — no questionnaire ships with the data and the column names are opaque, so
+no `con` claim can be *worded*, confirmed again this cycle by inspecting the country header), `fin25`
+(14, mostly 2024-only), `fin13`/`fin14` (38 cols, 2024, 27 developing economies). Micro file **45 of
+192 columns (23%)**, 16 untouched families / 108 columns. All four wave transitions are used;
+`urbanicity` is the only unused country frame and is single-wave.
+
+**Coverage cells this cycle lands on, named in advance.**
+- **U23 — B2 breadth cell and B17 micro quota, both paid here.** Three *untouched* micro columns:
+  `receive_pensions`, `receive_agriculture`, `pay_utilities`. Per the 2026-08-18 addendum's B2 note,
+  the breadth cell had to move to the micro side, and it does.
+- **E53 — the four-item cash rebound (agenda item 7.8)**, a `distribution` design across all five
+  waves. Frame `pan_dev`, columns already touched; the breadth is in the *design*, not the columns.
+- **E54 (if the budget allows) — agenda item 2.1b**, the population-size gradient in association
+  strength, registered fresh on the six E28/E30 bivariate rails.
+
+**B3 lineage.** U23 parent: **U14** (first descendant of it; the U19→U20→U22 chain is not extended).
+E53 parent: **none** — item 7.8 is a pattern noticed across E45/E47/E49x/E51x, not a finding
+descended from one of them; the nearest design ancestor is E39. E54 parent: **E52** (E48b → E50 →
+E52 → E54 would be a *third* consecutive descendant, at the cap of three but not over it).
+
+**B14.** U23 is a micro cross-section (B14 does not apply). E53 is a distribution design over the
+full five-wave path, not an adjacent-window Δ→Δ. E54 registers no new Δ→Δ primary — it re-slices
+existing all-windows cells by population.
+
+## U23 — pre-registered (micro stream)
+
+**Coding disclosure (a structural check on the CODING, not a peek at the outcome; U14 precedent).**
+No codebook ships with the microdata. Before registering I checked the code structure of every
+untouched payment-stream column by looking at `account`/`account_fin`/`anydigpayment` *within each
+code*, exactly as U14 did. `receive_pensions`, `receive_agriculture` and `pay_utilities` are coded
+**identically to `receive_wages`**: code 1 = the payment runs through an account (account = 1.000,
+1.000 and 0.963; anydigpayment = 1.000, 0.991, 0.956 — true by construction), code 2 = cash
+(account 0.276 / 0.468 / 0.545), code 3 = other (n = 1,005 / 872 / 2,324), code 4 = did not
+participate in the stream, code 5 = DK/refused (n ≤ 244). **`domestic_remittances` is EXCLUDED and
+the reason is recorded**: it carries four codes with a structure that does not match the family —
+code 4 (n = 40,768) has account = 0.942 but anydigpayment = 0.481 — so its semantics cannot be
+established without a questionnaire and no claim on it could be worded honestly. `fin32`/`fin33` are
+excluded as wage-stream detail already represented by U14's margin. The registered outcome below —
+the education gradient in each stream — is unknown at registration time.
+
+**H.** Among adults who **already hold an account** and who participate in a given payment stream,
+the share whose payment runs **through the account** rather than in cash is **education-graded**, and
+this holds in **all three** untouched streams, not only in the wage stream U14 tested. Motivation:
+U14 found the last mile of *wage* digitalization steeply education-graded conditional on access, and
+U10/U15/U17/U18 found the same for self-directed digital-payment use. Every one of those margins is
+either chosen by the adult or set by an employer. The three streams here are different: a **pension**
+is paid by a government or pension provider, an **agricultural payment** by a buyer of produce, and a
+**utility bill** is paid *out* by the adult. If the gradient is a property of the adult it should
+appear in all three; if it is a property of the payer it should appear where the payer is an
+institution and not where the adult chooses. That is the point of the test.
+
+**Test.** Restrict to `account == 1` AND stream code ∈ {1, 2, 3} (participants, excluding "did not
+participate" and DK/RF). Weighted rate of code == 1, split by `educ` (1 = primary or less,
+2 = secondary, 3 = tertiary), pooled across all 2024 economies with raw `wgt` per `micro.py`'s
+default. Statistic per stream: **gap = rate(educ 3) − rate(educ 1)**.
+
+**REGISTERED SIGN (B15): POSITIVE** — tertiary higher than primary. A gap of the right magnitude and
+the wrong sign is the opposite pattern and may not be counted toward the keep.
+
+**Keep if:** gap ≥ **+5.0pp** (the standing micro threshold) in **all three** streams, with M2
+satisfied on every reported cell. Two of three is a partial and is logged as `discard` with the
+pattern described.
+
+**Secondary 1 (registered, with a fixed rule).** The same gap computed **unconditional** on account
+holding, and the **absorption share** = 1 − (conditional gap / unconditional gap) per stream — the
+ledger's access-absorption ruler (U10 64% education, U20 58% income, U21/U22 55–65% connectivity).
+**Registered direction: absorption is LOWER in these payer-set streams than the ~64% the ruler gives
+for self-directed digital-payment use**, because access cannot absorb a gradient that a third party
+imposes. Bar: **median absorption across the three streams < 50%**. Reported either way; it does not
+gate the primary.
+
+**Secondary 2 (registered, with a fixed downgrade rule).** The pooled gap is vulnerable to
+between-country composition exactly as U19/U20/U22 were. For each stream, the **within-economy** gap
+in economies where both education cells have unweighted n ≥ 100 (M2), reported as a median, a
+positive-sign share, and the qualifying set's share of respondents. **Fixed rule: any stream that
+keeps on the pooled gap but shows a within-economy median < 5pp or a positive share < 60% is
+downgraded in the claim text to "pooled only, composition-suspect".**
+
+**Gates.** M1 (weights, enforced by the module). M2 (unweighted n ≥ 100) on every reported cell.
+M3 against the country file on `account`, tolerance 1pp — declared **n/a for the three stream
+margins themselves**, which have no country-file equivalent at this conditional granularity.
+
+**Declared caveats.** Payment mode in the pension and agriculture streams is largely set by the
+payer, so an education gradient there describes *who is paid how*, not an individual choice — and
+sectoral and formality composition are uncontrolled confounds throughout. Conditioning on account
+holding is conditioning on a post-treatment variable. Pension receipt is strongly age-selected and
+agricultural receipt strongly rural-selected; the gradient is not adjusted for either, and the claim
+must not be read as education net of them. Single 2024 cross-section — no trend language, no causal
+wording.
