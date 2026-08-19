@@ -6583,3 +6583,64 @@ holding is conditioning on a post-treatment variable. Pension receipt is strongl
 agricultural receipt strongly rural-selected; the gradient is not adjusted for either, and the claim
 must not be read as education net of them. Single 2024 cross-section — no trend language, no causal
 wording.
+
+## U23 — verdict: **KEEP** (registered bar met in 3/3 streams)
+
+**Primary, as registered.** Among accountholders who participate in the stream, the share whose
+payment runs through the account rather than in cash, tertiary minus primary-or-less:
+
+| stream | payer picks the channel | primary → tertiary | gap | 95% CI (economy cluster) |
+|---|---|---|---|---|
+| `receive_pensions` | government / pension provider | 83.0 → 89.5 | **+6.51pp** | [+3.64, +9.54] |
+| `receive_agriculture` | buyer of produce | 35.2 → 49.3 | **+14.16pp** | [+5.86, +22.22] |
+| `pay_utilities` | **the adult** (self-directed) | 41.9 → 68.0 | **+26.07pp** | [+19.43, +31.43] |
+| `receive_wages` *(U14 reference, not part of the bar)* | employer | 56.6 → 91.9 | +35.28pp | [+28.62, +41.88] |
+
+3/3 clear +5.0pp with the **registered positive sign** (B15) and every interval excludes zero, so
+the registered claim keeps. **The registered question is answered in the "property of the adult"
+direction**: the gradient does not need the adult to choose the channel — it survives in the pension
+stream, where a government or provider decides how the money arrives.
+
+**But the magnitudes order the streams, and that ordering is the interesting part.** Pensions
+**+6.5** < agriculture **+14.2** < utilities **+26.1** < wages **+35.3**. The stream where an
+institution pays a standardized, regular, legally-defined benefit shows the *smallest* gradient by a
+factor of four against the self-directed one; the two streams where a private counterparty (a
+buyer, an employer) or the adult picks the channel show the largest. Read descriptively: an
+institutional payer appears to flatten the last mile, and this is one 2024 cross-section, not
+evidence of what a policy would do.
+
+**Honest reading of the pension result.** It is the fragile one. Its interval [+3.64, +9.54]
+straddles the registered bar and only **83.8% of 1,000 cluster-bootstrap draws** reach +5.0pp. The
+claim keeps as registered on the point estimate; the write-up must not present +6.5pp as if it were
+as secure as the +26.1pp.
+
+**Secondary 1 (access absorption) — CONFIRMED, by 0.6 of a percentage point.** Absorption of the
+all-adult education gradient by account holding: pensions **69.0%**, agriculture **49.4%**,
+utilities **30.3%**, wages **30.9%**; **median 49.4% against the registered bar of < 50%**. This is
+a coin-flip confirmation and is recorded as one. The *pattern* is worth more than the verdict: the
+ruler's ~64% figure (U10/U19) is reproduced almost exactly by the **pension** stream (69%) and
+missed by half in the two streams where a private counterparty or the adult picks the channel
+(30%). Access absorbs the gradient where the payer is an institution and does not where it is not.
+
+**Secondary 2 (composition) — runnable on ONE stream of three, and this is a frame fact.** Zero
+economies reach 100 unweighted respondents in **both** education cells for pensions or for
+agriculture, so the within-country check simply cannot be run on them: those two streams are
+**pooled-only and unverified on composition**. The registered downgrade rule did not anticipate
+"cannot run" and I have not counted it as a pass. Where it does run — `pay_utilities`, 8 economies
+holding 14.4% of accountholding participants — the median within-economy gap is **+31.53pp**,
+positive in **7 of 8** (North Macedonia −0.5 the exception, India +48.2 the maximum), and the pooled
+gap over the same 8 is +35.44pp, a **composition wedge of +3.91pp (11%)** — the smallest wedge of
+any axis the loop has measured this way (U19 22%, U20 28%, U22 30%).
+
+**B6 inference.** Bootstrap resamples **economies**, not respondents: respondents are clustered
+inside economies and a respondent-level resample would report a falsely narrow interval. Kish `neff`
+of the survey weights inside each education cell is **569–5,128 against nominal 874–7,602** — the
+weights are mildly concentrated, nothing like the country-level `neff` ≈ 7.2. **The ledger's `neff`
+critique is about population weights across economies and does not transfer to micro survey
+weights**; what limits precision here is the 90-economy cluster count, which the bootstrap prices in.
+
+**Gates.** M1 module-enforced. M2 passes on every reported cell. M3 on `account` 0.0pp maximum
+deviation over 10 economies; declared n/a for the three stream margins, which have no country-file
+equivalent at this conditional granularity. Caveats as registered: pension receipt is age-selected,
+agricultural receipt rural-selected, neither adjusted; conditioning on account holding is
+post-treatment; single 2024 cross-section, no trend language.
