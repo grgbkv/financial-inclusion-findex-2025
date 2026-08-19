@@ -6644,3 +6644,65 @@ deviation over 10 economies; declared n/a for the three stream margins, which ha
 equivalent at this conditional granularity. Caveats as registered: pension receipt is age-selected,
 agricultural receipt rural-selected, neither adjusted; conditioning on account holding is
 post-treatment; single 2024 cross-section, no trend language.
+
+## E53 — pre-registered (hypothesis stream)
+
+**Agenda item 7.8, the repo's clearest unexplained pattern.** Four cash-side items in four different
+modules all fall across 2014→2021 and rebound in 2021→2024: `fin31d` 48.3 → 34.6 → 20.5 → **26.6**,
+`fin34c` 15.9 → 11.8 → 8.0 → **15.2**, `fin42` 24.6 → 14.7 → 10.8 → **13.4**, `fin43c` 21.5 → 10.7 →
+6.6 → **8.8** (levels quoted from E48b/E49x/E51x; E53 reprints them itself, rule B16). Single-item
+mean reversion is a sufficient explanation for one V-shape. It is not a sufficient explanation for
+four V-shapes in the same window in four modules **if they occur in the same economies**.
+
+**Parent: none.** The pattern was noticed across E45/E47/E49x/E51x rather than descending from a
+finding; the nearest design ancestor is **E39** (distribution design). Frame `pan_dev`. **B14:** this
+is a distribution design over the full four-wave path, not an adjacent-window Δ→Δ, and the primary
+statistic is a co-occurrence count, not a correlation of changes.
+
+**H.** The 2021→24 rebound is a **common episode across cash-side items within the same economies**,
+not four independent item-level reversions. If it is common, economies should carry the V-shape on
+several items at once far more often than independent items would produce.
+
+**Test (primary).** On the 71 developing-panel economies with all four items in all four waves
+(2014/2017/2021/2024), classify each economy × item as **V** if `level_2021 < level_2014 − 1pp`
+**and** `level_2024 > level_2021 + 1pp`. Count V-items per economy (0–4). Statistic: **S3 = the share
+of economies with ≥ 3 of 4 V-items.** Null: **1,000 permutations** in which each item's V-indicator
+is shuffled independently across economies, preserving each item's marginal V-rate and destroying
+only the co-occurrence.
+
+**REGISTERED SIGN (B15): POSITIVE excess** — more multi-item economies than independence predicts. A
+deficit of multi-item economies is the *opposite* pattern (items rebounding in disjoint economies)
+and may not be counted toward the keep; it would be reported separately as a substitution pattern.
+
+**Keep if:** S3_observed ≥ **1.5 ×** the permutation-null mean S3 **and** S3_observed exceeds the
+**97.5th percentile** of the permutation distribution. Both required.
+
+**Secondary A (registered, no bar, B16).** Reprint every item's four wave levels on this exact
+71-economy set, weighted and unweighted, so the path is on the record beside the span.
+
+**Secondary B (registered, no bar, the E39 question).** For each item, the share of the 71 economies
+whose 2021→24 change is positive, unweighted and population-weighted, plus the median change — is the
+aggregate rebound a within-country movement or a few large economies?
+
+**Secondary C (registered, no bar).** The population-weighted twin of the primary: the share of
+developing-panel adults living in an economy with ≥ 3 V-items, against the same null.
+
+**Robustness (registered in advance, reported whatever it shows).** The 1pp margin is arbitrary, so
+the whole primary is recomputed at margins of **0pp and 2pp**; and the mirror tail (share of
+economies with **0** V-items) is reported against the null, because genuine clustering shows in both
+tails. A verdict that survives only at one margin is reported as margin-dependent.
+
+**Inference (B6).** Economy bootstrap, 1,000 draws, percentile interval on S3_observed. Kish `neff`
+of the 2024 adult-population weights on the 71-economy set, reported beside the nominal n (B10).
+
+**Gates.** G3 declared: the four items are used at their base (non-`_s`) level — per
+`HARNESS_V2_NOTES` item 10 the `_s` columns are conditional versions and are excluded. G4 coverage on
+the 71-economy set. G5 n/a (no official aggregate for these items). G6 n/a — no correlation is
+computed; the analogous check is the mirror tail and the population-weighted twin, both registered
+above.
+
+**Declared caveats.** Four items sharing a *shape* is not evidence they share a *cause*; the shape is
+also consistent with a common survey or questionnaire change in 2024 affecting cash-side items
+together, which this design cannot rule out and which E46 already found it could not settle for
+`save_any_t_d`. The items are not independent by construction either — an economy where cash use is
+generally high can carry several of them. Descriptive co-occurrence only, never causal.
