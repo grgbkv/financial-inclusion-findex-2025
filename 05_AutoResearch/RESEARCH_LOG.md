@@ -6706,3 +6706,67 @@ also consistent with a common survey or questionnaire change in 2024 affecting c
 together, which this design cannot rule out and which E46 already found it could not settle for
 `save_any_t_d`. The items are not independent by construction either — an economy where cash use is
 generally high can carry several of them. Descriptive co-occurrence only, never causal.
+
+## E53 — verdict: **KEEP (margin-dependent)** on the registered primary, and the registered secondaries **overturn the premise of agenda item 7.8**
+
+**Coverage.** 71 developing-panel economies carry all four items in all four waves — 68.6% of the
+pan_dev 2024 adult population. Nominal n = 71, Kish `neff` = **7.2** (B10).
+
+**PRIMARY — the co-occurrence keeps as registered.** At the registered 1pp margin, **10 of 71
+economies (14.1%)** carry the V-shape on **≥ 3 of the 4** items, against a permutation null of
+**6.7%** — a ratio of **2.11×**, above the null's 97.5th percentile (11.3%), permutation
+**p = 0.003**. Registered sign POSITIVE, observed POSITIVE. Economy bootstrap 95% CI
+**[7.0%, 22.5%]**. The named set: **Bulgaria, Congo Rep., Dominican Republic, India, Madagascar,
+Philippines, Sri Lanka, Thailand, Uganda, Viet Nam**.
+
+**The registered robustness makes it margin-dependent, and this is reported as registered.** The
+two-part bar (ratio ≥ 1.5 **and** above null p97.5) fires at **1 of 3** margins:
+
+| margin | S3 observed | null mean | ratio | p_perm | verdict |
+|---|---|---|---|---|---|
+| 0pp | 22.5% | 15.8% | 1.42× | 0.024 | FAIL (ratio below 1.5) |
+| **1pp (registered)** | **14.1%** | **6.7%** | **2.11×** | **0.003** | **PASS** |
+| 2pp | 5.6% | 2.1% | 2.69× | 0.048 | FAIL (ties the p97.5, does not exceed it; 4 economies) |
+
+The *direction and the permutation p* hold at every margin — excess co-occurrence is present
+throughout — but the conjunction of the two registered bars fires only at 1pp, so the claim is
+logged **margin-dependent** and the 2pp failure is a discreteness tie on four economies, not a
+reversal. **Population-weighted twin (Secondary C): 44.2% of developing-panel adults live in a
+≥3-V economy against a null of 6.8% (6.49×, p = 0.004) — but India is in the named set and India is
+what that number is.**
+
+**SECONDARY A + B — the aggregate rebound is largely a COMPOSITION ARTIFACT, and this contradicts
+the premise the experiment was registered on.** On the balanced 71-economy set the four paths are
+**fin31d 40.8 → 33.4 → 26.9 → 26.6**, **fin34c 14.5 → 13.1 → 10.5 → 15.2**, **fin42 22.1 → 15.7 →
+13.3 → 13.4**, **fin43c 18.6 → 11.5 → 9.2 → 8.8** (population-weighted; unweighted **all four** are
+flat or still falling in 2021→24). Three of the four items **do not rebound at all** once the set of
+economies is held fixed: 2021→24 changes of **−0.28, +4.77, +0.11, −0.42**. And Secondary B says the
+same thing from the country side — the share of economies whose 2021→24 change is *positive* is
+**39.4% / 42.3% / 46.5% / 47.9%**, fewer than half on every item, with a **negative median change on
+all four**.
+
+**Unregistered diagnostic (labelled as such) — why the previously quoted paths rebound.** The paths
+in the agenda (`fin31d` 48.3 → 34.6 → **20.5** → 26.6, etc.) are computed over whichever economies
+report in each wave. **Six economies report these four items in 2021 and not in 2024 — Algeria,
+China, Iran, Mauritius, Russia and Ukraine** — and they are present in the survey's 2024 wave
+(`account_t_d` is there for all six); it is **item-level attrition**, not wave absence. **China
+alone holds 25.9% of the 2021 reporting population on these items and reports 4.5 / 1.3 / 6.2 / 1.1
+on them.** Dropping China alone lifts the 2021 weighted trough by **+5.7 / +2.3 / +1.6 / +2.0pp** —
+most of `fin31d`'s apparent rebound. The 2021 trough is China-shaped and the 2024 recovery is China
+leaving the denominator. This is rule **B12** in its purest form: name the economy.
+
+**What survives, stated precisely.** (i) The *aggregate* four-item rebound of agenda item 7.8 is
+**mostly an artifact of item-level attrition between the 2021 and 2024 waves**, and the agenda item
+must be rewritten. (ii) A genuine **minority** within-country V-shape cluster exists and is not
+explainable by independent item-level reversion: 10 of 71 economies carry it on three or four items,
+2.11× the independence null at p = 0.003, margin-dependent on the registered two-part bar.
+(iii) The two claims are compatible — a within-country pattern in one economy in seven does not move
+a population-weighted mean, and a population-weighted mean can move with no economy doing anything.
+
+**Gates.** G3 base (non-`_s`) columns, declared. G4 71 economies / 68.6% of pan_dev adults. G5 n/a.
+G6 n/a by design — the registered substitutes (the mirror S0 tail and the weighted twin) both ran;
+S0 is **above** its null at 0pp and 1pp (1.79× and 1.41×), i.e. the clustering shows in both tails as
+the registration anticipated. **Caveats as declared:** a shared shape is not a shared cause, a common
+2024 questionnaire change affecting cash-side items together would produce the same co-occurrence and
+this design cannot exclude it (E46's unresolved question), and the four items are not independent by
+construction. Descriptive co-occurrence, never causal.
