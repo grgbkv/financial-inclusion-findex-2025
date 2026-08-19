@@ -4,7 +4,7 @@
 
 This file is the required cycle read (rule: Documentation obligation 1, 2026-08-15c). `RESEARCH_LOG.md` stays the append-only record and is consulted by `grep` for one experiment at a time, never front to back.
 
-**80 logged experiments** · 37 keeps · 38 prediction rows
+**83 logged experiments** · 39 keeps · 38 prediction rows
 
 ## Status counts
 
@@ -12,27 +12,27 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 |---|---|
 | `keep-general` | 6 |
 | `keep-general-unweighted` | 1 |
-| `keep` | 21 |
-| `keep-window` | 9 |
+| `keep` | 22 |
+| `keep-window` | 10 |
 | `inconclusive` | 2 |
 | `discard-weighted` | 4 |
-| `discard` | 35 |
+| `discard` | 36 |
 | `exploratory` | 2 |
 
 ## Design families
 
 | design | n | keeps |
 |---|---|---|
-| `micro-cross-section` | 24 | 15 |
+| `micro-cross-section` | 25 | 16 |
 | `delta-delta` | 19 | 9 |
 | `level-to-change` | 7 | 0 |
 | `measurement` | 7 | 1 |
 | `partial` | 6 | 3 |
 | `gap-trajectory` | 6 | 2 |
 | `delta-delta-multi` | 5 | 3 |
-| `audit` | 3 | 1 |
+| `audit` | 4 | 1 |
+| `distribution` | 2 | 2 |
 | `level-cross-section` | 1 | 1 |
-| `distribution` | 1 | 1 |
 | `long-difference` | 1 | 1 |
 
 ## The keeps, most-supported first
@@ -61,6 +61,7 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `U19` | keep | micro-cross-section | 2024 | — / — | — / — | The education axis of the access-absorption ruler is a WITHIN-COUNTRY regularity, not a between-country composition art… |
 | `U20` | keep | micro-cross-section | 2024 | — / — | — / — | The income axis of the access-absorption ruler is a WITHIN-COUNTRY regularity, not a between-country composition artifa… |
 | `U22` | keep | micro-cross-section | 2024 | na / na | 56 / na | The connectivity axis of the access-absorption ruler is a WITHIN-COUNTRY regularity, not a between-country composition … |
+| `U23` | keep | micro-cross-section | 2024 | na / na | 90 / na | The last-mile education gradient in DIGITAL PAYMENT MODE is a property of the ADULT, not of one payer: conditional on h… |
 | `E28` | keep | delta-delta-multi | 2014->17|2017->21|2021->24 | — / — | — / 6.8-7.5 | The three digitalization rails co-move with formal saving in 2017-21 as well as 2021-24; E1/E10/E12 promoted to keep-ge… |
 | `E30` | keep | delta-delta-multi | 2014->17|2017->21|2021->24 | — / — | — / 6.8-7.6 | The three non-saving-destination co-movements (E11 borrowing~saving, E13 FI~mobile-money, E14 mobile-money~digital paym… |
 | `E34` | keep | gap-trajectory | 2011->2024 | — / — | — / 6.8 | The within-country AGE gap in account ownership narrowed in a majority of developing panel economies over 2011-2024, an… |
@@ -76,6 +77,7 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E41` | keep-window | delta-delta | 2021->2024 | — / — | — / 7.2 | The untouched merchant-payment margin sorts with the DIGITAL RAILS, not the balance sheet: only 26.3% of developing pan… |
 | `E43` | keep-window | gap-trajectory | 2021->2024 | — / — | — / 5.6 | The 2021-24 formal-saving surge reached EVERY demographic slice: in all five usable pan_grp dimensions the disadvantage… |
 | `E48b` | keep-window | long-difference | 2014->2024 | +0.515 / +0.389 | 71 / 7.2 | The two counter-moving margins the loop has found, in two different modules and identified by two different statistics,… |
+| `E53` | keep-window | distribution | 2014-2017-2021-2024 (path) / 2021-2024 (rebound) | na / na | 71 / 7.2 | MARGIN-DEPENDENT KEEP plus a PREMISE CORRECTION: the aggregate four-item 2021-24 cash rebound (agenda item 7.8) is larg… |
 
 ## Every experiment, in order
 
@@ -137,6 +139,8 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E51x` | exploratory | measurement | 2014-2024 | pan_dev | na | EXPLORATORY mapping pass on the untouched 6-column `fin43` agricultural-payments module: 4 of 6 columns … |
 | `E51` | discard | measurement | 2024 | pan_dev | na | Registered four-way orientation screen on the untouched `fin43` agricultural-payments module REJECTS its… |
 | `E52` | inconclusive | audit | 2014-2017 / 2017-2021 / 2021-2024 / 2014-2024 | pan_dev | E48b | INCONCLUSIVE under the registered rule: NEITHER candidate mechanism for the standing weighted/unweighted… |
+| `E53` | keep-window | distribution | 2014-2017-2021-2024 (path) / 2021-2024 (rebound) | pan_dev | none (design ancestor E39) | MARGIN-DEPENDENT KEEP plus a PREMISE CORRECTION: the aggregate four-item 2021-24 cash rebound (agenda it… |
+| `E54` | discard | audit | 2014-2017 / 2017-2021 / 2021-2024 | pan_dev | E52 | Registered POPULATION-GRADIENT claim REJECTED: within-tercile association strength does NOT rise with ec… |
 | `M1` | keep | micro-cross-section | 2024 | micro | — | Not enough money (fin11a) barrier among unbanked adults is an income-graded reason, most cited by the po… |
 | `U1` | discard | micro-cross-section | 2024 | micro | — | Gender gap in account ownership is wider among the poorest income quintile than the richest (2024 wave, … |
 | `M2` | keep | micro-cross-section | 2024 | micro | — | Mobile-only accountholders are younger and less educated than bank-only accountholders (2024 wave) |
@@ -161,6 +165,7 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `U20` | keep | micro-cross-section | 2024 | micro | — | The income axis of the access-absorption ruler is a WITHIN-COUNTRY regularity, not a between-country com… |
 | `U21` | discard | micro-cross-section | 2024 | micro | — | Registered CONNECTIVITY-GATE claims REJECTED: among accountholders the offline gap in digital-payment us… |
 | `U22` | keep | micro-cross-section | 2024 | micro | U21 | The connectivity axis of the access-absorption ruler is a WITHIN-COUNTRY regularity, not a between-count… |
+| `U23` | keep | micro-cross-section | 2024 | micro | U14 | The last-mile education gradient in DIGITAL PAYMENT MODE is a property of the ADULT, not of one payer: c… |
 
 ## Prediction stream (CLOSED at P28)
 

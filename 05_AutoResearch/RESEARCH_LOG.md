@@ -6867,3 +6867,36 @@ cell. G5 n/a. G6 n/a — no single association is claimed and the random-split n
 substitute; it ran and it is the reason for the discard. Caveats as declared: population tercile is
 confounded with region, per-economy sample size and everything else that scales with country size,
 and a within-tercile r on ~19–26 economies is noisy. Descriptive, never causal.
+
+---
+
+## Wrap-up — 2026-08-19
+
+1. **U23 KEEP (registered, micro).** The last-mile education gradient in digital payment *mode* is a
+   property of the adult, not of one payer: among accountholding participants it clears +5pp in
+   **all three** previously untouched streams — pensions **+6.51pp**, agricultural sales
+   **+14.16pp**, utility bills **+26.07pp** — every economy-cluster bootstrap interval excluding
+   zero. The pension result is the fragile one: only **83.8%** of draws reach the registered bar.
+2. **E53 KEEP (margin-dependent) with a premise correction that matters more than the keep.** The
+   aggregate four-item cash rebound of agenda item 7.8 is largely **item-level attrition**: six
+   economies report those items in 2021 and not 2024 — **China holds 25.9% of the 2021 reporting
+   population** at levels of 4.5 / 1.3 / 6.2 / 1.1 — and on a balanced 71-economy set three of the
+   four items do not rebound at all. What survives is a **minority within-country V-cluster**:
+   10 of 71 economies on ≥3 of 4 items, **2.11×** an independence null, `p_perm` 0.003.
+3. **E54 DISCARD as registered.** E52's population-size gradient in association strength does not
+   generalise — mean Δr **+0.047** against a +0.15 bar, positive in **9 of 18** cells, and the
+   registered random-split null shows a population split does no more than a random one
+   (`p_perm` 0.209). The ledger's weighted/unweighted disagreements stay a weighting problem.
+4. **The transferable methodological lesson is the same one twice: hold the denominator fixed.**
+   E53's rebound and, in a different guise, U23's unrunnable within-economy check both come down to
+   *which units are in the set*. `PAPER_DRAFT_v3.md` now carries its first CORRECTIONS OWED item,
+   and new agenda item **8.1** proposes the ledger-wide attrition sweep this cycle stumbled into.
+5. **Bookkeeping.** B18 checked and **not fired** at registration time (0 corrections owed against 5;
+   7 experiments since the 2026-08-16 rewrite against 10) — E53 opened the first correction *during*
+   the cycle, so the next cycle's check reads **1 of 5** and 10 of 10 on the count branch, meaning
+   **the count branch will fire next cycle**. B2 paid on the micro side (three untouched columns).
+   B17 **paid** (U23), next due in three cycles. B3: longest chain E48b → E50 → E52 → E54, three
+   descendants, at the cap and non-consecutive. B14 not engaged (no adjacent-window Δ→Δ primary).
+   B15 signs registered and reported on all three. B6 intervals on all three. `make_index.py --check`
+   passes at 83 rows, 0 problems. Prediction stream unchanged and **CLOSED**: `account_t_d`
+   **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
