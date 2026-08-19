@@ -6832,3 +6832,38 @@ all three windows jointly.
 size — region, data quality, sample size per economy, within-country heterogeneity. A within-tercile
 correlation on ~24 economies is a noisy statistic and the mean of 18 of them is what carries any
 signal. Descriptive; never causal.
+
+## E54 — verdict: **DISCARD as registered.** The population gradient does not generalise, and the ledger's de-weighting critique stands
+
+**Both registered bars fail, and they fail wide.** Mean Δr across the 18 rail × window cells is
+**+0.047** against a bar of +0.15, and Δr is positive in **9 of 18** — exactly a coin flip against a
+bar of 12. Monotone `r(top) > r(mid) > r(bottom)` in **3 of 18**. Median Δr **+0.028**, range −0.482
+(E11 2014→17) to +0.743 (E13 2017→21). All 18 cells were usable; nothing was dropped for tercile size.
+
+**Secondary 1 — the registered null is the decisive number.** Under 1,000 random three-way splits
+that ignore population entirely, the mean Δr distribution is centred at **+0.002** with a 95% band of
+**[−0.115, +0.108]**. The observed **+0.047 sits inside that band**, `p_perm` = **0.209**. Splitting
+economies by *population* does no more to sort association strength than splitting them at random.
+**Secondary/B6:** the within-tercile economy bootstrap gives 95% CI **[−0.074, +0.162]**, including
+zero. Kish `neff` is **7.2** in every window (B10).
+
+**What this settles.** E52's cash-cell observation (mean top-minus-bottom **+0.253**, monotone in 3
+of 4) is **a property of that cell, not of the ledger.** It was found by looking, and registered
+fresh on a different cell it does not reproduce. The consequence for how the ledger is read is the
+one stated in the registration: **the standing weighted/unweighted disagreements cannot be
+reinterpreted as the weighted lens correctly detecting a genuinely stronger association among large
+economies.** The de-weighting critique (B9/B11, E40) stands exactly as written.
+
+**One unregistered observation, labelled as such and carried to the agenda, not claimed.** The window
+means are **2014→17 −0.113** (positive in 2/6), **2017→21 +0.014** (2/6), **2021→24 +0.240**
+(**5 of 6** rails positive). Whatever the mean of 18 says, the size gradient is visible only in the
+most recent window — the same window E52's cash cell spans. This was not registered, has no
+multiplicity control across three window subsets of a failed primary, and is **a lead for a fresh
+registration, not a finding**. The obvious registered form is a window-specific test with the window
+named in advance.
+
+**Gates.** G3 six rails at their registered headline variants, declared. G4 18/18 cells, n = 54–77 per
+cell. G5 n/a. G6 n/a — no single association is claimed and the random-split null is the registered
+substitute; it ran and it is the reason for the discard. Caveats as declared: population tercile is
+confounded with region, per-economy sample size and everything else that scales with country size,
+and a within-tercile r on ~19–26 economies is noisy. Descriptive, never causal.
