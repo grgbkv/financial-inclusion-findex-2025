@@ -92,6 +92,59 @@ def within_economy(mi, stream, base):
     return pd.DataFrame(rows)
 
 
+
+# ---------------------------------------------------------------------------------------
+# B6 INFERENCE ADDENDUM (mandatory for a keep; added after the registered bars were read —
+# it is a diagnostic ON the registered statistic, not a new claim). Two things:
+#   (i)  a CLUSTER bootstrap: resample ECONOMIES with replacement, 1,000 draws, percentile
+#        interval on the pooled gap. Respondents are clustered in economies and a
+#        respondent-level bootstrap would understate the interval by ignoring that.
+#   (ii) the Kish effective n, neff = (sum w)^2 / sum w^2, of the survey weights inside each
+#        education cell, beside the nominal unweighted n (rule B10).
+# ---------------------------------------------------------------------------------------
+def kish(w):
+    w = np.asarray(w, dtype=float)
+    return float(w.sum() ** 2 / (w ** 2).sum()) if len(w) else np.nan
+
+
+def inference_block(mi, streams, draws=1000, seed=20260819):
+    df = mi.df
+    rng = np.random.default_rng(seed)
+    print("\n" + "=" * 92)
+    print("B6 INFERENCE — economy-cluster bootstrap (1,000 draws) and Kish neff per cell")
+    print("=" * 92)
+    for s in streams:
+        m = (df["account"] == 1) & df[s].isin([1, 2, 3]) & df["educ"].isin([1, 3])
+        sub = df.loc[m, ["economy", "educ", "wgt", s]].dropna(subset=["wgt"]).copy()
+        sub["y"] = (sub[s] == 1).astype(float)
+        econs = sub["economy"].unique()
+        by_econ = {e: g for e, g in sub.groupby("economy")}
+
+        def gap_of(frame):
+            hi = frame[frame["educ"] == 3]
+            lo = frame[frame["educ"] == 1]
+            if hi.empty or lo.empty:
+                return np.nan
+            return (np.average(hi["y"], weights=hi["wgt"])
+                    - np.average(lo["y"], weights=lo["wgt"])) * 100
+
+        point = gap_of(sub)
+        boot = []
+        for _ in range(draws):
+            pick = rng.choice(econs, size=len(econs), replace=True)
+            boot.append(gap_of(pd.concat([by_econ[e] for e in pick], ignore_index=True)))
+        boot = np.array([b for b in boot if pd.notna(b)])
+        lo_ci, hi_ci = np.percentile(boot, [2.5, 97.5])
+        cells = []
+        for code in (1, 3):
+            c = sub[sub["educ"] == code]
+            cells.append(f"educ{code}: n={len(c)} neff={kish(c['wgt']):.1f}")
+        print(f"  {s:22s} gap {point:+6.2f}pp  95% CI [{lo_ci:+.2f}, {hi_ci:+.2f}] "
+              f"over {len(econs)} economies  |  " + "  ".join(cells))
+        print(f"    {'excludes zero' if lo_ci > 0 else 'INCLUDES ZERO'}"
+              f"   |  share of draws >= +5.0pp: {(boot >= 5.0).mean():.1%}")
+
+
 def main():
     mi = Micro()
     df = mi.df
@@ -191,6 +244,8 @@ def main():
           f"{'CONFIRMED' if med_abs < ABSORB_BAR else 'REJECTED'}")
     print(f"\n  PRIMARY: {sum(ok)}/3 streams clear +{GAP_BAR}pp  -> "
           f"{'KEEP' if all(ok) else 'DISCARD (registered all-three bar not met)'}")
+
+    inference_block(mi, list(STREAMS) + [REFERENCE[0]])
 
 
 if __name__ == "__main__":
