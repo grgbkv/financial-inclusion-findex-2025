@@ -809,3 +809,72 @@ seven corrections and folds in E42–E48; v2 marked SUPERSEDED with its correcti
   micro side or to the frames**: 112 untouched micro columns in 17 families, and `urbanicity` remains
   the only untouched country frame (single-wave). **B17 falls due in two cycles and the next cycle
   should pay it early**, since micro is now also where B2 has to point.
+
+## Addendum (2026-08-19, from the U23/E53/E54 cycle)
+
+- **ITEM 7.8 IS OVERTURNED AND MUST BE REWRITTEN — the aggregate four-item cash rebound is largely
+  ITEM-LEVEL ATTRITION.** E53's registered Secondary A/B, plus one labelled diagnostic, show that the
+  paths this agenda has been quoting are computed over whoever reports the item in each wave. **Six
+  economies report `fin31d`/`fin34c`/`fin42`/`fin43c` in 2021 and not in 2024 — Algeria, China, Iran,
+  Mauritius, Russia, Ukraine — and all six ARE in the 2024 wave** (`account_t_d` present for each).
+  On the balanced 71-economy set the 2021→24 changes are **−0.28 / +4.77 / +0.11 / −0.42**: three of
+  the four items do not rebound at all, and **unweighted all four are flat or still falling**. The
+  share of economies whose 2021→24 change is positive is **39.4 / 42.3 / 46.5 / 47.9%** — under half
+  on every item, median change negative on all four. **China alone holds 25.9% of the 2021 reporting
+  population on these items at levels 4.5 / 1.3 / 6.2 / 1.1; dropping China lifts the 2021 trough by
+  +5.7 / +2.3 / +1.6 / +2.0pp.** The rebound is China leaving the denominator. `PAPER_DRAFT_v3.md`
+  now carries this as its first CORRECTIONS OWED item (count 1 of 5).
+- **What replaces item 7.8: a MINORITY within-country V-cluster, and it is real.** 10 of 71 economies
+  carry the fall-then-rebound on **≥3 of the 4** items — **2.11×** an independence permutation null,
+  above its p97.5, `p_perm` 0.003, bootstrap CI [7.0%, 22.5%]. Named: **Bulgaria, Congo Rep.,
+  Dominican Republic, India, Madagascar, Philippines, Sri Lanka, Thailand, Uganda, Viet Nam.** The
+  keep is **margin-dependent** (the two-part bar fires at the registered 1pp margin, not at 0 or 2pp,
+  though direction and `p_perm` hold at all three). The population-weighted twin is 44.2% vs a 6.8%
+  null — that number is India.
+- **NEW ITEM 8.1 (audit, high priority) — how much of the ledger rests on item-level attrition
+  between 2021 and 2024?** E53 found a six-economy, China-led attrition pattern on four cash-side
+  items by accident. **No experiment in the ledger has ever checked whether its wave-to-wave
+  comparison holds the economy set fixed.** The registered form is a ledger-wide sweep: for every
+  column used in a Δ or path claim, the count and population share of economies reporting at t and
+  not at t+1, and the aggregate difference between the unbalanced and balanced series. This is
+  cheap, mechanical, and it is the natural successor to E40's BH/de-weighting audit.
+- **ITEM 2.1b IS ANSWERED: NO.** E54 registered E52's size gradient fresh on the six E28/E30 rails ×
+  three windows and it fails wide — mean Δr **+0.047** against a +0.15 bar, positive in **9 of 18**,
+  monotone in 3 of 18, bootstrap CI [−0.074, +0.162]. The registered random-split null is decisive:
+  splitting economies by population does **no more** than splitting them at random (null band
+  [−0.115, +0.108], `p_perm` 0.209). **The ledger's weighted/unweighted disagreements therefore
+  cannot be reread as the weighted lens correctly detecting a stronger association among large
+  economies; the B9/B11/E40 de-weighting critique stands as written.**
+- **NEW ITEM 2.1c (a lead, explicitly unregistered).** E54's window means are 2014→17 **−0.113**
+  (2/6 rails positive), 2017→21 **+0.014** (2/6), 2021→24 **+0.240** (**5 of 6**). The size gradient
+  is visible only in the most recent window — the window E52's cash cell spans. It has no
+  multiplicity control and is a subset of a failed primary. A fresh registration must name the
+  window in advance and should say why 2021→24 would differ.
+- **PROGRAM 7's MICRO HALF IS OPEN and the country half is confirmed permanently blocked.** U23
+  opened three untouched micro columns — `receive_pensions`, `receive_agriculture`, `pay_utilities` —
+  and keeps: the last-mile education gradient in digital payment *mode* holds in **all three**
+  (**+6.51 / +14.16 / +26.07pp**, all intervals excluding zero), so it is a property of the adult and
+  not of one payer. The `con` module was re-checked this cycle and stays blocked: no questionnaire
+  ships with either file and the column names are opaque, so **no `con` claim can be worded**, at
+  either level. `domestic_remittances` is blocked on the same grounds — its four codes do not match
+  the payment-stream family (code 4 has account 0.942 but anydigpayment 0.481).
+- **NEW ITEM 7.11 — the payer-set / self-directed split in access absorption, the cycle's most
+  suggestive unregistered pattern.** Account holding absorbs **69.0%** of the education gradient in
+  the **pension** stream (an institution pays), **49.4%** in agriculture, and only **30.3%** in
+  utilities and **30.9%** in wages. The ruler's standing ~64% figure (U10/U19) is reproduced almost
+  exactly by the one stream where the payer is a public institution and missed by half where it is
+  not. The registered secondary that produced it cleared its bar by **0.6pp** and is a coin flip; the
+  *pattern across streams* is what deserves a fresh registration, with the ordering named in advance.
+- **A FRAME FACT for micro within-country work, alongside U22's.** The within-economy composition
+  check is **unrunnable** for pensions and agriculture: **zero** economies reach 100 unweighted
+  respondents in both education cells. Those two streams are pooled-only and unverified on
+  composition. `pay_utilities` qualifies 8 economies (14.4% of participants) with a composition wedge
+  of **+3.91pp (11%)** — the smallest of any axis measured this way (U19 22%, U20 28%, U22 30%).
+- **B2 note for the next cycle — re-derived.** Country file **69/429 (16%)**, unchanged: E53 and E54
+  reused touched columns and bought their breadth in *design*. Micro **48/192 (25%)** after U23. The
+  reachable untouched micro surface is now `fin22` (9, borrowing sources), `fin24`/`fin25e` (11,
+  emergency funds — the country-side twin is also untouched), `fin13`/`fin14` (13, 36 economies),
+  `fin39` (4, utility-payment detail), `fin48`/`fin49` (12, digital-risk exposure, 8,037 respondents
+  in 82 economies — a split-sample module, check the weights before registering), plus `fin32`/
+  `fin33`/`dig_account`. `urbanicity` remains the only untouched country frame and is single-wave.
+  **B17 is PAID this cycle (U23) and next falls due in three cycles.**

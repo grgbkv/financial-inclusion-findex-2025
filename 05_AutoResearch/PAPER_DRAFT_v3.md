@@ -9,9 +9,23 @@ to a numbered, pre-registered experiment in `findings.tsv` / `results_prediction
 protocol in `program_findex.md` and indexed one line per experiment in `LEDGER_INDEX.md`. Nothing
 here is causal. Unlike v2, this draft has an inference layer (Section 10) and it is unflattering.
 
-**CORRECTIONS OWED: none outstanding.** v2's seven-item block is executed here and is reproduced as
-Appendix B, item by item, with the section that discharges each. The next distillation trigger (rule
-B18) reads *this* file.
+**CORRECTIONS OWED: 1 outstanding** (v2's seven-item block is executed here and is reproduced as
+Appendix B, item by item, with the section that discharges each; the next distillation trigger, rule
+B18, reads *this* file).
+
+1. **Section 8's "2021→24 rebound" paragraph is wrong as written, and the passage beginning "Both
+   margins fall for a decade and then rebound" must be rewritten.** E53 (2026-08-19) shows the
+   quoted paths — `fin31d` 47.1 → 34.1 → **20.5** → 26.6 and `fin34c` 15.9 → 11.8 → **8.0** → 15.2 —
+   are computed over whichever economies report the item in each wave, and **six economies report
+   these items in 2021 and not in 2024 (Algeria, China, Iran, Mauritius, Russia, Ukraine), all of
+   them present in the 2024 wave on `account_t_d`**. It is item-level attrition. On the balanced
+   71-economy set the paths are `fin31d` **40.8 → 33.4 → 26.9 → 26.6** and `fin34c` **14.5 → 13.1 →
+   10.5 → 15.2**: `fin31d` does **not** rebound at all (2021→24 change −0.28) and only `fin34c` does
+   (+4.77 weighted, −0.5 unweighted). China alone holds 25.9% of the 2021 reporting population on
+   these items at levels of 4.5 and 1.3 and lifts the 2021 trough by +5.7 and +2.3pp on removal. What
+   survives is narrower and must replace the current sentence: a **minority within-country** V-shape
+   cluster, 10 of 71 economies carrying it on ≥3 of 4 cash-side items, 2.11× an independence null
+   (p = 0.003, margin-dependent). Section 12's open-question 3 inherits the same correction.
 
 ---
 
