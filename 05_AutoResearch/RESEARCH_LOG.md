@@ -6770,3 +6770,65 @@ the registration anticipated. **Caveats as declared:** a shared shape is not a s
 2024 questionnaire change affecting cash-side items together would produce the same co-occurrence and
 this design cannot exclude it (E46's unresolved question), and the four items are not independent by
 construction. Descriptive co-occurrence, never causal.
+
+## E54 — pre-registered (hypothesis stream)
+
+**Agenda item 2.1b, registered fresh as the addendum required.** E52 noticed, *after looking*, that
+within-population-tercile unweighted correlations rise with economy size in 4 of 4 cells of the
+`fin31d`~`fin34c` cash cell (mean top-minus-bottom **+0.253**). E52 explicitly could not claim it.
+The addendum's instruction was to register the gradient on a **different cell**, and the six
+bivariate rails of E28/E30 are the cell it named.
+
+**Parent: E52.** Lineage note (B3): E50 and E52 descend from E48b and E54 descends from E52, but
+they are **not consecutive experiments** — U23 and E53 sit between E52 and E54 in this cycle — and
+the *data cell* jumps completely, from the two cash margins to the six saving/digitalization rails.
+The chain stands at three descendants, at the cap and not over it.
+
+**Why it matters.** If association strength is population-graded, then the ledger's standing
+weighted/unweighted disagreements are not a weighting *artifact* at all — they would be the weighted
+lens correctly reporting that the association is genuinely stronger in large economies, and the
+unweighted lens correctly reporting that it is weaker in small ones. That reading would change how
+every `keep-weighted` row in the ledger should be read. If the gradient does **not** generalise, then
+E52's cash-cell observation is a property of that cell and the ledger's de-weighting critique stands
+as written.
+
+**Test.** The six rails, at their E28/E30 constructions, on `pan_dev`:
+`Δmobileaccount_t_d ~ Δfin17a_17a1_d` (E1) · `Δfin32_acc ~ Δfin17a_17a1_d` (E10) ·
+`Δg20_any ~ Δfin17a_17a1_d` (E12) · `Δfin22a_22a1_22g_d ~ Δfin17a_17a1_d` (E11) ·
+`Δfiaccount_t_d ~ Δmobileaccount_t_d` (E13) · `Δmobileaccount_t_d ~ Δg20_any` (E14),
+each in **three windows** (2014→17, 2017→21, 2021→24) = **18 rail × window cells**. In every cell,
+split the economies into **terciles of 2024 adult population** and compute the **unweighted** Pearson
+correlation within each tercile (unweighted by construction: the question is whether *size* sorts
+association strength, and a weighted statistic inside a size tercile would re-import the thing being
+tested). Statistic per cell: **Δr = r(top tercile) − r(bottom tercile)**.
+
+**REGISTERED SIGN (B15): POSITIVE** — larger economies show the stronger association. A negative mean
+Δr is the opposite pattern, is reported as such, and may not be counted toward a keep.
+
+**Keep if BOTH:** mean Δr across the 18 cells ≥ **+0.15** (a deliberately weaker bar than E52's
++0.253, since E52's cell was chosen by having looked) **AND** Δr > 0 in at least **12 of 18** cells.
+
+**Secondary 1 (registered, the better null).** The +0.15 bar is arbitrary and a tercile r on ~24
+economies is noisy. So: **1,000 random splits** in which economies are assigned to three equal groups
+**ignoring population**, recomputing the mean Δr each time, giving the distribution of the statistic
+under "any split does this". Reported with the permutation p; it does not gate the primary but a
+primary that passes while sitting inside the random-split distribution is reported as **not
+population-specific**.
+
+**Secondary 2 (registered, no bar).** The monotone count — cells where r(top) > r(mid) > r(bottom) —
+and the per-cell table, so the pattern can be read rail by rail rather than only in the mean.
+
+**Inference (B6).** Economy bootstrap within terciles, 1,000 draws, percentile interval on the mean
+Δr. Kish `neff` reported per window (B10). Minimum tercile size is checked and any cell with a
+tercile below 15 economies is dropped and named.
+
+**Gates.** G3 declared: all six rails at their registered headline variants. G4 coverage per window.
+G5 n/a. G6 n/a — no single association is claimed; the random-split null is the registered substitute.
+**B14:** no new Δ→Δ primary is registered — the 18 cells are existing all-windows cells of standing
+keeps and the primary statistic is a *between-tercile difference of correlations*, evaluated across
+all three windows jointly.
+
+**Declared caveats.** Population tercile is confounded with everything that correlates with country
+size — region, data quality, sample size per economy, within-country heterogeneity. A within-tercile
+correlation on ~24 economies is a noisy statistic and the mean of 18 of them is what carries any
+signal. Descriptive; never causal.
