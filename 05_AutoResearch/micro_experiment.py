@@ -1,42 +1,29 @@
-"""U22 (pre-registered 2026-08-17): is the CONNECTIVITY gap in digital-payment use a
-WITHIN-COUNTRY regularity, or a between-country composition artifact?
+"""U23 (pre-registered 2026-08-19): is the "last mile" education gradient in DIGITAL PAYMENT MODE
+a property of the ADULT or of the PAYER? Three untouched payment streams.
 
-Agenda item 5.5. Parent: U21 (first descendant). Micro stream, 2024 wave, cross-sectional.
-Rule B17: this experiment pays the micro quota, carried unpaid for two cycles.
+Micro stream, 2024 wave, cross-sectional. Parent: U14 (first descendant).
+Rules B2 (breadth cell: three untouched micro columns) and B17 (micro quota) are both paid here.
 
-WHY. U21 established two POOLED facts over 140 economies: among accountholders the offline-vs-online
-gap in `anydigpayment` is +13.6pp, and account holding absorbs 55.5% of the unconditional +30.5pp
-connectivity gap — an absorption share unlike any resource axis. Pooled figures over economies that
-differ enormously in internet penetration are exactly where a composition artifact hides: economies
-with low internet use are also economies with low digital-payment use, so a pooled gap can be large
-with no economy showing one. U19 and U20 ran this test on the education and income axes and both
-kept. Connectivity is the axis on which economies differ most, so it is the axis where the worry
-is largest.
+WHY. U14 found that among accountholding WAGE receivers the share paid into the account rather than
+in cash is steeply education-graded, and U10/U15/U17/U18 found the same for self-directed
+digital-payment use. Every one of those margins is chosen by the adult or set by an employer. The
+three streams here differ in WHO picks the channel: a PENSION is paid by a government or pension
+provider, an AGRICULTURAL payment by a buyer of produce, and a UTILITY bill is paid OUT by the adult.
+If the gradient belongs to the adult it appears in all three.
 
-DESIGN (U19/U20's design verbatim, connectivity substituted). For every economy with >= 100
-unweighted respondents in BOTH cells (M2) among accountholders (`account == 1`), the weighted gap
-  anydigpayment(internet_use == 1) - anydigpayment(internet_use == 0).
-Report median, IQR, sign count, range with economy names, the qualifying set's share of
-accountholding respondents, the POOLED gap over the SAME qualifying set, and the COMPOSITION WEDGE
-(pooled - median).
+CODING (disclosed in the pre-registration; structural check, not an outcome peek). All three columns
+are coded identically to `receive_wages`: 1 = through an account, 2 = cash, 3 = other,
+4 = did not participate, 5 = DK/RF. `domestic_remittances` was EXCLUDED: its four codes do not match
+the family (code 4 has account 0.942 but anydigpayment 0.481) and cannot be read without a codebook.
 
-REGISTERED CLAIMS, both required for a keep:
-  C1  median within-economy gap >= +5.0pp (the standing micro gap threshold)
-  C2  the gap is positive in >= 80% of qualifying economies (U19 98%, U20 89%)
-REGISTERED SIGN (B15): POSITIVE — online accountholders use digital payments MORE. A gap of the
-right magnitude and the wrong sign is the opposite pattern, not partial confirmation.
+REGISTERED PRIMARY: gap = rate(educ 3) - rate(educ 1) >= +5.0pp in ALL THREE streams, among
+`account == 1` participants. REGISTERED SIGN (B15): POSITIVE.
+SECONDARY 1: absorption = 1 - (conditional gap / unconditional gap); registered direction is
+absorption BELOW the ruler's ~64%, bar median < 50%.
+SECONDARY 2: within-economy median gap; fixed downgrade rule if median < 5pp or positive share < 60%.
 
-SECONDARY (registered, no bar, diagnostic): the within-country version of U21's ABSORPTION result —
-per economy, the connectivity gap among accountholders as a fraction of the connectivity gap among
-all adults, reported as a median. It exists so U21's 55.5% is not left as a pooled-only number.
-
-GATES. M1 (weights, enforced by the module). M2 (unweighted n >= 100) on every reported cell.
-M3 against the country file on `account` and `anydigpayment`, tolerance 1pp.
-
-DECLARED. `internet_use` is self-reported internet USE, co-determined with digital payment use — a
-person may report using the internet BECAUSE they pay digitally, and one cross-section cannot
-separate the directions (U21's caveat, carried). Conditioning on account holding is post-treatment.
-Single wave: no trend language. A within-country regularity is still an association, not a mechanism.
+GATES. M1 (module-enforced), M2 (n >= 100 on every reported cell), M3 on `account` (the stream
+margins have no country-file equivalent at this conditional granularity).
 """
 import numpy as np
 import pandas as pd
@@ -44,138 +31,167 @@ import pandas as pd
 from micro import Micro
 
 MIN_CELL = 100
-MEDIAN_BAR = 5.0        # C1
-SHARE_BAR = 0.80        # C2
+GAP_BAR = 5.0            # primary, per stream
+ABSORB_BAR = 0.50        # secondary 1: median absorption must be BELOW this to confirm
+WITHIN_MEDIAN_BAR = 5.0  # secondary 2 downgrade rule
+WITHIN_SHARE_BAR = 0.60  # secondary 2 downgrade rule
 
+STREAMS = {
+    "receive_pensions":    "pension receipt      (payer: government / pension provider)",
+    "receive_agriculture": "agricultural payment (payer: buyer of produce)",
+    "pay_utilities":       "utility bill payment (payer: THE ADULT, self-directed)",
+}
+REFERENCE = ("receive_wages", "wage receipt         (payer: employer)  -- U14's margin, reference")
+
+EDUC = {1: "primary or less", 2: "secondary", 3: "tertiary"}
 M3_ECONOMIES = ["India", "Kazakhstan", "Poland", "Estonia", "Uzbekistan", "Brazil", "Nigeria",
                 "Indonesia", "Turkiye", "Mexico"]
 
 
-def per_economy_gap(mi: Micro, col, hi_mask, lo_mask, base):
-    """Weighted hi-lo gap on `col` within `base`, per economy, M2 on BOTH cells."""
+def digital_rate(mi, stream, base, educ_code=None, economy=None):
+    """Weighted share of stream participants whose payment runs THROUGH AN ACCOUNT (code 1),
+    within `base`. Returns (rate_pp, unweighted n of the participant cell)."""
+    df = mi.df
+    m = base & df[stream].isin([1, 2, 3])
+    if educ_code is not None:
+        m = m & (df["educ"] == educ_code)
+    if economy is not None:
+        m = m & (df["economy"] == economy)
+    sub = df[m].dropna(subset=["wgt"])
+    if sub.empty:
+        return np.nan, 0
+    y = (sub[stream] == 1).astype(float)
+    return float(np.average(y, weights=sub["wgt"])) * 100, int(len(sub))
+
+
+def pooled_block(mi, stream, base, label):
+    rows = []
+    for code, name in EDUC.items():
+        r, n = digital_rate(mi, stream, base, educ_code=code)
+        rows.append({"educ": name, "digital_pp": round(r, 2) if pd.notna(r) else np.nan,
+                     "n_unweighted": n, "M2_ok": n >= MIN_CELL})
+    tab = pd.DataFrame(rows)
+    gap = tab.loc[tab["educ"] == "tertiary", "digital_pp"].iloc[0] - \
+        tab.loc[tab["educ"] == "primary or less", "digital_pp"].iloc[0]
+    print(f"\n  {label}")
+    print(tab.to_string(index=False))
+    print(f"    gap (tertiary - primary) = {gap:+.2f}pp   M2 all cells: "
+          f"{bool(tab['M2_ok'].all())}")
+    return float(gap), bool(tab["M2_ok"].all())
+
+
+def within_economy(mi, stream, base):
+    """Per-economy gap, M2 on BOTH education cells."""
     df = mi.df
     rows = []
     for econ in sorted(df["economy"].dropna().unique()):
-        e = df["economy"] == econ
-        v_hi, n_hi = mi.rate(col, where=base & hi_mask & e)
-        v_lo, n_lo = mi.rate(col, where=base & lo_mask & e)
-        rows.append({"economy": econ, "rate_hi": v_hi, "rate_lo": v_lo,
-                     "gap": v_hi - v_lo, "n_hi": n_hi, "n_lo": n_lo,
-                     "n_base": int((base & e).sum()),
-                     "qualifies": bool(n_hi >= MIN_CELL and n_lo >= MIN_CELL)})
+        hi, n_hi = digital_rate(mi, stream, base, educ_code=3, economy=econ)
+        lo, n_lo = digital_rate(mi, stream, base, educ_code=1, economy=econ)
+        if n_hi >= MIN_CELL and n_lo >= MIN_CELL and pd.notna(hi) and pd.notna(lo):
+            rows.append({"economy": econ, "gap_pp": hi - lo, "n_hi": n_hi, "n_lo": n_lo})
     return pd.DataFrame(rows)
 
 
-def pooled_gap(mi: Micro, col, hi_mask, lo_mask, base):
-    v_hi, n_hi = mi.rate(col, where=base & hi_mask)
-    v_lo, n_lo = mi.rate(col, where=base & lo_mask)
-    return v_hi - v_lo, n_hi, n_lo
-
-
-def describe(tab, label):
-    q = tab[tab["qualifies"]]
-    g = q["gap"]
-    pos = int((g > 0).sum())
-    print(f"\n  {label}")
-    print(f"    qualifying economies (M2 on both cells): {len(q)} of {len(tab)}")
-    if not len(q):
-        return None
-    print(f"    MEDIAN gap {g.median():+.2f}pp | IQR {g.quantile(.25):+.2f} to "
-          f"{g.quantile(.75):+.2f} | mean {g.mean():+.2f}")
-    print(f"    positive in {pos}/{len(q)} ({pos / len(q):.1%})")
-    lo_row, hi_row = q.loc[g.idxmin()], q.loc[g.idxmax()]
-    print(f"    range: {lo_row['economy']} {lo_row['gap']:+.1f}  ...  "
-          f"{hi_row['economy']} {hi_row['gap']:+.1f}")
-    return {"n_qual": len(q), "median": float(g.median()), "pos": pos,
-            "share_pos": pos / len(q), "iqr": (float(g.quantile(.25)), float(g.quantile(.75))),
-            "mean": float(g.mean())}
-
-
-def run(mi: Micro):
+def main():
+    mi = Micro()
     df = mi.df
-    print("=" * 100)
-    print("U22 — is the connectivity gap in digital-payment use a WITHIN-COUNTRY regularity?")
-    print("     (agenda 5.5; parent U21; 2024 micro, weighted; B17 quota)")
-    print("=" * 100)
-
-    print("\nM3 country-file cross-check:")
-    print("  account       ", mi.gate_country_file("account", "account_t_d", M3_ECONOMIES))
-    print("  anydigpayment ", mi.gate_country_file("anydigpayment", "g20_any", M3_ECONOMIES))
-
-    online = df["internet_use"] == 1
-    offline = df["internet_use"] == 0
     acct = df["account"] == 1
     everyone = pd.Series(True, index=df.index)
 
-    # ------------------------------------------------------------------ PRIMARY
-    print("\n" + "-" * 100)
-    print("PRIMARY (registered) — per-economy connectivity gap in anydigpayment AMONG ACCOUNTHOLDERS")
-    print("-" * 100)
-    tab = per_economy_gap(mi, "anydigpayment", online, offline, acct)
-    stats = describe(tab, "online - offline | accountholders")
-    q = tab[tab["qualifies"]]
+    print("=" * 92)
+    print("U23 — the education gradient in DIGITAL PAYMENT MODE across three untouched streams")
+    print("=" * 92)
 
-    # coverage of the qualifying set, in accountholding respondents
-    acct_n_all = int(acct.sum())
-    acct_n_qual = int(df[acct & df["economy"].isin(q["economy"])].shape[0])
-    print(f"    qualifying economies hold {acct_n_qual}/{acct_n_all} = "
-          f"{acct_n_qual / acct_n_all:.1%} of accountholding respondents")
+    m3 = mi.gate_country_file("account", "account_t_d", M3_ECONOMIES, tol_pp=1.0)
+    print(f"\nM3 (account vs country file, {m3.get('n_economies')} economies): {m3}")
 
-    # pooled over the SAME qualifying set -> composition wedge
-    qual_mask = df["economy"].isin(q["economy"])
-    pool_q, nh, nl = pooled_gap(mi, "anydigpayment", online, offline, acct & qual_mask)
-    pool_all, _, _ = pooled_gap(mi, "anydigpayment", online, offline, acct)
-    print(f"    POOLED over the same {len(q)} economies: {pool_q:+.2f}pp (n {nh}/{nl})")
-    print(f"    pooled over ALL economies (U21's figure): {pool_all:+.2f}pp")
-    print(f"    COMPOSITION WEDGE (pooled_qual - median) = {pool_q - stats['median']:+.2f}pp "
-          f"({(pool_q - stats['median']) / pool_q:.1%} of the pooled gap)")
+    print("\n--- participant base sizes (accountholders, codes 1/2/3) ---")
+    for s in list(STREAMS) + [REFERENCE[0]]:
+        _, n = digital_rate(mi, s, acct)
+        _, n_all = digital_rate(mi, s, everyone)
+        econ = df.loc[acct & df[s].isin([1, 2, 3]), "economy"].nunique()
+        print(f"  {s:22s} n(accountholders)={n:6d}  n(all adults)={n_all:6d}  economies={econ}")
 
-    print("\n    ten largest / ten smallest qualifying gaps:")
-    srt = q.sort_values("gap")
-    for _, r in pd.concat([srt.head(10), srt.tail(10)]).iterrows():
-        print(f"      {r['economy']:28s} online {r['rate_hi']:5.1f}  offline {r['rate_lo']:5.1f}"
-              f"   gap {r['gap']:+6.1f}pp   n {r['n_hi']:5d}/{r['n_lo']:5d}")
+    results = {}
+    print("\n" + "=" * 92)
+    print("PRIMARY — conditional on holding an account")
+    print("=" * 92)
+    for s, label in STREAMS.items():
+        gap, m2 = pooled_block(mi, s, acct, f"{s}: {label}")
+        results[s] = {"gap_cond": gap, "m2": m2}
+    gap_ref, m2_ref = pooled_block(mi, REFERENCE[0], acct, f"{REFERENCE[0]}: {REFERENCE[1]}")
 
-    # ---------------------------------------------------------------- SECONDARY
-    print("\n" + "-" * 100)
-    print("SECONDARY (registered, diagnostic, no bar) — the WITHIN-COUNTRY version of U21's "
-          "absorption result")
-    print("-" * 100)
-    tab_all = per_economy_gap(mi, "anydigpayment", online, offline, everyone)
-    stats_all = describe(tab_all, "online - offline | ALL ADULTS")
-    both = tab.merge(tab_all, on="economy", suffixes=("_acct", "_all"))
-    both = both[both["qualifies_acct"] & both["qualifies_all"] & (both["gap_all"] > 0)]
-    both["absorbed"] = 1 - both["gap_acct"] / both["gap_all"]
-    print(f"\n    economies qualifying on BOTH bases with a positive all-adult gap: {len(both)}")
-    if len(both):
-        a = both["absorbed"]
-        print(f"    MEDIAN absorption by account holding = {a.median():.1%} "
-              f"(IQR {a.quantile(.25):.1%} to {a.quantile(.75):.1%}); U21's pooled figure 55.5%")
-        print(f"    absorption > 0 in {(a > 0).sum()}/{len(a)} economies")
+    print("\n" + "=" * 92)
+    print("SECONDARY 1 — unconditional gap and the ACCESS-ABSORPTION share")
+    print("=" * 92)
+    for s, label in STREAMS.items():
+        gap_u, m2_u = pooled_block(mi, s, everyone, f"{s} (ALL adults): {label}")
+        results[s]["gap_uncond"] = gap_u
+        results[s]["m2_uncond"] = m2_u
+        results[s]["absorption"] = 1 - (results[s]["gap_cond"] / gap_u) if gap_u else np.nan
+    gap_ref_u, _ = pooled_block(mi, REFERENCE[0], everyone, f"{REFERENCE[0]} (ALL adults)")
 
-    # ------------------------------------------------------------------ VERDICT
-    print("\n" + "=" * 100)
-    print("VERDICT (pre-registered bars)")
-    c1 = stats["median"] >= MEDIAN_BAR
-    c2 = stats["share_pos"] >= SHARE_BAR
-    sign_ok = stats["median"] > 0
-    print(f"  C1  median within-economy gap {stats['median']:+.2f}pp "
-          f"(bar >= +{MEDIAN_BAR:.1f}pp) -> {'PASS' if c1 else 'FAIL'}")
-    print(f"  C2  positive in {stats['share_pos']:.1%} of qualifying economies "
-          f"(bar >= {SHARE_BAR:.0%}) -> {'PASS' if c2 else 'FAIL'}")
-    print(f"  B15 registered sign POSITIVE -> observed "
-          f"{'POSITIVE, agrees' if sign_ok else 'NEGATIVE, DISAGREES'}")
-    verdict = "KEEP" if (c1 and c2 and sign_ok) else "DISCARD"
-    print(f"  -> U22 {verdict}")
-    if verdict == "DISCARD":
-        print("     Registered null reading: U21's pooled +13.6pp would then be a between-country")
-        print("     composition fact and the connectivity row of the ruler could not be read as a")
-        print("     within-economy regularity, unlike education (U19) and income (U20).")
-    print("=" * 100)
-    return {"stats": stats, "pooled_qual": pool_q, "pooled_all": pool_all,
-            "wedge": pool_q - stats["median"], "verdict": verdict,
-            "coverage": acct_n_qual / acct_n_all}
+    print("\n" + "=" * 92)
+    print("SECONDARY 2 — WITHIN-ECONOMY gaps (M2 >= 100 on both education cells)")
+    print("=" * 92)
+    for s in STREAMS:
+        w = within_economy(mi, s, acct)
+        if w.empty:
+            print(f"\n  {s}: NO economy qualifies on M2 in both cells — within-country test "
+                  f"cannot be run.")
+            results[s].update({"n_qual": 0, "within_median": np.nan, "within_share": np.nan,
+                               "cover": np.nan})
+            continue
+        base_n = int((acct & df[s].isin([1, 2, 3])).sum())
+        qual_n = int(df[df["economy"].isin(w["economy"]) & acct & df[s].isin([1, 2, 3])].shape[0])
+        med = float(w["gap_pp"].median())
+        share = float((w["gap_pp"] > 0).mean())
+        pooled_qual, _ = digital_rate(
+            mi, s, acct & df["economy"].isin(w["economy"]) & (df["educ"] == 3))
+        pooled_qual_lo, _ = digital_rate(
+            mi, s, acct & df["economy"].isin(w["economy"]) & (df["educ"] == 1))
+        wedge = (pooled_qual - pooled_qual_lo) - med
+        print(f"\n  {s}: {len(w)} economies qualify, holding {qual_n/base_n:.1%} of "
+              f"accountholding participants")
+        print(f"    median gap {med:+.2f}pp | IQR [{w['gap_pp'].quantile(.25):+.2f}, "
+              f"{w['gap_pp'].quantile(.75):+.2f}] | positive in {int((w['gap_pp']>0).sum())}/"
+              f"{len(w)} ({share:.1%})")
+        print(f"    pooled gap over the SAME qualifying set {pooled_qual - pooled_qual_lo:+.2f}pp"
+              f"  ->  composition wedge {wedge:+.2f}pp")
+        ext = w.sort_values("gap_pp")
+        print(f"    range: {ext.iloc[0]['economy']} {ext.iloc[0]['gap_pp']:+.1f} ... "
+              f"{ext.iloc[-1]['economy']} {ext.iloc[-1]['gap_pp']:+.1f}")
+        results[s].update({"n_qual": len(w), "within_median": med, "within_share": share,
+                           "cover": qual_n / base_n})
+
+    print("\n" + "=" * 92)
+    print("VERDICT against the registered bars")
+    print("=" * 92)
+    print(f"\n  reference (U14's wage margin, not part of the bar): conditional gap "
+          f"{gap_ref:+.2f}pp, unconditional {gap_ref_u:+.2f}pp, "
+          f"absorption {1 - gap_ref/gap_ref_u:.1%}")
+    ok = []
+    for s in STREAMS:
+        r = results[s]
+        passed = (r["gap_cond"] >= GAP_BAR) and r["m2"]
+        ok.append(passed)
+        down = ""
+        if passed and pd.notna(r["within_median"]):
+            if r["within_median"] < WITHIN_MEDIAN_BAR or r["within_share"] < WITHIN_SHARE_BAR:
+                down = "  [DOWNGRADE: pooled only, composition-suspect]"
+        print(f"  {s:22s} gap {r['gap_cond']:+7.2f}pp  {'PASS' if passed else 'FAIL'}"
+              f"   (sign {'as registered' if r['gap_cond'] > 0 else 'OPPOSITE to registered'})"
+              f"   within-median {r['within_median']:+.2f}pp"
+              f" pos {r['within_share']:.0%} on {r['n_qual']} economies{down}")
+    absorptions = [results[s]["absorption"] for s in STREAMS]
+    med_abs = float(np.nanmedian(absorptions))
+    print(f"\n  absorption by stream: " +
+          ", ".join(f"{s}={results[s]['absorption']:.1%}" for s in STREAMS))
+    print(f"  median absorption {med_abs:.1%} vs registered bar < {ABSORB_BAR:.0%}: "
+          f"{'CONFIRMED' if med_abs < ABSORB_BAR else 'REJECTED'}")
+    print(f"\n  PRIMARY: {sum(ok)}/3 streams clear +{GAP_BAR}pp  -> "
+          f"{'KEEP' if all(ok) else 'DISCARD (registered all-three bar not met)'}")
 
 
 if __name__ == "__main__":
-    run(Micro())
+    main()
