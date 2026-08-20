@@ -878,3 +878,60 @@ seven corrections and folds in E42–E48; v2 marked SUPERSEDED with its correcti
   in 82 economies — a split-sample module, check the weights before registering), plus `fin32`/
   `fin33`/`dig_account`. `urbanicity` remains the only untouched country frame and is single-wave.
   **B17 is PAID this cycle (U23) and next falls due in three cycles.**
+
+## Addendum (2026-08-20, the second B18 distillation cycle — no experiments)
+
+**The cycle registered nothing.** Rule B18 fired on the **count** branch: ten experiments (U22, E49x,
+E49, E50, E51x, E51, E52, U23, E53, E54) since the 2026-08-16 rewrite, against a corrections count of
+**1 of 5**. This is the mirror of the first firing (corrections 7, count 7 of 10): v3 was stale by
+being **behind**, not by being **wrong**. It was still a full rewrite, and it retired a claim v3 made
+in its newest section. Output: **`PAPER_DRAFT_v4.md`**; v3 SUPERSEDED with its corrections block
+closed and frozen at one item, executed; two new rules **B20** and **B21** in `program_findex.md`.
+
+- **What the rewrite changed, and it is one section.** §8 (the cash side) is rebuilt in full from four
+  experiments. v3's "both margins fall for a decade and then rebound" is **deleted**; the section now
+  carries the four-module screen base rate (2 counter-moving margins from `fin31`, `fin34`, `fin`,
+  `fin43`), E48b's **failed** per-window promotion (weighted 3/3, unweighted 1/3, reproducing E48a's
+  split exactly), E52's audit rejecting both leverage and binary heterogeneity, and E53's attrition
+  correction with the surviving minority V-cluster. §9 gains U22's connectivity axis and U23's
+  four-stream last-mile gradient; §10 gains E54's rejection of the population-gradient defence and
+  E52's ascent-depth symmetry; §13's items 2, 3 and 6 are **closed** by that evidence.
+- **NEW RULE B20 — hold the denominator fixed.** Any path, long difference or Δ must be computed on a
+  **balanced** economy set and must say so; an unbalanced one is not admissible as a primary. Reason:
+  reporting sets are correlated across items within a module, so one large drop-out manufactures
+  apparent co-movement — which is the evidence a co-occurrence claim rests on. Headline coverage
+  (76–77 economies every wave) is why every prior cycle's habits were safe and the first narrow-item
+  path claim was not.
+- **NEW RULE B21 — ascent depth beside G6.** Wherever the lenses disagree, report both the fragility
+  depth (large economies, the G6/B12 direction) and the ascent depth (small economies, the mirror).
+  E52 recommended this as a habit one cycle ago; it is a rule now because §10 could not state its
+  stability result honestly without it. **Neither lens is the stable one.**
+- **ITEM 2.1b's answer is now load-bearing and the defence it closes should not be reopened.** E54's
+  random-split null (`p_perm` 0.209) is recorded in B21's block: the weighted lens is not correctly
+  detecting stronger association among large economies. Item **2.1c** (the 2021→24-only window mean of
+  +0.240, 5 of 6 rails) survives as a lead with the window to be named in advance.
+- **ITEM 8.1 IS THE PROJECT'S HIGHEST-PRIORITY OPEN ITEM**, promoted from "new, high priority" to the
+  top of v4's extension agenda and named in v4 §12 as the largest known **unquantified** risk. Until
+  the ledger-wide reporting-set sweep runs, nobody knows how many other Δ or path claims share E53's
+  failure. Its registered form is unchanged: per column used in a Δ or path claim, the count and
+  population share of economies reporting at *t* and not *t+1*, and the unbalanced-minus-balanced
+  difference. It is cheap and mechanical and should be **the next cycle's slot-3 draw**.
+- **Live items after this cycle.** Program 3: 3.1, 3.2, 3.5, 3.8 (`pan_grp`). Program 4: 4.3 (`fin25`
+  emergency-fund sources); 4.5 blocked. Program 5: closed on the micro half (U22), country half
+  unchanged. Program 7: country half **permanently blocked** (`con` re-checked 2026-08-19); micro half
+  **open**. Items **7.10** (the `fin43c` anchor split — v4 §8.5 states the anchor question the
+  registration must answer), **7.11** (the payer-set ordering in access absorption, 69% institutional
+  vs ~30% self-directed, from a secondary that cleared by 0.6pp), **2.1c**, **8.1**, **3.10** closed by
+  E51. Items **7.7** (closed, failed) and **7.8** (**RETIRED** — the premise was wrong; what replaces
+  it is E53's minority V-cluster, which has no promotion route) are struck.
+- **B2 note for the next cycle — re-derived, not inherited.** No coverage consumed (no outcome
+  computed): country file **70/429 (16%)**, micro **51/192 (27%)**. Untouched country families:
+  `con` (133, blocked), `fin13` (30, 2024 × 27 economies), `fin25` (14, mostly 2024-only), `fin14`
+  (8, 2024 × 27) — **185 columns of which 133 are blocked and the rest fail the wave-coverage floor**,
+  so the country side has **no eligible untouched module left** and B2's cell must come from the micro
+  file or the frames. Untouched micro: **102 columns in 10 families** — `con` (52, blocked),
+  `fin22` (9, borrowing sources), `fin13` (8), `fin24` (7, emergency funds), `fin48`/`fin49` (12,
+  digital-risk exposure — a split-sample module, check the weights first), `fin14` (5), `fin25` (4),
+  `fin39` (4, utility-payment detail), `dig_account` (1). `urbanicity` remains the only untouched
+  country frame and is single-wave. **B17 was paid 2026-08-19 (U23) and next falls due in two
+  cycles**; this skip carries no micro debt, unlike the 2026-08-16 firing.

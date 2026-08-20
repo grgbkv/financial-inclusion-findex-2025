@@ -4,6 +4,22 @@
 ledger over the Global Findex 2025 database (117-economy balanced panel, 2011–2024) and the 2024
 individual-level file (144,090 respondents, 140 economies).
 
+**SUPERSEDED — 2026-08-20.** This draft is replaced in full by `PAPER_DRAFT_v4.md`. It is retained
+as the record of what the project claimed between 2026-08-16 and 2026-08-20; do not cite it, and do
+not update it. Rule B18's distillation trigger reads the highest-numbered `PAPER_DRAFT_v*.md`, which
+is now v4.
+
+**Its corrections block is CLOSED and frozen at one item, executed in v4 §8.4.** The passage in §8
+beginning "Both margins fall for a decade and then rebound" is **wrong**: the four-item paths it
+quotes are computed over whichever economies report each item in each wave, six economies (Algeria,
+China, Iran, Mauritius, Russia, Ukraine) drop out of those items between 2021 and 2024 while
+remaining in the 2024 wave, and on a balanced 71-economy set three of the four items do not rebound
+at all. §13's extension items 2, 3 and 6 are also closed by evidence that post-dates this draft: the
+per-window replication was run and **failed**, the rebound was overturned, and agricultural payments
+was screened and returned a null.
+
+**Original status header follows, for the record.**
+
 **Status of this draft.** v3 replaces v2 (2026-08-01) in full. Every empirical statement is traceable
 to a numbered, pre-registered experiment in `findings.tsv` / `results_prediction.tsv`, run under the
 protocol in `program_findex.md` and indexed one line per experiment in `LEDGER_INDEX.md`. Nothing

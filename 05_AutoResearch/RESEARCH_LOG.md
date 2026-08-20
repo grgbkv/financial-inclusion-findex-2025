@@ -6947,3 +6947,111 @@ ledger is in sync with itself; only the draft is behind it.
 outstanding correction, and — the substantive change this evidence forces — **retiring §8's
 four-item cash-rebound claim and rebuilding the section around what survived a balanced economy
 set**. Companion updates to v3 (SUPERSEDED header), the agenda, and this log.
+
+### The rewrite, executed — 2026-08-20
+
+**`PAPER_DRAFT_v4.md` is written; v3's one outstanding correction is discharged and the block reads
+none outstanding.** Appendix B carries both correction records — v3's single item with the section
+that fixes it, and v2's seven, forwarded for the audit trail.
+
+**The substantive change is one section, rebuilt in full.** §8 was v3's newest and is now v4's most
+revised. Four experiments replaced almost all of it:
+
+1. **§8.1 — the four-module base rate.** `fin31`, `fin34`, `fin` (24 eligible of 93) and `fin43`
+   (4 of 6) have now been screened with the identical four-way orientation instrument, returning
+   **two** counter-moving margins in total: `fin31d` and `fin34c`. E49's null is 0 of 24 with the most
+   negative cell at −0.135; E51's is 0 of 4, and `fin43` was the best remaining *prior* for a third.
+   The section now states the base rate rather than the two hits. Two by-products carried into the
+   text because any future user of the file needs them: `fin26a` at +0.933/+0.852 is a **restatement**
+   of the digital headline and must never be used as an independent margin, and `fin30` is a
+   **declining** margin that is **not** counter-moving (+0.254/+0.306) — the loop's first clean
+   separation of those two ideas.
+2. **§8.2 — E48b's promotion FAILED and the shape of the failure is the result.** Weighted 3/3
+   (+0.795/+0.650/+0.615), unweighted 1/3 (+0.431/+0.243/+0.263). Not a reversal — all six
+   lens-windows are positive — and it reproduces E48a's lens split **exactly** on a different pair of
+   margins in the same two modules. Recorded as `keep-window`, FAILED, per B8.
+3. **§8.3 — why the lenses disagree: neither obvious answer.** E52's registered audit rejects
+   **leverage** (p90-winsorized weights lift `neff` 7.2 → ~32 and leave r_w at +0.418–+0.591, 4/4
+   above the bar; median cap, `neff` ≈ 60, still +0.292–+0.468) and rejects the **binary** tercile
+   pattern (2/4, failing because the *bottom* tercile also clears). `inconclusive` is the verdict and
+   it is a real one, because both mechanisms were what the project had been assuming.
+4. **§8.4 — the rebound was not real.** v3's sentence is deleted, not softened. The balanced-set table
+   (fin31d 40.8/33.4/26.9/26.6, fin34c 14.5/13.1/10.5/15.2, fin42 22.1/15.7/13.3/13.4, fin43c
+   18.6/11.5/9.2/8.8) replaces the unbalanced paths; the six named drop-out economies and China's
+   25.9% share of the 2021 reporting population are given in the text. What replaces the claim is
+   E53's registered minority V-cluster — 10 of 71 on ≥3 of 4 items, 2.11× null, `p_perm` 0.003, CI
+   [7.0%, 22.5%] — with its margin dependence, its India-driven weighted twin and the
+   questionnaire-change alternative all stated as part of the claim rather than appended to it.
+   §8.5 keeps E51's `fin43c` anchor split as an explicitly unregistered lead, and states the question
+   it raises: the two known cash margins **disagree about which anchor** a cash margin runs against.
+
+**§9 gains two micro experiments and a frame fact.** U22 adds the connectivity row to the
+within-country ruler table (median +10.62pp, positive in **55 of 56**, wedge 30%) and raises U21's
+pooled 55.5% absorption to a **median 65.0% within economies**. U23 adds the four-stream last-mile
+education gradient (pensions +6.51 / agriculture +14.16 / utilities +26.07 / wages +35.28pp, all
+intervals excluding zero), with the pension gradient flagged as the fragile one at **83.8%** of
+cluster-bootstrap draws clearing the bar. The **qualifying-set** caveat is promoted into the body: the
+M2 rule decides which economies can be asked the question at all and the qualifying set is not random
+(connectivity 56 of 140 economies, tilted low-connectivity; pensions and agriculture **unrunnable**,
+zero economies qualifying). U23's payer-set ordering (69% institutional vs ~30% self-directed) is
+carried as a lead, with its 0.6pp bar clearance stated.
+
+**§10 gains two results and loses a defence.** Result 4 is new: the natural reply to the de-weighting
+critique — that the weighted lens correctly detects stronger association among large economies — was
+registered fresh by E54 on the six rails × three windows and **failed wide** (mean Δr +0.047 vs a
++0.15 bar, 9 of 18 positive), with the registered random-split null decisive at `p_perm` **0.209**.
+Result 5 is E52's ascent-depth symmetry: the unweighted verdict on the audited cell turns on
+**Bulgaria alone**. §10 also now names the debt it cannot discharge — no experiment has ever checked
+whether its Δ held the economy set fixed.
+
+**Two new rules in `program_findex.md`, both forced by the above.** **B20** (hold the denominator
+fixed) makes a balanced economy set a requirement rather than a caveat, with the reasoning recorded:
+reporting sets are correlated **across items within a module**, so one large drop-out manufactures
+apparent co-movement, which is precisely the evidence a co-occurrence claim rests on. **B21** (ascent
+depth beside G6 wherever the lenses disagree) converts E52's recommendation into a rule one cycle
+after it was made, and carries E54's closing of the size-gradient defence in the same block. v4's
+§2 rules list grows from four to five, and §12's limitations from eight to ten.
+
+**Companion updates.** `PAPER_DRAFT_v3.md` header replaced with a SUPERSEDED block, its corrections
+block closed and frozen at one item marked executed, and its extension items 2/3/6 marked closed by
+post-dating evidence. `EXTENSIONS_DRAFT.md` status block re-pointed at v4, with B20 added as a fourth
+known-wrong class applying to any wave path on a narrow item. `RESEARCH_AGENDA.md` addendum written:
+item 7.8 **struck** (premise wrong, no successor with a promotion route), item 8.1 promoted to the
+project's highest-priority open item, B2's cell re-derived.
+
+**Carried to the next cycle, in priority order.** (1) **Item 8.1, the ledger-wide reporting-set
+sweep**, is the natural slot-3 draw and the only way to size the risk B20 exposes; it is currently
+stated as *unquantified*, which is the honest word and not a comfortable one. (2) **B2 has no
+eligible untouched country module left** — 185 untouched country columns, 133 blocked and the rest
+below the wave-coverage floor — so the breadth cell must come from the micro file (102 columns in 10
+families) or the frames. (3) B17 is paid through two more cycles. (4) The `fin43c` anchor question
+(item 7.10) and the payer-set ordering (7.11) are the two best-specified unregistered leads, and both
+now have their registration requirements written into v4.
+
+## Wrap-up — 2026-08-20
+
+1. **B18 fired on the COUNT branch and the cycle registered no experiments.** Ten experiments since
+   the 2026-08-16 rewrite against a threshold of ten, with corrections at only **1 of 5** — the mirror
+   of the first firing, where the draft was stale by being *wrong* rather than *behind*. It was still
+   a full rewrite: the count branch found more than the corrections branch had, because a correction
+   only ever gets opened by a cycle that trips over it.
+2. **`PAPER_DRAFT_v4.md` is written and §8 is rebuilt in full.** v3's "both margins fall for a decade
+   and then rebound" is **deleted**. The section now leads with the four-module screen base rate
+   (**two** counter-moving margins from `fin31`/`fin34`/`fin`/`fin43`), carries E48b's **failed**
+   promotion (weighted 3/3, unweighted 1/3), E52's audit rejecting both leverage and binary
+   heterogeneity, and E53's balanced-set correction with the surviving minority V-cluster.
+3. **Two new rules, B20 and B21.** B20 requires a **balanced economy set** on any path or Δ and makes
+   an unbalanced one inadmissible as a primary — reporting sets are correlated across items within a
+   module, so one large drop-out manufactures co-movement. B21 requires **ascent depth beside G6**
+   wherever the lenses disagree: on the audited cell the unweighted verdict turns on **Bulgaria
+   alone**, and the project's stability evidence had been one-sided by construction.
+4. **A defence of the weighted lens is now closed.** E54's registered random-split null (`p_perm`
+   **0.209**) means splitting economies by population does no more than splitting them at random, so
+   the ledger's weighted/unweighted disagreements cannot be reread as the weighted lens detecting
+   something real about large economies. This is written into v4 §10 as Result 4 and into B21's block.
+5. **Bookkeeping.** No new experiments, so no new `findings.tsv` rows; the ledger stands at **83 rows,
+   39 keeps**, `make_index.py --check` passes with 0 problems. No status changes were owed and this
+   was checked rather than assumed. B17 paid through two more cycles; B2's cell not consumed and now
+   **has no eligible untouched country module left**; B3 broken by construction. Highest-priority open
+   item is **8.1**, the ledger-wide reporting-set audit. Prediction stream unchanged and **CLOSED**:
+   `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.

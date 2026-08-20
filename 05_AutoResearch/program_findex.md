@@ -376,3 +376,84 @@ authoritative; where it and an earlier block disagree, this table wins.
 
 **A bare `keep` means both lenses agree.** Any status that keeps under one lens must name the lens in
 the claim text, not only in the status field.
+
+---
+
+# Amendment (2026-08-20) — the second B18 firing, and two rules the ten intervening experiments forced
+
+The B18 trigger fired for the second time, this time on the **count** branch: ten experiments (U22,
+E49x, E49, E50, E51x, E51, E52, U23, E53, E54) had run since the 2026-08-16 rewrite, against a
+corrections count of one. Output: `PAPER_DRAFT_v4.md`; v3 marked SUPERSEDED with its corrections block
+closed and frozen at one item, executed. The two rules below are additive; every gate, threshold and
+pre-registration rule above stands unchanged.
+
+**A note on the trigger itself, which its first firing could not show.** B18's own amendment observed
+that the two branches measure different debts — *volume* (the count branch) and *known falsity* (the
+corrections branch) — and instructed the loop not to discount a corrections firing because the count
+was low. The symmetric case has now occurred: this firing had corrections at 1 of 5 and the count at
+10 of 10, i.e. the draft was stale by being **behind** rather than **wrong**. It was still a full
+rewrite cycle, and it retired a claim the draft had made in its newest section. **Do not discount a
+count firing because few corrections are owed.** In practice the count branch found more than the
+corrections branch did, because a correction is only ever opened by a cycle that happens to trip over
+it — E53 opened v3's one item by accident.
+
+## B20 — hold the denominator fixed, and say what it is
+
+**The rule.** Any claim resting on a wave path, a long difference or a Δ must state whether the
+economy set is **balanced across the waves being compared**, and must be computed on a balanced set.
+A path or Δ computed over "whoever reports the item in each wave" is **not admissible** as a primary,
+and a claim already resting on one must be recomputed before it may be repeated. Where an item's
+reporting set changes, report the count and population share of the economies that drop, and name the
+largest of them.
+
+**Why.** E53 found, by accident and while testing something else, that the four-item 2021→24 cash
+rebound this project had spent three cycles calling its clearest unexplained pattern is **largely
+item-level attrition**. Six economies report `fin31d` / `fin34c` / `fin42` / `fin43c` in 2021 and not
+in 2024 — Algeria, China, Iran, Mauritius, Russia, Ukraine — and **all six are present in the 2024
+wave** (`account_t_d` recorded for each), so this is items dropping out of a file, not economies
+dropping out of a survey. China alone holds **25.9%** of the 2021 reporting population on these items
+at levels of 4.5 / 1.3 / 6.2 / 1.1, and removing it lifts the 2021 trough by +5.7 / +2.3 / +1.6 /
++2.0pp. On the balanced 71-economy set the 2021→24 changes are **−0.28 / +4.77 / +0.11 / −0.42**:
+three of the four items do not rebound at all. The pattern reached `PAPER_DRAFT_v3.md` §8 and the
+agenda's item 7.8 before anyone checked the denominator.
+
+**The reason this is a rule and not a caveat.** Reporting sets are **correlated across items within a
+module**, so a single large drop-out makes several items appear to move together — which is exactly
+the evidence a co-occurrence claim rests on. The failure mode is not "a slightly wrong number"; it is
+a manufactured pattern. Note also that headline coverage is no defence: the headline set is reported
+by 76–77 economies in every wave and is effectively balanced, which is precisely why every prior
+cycle's habits were safe and the first narrow-item path claim was not.
+
+**The audit this rule owes** is agenda item 8.1, now the project's highest-priority open item: no
+experiment in the ledger has ever checked whether its wave-to-wave comparison held the economy set
+fixed. Until that sweep runs, the size of this risk across the ledger is **unknown**, and the
+limitation must be stated as unquantified rather than small.
+
+## B21 — ASCENT DEPTH beside G6, wherever the lenses disagree
+
+**The rule.** On any cell where the weighted and unweighted lenses give different verdicts against the
+threshold, report **both** stability depths: the **fragility depth** (fewest greedy removals of large
+economies driving `r_w` below the bar, economies named — the G6/B12 direction) and the **ascent
+depth** (fewest greedy removals driving `r_u` **above** the bar, economies named). Neither number
+alone is stability evidence.
+
+**Why.** G6 and B12 look only at the largest economies, by construction, so the ledger has been able
+to say "it survives dropping the giants" and has never been able to say anything about the small ones.
+E52 computed the mirror for the first time: on the `fin31d`~`fin34c` cell, **removing Bulgaria alone**
+lifts the 2021→24 unweighted r above +0.30, and Ukraine plus Bulgaria does it for 2017→21 — the two
+windows that produced E50's lens split — against weighted fragility depths of 5 / 2 / 2 / 3 named
+economies on the same cells. **Neither lens is the stable one**; the unweighted lens is merely
+unstable in economies nobody names. E52's write-up recommended adopting this as a habit before it
+became a rule; one cycle later it is a rule, because §10 of the draft could not state its
+stability result honestly without it.
+
+**A related result that closes a defence, and belongs beside this rule.** The natural reply to the
+B9/B11/E40 de-weighting critique is that the weighted lens is *correctly* detecting an association
+that is genuinely stronger among large economies. E52 produced an unregistered pattern consistent
+with that (within-tercile `r_u` rising with population size in 4 of 4 cells, mean top-minus-bottom
++0.253); **E54 registered it fresh on the six E28/E30 rails × three windows and it failed wide** —
+mean Δr **+0.047** against a +0.15 bar, positive in **9 of 18**, and, decisively, the registered
+random-split null shows that splitting economies by population does **no more than splitting them at
+random** (band [−0.115, +0.108], `p_perm` 0.209). **The de-weighting critique stands as written and
+this defence of the weighted lens is closed.** Do not re-open it without a design that differs from
+E54's in a stated way.

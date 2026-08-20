@@ -1,20 +1,23 @@
 # Extensions draft — autoresearch session, 2026-07-11 (branch `autoresearch/jul11`)
 
-> ## STATUS BLOCK — 2026-08-16 distillation. THIS FILE IS ABSORBED INTO `PAPER_DRAFT_v3.md`.
+> ## STATUS BLOCK — updated 2026-08-20. THIS FILE IS ABSORBED INTO `PAPER_DRAFT_v4.md`.
 >
-> **Everything in this file that still stands is now written into `PAPER_DRAFT_v3.md` (2026-08-16),
-> which supersedes both `PAPER_DRAFT_v2.md` and this extensions file as the place candidate material
-> is carried.** The prose below dates from **2026-07-11, at experiment 27**, and forty-six
+> **Everything in this file that still stands is now written into `PAPER_DRAFT_v4.md` (2026-08-20),
+> which supersedes `PAPER_DRAFT_v2.md`, `PAPER_DRAFT_v3.md` and this extensions file as the place candidate material
+> is carried.** The prose below dates from **2026-07-11, at experiment 27**, and fifty-six
 > experiments have run since; it is retained as the audit trail for what was proposed and when, not
-> as a live backlog. **Do not lift any passage below into a write-up without checking it against v3.**
+> as a live backlog. **Do not lift any passage below into a write-up without checking it against v4.**
 >
-> Specifically, three things in the text below are known-wrong and are corrected in v3: the
+> Specifically, three things in the text below are known-wrong and are corrected in v4: the
 > three-separate-rails decomposition (failed replication, §5), the welfare "boundary" (demoted to a
 > measure comparison, §7), and every "digitalization signature" phrasing (the window is a
 > balance-sheet window, §4). Two demoted findings — E7 and E5b — appear below and are discards.
 >
-> New candidate material produced after this file was written lives in v3 §8 (the counter-moving
-> cash margins) and v3 §13 (the live extension agenda). **Live agenda items are tracked in
+> New candidate material produced after this file was written lives in v4 §8 (the cash side, rebuilt
+> in full on 2026-08-20 after its rebound premise was overturned) and v4 §13 (the live extension
+> agenda). A **fourth** known-wrong class was added on 2026-08-20 and applies to any passage below
+> quoting a wave path on a narrow item: rule **B20** now requires a balanced economy set, and paths
+> computed over whoever reports in each wave are not admissible. **Live agenda items are tracked in
 > `RESEARCH_AGENDA.md`, not here.**
 >
 > ---
