@@ -27,8 +27,8 @@ The next distillation trigger (B18) reads *this* file.
 Between 2021 and 2024 formal saving in developing economies rose 13.7 percentage points (24.3% →
 38.0% of adults), the largest movement of any financial-inclusion margin in the four wave transitions
 Findex has measured since 2011. We document what that episode was made of, what moved with it, and
-where it stopped, from a ledger of 83 pre-registered tests of which 44 were discarded or returned
-inconclusive.
+where it stopped, from a ledger of 83 logged experiments — 81 pre-registered tests, of which 40 were
+discarded and 2 returned inconclusive, plus 2 mandatory exploratory mapping passes.
 
 Four findings. **First**, within the window the surge is predominantly *new* saving rather than a
 relabelling of informal saving: 77% of the formal gain appears in total saving, and informal saving
@@ -71,12 +71,12 @@ and where it stopped.
 The contribution is descriptive and deliberately bounded. There is no instrument, no policy
 discontinuity and no within-country repeated observation of individuals; almost every country-level
 association reported here is a co-movement of changes. What the paper offers instead is *discipline
-over a large hypothesis space*: 83 hypotheses were registered with a stated keep threshold, and from
+over a large hypothesis space*: 81 hypotheses were registered with a stated keep threshold, and from
 2026-08-15 a stated predicted **sign**, before the answer was computed; every one — kept or discarded
 — is logged with its effect size, gate results, both weighting lenses and its effective sample size;
-and 44 were discarded or returned inconclusive. Applied cross-country work on Findex rarely reports
-its discards; the informative nulls in Sections 7, 8 and 9 are the part of this paper we would most
-like readers to take.
+and 42 of the 81 were discarded or returned inconclusive. Applied cross-country work on Findex
+rarely reports its discards; the informative nulls in Sections 7, 8 and 9 are the part of this paper
+we would most like readers to take.
 
 **What changed from v3, stated up front.** v3's newest section reported two country-file margins that
 run *against* the digital-payment headline and stated that both "fall for a decade and then rebound",
