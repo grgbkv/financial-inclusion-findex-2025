@@ -6900,3 +6900,50 @@ and a within-tercile r on ~19–26 economies is noisy. Descriptive, never causal
    B15 signs registered and reported on all three. B6 intervals on all three. `make_index.py --check`
    passes at 83 rows, 0 problems. Prediction stream unchanged and **CLOSED**: `account_t_d`
    **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-20 — B18 DISTILLATION CYCLE (no experiments registered)
+
+## The trigger check, run at rule B1's coverage point, as B18 requires
+
+- `python3 make_index.py` → **83 experiments**, 39 keeps, **0 rule problems** (`--check` exits 0).
+- `python3 coverage.py` → country file **70/429 columns touched (16%)**, micro **51/192 (27%)**.
+  Untouched country modules: `con` (133 cols, blocked for want of a questionnaire), `fin13` (30),
+  `fin25` (14), `fin14` (8) — 185 columns in 4 families, of which only `fin25` has ≥2 usable waves
+  and 133 are blocked. Untouched micro: 102 columns in 10 families. All four wave transitions used
+  (19 / 71 / 134 / 298 mentions). `urbanicity` remains the only unused country frame (single-wave).
+- **B18 trigger — FIRED on the COUNT branch.** `PAPER_DRAFT_v3.md` is the highest-numbered draft
+  (B18 amendment 2026-08-16) and carries **1** CORRECTIONS OWED item against a threshold of five, so
+  the corrections branch has **not** fired. The count branch has: the last distillation was
+  2026-08-16 at experiment count **73**, the ledger now stands at **83**, i.e. **exactly 10
+  experiments since** (U22, E49x, E49, E50, E51x, E51, E52, U23, E53, E54) against a threshold of
+  ten. The 2026-08-19 wrap-up predicted this firing in advance and it is confirmed here.
+- **The two branches measure different debts (B18's own note), and this firing is the mirror of the
+  first one.** On 2026-08-16 the corrections branch fired at 7 while the count branch stood at 7 of
+  10: the draft was stale by being **wrong**. Today the count branch fires at 10 of 10 while
+  corrections stands at 1 of 5: the draft is stale by being **behind**. Both are full rewrite cycles;
+  B18's amendment says explicitly not to discount a firing because the other branch is low, and the
+  symmetric case holds — do not discount this one because only one correction is owed.
+
+**Consequence, per B18: this cycle registers NO new experiments.** All three cycle slots
+(untouched-module screen, micro `U` experiment, replication/promotion pass) are skipped.
+
+**Quota bookkeeping under the skip.** B17 (micro quota) was **paid last cycle by U23** and next falls
+due in three cycles, so unlike the 2026-08-16 firing this skip carries no unpaid micro debt — the
+2026-08-16 lesson was learned by paying the quota early, as its addendum instructed. B2's breadth
+cell is **not consumed** (no outcome is computed), so it is wide open for the next cycle. B3's
+lineage chain is broken by construction: nothing descends from anything this cycle.
+
+**Status changes owed: NONE, and this was checked rather than assumed.** E48b is recorded as
+`keep-window`, FAILED promotion (E50); E52 is `inconclusive` and its unregistered size gradient was
+registered fresh and rejected (E54), so no status rests on it; E53 is `keep-window` with **no
+promotion route** by construction. The demotions from 2026-08-11 (E7, E5b) stand executed. The
+ledger is in sync with itself; only the draft is behind it.
+
+## What this cycle produces instead
+
+`PAPER_DRAFT_v4.md`: a full rewrite folding in all ten unseen experiments, discharging v3's single
+outstanding correction, and — the substantive change this evidence forces — **retiring §8's
+four-item cash-rebound claim and rebuilding the section around what survived a balanced economy
+set**. Companion updates to v3 (SUPERSEDED header), the agenda, and this log.
