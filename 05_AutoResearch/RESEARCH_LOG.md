@@ -7392,3 +7392,35 @@ everywhere else**: three of four transitions are clean at a median of exactly ze
 window has a systematic six-economy item-level dropout led by China that biases roughly three in ten
 of its cells by ≥2pp. **Corrections are owed on `fin32_acc` (E10, `keep-general`) and on the whole
 `fh` family (E33, `keep-window`)**, neither of which E53 had touched.
+
+## Wrap-up — 2026-08-21
+
+1. **Three experiments, one keep, one discard that pays a debt, and one module opened.** B18 did not
+   fire (corrections 0 of 5, count 0 of 10), so this was a normal cycle: **U24x** (exploratory
+   mapping), **U24** (`keep`), **E55** (`discard`, Branch 3). Ledger now **86 rows, 40 keeps**,
+   `make_index.py --check` clean.
+2. **U24 — the access-absorption ruler is a USAGE instrument and does not reach welfare.** On the
+   same 98-economy 2024 sample, account holding absorbs **56.9%** of the education gradient in
+   digital-payment use and **8.6%** of the gradient in emergency-fund resilience; the bootstrap
+   intervals **[+38.4%, +72.8%]** and **[−3.1%, +21.1%]** do not overlap and the resilience interval
+   contains zero. Within-country the conditional gap is positive in **64 of 64** qualifying
+   economies. This is the country stream's thrice-repeated resilience null (E2, E15, E26) seen from
+   the individual side, and it is the first individual-level result Program 4 has.
+3. **E55 — agenda item 8.1 is ANSWERED and the registered claim FAILED, which is the point.** The
+   reporting-set risk is **not localized to narrow items** (13.9% of cells ≥2pp against a <10% bar;
+   8 keep-backing cells against a bar of zero) but it **is localized to one window**: 0/6, 2/33,
+   1/43 and **16/55 (29.1%)** across the four transitions, with a median discrepancy of **exactly
+   0.000pp** in the three earlier windows. The registered mechanism check fires at **38 of 40
+   (95.0%)** — the bias points away from where the droppers sat, predictably.
+4. **Two corrections opened in `PAPER_DRAFT_v4.md`, on keeps E53 never touched.** `fin32_acc` (E10's
+   wage rail, `keep-general`) reads **−3.21pp unbalanced and +4.40pp balanced** over 2021→24, and
+   the whole `fh` family (E33) flips the same way. The affected *associations* are Δ→Δ and balanced
+   by construction; what is wrong is any statement about these margins' **aggregate direction**.
+   v4's corrections branch stands at **2 of 5**, its count branch at **3 of 10**.
+5. **A method worth more than the module it opened.** U24x identified eleven numerically-coded micro
+   columns by matching per-economy weighted shares against the labelled country file — **exact, max
+   |dev| 0.0000pp on 98 economies**. Any numerically-coded micro module with a labelled country twin
+   can be opened this way. `con` stays blocked (its country twin is unlabelled too), but `fin13`,
+   `fin14` and `fin22` should be tried with it before being written off. B2's cell was paid by these
+   eleven columns; **B17 paid by U24**, next due in three cycles. Prediction stream unchanged and
+   **CLOSED**: `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
