@@ -7217,3 +7217,178 @@ holds. This measures a distinct risk and has no verdict rule attached.
 reported cell carries its n and population share by construction; G5 na (no level claim against an
 official aggregate); G6 na (no association is claimed — the audit's unit is a discrepancy, not a
 correlation).
+
+---
+
+# Cycle 2026-08-21 — RESULTS
+
+## U24x — EXPLORATORY mapping pass: the micro emergency-fund module is OPENED and fully identified
+
+Commit `574c6f4`. Status `exploratory`. No hypothesis, no keep — logged before U24 under the peek rule.
+
+**The obstacle and the fix.** The eleven columns carry **numeric codes, not text labels**, despite the
+file being the "labelled" release — the same wall that blocks `con` at both levels. It was cleared
+mechanically rather than by codebook: for every column × every code, the **per-economy weighted
+share** was matched against every labelled country-file `fin24*`/`fin25*` column. Where a micro code
+*is* a country indicator the deviation is not small, it is **zero**.
+
+**The identification, median |dev| = 0.000pp and max 0.000pp over 98 economies unless noted:**
+
+- **`fin24` = MAIN SOURCE of emergency funds.** 1 savings (`fin24sav`), 2 family/friends
+  (`fin24fam`), 3 money from working (`fin24work`), 4 borrowing (`fin24bor`), 5 selling assets
+  (`fin24sell`), 6 other (`fin24other`), 7 not possible (≈`fin24aN`, med dev 2.40 — the only
+  inexact one), 8/9 DK/RF. Pooled weighted composition: family/friends **37.5%**, money from working
+  **16.8%**, savings **16.3%**, selling assets **10.9%**, borrowing **7.4%**, not possible **6.3%**.
+- **`fin24a` = DIFFICULTY**, asked only of codes 1–6. 1 very difficult (`fin24aVD`), 2 somewhat
+  difficult (`fin24aSD`), 3 not difficult (`fin24aND`), 4/5 DK/RF.
+- **`fin24b` codes 1/2/3/4 = `fin24ba`/`bb`/`bc`/`bd`** exactly; **`fin24c` code 1 = `fin24c`** exactly.
+- **M3, EXACT on the outcome U24 uses.** `fin24a ∈ {2,3}` over the `fin24` denominator reproduces
+  **`fin24aSD_ND`** — the harness's own declared `resilience` headline — with **max |dev| = 0.0000pp
+  on all 98 economies**. The four sibling columns `fin24aVD`/`SD`/`ND`/`aP` reproduce exactly too.
+
+**A frame fact.** The module covers **98 economies and 102,954 respondents (71.5% of the file)**.
+This is an **economy-level** subsample, not a within-economy split sample — the 98 economies are
+complete — so `wgt` is the correct weight inside them and the 2026-08-19 split-sample warning does
+not bite here. `fin24d1`/`d2` (24,335) and `fin24d3` (15,358) *are* conditional sub-branches and
+qualify only 82 / 82 / 59 economies at M2.
+
+**A label correction owed to this cycle's own pre-registration.** The registration described the
+outcome as the "'very possible' or 'somewhat possible'" item. The item is a **difficulty** scale, not
+a possibility scale; the registered *target* — "the `fin24aSD_ND`-equivalent validated in U24x" — is
+unambiguous and is what U24 used. The parenthetical guess was wrong, the referent was not.
+
+**Coverage consumed.** Eleven previously untouched micro columns. This is rule **B2**'s breadth cell.
+
+## U24 — KEEP. The access-absorption ruler does NOT transfer to the welfare margin
+
+Commit `0148c97`. Stream micro. Status **`keep`**. Parent: none (new module). Design
+`micro-cross-section`, 2024, single wave, cross-sectional — **no trend language**.
+
+**Verdict against the registered bar (educ ≥ 2 vs educ == 1, 98 economies, 102,530 respondents):**
+
+1. unconditional gap **+22.10pp** (64.4 vs 42.3) ≥ +5 and POSITIVE as registered — **PASS**;
+2. absorption **8.6%** < 40% — **PASS**;
+3. account-conditional gap **+20.20pp** (68.9 vs 48.7) ≥ +5 and POSITIVE — **PASS**.
+
+**The benchmark is the result.** Computed on the *same 98-economy sample, same split, same weights*,
+the usage margin `anydigpayment` absorbs **56.9%** of its education gradient against the welfare
+margin's **8.6%**. On the ledger's usual split (`educ==3` vs `educ==1`) the two are **64.0%** and
+**12.3%** — and the 64.0% reproduces the standing U10/U19 figure that `PAPER_DRAFT_v4`'s abstract
+quotes, on a sample that was chosen by the module's coverage and not by this experiment. **Account
+holding is the gate on *using* the system and is not a gate on *withstanding a shock*.**
+
+**B6 inference.** Country-clustered bootstrap, 2,000 draws, percentile intervals. Resilience
+absorption **[−3.1%, +21.1%]**; digital-payment absorption **[+38.4%, +72.8%]**. The two intervals
+**do not overlap**, and the resilience interval sits entirely below the registered 40% bar while
+containing zero — i.e. the point estimate of 8.6% is not distinguishable from *no absorption at all*.
+Gap intervals: resilience uncond **[+19.47, +24.87]**, cond **[+16.02, +24.78]**; digital payment
+uncond **[+23.53, +31.75]**, cond **[+7.25, +17.33]**.
+
+**Registered secondary — the within-country check, and it is unanimous.** Of the 98 economies, **64
+qualify M2** (≥100 unweighted in both education cells within `account == 1`), holding **69.5% of
+accountholding respondents** — a far better qualifying share than U22's connectivity axis (40.8%) and
+comparable to U19's. The account-conditional education gap in resilience is **positive in 64 of 64
+(100%)**, median **+20.61pp**, against a registered bar of ≥75%. This is not a between-country
+composition artifact. The benchmark margin on the same 64 economies is positive in 63 of 64 at a
+median of **+9.36pp** — *less than half* the resilience gap's within-country median, which is the
+same contrast the pooled absorption figures give, arrived at without pooling. On the ledger-standard
+split only **23 economies** qualify (16.7% of accountholding respondents, the tertiary cell being
+thin outside richer economies) and both margins are positive in 23 of 23, at medians of **+33.39pp**
+(resilience) and **+18.04pp** (digital payment).
+
+**Reproducibility note.** The first run crashed in the final print of this secondary (a format-string
+argument count) after the primary and the bootstrap had printed. The print was fixed and the whole
+experiment re-run end to end: every number above, including the seeded 2,000-draw bootstrap, is
+**identical** across the two runs.
+
+**Kish neff.** The micro weights are not concentrated the way the country weights are: `neff` =
+**66,982** on a nominal n of **102,530** (ratio 0.65). The B10 warning about `neff` ≈ 7 is a
+statement about the *country* file and does not transfer here; the binding constraint on this claim
+is that economies are not independent draws, which the country-clustered bootstrap above addresses
+and the within-country count above addresses differently.
+
+**What this closes and what it does not.** It converges from the individual side with the country
+stream's three-times-repeated resilience null (E2, E15, E26): digitalization and account access do
+not reach the welfare margin. It is a **2024 cross-sectional description** and says nothing about
+change. And it does not say resilience is *un*-graded — the gradient is **+22pp and one of the
+largest in the micro ledger**; it says the gradient does not run *through the account*.
+
+## E55 — DISCARD (Branch 3). The registered "localized" claim is REJECTED: the reporting-set risk is real, and it is a 2021→2024 phenomenon
+
+Commit `91e972c`. Stream hypothesis. Design `audit`. Frame `pan_dev`. Parent E53. Agenda item **8.1**.
+
+**The audit.** 429 country columns → **76 ledger-touched** → **58 eligible** (≥30 developing-panel
+economies in ≥2 waves) → **137 column × transition cells over 57 columns**, across all four
+transitions. Every cell reports n at *t*, n at *t+1*, the balanced intersection, droppers, adders,
+the dropper population share, the largest dropper by name, and Δ_unbalanced − Δ_balanced.
+
+**Verdict against the three pre-registered branches:**
+
+- **(a) median |discrepancy| = 0.0000pp** (bar < 0.50) — **PASS**. More than half the ledger is
+  exactly balanced: **78 of 137 cells (56.9%)** have zero droppers and zero adders.
+- **(b) cells with |discrepancy| ≥ 2.0pp: 19 of 137 = 13.9%** (bar < 10%) — **FAIL**.
+- **(c) keep-backing cells with |discrepancy| ≥ 2.0pp: 8** (bar 0) — **FAIL**.
+- **⇒ BRANCH 3: DISCARD.** The registered claim that E53's failure is localized to narrow items does
+  not survive its own bar.
+
+**The shape of the failure, which is the useful part.** The exposure is **not spread over the
+ledger — it is one window**. Cells above the 2pp bar by transition: 2011→14 **0 of 6**, 2014→17
+**2 of 33 (6.1%)**, 2017→21 **1 of 43 (2.3%)**, 2021→24 **16 of 55 (29.1%)**. Median |discrepancy|
+is **0.000pp** in the three earlier windows and **0.534pp** in 2021→24. The distribution is bimodal,
+not heavy-tailed: p50 = 0.000, p75 = 0.501, p90 = 3.452, p100 = 31.222.
+
+**Every keep-backing failure is 2021→2024 and every one names China.** Eight cells, dropper counts of
+five or six economies holding **31.7–32.3%** of the *t* reporting population, China the largest at
+**26.4–27.2%**:
+
+| column | Δ unbalanced | Δ balanced | discrepancy |
+|---|---|---|---|
+| `fin32_acc` (E10's wage rail, `keep-general`) | −3.21 | **+4.40** | **−7.61** |
+| `fin31d` (E45/E48b cash margin) | +6.10 | **−0.38** | **+6.48** |
+| `fh1_fh2` (E33's welfare margin) | −0.85 | **+2.70** | −3.55 |
+| `fh2` | −0.67 | **+2.72** | −3.39 |
+| `fh1` | −1.40 | **+1.81** | −3.22 |
+| `fin34c` (E47's counter-moving margin) | +7.27 | +4.76 | +2.51 |
+| `fin43c` | +2.20 | −0.31 | +2.51 |
+| `fin42` | +2.60 | +0.26 | +2.34 |
+
+**Four of these eight change SIGN between the unbalanced and balanced series** — `fin32_acc`, `fh1`,
+`fh2`, `fh1_fh2` all read as *falling* on the reporting set and *rising* on the balanced set;
+`fin31d` and `fin43c` read as rising unbalanced and flat-to-falling balanced. E53's correction on
+`fin31d`/`fin34c`/`fin42`/`fin43c` is reproduced exactly here as a by-product, which is the audit
+working.
+
+**The registered sign check (B15) confirms the mechanism, decisively.** On the 40 cells with a
+non-trivial drop (≥3 economies or ≥5% of the *t* population), the sign of the discrepancy matches
+`sign(retained mean − dropped mean)` at *t* in **38 of 40 = 95.0%**, against a registered bar of
+"a majority". Mean |discrepancy| is **3.113pp** on non-trivial-drop cells against **0.085pp**
+elsewhere. This is not noise: an unbalanced Δ is biased *away from where the droppers sat*, by an
+amount the drop size predicts.
+
+**A robustness read, reported and NOT used to move the bar.** Ten of the 137 cells are `_s`
+conditional columns, which `HARNESS_V2_NOTES` item 10 already records as unusable and which no claim
+rests on; the detector picked them up because the ledger *discusses* them. Excluding them, bar (b) is
+**13 of 127 = 10.2%** — which still fails the <10% bar, and branch (c)'s eight failures contain no
+`_s` column at all. The verdict does not turn on this.
+
+**Labelled diagnostic, no verdict attached — the SAMPLE exposure of association designs.** Δ→Δ
+correlations are balanced automatically by the pairwise-complete construction, so they cannot suffer
+the bias above; what they lose is sample. Against a 77-economy headline panel: E12, E11 hold 76–77
+economies and 97–100% of panel adult population in every window; the three mobile-money rails (E1,
+E13, E14) run on **54–59 economies and 67–71%** throughout, which is a coverage fact about
+`mobileaccount_t_d` and not attrition; and **E10's wage rail falls from 77 economies / 100% in
+2014→17 and 2017→21 to 71 economies / 69% in 2021→24** — the same six-economy drop, seen as a sample
+loss rather than as a bias.
+
+**Two post-run patches, disclosed.** The labelled diagnostic block crashed on the 2011→2014 window
+(`mobileaccount_t_d` has no 2011) and used a mismatched population denominator across waves. Both
+were fixed after the primary bars had been computed and printed; **the primary, the branch and the
+sign check are byte-identical before and after** — the patches touch only the diagnostic that carries
+no verdict rule.
+
+**What this owes the paper.** `PAPER_DRAFT_v4.md` §12 states this risk as *unquantified*. It is now
+quantified and it is **larger than the loop assumed on the narrow-item block and smaller than feared
+everywhere else**: three of four transitions are clean at a median of exactly zero, and the 2021→24
+window has a systematic six-economy item-level dropout led by China that biases roughly three in ten
+of its cells by ≥2pp. **Corrections are owed on `fin32_acc` (E10, `keep-general`) and on the whole
+`fh` family (E33, `keep-window`)**, neither of which E53 had touched.

@@ -213,7 +213,8 @@ def main():
         if len(wd):
             print("  %-17s digitalpay: %d economies qualify, median gap %+.2fpp, "
                   "positive in %d/%d (%.1f%%)"
-                  % (tag, len(wd), wd["gap"].median(), int((wd["gap"] > 0).sum()), len(wd)))
+                  % (tag, len(wd), wd["gap"].median(), int((wd["gap"] > 0).sum()), len(wd),
+                     100 * float((wd["gap"] > 0).mean())))
 
     print("\nVERDICT AGAINST THE REGISTERED BAR (educ>=2 vs educ==1):")
     b1 = P["uncond"] >= 5.0

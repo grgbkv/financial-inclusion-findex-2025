@@ -935,3 +935,71 @@ closed and frozen at one item, executed; two new rules **B20** and **B21** in `p
   `fin39` (4, utility-payment detail), `dig_account` (1). `urbanicity` remains the only untouched
   country frame and is single-wave. **B17 was paid 2026-08-19 (U23) and next falls due in two
   cycles**; this skip carries no micro debt, unlike the 2026-08-16 firing.
+
+## Addendum (2026-08-21, from the U24x/U24/E55 cycle)
+
+- **ITEM 8.1 IS ANSWERED, and the answer is "one window, not the whole ledger".** E55's registered
+  localization claim is **REJECTED at Branch 3** on its own bars — (b) 19 of 137 cells at ≥2pp =
+  **13.9%** against a <10% bar, and (c) **8 keep-backing cells** against a bar of zero — but the
+  shape of the failure is the usable result. Cells above 2pp by transition: 2011→14 **0/6**, 2014→17
+  **2/33**, 2017→21 **1/43**, 2021→24 **16/55 (29.1%)**. Median |discrepancy| is **exactly 0.000pp**
+  in the three earlier windows and 0.534pp in 2021→24; **78 of 137 cells (56.9%) are perfectly
+  balanced**. The registered mechanism check fires at **38 of 40 (95.0%)**: the discrepancy's sign
+  follows `sign(retained − dropped)` at *t*, so the bias is predictable from the drop, not random.
+- **TWO NEW CORRECTIONS OWED in `PAPER_DRAFT_v4.md` (its corrections branch now reads 2 of 5).**
+  `fin32_acc` — **E10's wage rail, a `keep-general`** — reads **−3.21pp** unbalanced and **+4.40pp**
+  balanced over 2021→24 (discrepancy −7.61, the largest non-`_s` figure in the audit). The entire
+  `fh` family — **E33's second welfare margin** — flips the same way (`fh1` −1.40 → +1.81, `fh2`
+  −0.67 → +2.72, `fh1_fh2` −0.85 → +2.70). **E53 had touched neither.** The associations themselves
+  are Δ→Δ and balanced by construction; what is wrong is any statement about the **aggregate
+  direction** of these margins in 2021→24.
+- **NEW ITEM 8.2 — the 2021→24 six-economy item block, now the best-specified open question on the
+  country side.** Five or six economies holding **31.7–32.3%** of the *t* reporting population drop
+  out of the narrow-item block between 2021 and 2024 while remaining in the wave, China alone at
+  **26.4–27.2%**. E53 named them on four cash items; E55 shows the same block hitting `fin32_acc`,
+  `fin31a`, `fin34a`, `fin30`, `fin32`, `fin31a_31b` and the three `fh` columns. The registered
+  question is whether the affected columns share a **questionnaire module** or a **country-file
+  release rule**, since a single cause would let every affected claim be corrected at once rather
+  than one at a time.
+- **NEW ITEM 8.3 — SAMPLE exposure is a second, separate risk and it is now measured.** E55's
+  labelled diagnostic: E12 and E11 hold 76–77 economies and 97–100% of panel adult population in
+  every window, but the three **mobile-money rails (E1, E13, E14) run on 54–59 economies and 67–71%
+  of the population throughout** — a coverage property of `mobileaccount_t_d`, not attrition — and
+  **E10's wage rail falls from 77 economies / 100% to 71 / 69% in exactly the 2021→24 window its keep
+  is measured in**. Nothing in the ledger reports the population share behind an association. The
+  registered form is a standing reporting requirement, not an experiment.
+- **THE MICRO EMERGENCY-FUND MODULE IS OPEN and fully identified (U24x).** The 11 columns carry
+  numeric codes; they were identified by matching per-economy weighted shares against the labelled
+  country file, at **median |dev| 0.000pp and max 0.000pp on 98 economies**. `fin24` is the **main
+  source** of emergency funds (savings / family-friends / working / borrowing / selling assets /
+  other / not possible), `fin24a` the **difficulty** follow-up, and `fin24a ∈ {2,3}` over the `fin24`
+  denominator **is** the harness's `resilience` headline `fin24aSD_ND`, exactly. **This method
+  generalizes**: any numerically-coded micro module with a labelled country-file twin can be opened
+  the same way, which is the first crack in the wall that blocks `con`. `con` itself stays blocked —
+  its country twin is unlabelled too — but the technique should be tried on `fin13`/`fin14`/`fin22`
+  before those are written off.
+- **U24 KEEPS and Program 4's welfare margin now has an individual-level result.** Account holding
+  absorbs **56.9%** of the education gradient in digital-payment use and **8.6%** of the gradient in
+  emergency-fund resilience, on the same 98-economy sample; bootstrap intervals **[+38.4%, +72.8%]**
+  and **[−3.1%, +21.1%]** do not overlap, and the resilience interval contains zero. Within-country,
+  the account-conditional gap is positive in **64 of 64** qualifying economies (median +20.61pp).
+  The ledger's access-absorption ruler is a **usage** instrument and does not reach welfare — which
+  is the country stream's E2/E15/E26 resilience null seen from the individual side.
+- **NEW ITEM 4.6 — the SOURCE composition of emergency funds, the cycle's clearest unregistered
+  lead.** U24x's mapping (an exploratory pass, so nothing here is claimable) shows the pooled main
+  source is **family/friends 37.5%**, working 16.8%, **savings only 16.3%**, selling assets 10.9%,
+  borrowing 7.4%. The registered question is whether the *source* is education- or income-graded in
+  the direction the balance-sheet story predicts — savings-side up the gradient, family/friends down
+  — with the **sign named per source in advance** (B15), and whether account holding absorbs the
+  savings-source gradient the way it absorbs usage. `fin24b` (the second source) supports the same
+  design and reproduces `fin24ba`–`bd` exactly.
+- **B2 note for the next cycle — re-derived, not inherited.** Country file **70/429 (16%)**: E55
+  reused touched columns by construction (its audit set *is* the touched set) and bought its breadth
+  in design. Micro **62/192 (32%)** after U24x's eleven. Reachable untouched micro: `con` (52,
+  blocked), `fin22` (9, borrowing sources), `fin13` (8), `fin48`/`fin49` (12, digital-risk exposure —
+  split-sample, check the weights, and try U24x's country-twin matching method first), `fin14` (5),
+  `fin39` (4), `dig_account` (1). `urbanicity` remains the only untouched country frame and is
+  single-wave. **B17 was paid this cycle (U24) and next falls due in three cycles.**
+- **B18 state after this cycle.** Corrections branch **2 of 5** (both opened by E55); count branch
+  **3 of 10** (U24x, U24, E55 since the 2026-08-20 rewrite). Neither fires next cycle unless the
+  next cycle opens three more corrections.

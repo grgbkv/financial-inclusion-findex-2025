@@ -15,10 +15,26 @@ being **behind**, where v2 had been stale by being **wrong**. In the event the t
 both jobs — they discharge v3's one outstanding correction and they retire a claim v3 made in its
 newest section.
 
-**CORRECTIONS OWED: none outstanding.** v3's single item — §8's "2021→24 rebound" paragraph — is
-executed here; the passage is deleted rather than softened and §8 is rebuilt around what survives a
-balanced economy set. v3's own discharge table for v2's seven items is carried forward as Appendix B.
-The next distillation trigger (B18) reads *this* file.
+**CORRECTIONS OWED: 2 items, opened 2026-08-21 by E55.** v3's single inherited item — §8's
+"2021→24 rebound" paragraph — was executed in this draft; the passage is deleted rather than softened
+and §8 is rebuilt around what survives a balanced economy set. v3's own discharge table for v2's
+seven items is carried forward as Appendix B. The next distillation trigger (B18) reads *this* file,
+and its corrections branch now stands at **2 of 5**.
+
+1. **§12's reporting-set limitation is no longer "unquantified", and its size on 2021→24 is larger
+   than this draft assumes.** E55's ledger-wide sweep (137 column × transition cells over 57 columns)
+   finds three of the four transitions clean at a **median discrepancy of exactly 0.000pp**, and the
+   2021→24 window carrying a systematic six-economy item-level dropout led by **China (26–27% of the
+   reporting population)** that biases **29.1%** of its cells by ≥2pp. Wherever §12 says the risk is
+   unquantified, it must instead say: *quantified, concentrated in one window, and material there*.
+2. **Two standing keeps are exposed and their aggregate wave-to-wave movements change sign on a
+   balanced set.** `fin32_acc` (E10's wage rail, `keep-general`) reads **−3.21pp** unbalanced and
+   **+4.40pp** balanced over 2021→24, a discrepancy of −7.61pp — the largest non-`_s` figure in the
+   audit. The whole `fh` family (E33's second welfare margin, `keep-window`) flips the same way:
+   `fh1` −1.40 → +1.81, `fh2` −0.67 → +2.72, `fh1_fh2` −0.85 → +2.70. **Neither was touched by
+   E53.** The E10/E33 *associations* are Δ→Δ correlations and are balanced by construction, so what
+   is wrong is any statement in this draft about the **aggregate direction** of these margins over
+   2021→24 — those must be recomputed on the balanced 71/69-economy set before they are repeated.
 
 ---
 

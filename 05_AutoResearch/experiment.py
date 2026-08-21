@@ -224,12 +224,18 @@ def main():
         for (a, b) in TRANSITIONS:
             w = fx.country_panel(frame, x, [a, b]).join(
                 fx.country_panel(frame, y, [a, b]), lsuffix="_x", rsuffix="_y")
+            need = ["%d_x" % a, "%d_x" % b, "%d_y" % a, "%d_y" % b]
+            if any(k not in w.columns for k in need):
+                line.append("%d-%d n/a" % (a, b))
+                continue
             dx = w["%d_x" % b] - w["%d_x" % a]
             dy = w["%d_y" % b] - w["%d_y" % a]
             m = dx.notna() & dy.notna() & w["pop_x"].notna()
             n = int(m.sum())
-            base = frame[frame["year"] == b].dropna(subset=["account_t_d", "pop_adult"])
-            share = (w.loc[m, "pop_x"].sum() / base["pop_adult"].sum()) if n else np.nan
+            # denominator held fixed at the 2024 adult population of the whole dev panel,
+            # so the shares are comparable across windows (rule B20's own logic)
+            base_pop = frame[frame["year"] == 2024]["pop_adult"].sum()
+            share = (w.loc[m, "pop_x"].sum() / base_pop) if n else np.nan
             line.append("%d-%d n=%d (%.0f%% pop)" % (a, b, n, 100 * share))
         print("  %-24s %s  [headline set: %d economies]"
               % (label, " | ".join(line),
