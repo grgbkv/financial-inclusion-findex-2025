@@ -7055,3 +7055,165 @@ now have their registration requirements written into v4.
    **has no eligible untouched country module left**; B3 broken by construction. Highest-priority open
    item is **8.1**, the ledger-wide reporting-set audit. Prediction stream unchanged and **CLOSED**:
    `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-21 — PRE-REGISTRATION
+
+## Mandatory cycle-start checks
+
+**B18 distillation trigger — DOES NOT FIRE.** Evaluated against the highest-numbered draft,
+`PAPER_DRAFT_v4.md` (B18 amendment 2026-08-16). Corrections branch: the CORRECTIONS OWED block reads
+"none outstanding" — **0 of 5**. Count branch: the last distillation completed 2026-08-20 at
+experiment count 83, and **0 experiments** have run since — **0 of 10**. Neither branch fires; this is
+a normal experiment cycle.
+
+**B1 coverage run — done before any hypothesis was chosen.** `python3 coverage.py`: country file
+**70/429 columns (16%)**, micro file **51/192 (27%)**. All four wave transitions are USED. Country
+untouched families: `con` (133, permanently blocked — no questionnaire, opaque names, re-checked
+2026-08-19), `fin13` (30, 2024 × 27 economies), `fin25` (14, mostly 2024-only), `fin14` (8, 2024 × 27)
+— confirming the 2026-08-20 note that **no eligible untouched country module remains**. Untouched
+micro: 102 columns in 10 families.
+
+**B2 breadth cell — the untouched MICRO EMERGENCY-FUND module.** `fin24`, `fin24a`, `fin24b`,
+`fin24c`, `fin24d1`, `fin24d2`, `fin24d3`, `fin25e1`, `fin25e2`, `fin25e3`, `fin25e4` — **11 columns,
+zero ledger mentions**, and the country-side twin (`fin25`, 14 columns) is untouched as well. This is
+Program 4 item 4.3 ("emergency-fund sources beyond savings and borrowing") taken at the individual
+level, where the coverage is 2024-only anyway and the micro file is the better instrument.
+
+**B17 micro quota — PAID this cycle** by U24 (last paid 2026-08-19, U23).
+
+**B3 lineage** — U24x/U24 parent `none` (new module, no parent finding); E55 parent `E53`. No chain
+of three.
+
+**B14** — E55 is an audit, not an association primary; no adjacent-wave Δ→Δ is registered anywhere in
+this cycle.
+
+**Cycle shape.** Slot 1 + slot 2 are merged and paid by the same draw (an untouched-module pass that
+is also the micro-stream experiment): **U24x** (mandatory exploratory mapping) then **U24**
+(registered). Slot 3 is **E55**, agenda item **8.1** — the project's highest-priority open item and
+the draw the 2026-08-20 addendum named for this slot.
+
+---
+
+## U24x — EXPLORATORY mapping pass on the untouched micro emergency-fund module
+
+Logged as **exploratory** under the peek rule (2026-07-11 amendment) BEFORE any registered
+hypothesis on these columns. No hypothesis, no threshold, no keep is possible from this entry.
+
+**What it computes and nothing else.** For each of the 11 columns: the labelled value set with
+weighted shares, unweighted non-missing n, number of economies with ≥100 unweighted non-missing
+respondents, and whether the module is **split-sample** (n materially below the 144,090 file, which
+would make `wgt` the wrong weight — the check the 2026-08-19 addendum demanded before any `fin48`/
+`fin49`-style registration). Plus one binary recode of the headline resilience item and its **M3**
+cross-check against the country file's `fin24aSD_ND` on ≥20 economies.
+
+**What it must NOT compute, so that U24 remains genuinely pre-registered:** no split by `educ`,
+`inc_q`, `age`, `female`, `emp_in`, `urbanicity` or `account`, and no gradient or absorption
+statistic of any kind.
+
+---
+
+## U24 — the access-absorption ruler applied to the RESILIENCE margin
+
+**Parent:** none (new module). **Stream:** micro. **Frame:** micro, 2024, pooled over economies,
+weighted (`wgt`), M1 by construction.
+
+**Hypothesis.** The ledger's access-absorption ruler — account holding absorbs ~**64%** of the
+education gradient in digital-payment use (U10, and a within-country median of the same order in
+U19) — is a property of *usage* margins and **does not transfer to a welfare margin**. The country
+stream says the same thing from the other side: three tests (E2, E15, E26) agree self-reported
+resilience does not move with digitalization. If resilience is a resource margin rather than a
+usage margin, then account holding — which is the gate on usage — should absorb **much less** of the
+education gradient in emergency-fund availability than it absorbs of the gradient in digital-payment
+use.
+
+**Registered SIGN (B15).** The education gradient in emergency-fund availability is predicted
+**POSITIVE** (secondary-or-more above primary-or-less) both unconditionally and conditional on
+account holding. A gradient of the right size and the wrong sign is **not** partial confirmation.
+
+**Exact test.** Outcome: the binary recode of the headline emergency-fund possibility item validated
+in U24x (the `fin24aSD_ND`-equivalent — "very possible" or "somewhat possible"), declared under G3 as
+the headline variant. Education split: `educ` primary-or-less vs secondary-or-more, pooled, weighted.
+
+- P1 unconditional gap = rate(secondary+) − rate(primary or less), all adults.
+- P2 conditional gap = the same gap computed within `account == 1`.
+- P3 absorption = 1 − (P2 / P1).
+
+**Keep bar — all three must fire:**
+1. P1 ≥ **5pp** and **positive** (registered sign);
+2. absorption < **40%** (against the ruler's ~64% on digital-payment use);
+3. P2 ≥ **5pp** and **positive**.
+
+**Discard** if the gradient is under 5pp, wrong-signed, or absorption ≥ 40%. A result with
+absorption ≥ 40% is a *transfer* of the ruler and is reported as such — the opposite pattern, not a
+weaker version of the same one.
+
+**Registered secondary (within-country, U19/U20/U22 form).** Sign of the account-conditional
+education gap inside each economy qualifying M2 (≥100 unweighted respondents in **both** education
+cells within `account == 1`): bar **≥75% positive**. Reported with the count and participant share
+of the qualifying set, per the frame facts U22 and U23 recorded — the qualifying set is not the file.
+
+**Gates and inference.** M1 weights throughout; **M2** ≥100 unweighted per cell on every reported
+cell; **M3** carried from U24x. **B6**: country-clustered bootstrap (resample economies with
+replacement, 2,000 draws, percentile interval) on P1, P2 and the absorption share. No trend language
+— single wave, cross-sectional description.
+
+---
+
+## E55 — the ledger-wide reporting-set audit (agenda item 8.1)
+
+**Parent:** E53. **Stream:** hypothesis. **Design:** audit. **Frame:** `pan_dev`. **Windows:** all
+four transitions.
+
+**Why it is registered.** Rule **B20** (2026-08-20) requires a balanced economy set on any path, long
+difference or Δ. E53 found the four-item cash "rebound" was largely six economies — China the largest
+— dropping out of the *items* while staying in the *wave*. **No experiment in the ledger has ever
+checked whether its own wave-to-wave comparison held the economy set fixed**, so v4 §12 states the
+risk as *unquantified*. This experiment quantifies it.
+
+**Exact test.** Audit set: every country-file column the ledger has touched (coverage.py's
+word-boundary detector, so the set is mechanical and not chosen), restricted to columns reporting
+≥30 developing-panel economies in at least two waves. For each column × each of the four
+transitions:
+
+- n reporting at *t*, at *t+1*, in both (**balanced**), dropped (*t* only), added (*t+1* only);
+- the population share of the dropped economies inside the *t* reporting set, and the **name** of the
+  largest dropped economy;
+- Δ_unbalanced = wmean(*t+1* over its own reporters) − wmean(*t* over its own reporters);
+- Δ_balanced = the same on the intersection only;
+- **discrepancy** = Δ_unbalanced − Δ_balanced.
+
+**Registered claim.** E53's attrition failure is **localized to narrow items and does not
+characterize the ledger**.
+
+**Registered SIGN (B15).** Where economies drop out, the discrepancy is predicted **positive on
+cash-side items** — the droppers sit *below* the retained mean on those items, so an unbalanced Δ
+overstates the rise. The signed test is: among cells with a non-trivial drop (≥3 economies or ≥5% of
+the *t* population), the discrepancy's sign should follow the sign of (retained mean − dropped mean)
+at *t*, in a **majority** of cells. Registered as a directional check on the mechanism, reported
+separately from the keep bars.
+
+**Keep bar — three branches, all fixed in advance so no branch is chosen after the fact:**
+- **(a)** median |discrepancy| over all column × transition cells < **0.50pp**, AND
+- **(b)** share of cells with |discrepancy| ≥ **2.0pp** below **10%**, AND
+- **(c)** among the cells that back a **kept** ledger finding, none has |discrepancy| ≥ 2.0pp.
+
+Branch 1 — (a), (b) and (c) all hold → **keep**: the risk is bounded and the v4 §12 limitation can be
+restated as small and quantified.
+Branch 2 — (a) and (b) hold, (c) fails → **keep with corrections owed**: the ledger-wide risk is
+bounded but named kept findings are exposed; those findings are listed and a correction is opened in
+`PAPER_DRAFT_v4.md`.
+Branch 3 — (a) or (b) fails → **discard**: the registered claim is rejected, the risk is ledger-wide,
+and every column above the 2pp bar is named.
+
+**Registered diagnostic, labelled and NOT part of the keep bar.** Country-level *association* designs
+have a different exposure from aggregate-Δ designs: pandas' pairwise-complete construction balances
+them automatically, but their **sample** shrinks. For each association cell in the ledger, report the
+n of the pairwise-complete set against the 76–77-economy headline set, and the population share it
+holds. This measures a distinct risk and has no verdict rule attached.
+
+**Gates.** G3 columns are the ledger's own declared variants, carried unchanged; **G4** every
+reported cell carries its n and population share by construction; G5 na (no level claim against an
+official aggregate); G6 na (no association is claimed — the audit's unit is a discrepancy, not a
+correlation).
