@@ -12,3 +12,6 @@ __pycache__/
 .claude/
 .venv/
 ~$*
+
+# licensed microdata - never commit (WB Microdata Library terms)
+05_AutoResearch/microdata/
