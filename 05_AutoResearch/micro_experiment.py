@@ -1,251 +1,122 @@
-"""U23 (pre-registered 2026-08-19): is the "last mile" education gradient in DIGITAL PAYMENT MODE
-a property of the ADULT or of the PAYER? Three untouched payment streams.
+"""U24x (EXPLORATORY, registered 2026-08-21): mandatory mapping pass on the untouched micro
+EMERGENCY-FUND module — `fin24`, `fin24a`, `fin24b`, `fin24c`, `fin24d1`, `fin24d2`, `fin24d3`,
+`fin25e1`, `fin25e2`, `fin25e3`, `fin25e4`. Eleven columns, zero ledger mentions.
 
-Micro stream, 2024 wave, cross-sectional. Parent: U14 (first descendant).
-Rules B2 (breadth cell: three untouched micro columns) and B17 (micro quota) are both paid here.
+Logged as EXPLORATORY under the peek rule (2026-07-11). No hypothesis, no threshold, no keep.
+This is rule B2's breadth cell for the cycle and the structural half of slot 1.
 
-WHY. U14 found that among accountholding WAGE receivers the share paid into the account rather than
-in cash is steeply education-graded, and U10/U15/U17/U18 found the same for self-directed
-digital-payment use. Every one of those margins is chosen by the adult or set by an employer. The
-three streams here differ in WHO picks the channel: a PENSION is paid by a government or pension
-provider, an AGRICULTURAL payment by a buyer of produce, and a UTILITY bill is paid OUT by the adult.
-If the gradient belongs to the adult it appears in all three.
+WHAT IT COMPUTES: labelled value sets with weighted shares, unweighted non-missing n, economies
+with >= 100 unweighted non-missing respondents, the split-sample check (is `wgt` the right weight
+for this module?), and ONE binary recode of the headline possibility item with its M3 cross-check
+against the country file's `fin24aSD_ND`.
 
-CODING (disclosed in the pre-registration; structural check, not an outcome peek). All three columns
-are coded identically to `receive_wages`: 1 = through an account, 2 = cash, 3 = other,
-4 = did not participate, 5 = DK/RF. `domestic_remittances` was EXCLUDED: its four codes do not match
-the family (code 4 has account 0.942 but anydigpayment 0.481) and cannot be read without a codebook.
-
-REGISTERED PRIMARY: gap = rate(educ 3) - rate(educ 1) >= +5.0pp in ALL THREE streams, among
-`account == 1` participants. REGISTERED SIGN (B15): POSITIVE.
-SECONDARY 1: absorption = 1 - (conditional gap / unconditional gap); registered direction is
-absorption BELOW the ruler's ~64%, bar median < 50%.
-SECONDARY 2: within-economy median gap; fixed downgrade rule if median < 5pp or positive share < 60%.
-
-GATES. M1 (module-enforced), M2 (n >= 100 on every reported cell), M3 on `account` (the stream
-margins have no country-file equivalent at this conditional granularity).
+WHAT IT MUST NOT COMPUTE, so U24 stays genuinely pre-registered: nothing split by `educ`, `inc_q`,
+`age`, `female`, `emp_in`, `urbanicity` or `account`; no gradient, no absorption statistic.
 """
 import numpy as np
 import pandas as pd
 
 from micro import Micro
 
-MIN_CELL = 100
-GAP_BAR = 5.0            # primary, per stream
-ABSORB_BAR = 0.50        # secondary 1: median absorption must be BELOW this to confirm
-WITHIN_MEDIAN_BAR = 5.0  # secondary 2 downgrade rule
-WITHIN_SHARE_BAR = 0.60  # secondary 2 downgrade rule
-
-STREAMS = {
-    "receive_pensions":    "pension receipt      (payer: government / pension provider)",
-    "receive_agriculture": "agricultural payment (payer: buyer of produce)",
-    "pay_utilities":       "utility bill payment (payer: THE ADULT, self-directed)",
-}
-REFERENCE = ("receive_wages", "wage receipt         (payer: employer)  -- U14's margin, reference")
-
-EDUC = {1: "primary or less", 2: "secondary", 3: "tertiary"}
-M3_ECONOMIES = ["India", "Kazakhstan", "Poland", "Estonia", "Uzbekistan", "Brazil", "Nigeria",
-                "Indonesia", "Turkiye", "Mexico"]
+COLS = ["fin24", "fin24a", "fin24b", "fin24c", "fin24d1", "fin24d2", "fin24d3",
+        "fin25e1", "fin25e2", "fin25e3", "fin25e4"]
 
 
-def digital_rate(mi, stream, base, educ_code=None, economy=None):
-    """Weighted share of stream participants whose payment runs THROUGH AN ACCOUNT (code 1),
-    within `base`. Returns (rate_pp, unweighted n of the participant cell)."""
-    df = mi.df
-    m = base & df[stream].isin([1, 2, 3])
-    if educ_code is not None:
-        m = m & (df["educ"] == educ_code)
-    if economy is not None:
-        m = m & (df["economy"] == economy)
-    sub = df[m].dropna(subset=["wgt"])
-    if sub.empty:
-        return np.nan, 0
-    y = (sub[stream] == 1).astype(float)
-    return float(np.average(y, weights=sub["wgt"])) * 100, int(len(sub))
-
-
-def pooled_block(mi, stream, base, label):
-    rows = []
-    for code, name in EDUC.items():
-        r, n = digital_rate(mi, stream, base, educ_code=code)
-        rows.append({"educ": name, "digital_pp": round(r, 2) if pd.notna(r) else np.nan,
-                     "n_unweighted": n, "M2_ok": n >= MIN_CELL})
-    tab = pd.DataFrame(rows)
-    gap = tab.loc[tab["educ"] == "tertiary", "digital_pp"].iloc[0] - \
-        tab.loc[tab["educ"] == "primary or less", "digital_pp"].iloc[0]
-    print(f"\n  {label}")
-    print(tab.to_string(index=False))
-    print(f"    gap (tertiary - primary) = {gap:+.2f}pp   M2 all cells: "
-          f"{bool(tab['M2_ok'].all())}")
-    return float(gap), bool(tab["M2_ok"].all())
-
-
-def within_economy(mi, stream, base):
-    """Per-economy gap, M2 on BOTH education cells."""
-    df = mi.df
-    rows = []
-    for econ in sorted(df["economy"].dropna().unique()):
-        hi, n_hi = digital_rate(mi, stream, base, educ_code=3, economy=econ)
-        lo, n_lo = digital_rate(mi, stream, base, educ_code=1, economy=econ)
-        if n_hi >= MIN_CELL and n_lo >= MIN_CELL and pd.notna(hi) and pd.notna(lo):
-            rows.append({"economy": econ, "gap_pp": hi - lo, "n_hi": n_hi, "n_lo": n_lo})
-    return pd.DataFrame(rows)
-
-
-
-# ---------------------------------------------------------------------------------------
-# B6 INFERENCE ADDENDUM (mandatory for a keep; added after the registered bars were read —
-# it is a diagnostic ON the registered statistic, not a new claim). Two things:
-#   (i)  a CLUSTER bootstrap: resample ECONOMIES with replacement, 1,000 draws, percentile
-#        interval on the pooled gap. Respondents are clustered in economies and a
-#        respondent-level bootstrap would understate the interval by ignoring that.
-#   (ii) the Kish effective n, neff = (sum w)^2 / sum w^2, of the survey weights inside each
-#        education cell, beside the nominal unweighted n (rule B10).
-# ---------------------------------------------------------------------------------------
-def kish(w):
-    w = np.asarray(w, dtype=float)
-    return float(w.sum() ** 2 / (w ** 2).sum()) if len(w) else np.nan
-
-
-def inference_block(mi, streams, draws=1000, seed=20260819):
-    df = mi.df
-    rng = np.random.default_rng(seed)
-    print("\n" + "=" * 92)
-    print("B6 INFERENCE — economy-cluster bootstrap (1,000 draws) and Kish neff per cell")
-    print("=" * 92)
-    for s in streams:
-        m = (df["account"] == 1) & df[s].isin([1, 2, 3]) & df["educ"].isin([1, 3])
-        sub = df.loc[m, ["economy", "educ", "wgt", s]].dropna(subset=["wgt"]).copy()
-        sub["y"] = (sub[s] == 1).astype(float)
-        econs = sub["economy"].unique()
-        by_econ = {e: g for e, g in sub.groupby("economy")}
-
-        def gap_of(frame):
-            hi = frame[frame["educ"] == 3]
-            lo = frame[frame["educ"] == 1]
-            if hi.empty or lo.empty:
-                return np.nan
-            return (np.average(hi["y"], weights=hi["wgt"])
-                    - np.average(lo["y"], weights=lo["wgt"])) * 100
-
-        point = gap_of(sub)
-        boot = []
-        for _ in range(draws):
-            pick = rng.choice(econs, size=len(econs), replace=True)
-            boot.append(gap_of(pd.concat([by_econ[e] for e in pick], ignore_index=True)))
-        boot = np.array([b for b in boot if pd.notna(b)])
-        lo_ci, hi_ci = np.percentile(boot, [2.5, 97.5])
-        cells = []
-        for code in (1, 3):
-            c = sub[sub["educ"] == code]
-            cells.append(f"educ{code}: n={len(c)} neff={kish(c['wgt']):.1f}")
-        print(f"  {s:22s} gap {point:+6.2f}pp  95% CI [{lo_ci:+.2f}, {hi_ci:+.2f}] "
-              f"over {len(econs)} economies  |  " + "  ".join(cells))
-        print(f"    {'excludes zero' if lo_ci > 0 else 'INCLUDES ZERO'}"
-              f"   |  share of draws >= +5.0pp: {(boot >= 5.0).mean():.1%}")
+def value_block(df, col):
+    s = df.dropna(subset=[col, "wgt"])
+    if s.empty:
+        return None, 0, 0
+    tot = s["wgt"].sum()
+    shares = (s.groupby(col)["wgt"].sum() / tot * 100).sort_values(ascending=False)
+    counts = s.groupby(col).size()
+    out = pd.DataFrame({"weighted_share_pp": shares.round(2),
+                        "n_unweighted": counts.reindex(shares.index)})
+    n_econ = int(s.groupby("economy").size().ge(100).sum())
+    return out, int(len(s)), n_econ
 
 
 def main():
     mi = Micro()
     df = mi.df
-    acct = df["account"] == 1
-    everyone = pd.Series(True, index=df.index)
-
     print("=" * 92)
-    print("U23 — the education gradient in DIGITAL PAYMENT MODE across three untouched streams")
+    print("U24x — EXPLORATORY mapping pass, micro emergency-fund module (11 untouched columns)")
+    print("file: %d respondents, %d economies, 2024 wave" % (len(df), df["economy"].nunique()))
     print("=" * 92)
 
-    m3 = mi.gate_country_file("account", "account_t_d", M3_ECONOMIES, tol_pp=1.0)
-    print(f"\nM3 (account vs country file, {m3.get('n_economies')} economies): {m3}")
+    print("\n--- SPLIT-SAMPLE CHECK (is `wgt` the right weight for this module?) ---")
+    print("%-10s %10s %10s %8s %10s" % ("col", "n_nonmiss", "share_file", "n_econ", "n_econ>=100"))
+    for c in COLS:
+        n = int(df[c].notna().sum()) if c in df.columns else -1
+        ne = int(df.loc[df[c].notna(), "economy"].nunique()) if c in df.columns else -1
+        ne100 = int(df[df[c].notna()].groupby("economy").size().ge(100).sum()) if c in df.columns else -1
+        print("%-10s %10d %9.1f%% %8d %10d" % (c, n, 100 * n / len(df), ne, ne100))
 
-    print("\n--- participant base sizes (accountholders, codes 1/2/3) ---")
-    for s in list(STREAMS) + [REFERENCE[0]]:
-        _, n = digital_rate(mi, s, acct)
-        _, n_all = digital_rate(mi, s, everyone)
-        econ = df.loc[acct & df[s].isin([1, 2, 3]), "economy"].nunique()
-        print(f"  {s:22s} n(accountholders)={n:6d}  n(all adults)={n_all:6d}  economies={econ}")
-
-    results = {}
-    print("\n" + "=" * 92)
-    print("PRIMARY — conditional on holding an account")
-    print("=" * 92)
-    for s, label in STREAMS.items():
-        gap, m2 = pooled_block(mi, s, acct, f"{s}: {label}")
-        results[s] = {"gap_cond": gap, "m2": m2}
-    gap_ref, m2_ref = pooled_block(mi, REFERENCE[0], acct, f"{REFERENCE[0]}: {REFERENCE[1]}")
-
-    print("\n" + "=" * 92)
-    print("SECONDARY 1 — unconditional gap and the ACCESS-ABSORPTION share")
-    print("=" * 92)
-    for s, label in STREAMS.items():
-        gap_u, m2_u = pooled_block(mi, s, everyone, f"{s} (ALL adults): {label}")
-        results[s]["gap_uncond"] = gap_u
-        results[s]["m2_uncond"] = m2_u
-        results[s]["absorption"] = 1 - (results[s]["gap_cond"] / gap_u) if gap_u else np.nan
-    gap_ref_u, _ = pooled_block(mi, REFERENCE[0], everyone, f"{REFERENCE[0]} (ALL adults)")
-
-    print("\n" + "=" * 92)
-    print("SECONDARY 2 — WITHIN-ECONOMY gaps (M2 >= 100 on both education cells)")
-    print("=" * 92)
-    for s in STREAMS:
-        w = within_economy(mi, s, acct)
-        if w.empty:
-            print(f"\n  {s}: NO economy qualifies on M2 in both cells — within-country test "
-                  f"cannot be run.")
-            results[s].update({"n_qual": 0, "within_median": np.nan, "within_share": np.nan,
-                               "cover": np.nan})
+    print("\n--- VALUE SETS (labelled), weighted shares ---")
+    for c in COLS:
+        if c not in df.columns:
+            print("\n[%s] ABSENT" % c)
             continue
-        base_n = int((acct & df[s].isin([1, 2, 3])).sum())
-        qual_n = int(df[df["economy"].isin(w["economy"]) & acct & df[s].isin([1, 2, 3])].shape[0])
-        med = float(w["gap_pp"].median())
-        share = float((w["gap_pp"] > 0).mean())
-        pooled_qual, _ = digital_rate(
-            mi, s, acct & df["economy"].isin(w["economy"]) & (df["educ"] == 3))
-        pooled_qual_lo, _ = digital_rate(
-            mi, s, acct & df["economy"].isin(w["economy"]) & (df["educ"] == 1))
-        wedge = (pooled_qual - pooled_qual_lo) - med
-        print(f"\n  {s}: {len(w)} economies qualify, holding {qual_n/base_n:.1%} of "
-              f"accountholding participants")
-        print(f"    median gap {med:+.2f}pp | IQR [{w['gap_pp'].quantile(.25):+.2f}, "
-              f"{w['gap_pp'].quantile(.75):+.2f}] | positive in {int((w['gap_pp']>0).sum())}/"
-              f"{len(w)} ({share:.1%})")
-        print(f"    pooled gap over the SAME qualifying set {pooled_qual - pooled_qual_lo:+.2f}pp"
-              f"  ->  composition wedge {wedge:+.2f}pp")
-        ext = w.sort_values("gap_pp")
-        print(f"    range: {ext.iloc[0]['economy']} {ext.iloc[0]['gap_pp']:+.1f} ... "
-              f"{ext.iloc[-1]['economy']} {ext.iloc[-1]['gap_pp']:+.1f}")
-        results[s].update({"n_qual": len(w), "within_median": med, "within_share": share,
-                           "cover": qual_n / base_n})
+        blk, n, ne = value_block(df, c)
+        print("\n[%s]  n_nonmiss=%d  economies with n>=100: %d" % (c, n, ne))
+        if blk is None:
+            print("  (empty)")
+        else:
+            for v, row in blk.iterrows():
+                print("   %-58s %7.2f%%  n=%d" % (str(v)[:58], row["weighted_share_pp"],
+                                                  row["n_unweighted"]))
 
-    print("\n" + "=" * 92)
-    print("VERDICT against the registered bars")
-    print("=" * 92)
-    print(f"\n  reference (U14's wage margin, not part of the bar): conditional gap "
-          f"{gap_ref:+.2f}pp, unconditional {gap_ref_u:+.2f}pp, "
-          f"absorption {1 - gap_ref/gap_ref_u:.1%}")
-    ok = []
-    for s in STREAMS:
-        r = results[s]
-        passed = (r["gap_cond"] >= GAP_BAR) and r["m2"]
-        ok.append(passed)
-        down = ""
-        if passed and pd.notna(r["within_median"]):
-            if r["within_median"] < WITHIN_MEDIAN_BAR or r["within_share"] < WITHIN_SHARE_BAR:
-                down = "  [DOWNGRADE: pooled only, composition-suspect]"
-        print(f"  {s:22s} gap {r['gap_cond']:+7.2f}pp  {'PASS' if passed else 'FAIL'}"
-              f"   (sign {'as registered' if r['gap_cond'] > 0 else 'OPPOSITE to registered'})"
-              f"   within-median {r['within_median']:+.2f}pp"
-              f" pos {r['within_share']:.0%} on {r['n_qual']} economies{down}")
-    absorptions = [results[s]["absorption"] for s in STREAMS]
-    med_abs = float(np.nanmedian(absorptions))
-    print(f"\n  absorption by stream: " +
-          ", ".join(f"{s}={results[s]['absorption']:.1%}" for s in STREAMS))
-    print(f"  median absorption {med_abs:.1%} vs registered bar < {ABSORB_BAR:.0%}: "
-          f"{'CONFIRMED' if med_abs < ABSORB_BAR else 'REJECTED'}")
-    print(f"\n  PRIMARY: {sum(ok)}/3 streams clear +{GAP_BAR}pp  -> "
-          f"{'KEEP' if all(ok) else 'DISCARD (registered all-three bar not met)'}")
+    print("\n--- CANDIDATE BINARY RECODE OF THE HEADLINE POSSIBILITY ITEM + M3 ---")
+    if "fin24" in df.columns:
+        vals = sorted([v for v in df["fin24"].dropna().unique()], key=str)
+        print("fin24 raw values: %s" % vals)
+        # country file `fin24aSD_ND`: 'very possible' or 'somewhat possible'
+        pos = [v for v in vals if isinstance(v, str)
+               and ("very possible" in v.lower() or "somewhat possible" in v.lower())]
+        print("recode -> 1 for: %s" % pos)
+        if pos:
+            df["_resilient"] = np.where(df["fin24"].isin(pos), 1.0,
+                                        np.where(df["fin24"].notna(), 0.0, np.nan))
+            # exclude DK/RF from the denominator only if a DK/RF label exists
+            dkrf = [v for v in vals if isinstance(v, str)
+                    and ("don't know" in v.lower() or "refuse" in v.lower()
+                         or v.strip().lower() in ("dk", "rf", "(dk)", "(rf)"))]
+            print("DK/RF labels detected (kept in denominator for the M3 check): %s" % dkrf)
+            r, n = mi.rate("_resilient")
+            print("pooled weighted rate = %.2fpp on n=%d" % (r, n))
+            mi.df = df
+            econ = sorted(df.loc[df["_resilient"].notna(), "economy"].unique())[:400]
+            g = mi.gate_country_file("_resilient", "fin24aSD_ND", econ, tol_pp=1.0)
+            print("M3: %s" % g)
+            # per-economy deviation detail so the recode can be judged, not just gated
+            c = pd.read_csv(mi.__class__.__module__ and
+                            __import__("micro").COUNTRY_CSV, low_memory=False)
+            c = c[(c["year"] == 2024) & (c["group"] == "all")].set_index(
+                "countrynewwb")["fin24aSD_ND"] * 100
+            nm = {"Czech Republic": "Czechia", "Slovak Republic": "Slovakia"}
+            devs = []
+            for e in econ:
+                mv, nn = mi.rate("_resilient", economy=e)
+                cv = c.get(nm.get(e, e), np.nan)
+                if pd.notna(mv) and pd.notna(cv):
+                    devs.append((abs(mv - cv), e, mv, cv))
+            devs.sort(reverse=True)
+            print("economies compared: %d | median |dev| = %.3fpp | worst five:"
+                  % (len(devs), float(np.median([d[0] for d in devs]))))
+            for d in devs[:5]:
+                print("   %-28s micro %6.2f  country %6.2f  dev %5.2f" % (d[1], d[2], d[3], d[0]))
 
-    inference_block(mi, list(STREAMS) + [REFERENCE[0]])
+    print("\n--- ACCOUNT-CONDITIONAL COVERAGE (structural only: cell counts, no rates) ---")
+    if "_resilient" in df.columns:
+        sub = df[df["_resilient"].notna() & df["account"].notna() & df["educ"].notna()]
+        print("respondents with resilience + account + educ all present: %d" % len(sub))
+        both = sub[sub["account"] == 1].groupby(["economy", "educ"]).size().unstack(fill_value=0)
+        if both.shape[1] >= 2:
+            lo, hi = both.columns.min(), both.columns.max()
+            qual = both[(both[lo] >= 100) & (both[hi] >= 100)]
+            print("educ codes present: %s" % list(both.columns))
+            print("economies with n>=100 in BOTH extreme educ cells within account==1: %d of %d"
+                  % (len(qual), len(both)))
+    print("\nEXPLORATORY — no verdict, no keep. U24 is registered separately.")
 
 
 if __name__ == "__main__":
