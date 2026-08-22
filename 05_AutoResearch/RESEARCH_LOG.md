@@ -7424,3 +7424,132 @@ of its cells by ≥2pp. **Corrections are owed on `fin32_acc` (E10, `keep-genera
    `fin14` and `fin22` should be tried with it before being written off. B2's cell was paid by these
    eleven columns; **B17 paid by U24**, next due in three cycles. Prediction stream unchanged and
    **CLOSED**: `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-22 — pre-registration
+
+**B18 TRIGGER CHECK (rule B18, amended 2026-08-16 — read the highest-numbered draft).** Current
+draft is `PAPER_DRAFT_v4.md`. Corrections branch: **2 of 5** (both opened 2026-08-21 by E55). Count
+branch: **3 of 10** (U24x, U24, E55 since the 2026-08-20 rewrite). **Neither branch fires — this is
+a normal experiment cycle.**
+
+**B1 COVERAGE RUN (done before any hypothesis was chosen).** Country file 83 of 429 columns touched
+(19%); untouched families `con` (133, blocked — unlabelled twin), **`fin13` (30) and `fin14` (8)**.
+Micro file 62 of 192 (32%); untouched families `con` (52, blocked), `fin22` (9), **`fin13` (8)**,
+`fin48`/`fin49` (12), **`fin14` (5)**, `fin39` (4), `dig_account` (1). Wave transitions: all four
+used, 2021→24 still 304 mentions against 21 for 2011→14. Frames: `urbanicity` still untouched and
+single-wave.
+
+**COVERAGE CELLS THIS CYCLE LANDS ON (rule B2).** `fin13` + `fin14` — the mobile-money usage module
+— have **zero ledger mentions on either the country side or the micro side**, and the 36-economy
+module set is a **frame the ledger has never used**. That pays B2 twice over. E56 buys no new
+columns and buys its breadth in design (an audit over the touched set, as E55 did).
+
+**B17 (micro quota).** Paid 2026-08-21 by U24; next due in three cycles. U25x/U25 pay it again
+early, which is deliberate: the micro stream holds 23 of the ledger's 40 keeps.
+
+**B3 (lineage cap).** U25x/U25 **parent: none** (a new module). E56 **parent: E55**, which makes
+E53 → E55 → E56 a chain of **three** — the cap. **The next cycle may not extend this chain.**
+
+## Slot 1 — U25x (exploratory) + U25 (registered): the untouched `fin13`/`fin14` mobile-money usage module
+
+**PART A — U25x, MAPPING PASS, logged as EXPLORATORY under the peek rule (2026-07-11).** The 13 micro
+columns (`fin13_1`, `fin13a`–`fin13f_1`, `fin14a`–`fin14e`) carry **numeric codes**, not text labels,
+exactly as U24x found for the emergency-fund module. U24x's method is applied unchanged: for every
+column × every code, the per-economy weighted share is matched against every labelled country-file
+`fin13*`/`fin14*` column (38 columns), and a code is declared identified at **median |dev| ≤ 0.10pp**
+across the common economies. The pass also prints, for each column, the denominator (which
+respondents are asked), the module's economy count and its unweighted n. **Item meanings are inferred
+from the country column NAMES and from the share match only** — there is no questionnaire in the repo
+(`HARNESS_V2_NOTES.md` items 5–6) and that caveat travels with everything below.
+
+**M3 is the identification.** A code is only usable if its weighted micro share reproduces the
+country file within the M3 tolerance (1pp); the mapping *is* the gate, as in U24x.
+
+**Registered in advance about the denominator.** The module is fielded in **36 economies** and, on
+its face, is asked of a conditional subsample (mobile-money users). U25x reports whether the module
+sample is an **economy-level subsample** (all respondents in those 36) or a **within-economy
+conditional subsample**; if the latter, every statistic below is a conditional one and the claim text
+must say so. If `account_mob` has no usable variance inside the module sample, the module's own
+access anchor is dropped and the screen runs on the remaining anchors — declared here so the choice
+is not made after seeing the answer.
+
+**PART B — U25, THE FOUR-WAY ORIENTATION SCREEN (Documentation obligation 2), the registered
+primary.** Every identified item is aggregated to a **per-economy weighted share** and screened in
+the **2024 cross-section across the 36 module economies**, against the anchor `g20_any` (the
+digital-payment headline — E45/E47/E49/E51's anchor, so the numbers are comparable), **both lenses**
+(population-weighted and unweighted across economies):
+
+    restatement    |r| >= 0.80
+    aligned        +0.30 <= r < 0.80
+    counter-moving -0.80 < r <= -0.30
+    independent    |r| < 0.30
+    both lenses must AGREE, else `mixed-lens` (B9/B11)
+
+**REGISTERED KEEP CONDITION:** at least one item classifies as **`counter-moving` on BOTH lenses**,
+survives **G6** with the sign intact, and has a **bootstrap interval (2,000 economy draws) excluding
+zero**. A screen returning only restatement / aligned / independent items is a **DISCARD**.
+
+**REGISTERED SIGN (B15): the keep direction is NEGATIVE.** An item at r ≥ +0.80 is a restatement of
+the digital-payment headline and is the **opposite** result, not partial confirmation. Note in
+advance: a frequency question whose categories **partition** (weekly / monthly / less than monthly /
+never) will produce a mechanically negative "never" category — that is an **inverse restatement**,
+caught by the |r| ≥ 0.80 bar, and if it lands in the −0.30 to −0.80 band instead, the claim must
+name the partition and say which level of it the claim is about (E51's composition rule).
+
+**SECONDARY (registered, no bar):** the same screen against `mobileaccount_t_d` — the E47 distinction
+between "counter-moves with digital payment" and "counter-moves with the module's own access margin".
+
+**Declared limitations, in advance.** (i) n ≈ 36 economies against the ledger's usual 71–77: **G4 is
+reported and the frame is declared as *the economies that field the mobile-money usage module*, not
+the developing panel** — this is a composition statement about a self-selected set of economies.
+(ii) A 2024 cross-sectional **level** correlation is not a within-country dynamic statement (E48 is
+the standing proof the two come apart); no Δ claim is registered. (iii) G3: every `fin13`/`fin14`
+item is an unregistered narrow variant. **B6/B9/B10/B12 on every cell**: weighted and unweighted r,
+percentile bootstrap and `p_boot`, Kish `neff` beside nominal n, G6 drop-top-5, and the largest
+single leave-one-out effect **with the economy named**.
+
+## Slot 3 — E56 (agenda item 8.2): is the 2021→24 dropout ONE cause or many, and what do the balanced paths say?
+
+**Parent: E55** (chain E53 → E55 → E56, at the B3 cap). **This is an audit / measurement pass, not an
+association experiment**, so B14's long-difference-or-all-windows requirement does not bind — no
+co-movement is registered here. It is the agenda's item 8.2 and it discharges E55's two corrections.
+
+**Why it matters, stated before the run.** E55 found eight keep-backing cells biased ≥2pp by a
+five-or-six-economy item-level dropout between 2021 and 2024, all naming China. If those columns
+share **one** dropper set, the cause is a single release rule or a single questionnaire block and
+every affected claim can be corrected at once with a known adjustment. If the dropper sets are
+column-specific, each affected claim needs its own recomputation and the risk is open-ended.
+
+**REGISTERED PRIMARY.** Over every country column with ≥30 developing-panel economies reporting in
+2021 (E55's eligibility, unchanged), compute `D(col)` = the set of economies reporting the column in
+2021 and **not** in 2024. Restrict to columns with a **non-trivial drop** (|D| ≥ 3). Let `D*` be the
+**modal** dropper set. **Registered bar: ≥ 80% of non-trivially-dropping columns have Jaccard(D,
+D*) ≥ 0.90.** Meeting it is a **keep** for the claim *the 2021→24 dropout is a single block, not
+per-item attrition*; below the bar is a **discard**, and between-the-lines outcomes are reported at
+whatever the number is, without moving the bar.
+
+**REGISTERED SIGN / DIRECTION (B15):** the claim is that the sets **coincide** (Jaccard → 1). A
+result showing many distinct dropper sets of similar size is the **opposite** finding and is reported
+as such.
+
+**REGISTERED SECONDARY 1 (no bar, descriptive):** the module membership of the affected columns —
+whether `D*`'s columns fall in one questionnaire block (`fin30`–`fin34`, `fh`, …) or scatter across
+unrelated families. A single block supports "questionnaire module"; scattering supports "release
+rule".
+
+**REGISTERED SECONDARY 2 — the corrections owed (rule B16, path before span).** The **fully balanced
+four-wave path** (economies reporting the column in **all four** of 2014/2017/2021/2024, one fixed
+denominator, count and population share printed) for `fin32_acc` (E10's wage rail, `keep-general`)
+and `fh1`, `fh2`, `fh1_fh2` (E33's welfare margin, `keep-window`) — the two corrections E55 opened in
+`PAPER_DRAFT_v4.md`. The `fh` family exists only from 2021, so its balanced path is stated over the
+waves it has, and **any non-monotone path is stated in the claim text itself**. This is a measurement
+statement about aggregate direction; the E10/E33 **associations** are Δ→Δ and balanced by
+construction, and nothing here revisits them.
+
+**Declared.** No new column is opened; the audit set is the ledger's own touched set, so this cycle's
+B2 obligation rests entirely on U25x/U25 (which is why slot 1 went to a doubly-untouched module).
+Deferred by budget, and named here so it is not lost: **agenda item 4.6**, the education/income
+gradient in the *source* of emergency funds, which U24x opened and which is the strongest
+unregistered lead on the micro side.
