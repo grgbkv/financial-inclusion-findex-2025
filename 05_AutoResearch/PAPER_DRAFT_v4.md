@@ -35,6 +35,22 @@ and its corrections branch now stands at **2 of 5**.
    E53.** The E10/E33 *associations* are Δ→Δ correlations and are balanced by construction, so what
    is wrong is any statement in this draft about the **aggregate direction** of these margins over
    2021→24 — those must be recomputed on the balanced 71/69-economy set before they are repeated.
+   **UPDATE 2026-08-22 — E56 has computed the replacement numbers; the execution is owed at the next
+   distillation, so this item stays open and the corrections branch stays at 2 of 5.** On a fixed
+   denominator: `fin32_acc` **8.04 → 10.35 → 12.03 → 16.43** (71 economies, 68.6% of developing-panel
+   adult population), a **monotone rise whose largest step is the 2021→24 window** (+2.31, +1.68,
+   **+4.40**) that the unbalanced series reports as a −3.21pp retreat; `fh1` **17.88 → 19.69**
+   (+1.81), `fh2` **21.69 → 24.41** (+2.72), `fh1_fh2` **29.39 → 32.09** (+2.70), all on 69
+   economies / 67.0% of panel population. All four last-window deltas **change sign** between the
+   unbalanced and balanced series.
+
+**A third fact E56 adds to item 1, which sharpens rather than corrects it.** The 2021→24 dropout is
+**one six-economy release block** — Algeria, China, Iran, Mauritius, Russia, Ukraine, **31.4%** of
+developing-panel adult population, all six present in the 2024 wave — and it spans **ten column
+families across the payments section** (`fin30`–`fin43`, `fing2p`, `g20_made`/`g20_received`) rather
+than one questionnaire module. Among the **63 usable** non-trivially-dropping columns there are only
+**three distinct dropper sets in total**. `g20_any` is the only column inside an affected family that
+stays stable, which is why the headline-based ledger was safe.
 
 ---
 

@@ -7678,3 +7678,36 @@ the 2021→24 window the unbalanced series reports as a *retreat*. The `fh` fami
 and rises in both columns and in their union. **What this does not touch:** the E10 and E33
 *associations* are Δ→Δ and balanced by construction; only statements about these margins' **aggregate
 direction** were wrong, and those now have replacement numbers.
+
+## Wrap-up — 2026-08-22
+
+1. **Three experiments, no keeps, and two of the three failures are more useful than a keep would
+   have been.** B18 did not fire (corrections 2 of 5, count 3 of 10), so this was a normal cycle:
+   **U25x** (exploratory — module opened), **U25** (`discard`), **E56** (`discard`). Ledger now
+   **89 rows, 40 keeps**, `make_index.py --check` clean.
+2. **U25x — the mobile-money usage module is open and it is two disjoint blocks.** 19 code-cells
+   identified against labelled country twins, **18 at median |dev| of exactly 0.000pp** on 36
+   economies. `fin13` is asked **only of mobile-money holders**, `fin14` **only of non-holders**,
+   overlap **zero respondents** — a structure the country file's names do not carry. Micro coverage
+   rises to **81 of 192 columns (42%)**; B2 and B17 both paid.
+3. **U25 — DISCARD, and the reason is a denominator.** The screen's two counter-moving items passed
+   every mechanical bar (**−0.611/−0.760** and **−0.685/−0.744**, G6-stable, bootstrap intervals
+   excluding zero) and are the **complement factor**: `r(100 − mobileaccount_t_d, g20_any)` is
+   **−0.903/−0.938**, and both items collapse to `mixed-lens`/`independent` on their own denominator.
+   The one survivor on the correct denominator (`fin14d`) **fails BH at q = 0.10 over its own 19-test
+   family — 0 of 19 rejected**. Two rules proposed: screen on the block's own denominator with the
+   complement factor reported, and make BH over the module family part of the screen.
+4. **E56 — DISCARD at 70.5% against an 80% bar, with agenda item 8.2 answered anyway.** The 2021→24
+   dropout is **one six-economy release block** (Algeria, China, Iran, Mauritius, Russia, Ukraine —
+   **31.4%** of developing-panel adult population, all six present in the 2024 wave) spanning **ten
+   column families across the payments section**, not one questionnaire module. Among the **63
+   usable** columns there are only **three distinct dropper sets** and the figure is **87.3%** — but
+   the `_s` exclusion was not declared in advance, so the verdict stands as registered and the rule
+   is proposed instead (item 8.4).
+5. **Both of E55's corrections now have replacement numbers.** On a fixed denominator `fin32_acc`
+   runs **8.04 → 10.35 → 12.03 → 16.43**, monotone, its **largest step (+4.40) in the window the
+   unbalanced series calls a −3.21pp retreat**; `fh1` +1.81, `fh2` +2.72, `fh1_fh2` +2.70. All four
+   sign-flip. `PAPER_DRAFT_v4.md` is annotated and **execution is owed at the next distillation**;
+   corrections branch stays **2 of 5**, count branch now **6 of 10**. **B3 is at its cap** — the next
+   cycle may not extend the E53 → E55 → E56 lineage. Prediction stream unchanged and **CLOSED**:
+   `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
