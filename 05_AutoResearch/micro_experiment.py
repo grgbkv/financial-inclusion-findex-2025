@@ -1,233 +1,245 @@
-"""U24x (exploratory) + U24 (registered 2026-08-21) — the untouched micro EMERGENCY-FUND module.
+"""U25x (exploratory) + U25 (registered 2026-08-22) — the untouched `fin13`/`fin14` MOBILE-MONEY
+USAGE module: mapping pass plus the four-way orientation screen.
 
-U24x, MAPPING PASS (exploratory under the peek rule). The 11 columns carry NUMERIC codes, not text
-labels, so the module was identified mechanically: for every column x every code, the per-economy
-weighted share was matched against every labelled country-file `fin24*`/`fin25*` column. Result
-(median |dev| = 0.000pp, max 0.000pp over 98 economies unless noted):
+U25x, MAPPING PASS (exploratory under the peek rule). The 13 micro columns carry NUMERIC codes,
+not text labels, so U24x's identification method is applied unchanged: for every column x every
+code, the per-economy weighted share is matched against every labelled country-file `fin13*`/
+`fin14*` column (38 of them, 2024, group == "all"). A code is declared IDENTIFIED at median
+|dev| <= 0.10pp across common economies. Item meanings are inferred from country column NAMES and
+from the share match only -- there is no questionnaire in the repo (HARNESS_V2_NOTES items 5-6).
 
-  fin24  = MAIN SOURCE of emergency funds. 1 savings (=fin24sav), 2 family/friends (=fin24fam),
-           3 money from working (=fin24work), 4 borrowing (=fin24bor), 5 selling assets
-           (=fin24sell), 6 other (=fin24other), 7 not possible (~fin24aN, med dev 2.40), 8/9 DK/RF.
-  fin24a = DIFFICULTY, asked only of codes 1-6. 1 very difficult (=fin24aVD), 2 somewhat difficult
-           (=fin24aSD), 3 not difficult (=fin24aND), 4/5 DK/RF.
-  fin24b codes 1/2/3/4 = fin24ba/bb/bc/bd exactly;  fin24c code 1 = fin24c exactly.
-  Module coverage: 98 economies, 102,954 respondents (71.5% of the file). This is an ECONOMY-level
-  subsample, not a within-economy split sample, so `wgt` is the correct weight inside the 98.
-
-  M3, EXACT: `fin24a in {2,3}` over the `fin24` denominator reproduces the country file's
-  `fin24aSD_ND` -- the harness's declared `resilience` headline -- with max |dev| = 0.000pp on all
-  98 economies. That is the outcome U24 uses, so G3 is the declared headline variant.
-
-U24, REGISTERED. Does the access-absorption ruler (account holding absorbs ~64% of the education
-gradient in digital-payment use) transfer to a WELFARE margin? Registered sign: POSITIVE gradient.
-Keep bar: (1) unconditional gap >= +5pp, (2) absorption < 40%, (3) conditional gap >= +5pp.
-Registered split: educ >= 2 (secondary or more) vs educ == 1 (primary or less).
-Declared secondary for comparability with U10/U19: educ == 3 vs educ == 1, the ledger's usual split.
-Declared benchmark: the identical statistic on `anydigpayment` computed on the SAME 98-economy
-sample, so the contrast is not against a figure from a different frame.
+U25, REGISTERED. Four-way orientation screen (Documentation obligation 2) of every identified item
+against `g20_any` in the 2024 cross-section over the module's own economy set:
+    restatement |r| >= 0.80 | aligned +0.30..0.80 | counter-moving -0.80..-0.30 | independent < 0.30
+both lenses must agree, else `mixed-lens`. KEEP requires >= 1 counter-moving item on BOTH lenses,
+G6 sign-stable, bootstrap (2,000 economy draws) excluding zero. Registered sign: NEGATIVE.
+Secondary anchor (no bar): `mobileaccount_t_d`.
 """
-import itertools
-
 import numpy as np
 import pandas as pd
 
 from micro import Micro, COUNTRY_CSV
 
-SRC = {1: "savings", 2: "family/friends", 3: "money from working", 4: "borrowing",
-       5: "selling assets", 6: "other", 7: "not possible", 8: "DK", 9: "RF"}
-COLS = ["fin24", "fin24a", "fin24b", "fin24c", "fin24d1", "fin24d2", "fin24d3",
-        "fin25e1", "fin25e2", "fin25e3", "fin25e4"]
+MCOLS = ["fin13_1", "fin13a", "fin13b", "fin13c", "fin13d", "fin13e", "fin13f", "fin13f_1",
+         "fin14a", "fin14b", "fin14c", "fin14d", "fin14e"]
+NAME_FIX = {"Czech Republic": "Czechia", "Slovak Republic": "Slovakia"}
+RNG = np.random.default_rng(20260822)
 
 
-# --------------------------------------------------------------------------- U24x mapping
-def mapping_pass(mi):
-    df, out = mi.df, []
+def country_2024():
     c = pd.read_csv(COUNTRY_CSV, low_memory=False)
-    c = c[(c["year"] == 2024) & (c["group"] == "all")].set_index("countrynewwb")
-    nm = {"Czech Republic": "Czechia", "Slovak Republic": "Slovakia"}
-    cc = [x for x in c.columns if (x.startswith("fin24") or x.startswith("fin25"))
-          and not x.endswith("_s")]
+    c = c[(c["year"] == 2024) & (c["group"] == "all") & c["regionwb24_hi"].notna()]
+    return c.set_index("countrynewwb")
 
-    def econ_share(mask, denom):
-        s = df[denom].dropna(subset=["wgt"])
+
+# ------------------------------------------------------------------ U25x mapping pass
+def mapping_pass(mi, c):
+    df = mi.df
+    ccols = [x for x in c.columns if x.startswith(("fin13", "fin14")) and not x.endswith("_s")]
+
+    def econ_share(mask, denom_mask):
+        s = df[denom_mask].dropna(subset=["wgt"])
         h = mask.reindex(s.index).fillna(False).astype(float)
         g = s.assign(_h=h * s["wgt"]).groupby("economy")[["_h", "wgt"]].sum()
         return g["_h"] / g["wgt"] * 100
 
-    def dev_vs(mask, denom, ccol):
-        r, t = econ_share(mask, denom), c[ccol] * 100
-        idx = [e for e in r.index if nm.get(e, e) in t.index and pd.notna(t.get(nm.get(e, e)))]
-        d = np.abs(np.array([r[e] - t[nm.get(e, e)] for e in idx]))
+    def dev_vs(mask, denom_mask, ccol):
+        r, t = econ_share(mask, denom_mask), c[ccol] * 100
+        idx = [e for e in r.index if NAME_FIX.get(e, e) in t.index
+               and pd.notna(t.get(NAME_FIX.get(e, e)))]
+        if len(idx) < 15:
+            return np.nan, np.nan, len(idx)
+        d = np.abs(np.array([r[e] - t[NAME_FIX.get(e, e)] for e in idx]))
         return float(np.median(d)), float(d.max()), len(idx)
 
-    print("=" * 92)
-    print("U24x — EXPLORATORY mapping pass, micro emergency-fund module (11 untouched columns)")
-    print("=" * 92)
-    print("%-10s %10s %10s %8s %11s" % ("col", "n_nonmiss", "share_file", "n_econ", "n_econ>=100"))
-    for col in COLS:
+    print("=" * 96)
+    print("U25x — EXPLORATORY mapping pass, micro MOBILE-MONEY USAGE module (13 untouched columns)")
+    print("=" * 96)
+    print("%-10s %10s %9s %8s %12s" % ("col", "n_nonmiss", "share", "n_econ", "n_econ>=100"))
+    for col in MCOLS:
         n = int(df[col].notna().sum())
         ne = int(df.loc[df[col].notna(), "economy"].nunique())
         n100 = int(df[df[col].notna()].groupby("economy").size().ge(100).sum())
-        print("%-10s %10d %9.1f%% %8d %11d" % (col, n, 100 * n / len(df), ne, n100))
+        print("%-10s %10d %8.1f%% %8d %12d" % (col, n, 100 * n / len(df), ne, n100))
 
-    base = df["fin24"].notna()
-    print("\nbest single-code match per code of `fin24` and `fin24a` (all country fin24*/fin25*):")
-    for mcol in ["fin24", "fin24a"]:
+    # --- denominator structure: economy-level subsample or within-economy conditional?
+    econs = sorted(df.loc[df["fin13a"].notna(), "economy"].unique())
+    sub = df[df["economy"].isin(econs)]
+    cov = sub.groupby("economy").apply(
+        lambda g: pd.Series({"n_econ_total": len(g),
+                             "n_fin13a": int(g["fin13a"].notna().sum()),
+                             "share_asked": 100 * g["fin13a"].notna().mean(),
+                             "mm_acct_rate": 100 * g["account_mob"].mean(skipna=True)}),
+        include_groups=False)
+    print("\nDENOMINATOR STRUCTURE — %d module economies, %d respondents in those economies, "
+          "%d asked fin13a" % (len(econs), len(sub), int(sub["fin13a"].notna().sum())))
+    print("  share of each module economy's respondents asked fin13a: min %.1f%% median %.1f%% "
+          "max %.1f%%" % (cov["share_asked"].min(), cov["share_asked"].median(),
+                          cov["share_asked"].max()))
+    print("  => WITHIN-ECONOMY CONDITIONAL subsample" if cov["share_asked"].max() < 99
+          else "  => ECONOMY-LEVEL subsample")
+    amob = sub.loc[sub["fin13a"].notna(), "account_mob"]
+    print("  account_mob inside the module sample: mean %.3f, n_nonnull %d  (variance usable: %s)"
+          % (amob.mean(), amob.notna().sum(), "yes" if 0.05 < amob.mean() < 0.95 else "NO"))
+    print("  fin13_1 sample vs fin13a sample: %d vs %d respondents"
+          % (int(df['fin13_1'].notna().sum()), int(df['fin13a'].notna().sum())))
+
+    # --- code identification
+    print("\nBEST single-code match per code (denominator = that column's own nonmissing set):")
+    ident = {}
+    for mcol in MCOLS:
+        denom = df[mcol].notna()
         for code in sorted(df[mcol].dropna().unique()):
+            if (df[mcol] == code).sum() < 50:
+                continue
             best = []
-            for ccol in cc:
-                try:
-                    med, mx, n = dev_vs(df[mcol].eq(code), base, ccol)
-                except Exception:
-                    continue
-                if n >= 20:
+            for ccol in ccols:
+                med, mx, n = dev_vs(df[mcol].eq(code), denom, ccol)
+                if pd.notna(med):
                     best.append((med, mx, ccol, n))
             best.sort()
             if best:
-                print("  %-7s code %-4.0f -> %-16s med|dev|=%6.3f max=%6.2f (n=%d)"
-                      % (mcol, code, best[0][2], best[0][0], best[0][1], best[0][3]))
-    med, mx, n = dev_vs(df["fin24a"].isin([2, 3]), base, "fin24aSD_ND")
-    print("\nM3 on the OUTCOME U24 uses: fin24a in {2,3} over the fin24 denominator vs "
-          "country `fin24aSD_ND`: med|dev|=%.4f max=%.4f on %d economies" % (med, mx, n))
-    out.append(("M3", med, mx, n))
-    print("\nweighted composition of `fin24` (main source of emergency funds), pooled over the 98:")
-    s = df[base].dropna(subset=["wgt"])
-    sh = s.groupby("fin24")["wgt"].sum() / s["wgt"].sum() * 100
-    for k, v in sh.items():
-        print("   %-1.0f %-20s %6.2f%%" % (k, SRC.get(int(k), "?"), v))
-    return out
+                med, mx, ccol, n = best[0]
+                flag = "IDENT" if med <= 0.10 else ("close" if med <= 1.0 else "")
+                print("  %-9s code %-3.0f -> %-14s med|dev|=%7.3f max=%7.3f (n=%d) %s"
+                      % (mcol, code, ccol, med, mx, n, flag))
+                if med <= 0.10:
+                    ident[(mcol, int(code))] = (ccol, med, mx, n)
+    print("\nIDENTIFIED (median |dev| <= 0.10pp): %d code-cells" % len(ident))
+
+    # --- composition check: do the codes of each question partition?
+    print("\nPARTITION CHECK (weighted composition of each column over its own denominator):")
+    for mcol in MCOLS:
+        s = df[df[mcol].notna()].dropna(subset=["wgt"])
+        sh = s.groupby(mcol)["wgt"].sum() / s["wgt"].sum() * 100
+        print("  %-9s " % mcol + "  ".join("%d:%5.1f%%" % (k, v) for k, v in sh.items()))
+    return ident, econs
 
 
-# --------------------------------------------------------------------------- U24 machinery
-def wrate(d, col):
-    s = d.dropna(subset=[col, "wgt"])
-    if s.empty:
-        return np.nan, 0
-    return float(np.average(s[col], weights=s["wgt"])) * 100, int(len(s))
+# ------------------------------------------------------------------ U25 screen machinery
+def wcorr(x, y, w):
+    m = pd.notna(x) & pd.notna(y) & pd.notna(w)
+    x, y, w = x[m], y[m], w[m]
+    if len(x) < 10:
+        return np.nan, len(x)
+    mx, my = np.average(x, weights=w), np.average(y, weights=w)
+    cov = np.average((x - mx) * (y - my), weights=w)
+    sx = np.sqrt(np.average((x - mx) ** 2, weights=w))
+    sy = np.sqrt(np.average((y - my) ** 2, weights=w))
+    return float(cov / (sx * sy)), len(x)
 
 
-def gap(d, col, hi_mask, lo_mask):
-    """rate(advantaged) - rate(disadvantaged), in pp, with both unweighted cell n."""
-    rh, nh = wrate(d[hi_mask.reindex(d.index).fillna(False)], col)
-    rl, nl = wrate(d[lo_mask.reindex(d.index).fillna(False)], col)
-    return rh - rl, rh, rl, nh, nl
+def classify(rw, ru):
+    def one(r):
+        if pd.isna(r):
+            return "na"
+        if abs(r) >= 0.80:
+            return "restatement"
+        if r >= 0.30:
+            return "aligned"
+        if r <= -0.30:
+            return "counter-moving"
+        return "independent"
+    a, b = one(rw), one(ru)
+    return a if a == b else "mixed-lens"
 
 
-def block(d, col, hi, lo, label):
-    g_all = gap(d, col, hi, lo)
-    acc = d[d["account"] == 1]
-    g_acc = gap(acc, col, hi, lo)
-    absorb = np.nan if abs(g_all[0]) < 1e-9 else 1 - g_acc[0] / g_all[0]
-    print("  %-34s uncond %+6.2fpp (%5.1f vs %5.1f, n %6d/%6d) | "
-          "acct-cond %+6.2fpp (%5.1f vs %5.1f, n %6d/%6d) | absorption %6.1f%%"
-          % (label, g_all[0], g_all[1], g_all[2], g_all[3], g_all[4],
-             g_acc[0], g_acc[1], g_acc[2], g_acc[3], g_acc[4], 100 * absorb))
-    return {"uncond": g_all[0], "cond": g_acc[0], "absorb": absorb,
-            "n_hi": g_all[3], "n_lo": g_all[4], "n_hi_c": g_acc[3], "n_lo_c": g_acc[4]}
-
-
-def kish(w):
-    w = np.asarray(w, float)
-    return float(w.sum() ** 2 / (w ** 2).sum())
-
-
-def boot(d, col, hi, lo, draws=2000, seed=20260821):
-    rng = np.random.default_rng(seed)
-    econs = d["economy"].unique()
-    by = {e: d[d["economy"] == e] for e in econs}
-    U, C, A = [], [], []
+def boot_ci(x, y, w, draws=2000):
+    idx = np.array(x.index)
+    out = []
     for _ in range(draws):
-        pick = rng.choice(econs, size=len(econs), replace=True)
-        s = pd.concat([by[e] for e in pick])
-        gu = gap(s, col, hi, lo)[0]
-        gc = gap(s[s["account"] == 1], col, hi, lo)[0]
-        U.append(gu); C.append(gc)
-        A.append(np.nan if abs(gu) < 1e-9 else 1 - gc / gu)
-    q = lambda v: (float(np.nanpercentile(v, 2.5)), float(np.nanpercentile(v, 97.5)))
-    return q(U), q(C), q(A)
+        s = RNG.choice(len(idx), len(idx), replace=True)
+        take = idx[s]
+        r, _n = wcorr(pd.Series(x.loc[take].values), pd.Series(y.loc[take].values),
+                      pd.Series(w.loc[take].values))
+        if pd.notna(r):
+            out.append(r)
+    out = np.array(out)
+    lo, hi = np.percentile(out, [2.5, 97.5])
+    p = 2 * min((out <= 0).mean(), (out >= 0).mean())
+    return float(lo), float(hi), float(p)
 
 
-def within_economy(d, col, hi, lo, min_n=100):
+def screen(items, anchor_s, pop, label, do_boot):
+    print("\n" + "=" * 96)
+    print("U25 — four-way orientation screen vs `%s`  (n = %d module economies)" % (label, len(pop)))
+    print("=" * 96)
+    print("%-26s %7s %7s %16s %6s %8s %-22s" %
+          ("item", "r_w", "r_u", "class", "n", "neff", "G6 / largest LOO"))
     rows = []
-    for e, sub in d[d["account"] == 1].groupby("economy"):
-        h = sub[hi.reindex(sub.index).fillna(False)]
-        l = sub[lo.reindex(sub.index).fillna(False)]
-        nh = int(h[col].notna().sum()); nl = int(l[col].notna().sum())
-        if nh < min_n or nl < min_n:
+    for name, ser in items.items():
+        common = ser.dropna().index.intersection(anchor_s.dropna().index).intersection(pop.index)
+        x, y, w = ser.loc[common], anchor_s.loc[common], pop.loc[common]
+        rw, n = wcorr(x, y, w)
+        ru, _ = wcorr(x, y, pd.Series(1.0, index=common))
+        if pd.isna(rw):
             continue
-        rh, _ = wrate(h, col); rl, _ = wrate(l, col)
-        rows.append({"economy": e, "gap": rh - rl, "n_hi": nh, "n_lo": nl,
-                     "participants": nh + nl})
-    return pd.DataFrame(rows)
+        neff = (w.sum() ** 2) / (w ** 2).sum()
+        keep = w.sort_values(ascending=False).index[5:]
+        r_drop, _ = wcorr(x.loc[keep], y.loc[keep], w.loc[keep])
+        loo = {}
+        for e in common:
+            k = common.drop(e)
+            r_i, _ = wcorr(x.loc[k], y.loc[k], w.loc[k])
+            loo[e] = r_i - rw
+        big = max(loo, key=lambda e: abs(loo[e]))
+        cls = classify(rw, ru)
+        ci = boot_ci(x, y, w) if (do_boot and cls in ("counter-moving", "aligned",
+                                                     "restatement")) else None
+        rows.append({"item": name, "r_w": rw, "r_u": ru, "cls": cls, "n": n, "neff": neff,
+                     "r_drop": r_drop, "loo_econ": big, "loo_d": loo[big], "ci": ci,
+                     "x": x, "y": y, "w": w})
+        print("%-26s %+7.3f %+7.3f %16s %6d %8.1f  drop5 %+.3f / %s %+.3f"
+              % (name, rw, ru, cls, n, neff, r_drop, big[:14], loo[big]))
+        if ci:
+            print("%-26s   bootstrap 2,000 economy draws: [%+.3f, %+.3f]  p_boot=%.3f"
+                  % ("", ci[0], ci[1], ci[2]))
+    return rows
 
 
 def main():
     mi = Micro()
-    mapping_pass(mi)
+    c = country_2024()
+    ident, econs = mapping_pass(mi, c)
 
-    df = mi.df.copy()
-    base = df["fin24"].notna()
-    df["resilient"] = np.where(base, df["fin24a"].isin([2, 3]).astype(float), np.nan)
-    d = df[base & df["educ"].notna() & df["account"].notna()].copy()
+    df = mi.df
+    # per-economy weighted share of each identified code, over that column's own denominator
+    items = {}
+    for (mcol, code), (ccol, med, mx, n) in sorted(ident.items()):
+        denom = df[mcol].notna()
+        s = df[denom].dropna(subset=["wgt"])
+        h = df[mcol].eq(code).reindex(s.index).fillna(False).astype(float)
+        g = s.assign(_h=h * s["wgt"]).groupby("economy")[["_h", "wgt"]].sum()
+        ser = (g["_h"] / g["wgt"] * 100)
+        ser.index = [NAME_FIX.get(e, e) for e in ser.index]
+        items["%s=%d [%s]" % (mcol, code, ccol)] = ser
+    print("\nscreenable items: %d" % len(items))
 
-    hi_reg = d["educ"] >= 2            # registered: secondary or more
-    lo_reg = d["educ"] == 1            # registered: primary or less
-    hi_led = d["educ"] == 3            # ledger-standard comparability twin
-    lo_led = d["educ"] == 1
-
-    print("\n" + "=" * 92)
-    print("U24 — the access-absorption ruler on a WELFARE margin (fin24aSD_ND equivalent)")
-    print("sample: %d respondents, %d economies (the 98-economy module set)"
-          % (len(d), d["economy"].nunique()))
-    print("Kish neff of the weights: %.1f (nominal n %d)" % (kish(d["wgt"]), len(d)))
-    print("=" * 92)
-
-    print("\nPRIMARY — registered split (educ>=2 vs educ==1):")
-    P = block(d, "resilient", hi_reg, lo_reg, "resilience (fin24aSD_ND)")
-    print("\nDECLARED BENCHMARK — same statistic, same 98-economy sample, usage margin:")
-    B = block(d, "anydigpayment", hi_reg, lo_reg, "digital payment (anydigpayment)")
-    print("\nDECLARED SECONDARY — ledger-standard split (educ==3 vs educ==1):")
-    P3 = block(d, "resilient", hi_led, lo_led, "resilience (fin24aSD_ND)")
-    B3 = block(d, "anydigpayment", hi_led, lo_led, "digital payment (anydigpayment)")
-
-    print("\nB6 country-clustered bootstrap, 2,000 draws, percentile intervals (registered split):")
-    cu, cc_, ca = boot(d, "resilient", hi_reg, lo_reg)
-    print("  resilience  uncond [%+.2f, %+.2f]  cond [%+.2f, %+.2f]  absorption [%.1f%%, %.1f%%]"
-          % (cu[0], cu[1], cc_[0], cc_[1], 100 * ca[0], 100 * ca[1]))
-    bu, bc, ba = boot(d, "anydigpayment", hi_reg, lo_reg)
-    print("  digital pay uncond [%+.2f, %+.2f]  cond [%+.2f, %+.2f]  absorption [%.1f%%, %.1f%%]"
-          % (bu[0], bu[1], bc[0], bc[1], 100 * ba[0], 100 * ba[1]))
-
-    print("\nREGISTERED SECONDARY — within-economy sign of the account-conditional gap "
-          "(M2 >=100 in both cells):")
-    for tag, h, l in [("registered split", hi_reg, lo_reg), ("ledger split", hi_led, lo_led)]:
-        w = within_economy(d, "resilient", h, l)
-        wd = within_economy(d, "anydigpayment", h, l)
-        if len(w):
-            pos = float((w["gap"] > 0).mean())
-            share = w["participants"].sum() / len(d[d["account"] == 1])
-            print("  %-17s resilience: %d economies qualify (%.1f%% of acct respondents), "
-                  "median gap %+.2fpp, positive in %d/%d (%.1f%%)"
-                  % (tag, len(w), 100 * share, w["gap"].median(),
-                     int((w["gap"] > 0).sum()), len(w), 100 * pos))
-        if len(wd):
-            print("  %-17s digitalpay: %d economies qualify, median gap %+.2fpp, "
-                  "positive in %d/%d (%.1f%%)"
-                  % (tag, len(wd), wd["gap"].median(), int((wd["gap"] > 0).sum()), len(wd),
-                     100 * float((wd["gap"] > 0).mean())))
-
-    print("\nVERDICT AGAINST THE REGISTERED BAR (educ>=2 vs educ==1):")
-    b1 = P["uncond"] >= 5.0
-    b2 = P["absorb"] < 0.40
-    b3 = P["cond"] >= 5.0
-    print("  (1) uncond gap >= +5pp and POSITIVE: %+.2f  -> %s" % (P["uncond"], "PASS" if b1 else "FAIL"))
-    print("  (2) absorption < 40%%:                %.1f%%  -> %s" % (100 * P["absorb"], "PASS" if b2 else "FAIL"))
-    print("  (3) cond gap  >= +5pp and POSITIVE:  %+.2f  -> %s" % (P["cond"], "PASS" if b3 else "FAIL"))
-    print("  ==> %s" % ("KEEP" if (b1 and b2 and b3) else "DISCARD"))
-    print("\n  benchmark on the same sample: usage-margin absorption %.1f%% vs "
-          "welfare-margin absorption %.1f%%" % (100 * B["absorb"], 100 * P["absorb"]))
-    print("  ledger-split twin: welfare %.1f%% vs usage %.1f%% absorption"
-          % (100 * P3["absorb"], 100 * B3["absorb"]))
+    pop = c["pop_adult"].dropna()
+    for anchor, do_boot in (("g20_any", True), ("mobileaccount_t_d", False)):
+        a = (c[anchor] * 100).dropna()
+        rows = screen(items, a, pop, anchor, do_boot)
+        if anchor == "g20_any":
+            cm = [r for r in rows if r["cls"] == "counter-moving"]
+            print("\nREGISTERED KEEP CONDITION (>=1 counter-moving on BOTH lenses, G6 sign-stable,"
+                  " bootstrap excluding zero):")
+            if not cm:
+                print("  0 counter-moving items -> DISCARD as registered.")
+            for r in cm:
+                sign_ok = np.sign(r["r_drop"]) == np.sign(r["r_w"])
+                ci_ok = r["ci"] and (r["ci"][0] < 0 and r["ci"][1] < 0)
+                print("  %-26s G6 sign %s | CI excludes 0 %s -> %s"
+                      % (r["item"], "OK" if sign_ok else "FAIL", "OK" if ci_ok else "FAIL",
+                         "KEEP" if (sign_ok and ci_ok) else "FAIL"))
+            tab = pd.Series([r["cls"] for r in rows]).value_counts()
+            print("\nclassification counts vs g20_any: %s" % dict(tab))
+            # G4 coverage of the module frame
+            share = pop.reindex([e for e in items[list(items)[0]].index
+                                 if e in pop.index]).sum() / pop.sum()
+            print("G4 (declared frame = the module's own economy set): %d economies, "
+                  "%.1f%% of country-file 2024 adult population" % (len(econs), 100 * share))
+            inc = c.reindex([e for e in items[list(items)[0]].index if e in c.index])
+            print("income mix of the module set: %s" % dict(inc["incomegroupwb24"].value_counts()))
 
 
 if __name__ == "__main__":
