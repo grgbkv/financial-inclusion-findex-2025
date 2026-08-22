@@ -7621,3 +7621,60 @@ and a screen run on it measures penetration.* Proposed as a standing rule for th
 pass — **run the screen on the block's own denominator, and report the complement factor's own
 correlation with the anchor beside any negative classification**. It costs one loop and it would have
 caught this before the bootstrap did not.
+
+## E56 — DISCARD as registered (70.5% against an 80% bar), and agenda item 8.2 answered anyway
+
+Stream hypothesis. Design `audit`. Frame `pan_dev`. **Parent E55** (chain E53 → E55 → E56, at the B3
+cap — the next cycle may not extend it). Agenda item **8.2**.
+
+**The registered primary FAILS.** Of 128 developing-panel columns with ≥30 economies reporting in
+2021, **78 drop three or more economies** by 2024. The modal dropper set `D*` is shared **exactly**
+by **55 of them = 70.5%**, against a registered bar of 80% at Jaccard ≥ 0.90. **⇒ DISCARD.** Also
+recorded: 44 columns drop one or two economies and 6 drop none.
+
+**`D*` is E53's six economies, and they are all still in the wave.**
+**Algeria, China, Iran, Mauritius, Russia, Ukraine** — **31.4%** of 2024 developing-panel adult
+population — every one of them present in the 2024 wave with `account_t_d` recorded. This is items
+leaving a file, not economies leaving a survey, confirmed on a set built from 128 columns rather
+than from the four E53 happened to test.
+
+**Why the bar failed, and it is a fact about the ledger's own bookkeeping rather than about the
+data.** Thirteen of the 23 non-matching columns are **`_s` conditional columns**, which
+`HARNESS_V2_NOTES` item 10 records as **unusable** and on which no claim rests. Among the **63
+usable** non-trivially-dropping columns there are only **three distinct dropper sets in total**:
+`D*` (55 columns), `D*` minus Iran (6 — `fh1`, `fh2`, `fh1_fh2`, `fin28`, `fin29`, `fin28_29`), and
+a three-economy set (`fin17b`, `fin22a_1`: Georgia, Mauritania, Russia). On that set the statistic is
+**87.3%** and the bar would **pass**.
+
+**This is reported and the verdict is NOT taken from it.** E55 ran the same `_s` cut and its verdict
+did not turn on it; today's would. A restriction that flips a verdict must be **declared in advance**
+or it is a moved bar, so E56 stands as a discard. **Rule proposed for the next amendment pass:
+exclude `_s` columns from audit denominators by a standing declared rule** — they are already
+documented as unusable, and the choice should not be available to a cycle after it has seen the
+number.
+
+**SECONDARY 1 — the block is a SECTION, not a module, which answers item 8.2's actual question.**
+The 55 exact matchers span **ten column families**: `fin32` 14 of 17 · `fin37` 12 of 13 · `fin38` 6
+of 6 · `fing2p` 6 of 8 · `fin31` 4 of 8 · `fin34` 4 of 6 · `fin43` 4 of 4 · `fin42` 2 of 2 ·
+`g20_made` + `g20_received` · `fin30`. That is the **payments section** of the instrument, not one
+questionnaire module — so the cause is better read as a **release-level rule for these six economies
+over a block of payment items** than as a single dropped module. The one column inside an affected
+family that stays stable is **`g20_any`**, the headline, which is why every headline-based claim in
+the ledger was safe (E55's "headline coverage is no defence" note, seen from the other side).
+
+**SECONDARY 2 (rule B16) — the two corrections E55 opened are now DISCHARGED with numbers.**
+Balanced on a fixed denominator:
+
+| column | balanced path | balanced Δ (last window) | unbalanced Δ | set |
+|---|---|---|---|---|
+| `fin32_acc` (E10, `keep-general`) | **8.04 → 10.35 → 12.03 → 16.43** | **+4.40** | −3.21 | 71 economies, 68.6% of panel pop |
+| `fh1` (E33, `keep-window`) | **17.88 → 19.69** | **+1.81** | −1.40 | 69 economies, 67.0% |
+| `fh2` | **21.69 → 24.41** | **+2.72** | −0.67 | 69, 67.0% |
+| `fh1_fh2` | **29.39 → 32.09** | **+2.70** | −0.85 | 69, 67.0% |
+
+**All four last-window deltas change sign.** `fin32_acc`'s balanced path is **monotone rising in all
+three steps** (+2.31, +1.68, **+4.40**) — on a fixed denominator the wage rail's largest advance is
+the 2021→24 window the unbalanced series reports as a *retreat*. The `fh` family has only two waves
+and rises in both columns and in their union. **What this does not touch:** the E10 and E33
+*associations* are Δ→Δ and balanced by construction; only statements about these margins' **aggregate
+direction** were wrong, and those now have replacement numbers.

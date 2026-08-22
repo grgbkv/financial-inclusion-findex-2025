@@ -1,0 +1,124 @@
+================================================================================================
+E56 — agenda item 8.2: ONE dropout block or per-item attrition? (developing panel)
+================================================================================================
+eligible columns (>=30 developing-panel economies in 2021): 128
+columns with a non-trivial drop (|D| >= 3): 78   (of which DISCONTINUED, zero 2024 reporters: 0)
+columns with |D| in {1,2}: 44 ; perfectly stable (|D| = 0): 6
+
+[REGISTERED PRIMARY — all non-trivially-dropping columns] 78 columns; modal dropper set D* has |D*| = 6 and is EXACTLY shared by 55 columns (70.5%)
+  D* = Algeria, China, Iran, Islamic Rep., Mauritius, Russian Federation, Ukraine
+  columns with Jaccard(D, D*) >= 0.90: 55 of 78 = 70.5%  (bar 80%)  -> FAIL
+  Jaccard(D, D*) distribution: min 0.10 p25 0.83 median 1.00 p75 1.00 max 1.00
+  distinct dropper sets among these columns: 18
+    n=55  |D|=6   Algeria, China, Iran, Islamic Rep., Mauritius, Russian Federation, Ukr
+    n=6   |D|=5   Algeria, China, Mauritius, Russian Federation, Ukraine
+    n=2   |D|=3   Georgia, Mauritania, Russian Federation
+    n=1   |D|=7   Algeria, Guinea, Kazakhstan, Mauritius, Russian Federation, Senegal, U
+    n=1   |D|=16  Argentina, Armenia, Bolivia, Bulgaria, El Salvador, Ghana, Guatemala, 
+    n=1   |D|=15  Argentina, Bulgaria, Colombia, Dominican Republic, Ecuador, El Salvado
+
+[declared robustness — excluding discontinued columns] 78 columns; modal dropper set D* has |D*| = 6 and is EXACTLY shared by 55 columns (70.5%)
+  D* = Algeria, China, Iran, Islamic Rep., Mauritius, Russian Federation, Ukraine
+  columns with Jaccard(D, D*) >= 0.90: 55 of 78 = 70.5%  (bar 80%)  -> FAIL
+  Jaccard(D, D*) distribution: min 0.10 p25 0.83 median 1.00 p75 1.00 max 1.00
+  distinct dropper sets among these columns: 18
+    n=55  |D|=6   Algeria, China, Iran, Islamic Rep., Mauritius, Russian Federation, Ukr
+    n=6   |D|=5   Algeria, China, Mauritius, Russian Federation, Ukraine
+    n=2   |D|=3   Georgia, Mauritania, Russian Federation
+    n=1   |D|=7   Algeria, Guinea, Kazakhstan, Mauritius, Russian Federation, Senegal, U
+    n=1   |D|=16  Argentina, Armenia, Bolivia, Bulgaria, El Salvador, Ghana, Guatemala, 
+    n=1   |D|=15  Argentina, Bulgaria, Colombia, Dominican Republic, Ecuador, El Salvado
+
+[POST-HOC (verdict NOT taken from here) — excluding _s conditional columns] 63 columns; modal dropper set D* has |D*| = 6 and is EXACTLY shared by 55 columns (87.3%)
+  D* = Algeria, China, Iran, Islamic Rep., Mauritius, Russian Federation, Ukraine
+  columns with Jaccard(D, D*) >= 0.90: 55 of 63 = 87.3%  (bar 80%)  -> PASS
+  Jaccard(D, D*) distribution: min 0.12 p25 1.00 median 1.00 p75 1.00 max 1.00
+  distinct dropper sets among these columns: 3
+    n=55  |D|=6   Algeria, China, Iran, Islamic Rep., Mauritius, Russian Federation, Ukr
+    n=6   |D|=5   Algeria, China, Mauritius, Russian Federation, Ukraine
+    n=2   |D|=3   Georgia, Mauritania, Russian Federation
+
+D* ECONOMIES IN THE 2024 WAVE (E53's test: items dropping out, not economies):
+  Algeria        in 2024 wave: True  account_t_d recorded: True   2024 adult pop 32.0m
+  China          in 2024 wave: True  account_t_d recorded: True   2024 adult pop 1176.7m
+  Iran, Islamic Rep. in 2024 wave: True  account_t_d recorded: True   2024 adult pop 69.9m
+  Mauritius      in 2024 wave: True  account_t_d recorded: True   2024 adult pop 1.1m
+  Russian Federation in 2024 wave: True  account_t_d recorded: True   2024 adult pop 118.6m
+  Ukraine        in 2024 wave: True  account_t_d recorded: True   2024 adult pop 32.3m
+  D* holds 31.4% of 2024 developing-panel adult population
+
+SECONDARY 1 — module membership of the 55 columns sharing D* EXACTLY:
+  fin32         14   fin32, fin32_33, fin32_33_34a, fin32_33_34b, fin32_33_34c, fin32_33_34
+  fin37         12   fin37, fin37_38, fin37_38_39_acc, fin37_38_39a, fin37_38_39b, fin37_38
+  fin38          6   fin38, fin38_39_acc, fin38_39a, fin38_39b, fin38_39c, fin38_39d
+  fing2          6   fing2p, fing2p_acc, fing2p_card, fing2p_cash, fing2p_fin, fing2p_mob
+  fin31          4   fin31a, fin31a_31b, fin31b, fin31d
+  fin34          4   fin34a, fin34b, fin34c, fin34d
+  fin43          4   fin43a, fin43b, fin43c, fin43d
+  fin42          2   fin42, fin42_acc
+  g20            2   g20_made, g20_received
+  fin30          1   fin30
+  coverage of each affected module: fin32 14/17; fin37 12/13; fin38 6/6; fing2 6/8; fin31 4/8; fin34 4/6; fin43 4/4; fin42 2/2
+
+  the 23 columns NOT matching D* at Jaccard >= 0.90:
+    fin32_n33_34c_s    |D|=16  Jaccard 0.10  Argentina, Armenia, Bolivia, Bulgaria, El Salvador, Ghana,
+    fin34c_s           |D|=15  Jaccard 0.11  Argentina, Bulgaria, Colombia, Dominican Republic, Ecuador
+    fing2p_fin_s       |D|=10  Jaccard 0.60  Algeria, Bolivia, Botswana, China, Colombia, Iran, Islamic
+    fing2p_acc_s       |D|=10  Jaccard 0.60  Algeria, Bolivia, China, Colombia, El Salvador, Iran, Isla
+    fin37_38_39_acc_s  |D|=10  Jaccard 0.60  Algeria, Bolivia, China, Colombia, El Salvador, Iran, Isla
+    fin34a_s           |D|=8   Jaccard 0.75  Algeria, China, Gabon, Iran, Islamic Rep., Mauritius, Phil
+    fin31a_s           |D|=8   Jaccard 0.56  Cambodia, China, Colombia, Iran, Islamic Rep., Mauritius, 
+    fin31d_s           |D|=7   Jaccard 0.44  Algeria, Guinea, Kazakhstan, Mauritius, Russian Federation
+    fin32_acc_s        |D|=7   Jaccard 0.86  Algeria, China, Iran, Islamic Rep., Mali, Mauritius, Russi
+    fin32_n33_acc_s    |D|=6   Jaccard 0.50  Gabon, Iran, Islamic Rep., Mauritius, Philippines, Russian
+    fin31a_31b_s       |D|=6   Jaccard 0.71  Cambodia, China, Iran, Islamic Rep., Mauritius, Russian Fe
+    fin28_s            |D|=6   Jaccard 0.33  Bangladesh, China, Georgia, Mauritius, Nepal, Russian Fede
+    fh1                |D|=5   Jaccard 0.83  Algeria, China, Mauritius, Russian Federation, Ukraine
+    fin28              |D|=5   Jaccard 0.83  Algeria, China, Mauritius, Russian Federation, Ukraine
+    fh2                |D|=5   Jaccard 0.83  Algeria, China, Mauritius, Russian Federation, Ukraine
+    fin29              |D|=5   Jaccard 0.83  Algeria, China, Mauritius, Russian Federation, Ukraine
+    fh1_fh2            |D|=5   Jaccard 0.83  Algeria, China, Mauritius, Russian Federation, Ukraine
+    fin28_29           |D|=5   Jaccard 0.83  Algeria, China, Mauritius, Russian Federation, Ukraine
+    fin31b_s           |D|=4   Jaccard 0.43  Iran, Islamic Rep., Russian Federation, Ukraine, Zimbabwe
+    fin29_s            |D|=4   Jaccard 0.43  China, Mauritius, Mexico, Russian Federation
+    fin17b             |D|=3   Jaccard 0.12  Georgia, Mauritania, Russian Federation
+    fin22a_1           |D|=3   Jaccard 0.12  Georgia, Mauritania, Russian Federation
+    fin28_29_s         |D|=3   Jaccard 0.50  China, Mauritius, Russian Federation
+
+  inside the affected modules, the columns with |D| < 3 (stable items):
+    g20          g20_any
+
+  columns whose dropper set is a STRICT SUBSET of D* (>=5 economies): 6  fh1, fh1_fh2, fh2, fin28, fin28_29, fin29
+
+================================================================================================
+SECONDARY 2 (rule B16) — balanced wave paths for the columns E55 exposed
+================================================================================================
+
+fin32_acc — reporters by wave: {2014: 77, 2017: 77, 2021: 77, 2024: 71} ; BALANCED set 71 economies, 68.6% of 2024 developing-panel adult population
+  unbalanced (each wave over its own reporters): 2014  12.04  2017  14.36  2021  19.64  2024  16.43
+  BALANCED   (one fixed denominator):            2014   8.04  2017  10.35  2021  12.03  2024  16.43
+  last-window delta: unbalanced -3.21pp, balanced +4.40pp, discrepancy -7.61pp   [SIGN FLIP]
+  balanced path is MONOTONE: steps +2.31 +1.68 +4.40
+  G4 on the balanced set: {'gate': 'G4_coverage', 'ok': True, 'n_countries': 71, 'pop_share': 1.0}
+
+fh1 — reporters by wave: {2021: 74, 2024: 71} ; BALANCED set 69 economies, 67.0% of 2024 developing-panel adult population
+  unbalanced (each wave over its own reporters): 2021  21.18  2024  19.78
+  BALANCED   (one fixed denominator):            2021  17.88  2024  19.69
+  last-window delta: unbalanced -1.40pp, balanced +1.81pp, discrepancy -3.22pp   [SIGN FLIP]
+  G4 on the balanced set: {'gate': 'G4_coverage', 'ok': True, 'n_countries': 69, 'pop_share': 1.0}
+
+fh2 — reporters by wave: {2021: 74, 2024: 71} ; BALANCED set 69 economies, 67.0% of 2024 developing-panel adult population
+  unbalanced (each wave over its own reporters): 2021  24.97  2024  24.30
+  BALANCED   (one fixed denominator):            2021  21.69  2024  24.41
+  last-window delta: unbalanced -0.67pp, balanced +2.72pp, discrepancy -3.39pp   [SIGN FLIP]
+  G4 on the balanced set: {'gate': 'G4_coverage', 'ok': True, 'n_countries': 69, 'pop_share': 1.0}
+
+fh1_fh2 — reporters by wave: {2021: 74, 2024: 71} ; BALANCED set 69 economies, 67.0% of 2024 developing-panel adult population
+  unbalanced (each wave over its own reporters): 2021  32.88  2024  32.03
+  BALANCED   (one fixed denominator):            2021  29.39  2024  32.09
+  last-window delta: unbalanced -0.85pp, balanced +2.70pp, discrepancy -3.55pp   [SIGN FLIP]
+  G4 on the balanced set: {'gate': 'G4_coverage', 'ok': True, 'n_countries': 69, 'pop_share': 1.0}
+
+================================================================================================
+VERDICT: registered bar 80% of non-trivially-dropping columns at Jaccard >= 0.90; observed 70.5% -> DISCARD
+================================================================================================

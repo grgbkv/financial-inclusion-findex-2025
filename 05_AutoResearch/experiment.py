@@ -96,6 +96,12 @@ def main():
     Dstar, share = primary(nz, "REGISTERED PRIMARY — all non-trivially-dropping columns")
     primary([r for r in nz if not r["dead"]],
             "declared robustness — excluding discontinued columns")
+    # DISCLOSED POST-RUN ROBUSTNESS, NOT USED TO MOVE THE BAR: `_s` conditional columns are
+    # recorded as unusable in HARNESS_V2_NOTES item 10 and no claim rests on one. E55 reported
+    # the same cut and its verdict did not turn on it; here it DOES, which is stated as a
+    # finding about the RULE, not as a reason to overturn the registered verdict.
+    primary([r for r in nz if not r["col"].endswith("_s")],
+            "POST-HOC (verdict NOT taken from here) — excluding _s conditional columns")
 
     # --- D* provenance: are its economies still in the 2024 wave?
     print("\nD* ECONOMIES IN THE 2024 WAVE (E53's test: items dropping out, not economies):")
@@ -119,6 +125,24 @@ def main():
     allmods = Counter(module_of(r["col"]) for r in recs)
     print("  coverage of each affected module: " + "; ".join(
         "%s %d/%d" % (m, n, allmods[m]) for m, n in mods.most_common(8)))
+
+    # DISCLOSED POST-RUN DESCRIPTIVE DETAIL (no bar, no verdict attached): what the 23
+    # non-matching columns are, and whether the unaffected columns of an affected module
+    # are stable or drop a different set.
+    print("\n  the %d columns NOT matching D* at Jaccard >= %.2f:" % (
+        len(nz) - sum(1 for r in nz if jaccard(r["D"], Dstar) >= JACCARD_BAR), JACCARD_BAR))
+    for r in sorted((r for r in nz if jaccard(r["D"], Dstar) < JACCARD_BAR),
+                    key=lambda r: -r["nD"]):
+        print("    %-18s |D|=%-3d Jaccard %.2f  %s"
+              % (r["col"], r["nD"], jaccard(r["D"], Dstar), ", ".join(sorted(r["D"]))[:58]))
+    print("\n  inside the affected modules, the columns with |D| < %d (stable items):" % MIN_DROP)
+    for m in [m for m, _n in mods.most_common()]:
+        stable = [r["col"] for r in recs if module_of(r["col"]) == m and r["nD"] < MIN_DROP]
+        if stable:
+            print("    %-12s %s" % (m, ", ".join(sorted(stable))[:74]))
+    subset = [r["col"] for r in nz if r["D"] < Dstar and len(r["D"]) >= 5]
+    print("\n  columns whose dropper set is a STRICT SUBSET of D* (>=5 economies): %d  %s"
+          % (len(subset), ", ".join(sorted(subset))[:80]))
 
     # --- SECONDARY 2 (B16): balanced wave paths for the two corrections E55 opened
     print("\n" + "=" * 96)
