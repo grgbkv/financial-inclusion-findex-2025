@@ -7553,3 +7553,71 @@ B2 obligation rests entirely on U25x/U25 (which is why slot 1 went to a doubly-u
 Deferred by budget, and named here so it is not lost: **agenda item 4.6**, the education/income
 gradient in the *source* of emergency funds, which U24x opened and which is the strongest
 unregistered lead on the micro side.
+
+---
+
+## U25x — EXPLORATORY. The mobile-money usage module is open, and it is TWO blocks, not one
+
+Commit `3d6f39b`. Stream micro. Design `measurement`. Frame: the 36 economies that field the module.
+**Parent: none.** Nothing here is claimable (peek rule).
+
+**The identification failed as registered and succeeded on the second denominator, which is
+disclosed.** U24x's method run with the column's **own** nonmissing set as the denominator
+identified **0 of 40 code-cells** (best median |dev| 0.828pp). The reason is structural: the country
+twin is a share of **all adults** while the micro block is asked of a subsample. Re-run with the
+**population** denominator — all respondents in the 36 module economies — it identified **19
+code-cells, 18 of them at median |dev| of exactly 0.000pp and max 0.000pp on 36 economies**. Adding
+the second denominator is a mapping choice inside an exploratory pass, not a hypothesis test, and the
+registered U25 screen (anchor, bars, keep condition) was not touched.
+
+**What the module is.** `fin13a`/`fin13b`/`fin13c` are a **four-level frequency partition** —
+weekly / monthly / less than monthly / never = `fin13aw`/`am`/`alm`/`an` — over three different uses;
+`fin13_1`, `fin13e`, `fin13f`, `fin13f_1`, `fin14a`, `fin14b`, `fin14d` map one-to-one onto their
+country twins. `fin13d` and `fin14e` have **no country twin** and stay unidentified. Meanings beyond
+the column names are not available: there is no questionnaire in the repo (`HARNESS_V2_NOTES` 5–6).
+
+**The block structure is the durable deliverable, and the country file does not show it.**
+`fin13` is asked **only of mobile-money accountholders** (n = 16,410, `account_mob` mean **1.000**);
+`fin14` is asked **only of NON-holders** (n = 15,100, `account_mob` mean **0.000**, of whom just
+21.4% hold any account at all). The two blocks **overlap in exactly 0 respondents**. Any future use
+of `fin13` is conditional on holding mobile money and any use of `fin14` is conditional on not
+holding it — which is the fact that decides U25 below.
+
+## U25 — DISCARD. The screen's counter-movers are the DENOMINATOR, not the items
+
+Commit `3d6f39b`. Stream micro. Design `measurement`. Frame: 36 module economies, `neff` **11.7**.
+**Parent: none.** Registered sign: **negative**.
+
+**The registered condition was met on the population denominator — by two items that are an
+artifact.** `fin14a` (**−0.611 / −0.760**) and `fin14b` (**−0.685 / −0.744**) classify
+`counter-moving` on both lenses, keep their sign under G6 (drop-top-5 **−0.832 / −0.834**, i.e.
+stronger) and have bootstrap intervals **[−0.878, −0.308]** and **[−0.917, −0.424]** excluding zero.
+Every mechanical bar passes.
+
+**The decomposition retires them.** `fin14` items are asked of non-holders, so their population share
+is *(1 − mobile-money rate) × (rate within non-holders)*. Correlating the **complement factor alone**
+with the anchor gives **−0.903 / −0.938** — a `restatement` of `g20_any` by the screen's own bars.
+On their own block denominator both items collapse: `fin14a` to **−0.073 / −0.322** (`mixed-lens`)
+and `fin14b` to **−0.245 / −0.247** (`independent`). The same fact appears with the sign flipped on
+the secondary anchor: **9 of 19 items restate `mobileaccount_t_d` at |r| ≥ 0.80**. The
+population-denominator screen was measuring **penetration**.
+
+**The one item that survives the correct denominator does not survive its own family.** The
+pre-registration's denominator clause makes the conditional statistic the claim-bearing one. On it,
+exactly one item meets every registered bar: `fin14d` at **−0.556 / −0.396**, G6 **−0.515**, largest
+leave-one-out **Pakistan −0.078** (B12), bootstrap **[−0.759, −0.150]**, `p_boot` **0.017**. The
+registered bar is **existential over a 19-item family**, which is where multiplicity bites, so a BH
+correction at q = 0.10 was computed with the decision rule fixed **before** it ran: meet the bars but
+fail BH and the item is retired. **BH rejects 0 of 19.** `fin14d` ranks second at 0.016 against a
+critical value of **0.0105**, and the top-ranked test misses too (0.008 against 0.0053).
+**⇒ DISCARD.**
+
+**What the cycle gets instead, and a rule proposed for it.** Five modules have now been screened with
+this instrument (`fin31`, `fin34`, `fin`, `fin43`, `fin13`/`fin14`) and the counter-moving count
+stands unchanged at **two** (`fin31d`, `fin34c`). The new failure mode is not a thin module but a
+**denominator**: *when a micro module asked of a conditional subsample is aggregated to the
+population denominator its country twin uses, the resulting share is penetration × conditional rate,
+and a screen run on it measures penetration.* Proposed as a standing rule for the next amendment
+pass — **run the screen on the block's own denominator, and report the complement factor's own
+correlation with the anchor beside any negative classification**. It costs one loop and it would have
+caught this before the bootstrap did not.

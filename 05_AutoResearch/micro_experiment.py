@@ -83,12 +83,26 @@ def mapping_pass(mi, c):
           % (amob.mean(), amob.notna().sum(), "yes" if 0.05 < amob.mean() < 0.95 else "NO"))
     print("  fin13_1 sample vs fin13a sample: %d vs %d respondents"
           % (int(df['fin13_1'].notna().sum()), int(df['fin13a'].notna().sum())))
+    a13, a14 = df["fin13a"].notna(), df["fin14a"].notna()
+    print("  BLOCK STRUCTURE: fin13a n=%d (account_mob mean %.3f) | fin14a n=%d "
+          "(account_mob mean %.3f) | overlap %d respondents"
+          % (int(a13.sum()), df.loc[a13, "account_mob"].mean(),
+             int(a14.sum()), df.loc[a14, "account_mob"].mean(), int((a13 & a14).sum())))
+    print("  => the two blocks are DISJOINT COMPLEMENTARY subsamples: fin13 is asked of "
+          "mobile-money HOLDERS, fin14 of NON-holders (any-account rate %.3f among them)."
+          % df.loc[a14, "account"].mean())
 
     # --- code identification
-    print("\nBEST single-code match per code (denominator = that column's own nonmissing set):")
+    # DISCLOSED POST-RUN PATCH (exploratory pass only): the own-column denominator identified
+    # ZERO code-cells, because the module is asked only of mobile-money accountholders while the
+    # country twin is a share of ALL adults. The pass therefore tries BOTH denominators. The
+    # registered U25 screen (anchor, bars, keep condition) is untouched.
+    in_mod = df["economy"].isin(econs)
+    print("\nBEST single-code match per code, TWO denominators:"
+          "  [own] = the column's own nonmissing set;  [pop] = all respondents in the 36 economies")
     ident = {}
     for mcol in MCOLS:
-        denom = df[mcol].notna()
+      for dlabel, denom in (("own", df[mcol].notna()), ("pop", in_mod)):
         for code in sorted(df[mcol].dropna().unique()):
             if (df[mcol] == code).sum() < 50:
                 continue
@@ -101,10 +115,11 @@ def mapping_pass(mi, c):
             if best:
                 med, mx, ccol, n = best[0]
                 flag = "IDENT" if med <= 0.10 else ("close" if med <= 1.0 else "")
-                print("  %-9s code %-3.0f -> %-14s med|dev|=%7.3f max=%7.3f (n=%d) %s"
-                      % (mcol, code, ccol, med, mx, n, flag))
+                if med <= 1.0:
+                    print("  [%s] %-9s code %-3.0f -> %-14s med|dev|=%7.3f max=%7.3f (n=%d) %s"
+                          % (dlabel, mcol, code, ccol, med, mx, n, flag))
                 if med <= 0.10:
-                    ident[(mcol, int(code))] = (ccol, med, mx, n)
+                    ident[(mcol, int(code))] = (ccol, med, mx, n, dlabel)
     print("\nIDENTIFIED (median |dev| <= 0.10pp): %d code-cells" % len(ident))
 
     # --- composition check: do the codes of each question partition?
@@ -162,7 +177,7 @@ def boot_ci(x, y, w, draws=2000):
 
 def screen(items, anchor_s, pop, label, do_boot):
     print("\n" + "=" * 96)
-    print("U25 — four-way orientation screen vs `%s`  (n = %d module economies)" % (label, len(pop)))
+    print("U25 — four-way orientation screen vs `%s`" % label)
     print("=" * 96)
     print("%-26s %7s %7s %16s %6s %8s %-22s" %
           ("item", "r_w", "r_u", "class", "n", "neff", "G6 / largest LOO"))
@@ -204,21 +219,25 @@ def main():
 
     df = mi.df
     # per-economy weighted share of each identified code, over that column's own denominator
-    items = {}
-    for (mcol, code), (ccol, med, mx, n) in sorted(ident.items()):
-        denom = df[mcol].notna()
+    def share(mcol, code, denom):
         s = df[denom].dropna(subset=["wgt"])
         h = df[mcol].eq(code).reindex(s.index).fillna(False).astype(float)
         g = s.assign(_h=h * s["wgt"]).groupby("economy")[["_h", "wgt"]].sum()
         ser = (g["_h"] / g["wgt"] * 100)
         ser.index = [NAME_FIX.get(e, e) for e in ser.index]
-        items["%s=%d [%s]" % (mcol, code, ccol)] = ser
-    print("\nscreenable items: %d" % len(items))
+        return ser
+
+    items, items_cond = {}, {}
+    for (mcol, code), (ccol, med, mx, n, dlabel) in sorted(ident.items()):
+        key = "%s=%d [%s]" % (mcol, code, ccol)
+        items[key] = share(mcol, code, df["economy"].isin(econs))
+        items_cond[key] = share(mcol, code, df[mcol].notna())
+    print("\nscreenable items: %d (each in TWO denominators: population and own-block)" % len(items))
 
     pop = c["pop_adult"].dropna()
     for anchor, do_boot in (("g20_any", True), ("mobileaccount_t_d", False)):
         a = (c[anchor] * 100).dropna()
-        rows = screen(items, a, pop, anchor, do_boot)
+        rows = screen(items, a, pop, anchor + "  [POPULATION denominator]", do_boot)
         if anchor == "g20_any":
             cm = [r for r in rows if r["cls"] == "counter-moving"]
             print("\nREGISTERED KEEP CONDITION (>=1 counter-moving on BOTH lenses, G6 sign-stable,"
@@ -240,6 +259,52 @@ def main():
                   "%.1f%% of country-file 2024 adult population" % (len(econs), 100 * share))
             inc = c.reindex([e for e in items[list(items)[0]].index if e in c.index])
             print("income mix of the module set: %s" % dict(inc["incomegroupwb24"].value_counts()))
+
+            # ---- REGISTERED CONDITIONAL READING (pre-registration, U25x denominator clause):
+            # "if the module is a within-economy conditional subsample, every statistic is a
+            # conditional one and the claim text must say so." Same screen, own-block denominator.
+            rows_c = screen(items_cond, a, pop, "g20_any  [OWN-BLOCK conditional denominator]",
+                            True)
+            cmap = {r["item"]: r for r in rows_c}
+            print("\nBOTH-DENOMINATOR COMPARISON on the population-denominator counter-movers:")
+            for r in rows:
+                if r["cls"] == "counter-moving":
+                    q = cmap.get(r["item"])
+                    print("  %-26s pop: r_w %+.3f r_u %+.3f (%s)  |  conditional: r_w %+.3f "
+                          "r_u %+.3f (%s)" % (r["item"], r["r_w"], r["r_u"], r["cls"],
+                                              q["r_w"], q["r_u"], q["cls"]))
+            print("\nCOMPLEMENT-DENOMINATOR DECOMPOSITION (is the counter-movement the item or "
+                  "the 1 - mobile-money-rate factor?):")
+            mm = (c["mobileaccount_t_d"] * 100).dropna()
+            common = mm.index.intersection(a.index).intersection(pop.index).intersection(
+                items[list(items)[0]].dropna().index)
+            comp = 100 - mm.loc[common]
+            rw, _ = wcorr(comp, a.loc[common], pop.loc[common])
+            ru, _ = wcorr(comp, a.loc[common], pd.Series(1.0, index=common))
+            print("  r(100 - mobileaccount_t_d, g20_any) over the %d module economies: "
+                  "weighted %+.3f, unweighted %+.3f -> class %s"
+                  % (len(common), rw, ru, classify(rw, ru)))
+
+            # ---- DISCLOSED FAMILY-WISE CORRECTION (rule B7), decided BEFORE it was computed:
+            # the registered bars decide the verdict; an item that meets them but fails BH at
+            # q = 0.10 over its own 19-test family is RETIRED, not kept.
+            print("\nBH FAMILY-WISE CORRECTION over the %d conditional-denominator tests vs "
+                  "g20_any (q = 0.10):" % len(items_cond))
+            ps = []
+            for name, ser in items_cond.items():
+                k = ser.dropna().index.intersection(a.dropna().index).intersection(pop.index)
+                lo, hi, pb = boot_ci(ser.loc[k], a.loc[k], pop.loc[k])
+                ps.append((pb, name))
+            ps.sort()
+            m = len(ps)
+            for i, (pb, name) in enumerate(ps, 1):
+                crit = 0.10 * i / m
+                print("  %-26s p_boot=%.4f  BH crit=%.4f  %s"
+                      % (name, pb, crit, "reject" if pb <= crit else ""))
+            kmax = max([i for i, (pb, _n) in enumerate(ps, 1) if pb <= 0.10 * i / m] or [0])
+            passing = {n for _i, (pb, n) in enumerate(ps[:kmax], 1)}
+            print("  BH rejects %d of %d; fin14d in the rejected set: %s"
+                  % (kmax, m, "YES" if any("fin14d" in n for n in passing) else "NO"))
 
 
 if __name__ == "__main__":
