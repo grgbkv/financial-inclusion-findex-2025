@@ -1,249 +1,166 @@
-"""E55 (pre-registered 2026-08-21): the LEDGER-WIDE REPORTING-SET AUDIT — agenda item 8.1.
+"""E56 (registered 2026-08-22) — agenda item 8.2: is the 2021->2024 item-level dropout ONE block or
+per-item attrition, and what do the balanced paths of the two exposed keeps say?
 
-Parent: E53. Design: audit. Frame: pan_dev. Windows: all four transitions.
+Parent E55 (chain E53 -> E55 -> E56, at the B3 cap). Audit / measurement pass, not an association
+experiment, so B14 does not bind.
 
-WHY. Rule B20 (2026-08-20) requires a balanced economy set on any path, long difference or Delta.
-E53 found the four-item cash "rebound" was largely six economies -- China the largest -- dropping
-out of the ITEMS while staying in the WAVE. No experiment in the ledger had ever checked whether
-its own wave-to-wave comparison held the economy set fixed, so PAPER_DRAFT_v4 §12 states the risk
-as UNQUANTIFIED. This quantifies it.
-
-AUDIT SET (mechanical, not chosen): every country-file column the ledger has touched, detected with
-coverage.py's word-boundary regex over findings.tsv + RESEARCH_LOG.md + results_prediction.tsv,
-restricted to columns reporting >= 30 developing-panel economies in at least two waves.
-
-PER COLUMN x TRANSITION: n at t, n at t+1, n balanced, n dropped, n added; population share of the
-droppers inside the t reporting set; the NAME of the largest dropper; Delta_unbalanced (wmean over
-each wave's own reporters), Delta_balanced (intersection only), and discrepancy = unbal - bal.
-
-REGISTERED CLAIM: E53's attrition failure is LOCALIZED to narrow items and does not characterize
-the ledger.
-REGISTERED SIGN (B15): among cells with a non-trivial drop (>= 3 economies or >= 5% of the t
-population), the discrepancy's sign follows sign(retained mean - dropped mean) at t in a MAJORITY.
-KEEP BAR, three branches fixed in advance:
-  (a) median |discrepancy| over all cells < 0.50pp, AND
-  (b) share of cells with |discrepancy| >= 2.0pp below 10%, AND
-  (c) among cells backing a KEPT ledger finding, none has |discrepancy| >= 2.0pp.
-  Branch 1 (a,b,c hold)      -> keep.
-  Branch 2 (a,b hold, c fails) -> keep with corrections owed; the exposed keeps are named.
-  Branch 3 (a or b fails)     -> discard; every column above the 2pp bar is named.
-DIAGNOSTIC (labelled, NOT part of the bar): association designs are balanced automatically by the
-pairwise-complete construction but lose SAMPLE; per ledger association cell, report the n of the
-pairwise-complete set against the headline 76-77 and the population share it holds.
-GATES: G3 the ledger's own declared variants, carried unchanged; G4 every cell carries n and
-population share by construction; G5 na; G6 na (no association is claimed).
+PRIMARY (registered): for every country column with >=30 developing-panel economies reporting in
+2021, D(col) = economies reporting in 2021 and NOT in 2024. Restrict to |D| >= 3. D* = the modal
+dropper set. BAR: >= 80% of non-trivially-dropping columns have Jaccard(D, D*) >= 0.90 -> the
+dropout is a single block; below the bar -> per-item attrition. Registered sign/direction: the sets
+COINCIDE.
+SECONDARY 1 (no bar): module membership of the columns whose D matches D*.
+SECONDARY 2 (rule B16): the fully balanced wave path of fin32_acc (E10, keep-general) and fh1 / fh2 /
+fh1_fh2 (E33, keep-window) -- the two corrections E55 opened in PAPER_DRAFT_v4.md.
 """
-import os
 import re
+from collections import Counter
 
 import numpy as np
 import pandas as pd
 
 from harness import Findex, YEARS
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-LEDGER_FILES = ["findings.tsv", "RESEARCH_LOG.md", "results_prediction.tsv"]
-TRANSITIONS = [(a, b) for a, b in zip(YEARS, YEARS[1:])]
-MIN_ECON = 30
-MEDIAN_BAR = 0.50
-BIG_BAR = 2.0
-BIG_SHARE_BAR = 0.10
-
-# Columns backing a KEPT ledger finding (branch (c)). Read off LEDGER_INDEX.md's keeps table.
-KEEP_COLS = {
-    "account_t_d", "fiaccount_t_d", "mobileaccount_t_d", "g20_any", "fin17a_17a1_d",
-    "fin22a_22a1_22g_d", "fin32_acc", "save_any_t_d", "fin31d", "fin34c", "fin42", "fin43c",
-    "merchant_pay", "fh1", "fh2", "fh1_fh2", "internet", "dig_acc",
-}
+MIN_2021 = 30
+MIN_DROP = 3
+JACCARD_BAR = 0.90
+SHARE_BAR = 0.80
 
 
-def ledger_text():
-    parts = []
-    for f in LEDGER_FILES:
-        p = os.path.join(HERE, f)
-        if os.path.exists(p):
-            parts.append(open(p, encoding="utf-8", errors="ignore").read())
-    return "\n".join(parts)
+def reporters(dev, col, year):
+    d = dev[(dev["year"] == year) & dev[col].notna()]
+    return frozenset(d["countrynewwb"].unique())
 
 
-def used_columns(text, columns):
-    used = []
-    for c in columns:
-        if re.search(r"(?<![A-Za-z0-9_])" + re.escape(c) + r"(?![A-Za-z0-9_])", text):
-            used.append(c)
-    return used
+def jaccard(a, b):
+    return len(a & b) / len(a | b) if (a | b) else 1.0
 
 
-def wmean(d, col):
-    s = d.dropna(subset=[col, "pop_adult"])
-    return np.nan if s.empty else float(np.average(s[col], weights=s["pop_adult"])) * 100
+def module_of(col):
+    m = re.match(r"([a-z_]+[0-9]*)", col)
+    return m.group(1) if m else col
 
 
 def main():
     fx = Findex()
-    frame = fx.pan_dev
-    meta = {"year", "countrynewwb", "countrycode", "regionwb24_hi", "incomegroupwb24",
-            "adultpopulation", "pop_adult", "group", "codewb", "region", "income"}
-    numeric = [c for c in frame.columns
-               if c not in meta and pd.api.types.is_numeric_dtype(frame[c])]
-    text = ledger_text()
-    touched = used_columns(text, numeric)
+    dev = fx.pan_dev
+    pop24 = dev[dev["year"] == 2024].set_index("countrynewwb")["pop_adult"]
+    skip = {"year", "pop_adult", "countrynewwb", "codewb", "regionwb24_hi", "group",
+            "incomegroupwb24", "adultpopulation", "pop_adult_18"}
+    cols = [c for c in dev.columns
+            if c not in skip and pd.api.types.is_numeric_dtype(dev[c])]
 
-    # eligibility: >= MIN_ECON developing-panel economies in at least two waves
-    elig = []
-    for c in touched:
-        waves = [len(frame[(frame["year"] == y)].dropna(subset=[c, "pop_adult"]))
-                 for y in YEARS]
-        if sum(w >= MIN_ECON for w in waves) >= 2:
-            elig.append(c)
-    elig.sort()
+    print("=" * 96)
+    print("E56 — agenda item 8.2: ONE dropout block or per-item attrition? (developing panel)")
+    print("=" * 96)
 
-    print("=" * 108)
-    print("E55 — LEDGER-WIDE REPORTING-SET AUDIT (agenda item 8.1, rule B20)")
-    print("country-file numeric columns: %d | ledger-touched: %d | eligible (>=%d economies in "
-          ">=2 waves): %d" % (len(numeric), len(touched), MIN_ECON, len(elig)))
-    print("frame: pan_dev | transitions: %s" % ", ".join("%d-%d" % t for t in TRANSITIONS))
-    print("=" * 108)
-
-    rows = []
-    for c in elig:
-        for (a, b) in TRANSITIONS:
-            da = frame[frame["year"] == a].dropna(subset=[c, "pop_adult"])
-            db = frame[frame["year"] == b].dropna(subset=[c, "pop_adult"])
-            if len(da) < MIN_ECON or len(db) < MIN_ECON:
-                continue
-            sa = set(da["countrynewwb"]); sb = set(db["countrynewwb"])
-            both = sa & sb
-            dropped = sa - sb
-            added = sb - sa
-            if len(both) < MIN_ECON:
-                continue
-            pop_a = da["pop_adult"].sum()
-            drop_pop = da[da["countrynewwb"].isin(dropped)]["pop_adult"].sum()
-            add_pop = db[db["countrynewwb"].isin(added)]["pop_adult"].sum()
-            biggest = "-"
-            if dropped:
-                dd = da[da["countrynewwb"].isin(dropped)].sort_values("pop_adult",
-                                                                     ascending=False)
-                biggest = "%s (%.1f%%)" % (dd.iloc[0]["countrynewwb"],
-                                           100 * dd.iloc[0]["pop_adult"] / pop_a)
-            d_unbal = wmean(db, c) - wmean(da, c)
-            d_bal = (wmean(db[db["countrynewwb"].isin(both)], c)
-                     - wmean(da[da["countrynewwb"].isin(both)], c))
-            retained_a = wmean(da[da["countrynewwb"].isin(both)], c)
-            dropped_a = wmean(da[da["countrynewwb"].isin(dropped)], c) if dropped else np.nan
-            rows.append({
-                "col": c, "win": "%d-%d" % (a, b), "n_a": len(da), "n_b": len(db),
-                "n_bal": len(both), "n_drop": len(dropped), "n_add": len(added),
-                "drop_pop_share": 100 * drop_pop / pop_a if pop_a else np.nan,
-                "add_pop_share": 100 * add_pop / db["pop_adult"].sum() if len(db) else np.nan,
-                "biggest_drop": biggest, "d_unbal": d_unbal, "d_bal": d_bal,
-                "disc": d_unbal - d_bal, "retained_a": retained_a, "dropped_a": dropped_a,
-                "keep_col": c in KEEP_COLS})
-    R = pd.DataFrame(rows)
-
-    print("\n%d column x transition cells audited over %d columns.\n"
-          % (len(R), R["col"].nunique()))
-    med = float(R["disc"].abs().median())
-    big = R[R["disc"].abs() >= BIG_BAR]
-    share_big = len(big) / len(R)
-    print("PRIMARY BARS")
-    a_ok = med < MEDIAN_BAR
-    b_ok = share_big < BIG_SHARE_BAR
-    print("  (a) median |discrepancy| = %.4fpp  (bar < %.2f)  -> %s"
-          % (med, MEDIAN_BAR, "PASS" if a_ok else "FAIL"))
-    print("  (b) cells with |disc| >= %.1fpp: %d of %d = %.1f%%  (bar < %.0f%%)  -> %s"
-          % (BIG_BAR, len(big), len(R), 100 * share_big, 100 * BIG_SHARE_BAR,
-             "PASS" if b_ok else "FAIL"))
-    keep_big = big[big["keep_col"]]
-    c_ok = len(keep_big) == 0
-    print("  (c) keep-backing cells with |disc| >= %.1fpp: %d  -> %s"
-          % (BIG_BAR, len(keep_big), "PASS" if c_ok else "FAIL"))
-    branch = 1 if (a_ok and b_ok and c_ok) else (2 if (a_ok and b_ok) else 3)
-    print("  ==> BRANCH %d: %s" % (branch, {1: "KEEP", 2: "KEEP WITH CORRECTIONS OWED",
-                                            3: "DISCARD"}[branch]))
-
-    print("\nDISTRIBUTION OF |discrepancy| (pp)")
-    q = R["disc"].abs().quantile([0.5, 0.75, 0.9, 0.95, 0.99, 1.0])
-    print("  " + "  ".join("p%02d=%.3f" % (int(k * 100), v) for k, v in q.items()))
-    print("  cells with a perfectly balanced set (n_drop=0 and n_add=0): %d of %d (%.1f%%)"
-          % (int(((R["n_drop"] == 0) & (R["n_add"] == 0)).sum()), len(R),
-             100 * ((R["n_drop"] == 0) & (R["n_add"] == 0)).mean()))
-    print("  cells with any dropper: %d (%.1f%%) | any adder: %d (%.1f%%)"
-          % (int((R["n_drop"] > 0).sum()), 100 * (R["n_drop"] > 0).mean(),
-             int((R["n_add"] > 0).sum()), 100 * (R["n_add"] > 0).mean()))
-
-    print("\nWORST 20 CELLS BY |discrepancy|")
-    print("  %-22s %-10s %4s %4s %5s %4s %7s  %-26s %8s %8s %8s %s"
-          % ("col", "window", "n_a", "n_b", "n_bal", "drp", "drp_pop", "largest dropper",
-             "d_unbal", "d_bal", "disc", "keep?"))
-    for _, r in R.reindex(R["disc"].abs().sort_values(ascending=False).index).head(20).iterrows():
-        print("  %-22s %-10s %4d %4d %5d %4d %6.1f%%  %-26s %+8.2f %+8.2f %+8.2f %s"
-              % (r["col"], r["win"], r["n_a"], r["n_b"], r["n_bal"], r["n_drop"],
-                 r["drop_pop_share"], r["biggest_drop"][:26], r["d_unbal"], r["d_bal"],
-                 r["disc"], "YES" if r["keep_col"] else ""))
-
-    print("\nKEEP-BACKING COLUMNS, every cell (branch (c) evidence)")
-    K = R[R["keep_col"]].copy()
-    print("  %d cells over %d columns | median |disc| = %.4fpp | max |disc| = %.3fpp"
-          % (len(K), K["col"].nunique(), K["disc"].abs().median(), K["disc"].abs().max()))
-    worst = K.reindex(K["disc"].abs().sort_values(ascending=False).index).head(12)
-    for _, r in worst.iterrows():
-        print("   %-22s %-10s n %3d->%3d bal %3d drop %2d (%5.1f%% pop, %s)  unbal %+7.2f "
-              "bal %+7.2f disc %+6.2f" % (r["col"], r["win"], r["n_a"], r["n_b"], r["n_bal"],
-                                          r["n_drop"], r["drop_pop_share"],
-                                          r["biggest_drop"][:22], r["d_unbal"], r["d_bal"],
-                                          r["disc"]))
-
-    print("\nREGISTERED SIGN CHECK (B15) — non-trivial drops only "
-          "(>=3 economies or >=5%% of the t population)")
-    NT = R[((R["n_drop"] >= 3) | (R["drop_pop_share"] >= 5.0)) & R["dropped_a"].notna()].copy()
-    NT["pred"] = np.sign(NT["retained_a"] - NT["dropped_a"])
-    NT["obs"] = np.sign(NT["disc"])
-    agree = NT[NT["pred"] != 0]
-    hit = float((agree["pred"] == agree["obs"]).mean()) if len(agree) else np.nan
-    print("  %d non-trivial-drop cells | sign(disc) matches sign(retained - dropped) at t in "
-          "%d of %d = %.1f%%  -> %s" % (len(NT), int((agree["pred"] == agree["obs"]).sum()),
-                                        len(agree), 100 * hit,
-                                        "MAJORITY, as registered" if hit > 0.5 else "NOT a majority"))
-    print("  mean |disc| on non-trivial-drop cells %.3fpp vs %.3fpp elsewhere"
-          % (NT["disc"].abs().mean(), R[~R.index.isin(NT.index)]["disc"].abs().mean()))
-
-    print("\nDIAGNOSTIC (labelled, no verdict) — SAMPLE exposure of association designs")
-    RAILS = [("E1  mobilemoney~saving", "mobileaccount_t_d", "fin17a_17a1_d"),
-             ("E10 wagedigi~saving", "fin32_acc", "fin17a_17a1_d"),
-             ("E12 digipay~saving", "g20_any", "fin17a_17a1_d"),
-             ("E11 borrowing~saving", "fin22a_22a1_22g_d", "fin17a_17a1_d"),
-             ("E13 FIacct~mobilemoney", "fiaccount_t_d", "mobileaccount_t_d"),
-             ("E14 mobilemoney~digipay", "mobileaccount_t_d", "g20_any"),
-             ("E48b fin31d~fin34c", "fin31d", "fin34c")]
-    for label, x, y in RAILS:
-        if x not in frame.columns or y not in frame.columns:
+    recs = []
+    for c in cols:
+        r21, r24 = reporters(dev, c, 2021), reporters(dev, c, 2024)
+        if len(r21) < MIN_2021:
             continue
-        line = []
-        for (a, b) in TRANSITIONS:
-            w = fx.country_panel(frame, x, [a, b]).join(
-                fx.country_panel(frame, y, [a, b]), lsuffix="_x", rsuffix="_y")
-            need = ["%d_x" % a, "%d_x" % b, "%d_y" % a, "%d_y" % b]
-            if any(k not in w.columns for k in need):
-                line.append("%d-%d n/a" % (a, b))
-                continue
-            dx = w["%d_x" % b] - w["%d_x" % a]
-            dy = w["%d_y" % b] - w["%d_y" % a]
-            m = dx.notna() & dy.notna() & w["pop_x"].notna()
-            n = int(m.sum())
-            # denominator held fixed at the 2024 adult population of the whole dev panel,
-            # so the shares are comparable across windows (rule B20's own logic)
-            base_pop = frame[frame["year"] == 2024]["pop_adult"].sum()
-            share = (w.loc[m, "pop_x"].sum() / base_pop) if n else np.nan
-            line.append("%d-%d n=%d (%.0f%% pop)" % (a, b, n, 100 * share))
-        print("  %-24s %s  [headline set: %d economies]"
-              % (label, " | ".join(line),
-                 frame[frame["year"] == 2024].dropna(subset=["account_t_d"])
-                 ["countrynewwb"].nunique()))
+        D = r21 - r24
+        recs.append({"col": c, "n21": len(r21), "n24": len(r24), "nD": len(D), "D": D,
+                     "dead": len(r24) == 0})
+    print("eligible columns (>=%d developing-panel economies in 2021): %d" % (MIN_2021, len(recs)))
 
-    R.to_csv(os.path.join(HERE, "e55_reporting_set_audit.csv"), index=False)
-    print("\nfull per-cell table written to e55_reporting_set_audit.csv (%d rows)" % len(R))
+    nz = [r for r in recs if r["nD"] >= MIN_DROP]
+    dead = [r for r in nz if r["dead"]]
+    print("columns with a non-trivial drop (|D| >= %d): %d   (of which DISCONTINUED, "
+          "zero 2024 reporters: %d)" % (MIN_DROP, len(nz), len(dead)))
+    print("columns with |D| in {1,2}: %d ; perfectly stable (|D| = 0): %d"
+          % (sum(1 for r in recs if 1 <= r["nD"] <= 2), sum(1 for r in recs if r["nD"] == 0)))
+
+    def primary(rows, label):
+        if not rows:
+            print("\n[%s] no columns" % label)
+            return None, 0.0
+        counts = Counter(r["D"] for r in rows)
+        Dstar, k = counts.most_common(1)[0]
+        near = [r for r in rows if jaccard(r["D"], Dstar) >= JACCARD_BAR]
+        share = len(near) / len(rows)
+        print("\n[%s] %d columns; modal dropper set D* has |D*| = %d and is EXACTLY shared by "
+              "%d columns (%.1f%%)" % (label, len(rows), len(Dstar), k, 100 * k / len(rows)))
+        print("  D* = %s" % ", ".join(sorted(Dstar)))
+        print("  columns with Jaccard(D, D*) >= %.2f: %d of %d = %.1f%%  (bar %.0f%%)  -> %s"
+              % (JACCARD_BAR, len(near), len(rows), 100 * share, 100 * SHARE_BAR,
+                 "PASS" if share >= SHARE_BAR else "FAIL"))
+        js = sorted(jaccard(r["D"], Dstar) for r in rows)
+        print("  Jaccard(D, D*) distribution: min %.2f p25 %.2f median %.2f p75 %.2f max %.2f"
+              % (js[0], np.percentile(js, 25), np.median(js), np.percentile(js, 75), js[-1]))
+        print("  distinct dropper sets among these columns: %d" % len(counts))
+        for D, n in counts.most_common(6):
+            print("    n=%-3d |D|=%-3d %s" % (n, len(D), ", ".join(sorted(D))[:70]))
+        return Dstar, share
+
+    Dstar, share = primary(nz, "REGISTERED PRIMARY — all non-trivially-dropping columns")
+    primary([r for r in nz if not r["dead"]],
+            "declared robustness — excluding discontinued columns")
+
+    # --- D* provenance: are its economies still in the 2024 wave?
+    print("\nD* ECONOMIES IN THE 2024 WAVE (E53's test: items dropping out, not economies):")
+    for e in sorted(Dstar):
+        row = dev[(dev["year"] == 2024) & (dev["countrynewwb"] == e)]
+        acc = row["account_t_d"].notna().any() if len(row) else False
+        p = pop24.get(e, np.nan)
+        print("  %-14s in 2024 wave: %-5s account_t_d recorded: %-5s  2024 adult pop %.1fm"
+              % (e, bool(len(row)), bool(acc), p / 1e6 if pd.notna(p) else float("nan")))
+    tot = pop24.sum()
+    print("  D* holds %.1f%% of 2024 developing-panel adult population"
+          % (100 * pop24.reindex(sorted(Dstar)).sum() / tot))
+
+    # --- SECONDARY 1: module membership of the block
+    exact = [r["col"] for r in nz if r["D"] == Dstar]
+    mods = Counter(module_of(c) for c in exact)
+    print("\nSECONDARY 1 — module membership of the %d columns sharing D* EXACTLY:" % len(exact))
+    for m, n in mods.most_common():
+        print("  %-12s %3d   %s" % (m, n, ", ".join(sorted(c for c in exact
+                                                           if module_of(c) == m))[:70]))
+    allmods = Counter(module_of(r["col"]) for r in recs)
+    print("  coverage of each affected module: " + "; ".join(
+        "%s %d/%d" % (m, n, allmods[m]) for m, n in mods.most_common(8)))
+
+    # --- SECONDARY 2 (B16): balanced wave paths for the two corrections E55 opened
+    print("\n" + "=" * 96)
+    print("SECONDARY 2 (rule B16) — balanced wave paths for the columns E55 exposed")
+    print("=" * 96)
+    for col, yrs in (("fin32_acc", [2014, 2017, 2021, 2024]),
+                     ("fh1", [2021, 2024]), ("fh2", [2021, 2024]),
+                     ("fh1_fh2", [2021, 2024])):
+        sets = [reporters(dev, col, y) for y in yrs]
+        bal = frozenset.intersection(*sets)
+        print("\n%s — reporters by wave: %s ; BALANCED set %d economies, %.1f%% of 2024 "
+              "developing-panel adult population"
+              % (col, dict(zip(yrs, [len(s) for s in sets])), len(bal),
+                 100 * pop24.reindex(sorted(bal)).sum() / tot))
+        unb, ba = [], []
+        for y in yrs:
+            d = dev[dev["year"] == y]
+            unb.append(fx.wmean(d, col) * 100)
+            ba.append(fx.wmean(d[d["countrynewwb"].isin(bal)], col) * 100)
+        print("  unbalanced (each wave over its own reporters): "
+              + "  ".join("%d %6.2f" % (y, v) for y, v in zip(yrs, unb)))
+        print("  BALANCED   (one fixed denominator):            "
+              + "  ".join("%d %6.2f" % (y, v) for y, v in zip(yrs, ba)))
+        d_unb, d_bal = unb[-1] - unb[-2], ba[-1] - ba[-2]
+        print("  last-window delta: unbalanced %+.2fpp, balanced %+.2fpp, discrepancy %+.2fpp%s"
+              % (d_unb, d_bal, d_unb - d_bal,
+                 "   [SIGN FLIP]" if np.sign(d_unb) != np.sign(d_bal) else ""))
+        if len(ba) > 2:
+            diffs = np.diff(ba)
+            mono = np.all(diffs >= 0) or np.all(diffs <= 0)
+            print("  balanced path is %s: steps %s"
+                  % ("MONOTONE" if mono else "NON-MONOTONE",
+                     " ".join("%+.2f" % d for d in diffs)))
+        # G4 on the balanced set
+        g4 = fx.gate_coverage(dev[dev["countrynewwb"].isin(bal)], col, yrs[-1])
+        print("  G4 on the balanced set: %s" % g4)
+
+    print("\n" + "=" * 96)
+    print("VERDICT: registered bar %.0f%% of non-trivially-dropping columns at Jaccard >= %.2f; "
+          "observed %.1f%% -> %s" % (100 * SHARE_BAR, JACCARD_BAR, 100 * share,
+                                     "KEEP" if share >= SHARE_BAR else "DISCARD"))
+    print("=" * 96)
 
 
 if __name__ == "__main__":
