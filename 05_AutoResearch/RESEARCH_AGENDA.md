@@ -1059,3 +1059,62 @@ closed and frozen at one item, executed; two new rules **B20** and **B21** in `p
 - **DEFERRED BY BUDGET, carried forward as the strongest open micro lead: item 4.6**, the
   education/income gradient in the *source* of emergency funds (`fin24`/`fin24b`), signs named per
   source in advance.
+
+## Addendum (2026-08-23, from the U26x/U26/U27 cycle)
+
+- **THE REACHABLE UNTOUCHED MICRO SURFACE IS EXHAUSTED (U26x).** `fin39` (4 columns) and
+  `fin48`/`fin49` (12) are open; what remains untouched is `con` (52, still blocked) and `fin22`
+  (thin, 1 of 9 used). **Neither of this cycle's modules has any country-file twin**, so the
+  share-matching method that opened `fin24` and `fin13`/`fin14` at median |dev| 0.000pp **could not
+  run**, and both maps are structural and **not M3-validated** — a materially weaker footing that
+  must travel with any future use. Structural maps are in `HARNESS_V2_NOTES` item 12.
+- **NEW ITEM 10.1 — `fin48`/`fin49` is the first module the loop must declare UNUSABLE at the
+  country level, and the reason generalizes.** One 12-item battery, one identical 8,037-respondent
+  sample, **median 50 respondents per economy and only 23 of 82 economies at n ≥ 100**. The
+  registered eligibility rule (≥ 30 economies at n ≥ 100, fixed before the run) excluded it
+  mechanically. **Registered form: make that eligibility rule a standing part of the four-way
+  screen**, declared in advance, so a thin block is never screened and then explained away. The
+  block remains available for **pooled individual-level** description, on a sample that must be
+  described as **61.1% unbanked against 26.2% in the file** — never as representative.
+- **ITEM 9.1 NEEDS REWORDING, and U26 is why.** U25 found a denominator that *manufactured*
+  counter-movement; U26 finds one that *suppresses* a positive association (`fin39a` +0.284/+0.482
+  on its own denominator, **+0.484/+0.600** on the population denominator, `mixed-lens` → `aligned`,
+  complement factor **−0.273/−0.437**), while `fin39b` is nearly denominator-invariant. **The shift
+  is item-specific in size and in direction.** The standing addition to the screen should read
+  *report both denominators and the complement factor*, not *the own denominator is the primary*.
+- **ITEM 4.6 IS ANSWERED and the registered claim is REJECTED (U27) — but the shape of the failure
+  is the usable result.** The savings source of emergency funds is education-graded at **+8.17pp**
+  [+6.36, +10.16] and the substitution runs against the **distress** cells — selling assets
+  **−5.74**, "not possible" **−4.68** — **not** against family and friends, which is **flat**
+  (38.7% vs 39.0%, gap **−0.35pp**, CI straddling zero). All four registered signs are correct; bar
+  (ii) fails and under B15 correct signs do not rescue a magnitude bar. On the **income** axis the
+  same four signs hold and family/friends reaches **−4.10** — the informal-transfer substitution is
+  an income phenomenon and not an education one, which is the sharpest new fact in the cycle.
+- **THE ACCESS-ABSORPTION RULER NOW HAS THREE MARGINS AND A CLEAN SPLIT.** On the identical
+  98-economy sample: usage (`anydigpayment`) **56.9%**, welfare (`fin24aSD_ND`) **8.6%**,
+  savings-*source* composition **5.1%** with CI **[−12.3%, +29.4%]** containing zero. Two welfare-side
+  margins now sit an order of magnitude below the usage margin. **NEW ITEM 4.7: the ruler is worth a
+  registered fourth and fifth margin** — the natural candidates are the `fin24a` difficulty scale's
+  *very difficult* cell and a borrowing-side margin — before any distillation writes the two-sided
+  reading into a draft.
+- **A composition-wedge benchmark worth carrying.** U27's pooled savings gap is **+7.93pp** over the
+  same 88 economies whose median is **+7.84pp** — a wedge of **+0.09pp**, against U23's +3.91pp
+  (11%). This is the cleanest within-country/between-country agreement the ledger has produced and
+  it is the number future pooled micro claims should be compared to.
+- **B2 note for the next cycle.** Micro **94/192 (49%)** after U26x's sixteen; country file
+  unchanged at **98/429 (23%)**. Untouched and reachable: `fin22` (9, thin — and it HAS a labelled
+  country twin, so U24x's method works there), `dig_account` (1), `fin13d`/`fin14e` (no twin).
+  `con` stays blocked at both levels. **`urbanicity` is the only untouched country frame** and is
+  single-wave — with the micro surface exhausted, it is the next breadth cell by default.
+  **B17 paid a third consecutive cycle** (U27).
+- **B3.** U26x/U26 parent **none**; U27 parent **U24**, chain length 1. The E53 → E55 → E56 chain was
+  **not** extended, as its cap required.
+- **B18 state after this cycle. Corrections branch 2 of 5** (still annotated, not executed).
+  **Count branch 9 of 10** (U24x, U24, E55, U25x, U25, E56, U26x, U26, U27 since the 2026-08-20
+  rewrite). **The next cycle fires on the count branch the moment it registers anything**, so it
+  should be planned as a distillation/rewrite cycle producing `PAPER_DRAFT_v5.md` and executing
+  E55's two outstanding corrections with E56's replacement numbers.
+- **DEFERRED BY BUDGET, carried forward:** the **all-windows promotion test of E22** (`keep-window`,
+  the mobile-money~saving-surge co-movement outside Sub-Saharan Africa), which has no descendants and
+  has never been tested outside 2021→24. Under B14 it must be an all-windows design over 2014→17 /
+  2017→21 / 2021→24 with sign agreement required in every window (B8).

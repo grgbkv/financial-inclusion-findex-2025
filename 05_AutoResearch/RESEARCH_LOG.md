@@ -7996,3 +7996,117 @@ population** — well under the ledger's usual 97–100% on headline columns, an
 economies that field the `fin39` split sample*, not the developing panel. Income mix: 30 upper-middle,
 22 lower-middle, 5 low, 4 high income. **`neff` = 4.7**, the lowest in the ledger to date, so no
 significance language attaches to the nominal 61 (rule B10).
+
+## U27 — DISCARD as registered (one of two magnitude bars fails), and the rejection is more informative than the keep would have been: the savings source substitutes for DISTRESS sources, not for family and friends
+
+Commit `4099cf2`. Stream micro. Status **`discard`**. Parent: **U24** (chain length 1). Design
+`micro-cross-section`, **2024, single wave, cross-sectional** — no trend language. Sample: `fin24`
+∈ {1..7} (DK/RF dropped), **99,641 respondents in 98 economies**. Kish `neff` of the pooled
+respondent weights **65,115** against a nominal 99,641.
+
+**Verdict against the registered bar:**
+
+1. savings gap **+8.17pp** ≥ +5.0 — **PASS**;
+2. family/friends gap **−0.35pp** ≤ −5.0 — **FAIL**;
+3. all four registered signs correct — **PASS**.
+
+**→ DISCARD as registered.** Two of three conditions hold and the bar is not moved after the fact.
+
+**The primary table** (gap = share(`educ` ≥ 2) − share(`educ` == 1), pp; 2,000-draw economy-cluster
+percentile bootstrap; M2 n = 65,694 / 33,616):
+
+| source | educ ≥ 2 | educ == 1 | gap | CI | registered sign |
+|---|---|---|---|---|---|
+| savings | 20.48 | 12.31 | **+8.17** | [+6.36, +10.16] | POS — **correct** |
+| family/friends | 38.67 | 39.03 | **−0.35** | [−2.49, +1.65] | NEG — correct in sign, **flat**, and the interval contains zero |
+| money from working | 18.82 | 15.59 | +3.23 | [+1.53, +5.06] | none registered |
+| borrowing | 7.51 | 7.78 | −0.27 | [−1.59, +0.90] | none registered |
+| selling assets | 8.77 | 14.51 | **−5.74** | [−7.45, −4.15] | NEG — **correct** |
+| other | 1.24 | 1.60 | −0.35 | [−0.69, −0.01] | none registered |
+| not possible | 4.50 | 9.18 | **−4.68** | [−5.92, −3.55] | NEG — **correct** |
+
+**What the failure says, which is the result.** The registration encoded the balance-sheet story's
+prediction that the savings source displaces **informal transfers**. It does not: the family/friends
+share is **38.7% among the more-educated and 39.0% among the least-educated**, a difference of
+one third of a point whose interval straddles zero. The +8.17pp of savings is accounted for almost
+exactly by **selling assets (−5.74)** and **"not possible" (−4.68)** — the two distress cells. Recourse
+to family and friends is the one source of emergency funds in this module that is **flat across the
+education distribution**, and any future write-up of the balance-sheet story must say so. Under B15
+the four correct signs do **not** rescue the claim, because the registered bar was a magnitude bar on
+two named sources and one of them failed.
+
+**SECONDARY 1 (registered, no bar) — the third margin on the access-absorption ruler, and it lands on
+the WELFARE side.** Account holding absorbs **5.1%** of the education gradient in the savings source
+(unconditional +8.17 → account-conditional +7.75), **CI [−12.3%, +29.4%]**, on 48,727 / 16,494
+accountholding respondents. The benchmarks computed on this same 98-economy sample by U24 are
+**56.9%** for the usage margin (`anydigpayment`) and **8.6%** for the welfare margin
+(`fin24aSD_ND`). **5.1% sits with the welfare margin, not the usage margin**, and its interval
+contains zero. The "not possible" cell absorbs **25.6%**; the family/friends cell's absorption ratio
+(−329.7%) is arithmetically meaningless because its denominator is a gap of −0.35pp and is reported
+only to say so. **U24's conclusion — the access-absorption ruler is a usage instrument that does not
+reach welfare — now holds on a second, compositional welfare margin.**
+
+**SECONDARY 2 (registered, no bar) — the income axis, richest 60% minus poorest 40%.** savings
+**+8.31** [+7.16, +9.44], family/friends **−4.10** [−5.47, −2.69], selling assets **−2.72**
+[−3.59, −1.91], not possible **−5.10** [−5.96, −4.31], money from working +4.61, borrowing −0.82.
+**All four registered signs correct on this axis too**, and family/friends comes much closer to the
+5pp bar (−4.10) than on the education axis (−0.35) without clearing it. The income axis is where the
+informal-transfer substitution is visible at all; the education axis is where it is absent.
+
+**SECONDARY 3 (registered, no bar) — within-country, and it is the strongest part of the run.** On
+the **88 of 98** economies with both education cells at unweighted n ≥ 100, the savings-source gap is
+**positive in 82 (93.2%)**, median **+7.84pp**, IQR [+4.35, +11.84]. Pooling over that same
+qualifying set gives **+7.93pp** against a median economy of **+7.84pp** — a **composition wedge of
++0.09pp**, the smallest the ledger has recorded. The pooled gradient is therefore a **within-country**
+regularity, not a between-country composition artifact. The family/friends gap is negative in only
+**52 of 88 (59.1%)**, median −1.37pp — consistent with its pooled flatness rather than with a
+cancelling mixture. Extremes: Bulgaria +21.76, Costa Rica +20.97, Bolivia +20.48; Algeria −6.33,
+Comoros −3.09, Türkiye −1.97.
+
+**Declared limitations.** Single 2024 wave, cross-sectional, descriptive — no trend and no causal
+language; education is not randomly assigned and nothing here identifies anything. Conditioning on
+account holding in Secondary 1 conditions on a post-treatment variable, the same caveat U14/U23/U24
+carry. **Pooled-weighting caveat (`HARNESS_V2_NOTES` item 3) applies to every pooled pp value above**:
+pooled `wgt` weights economies roughly equally rather than by population, so the pooled figures
+describe *the typical module economy*; Secondary 3 is what carries the within-country reading. The
+`fin24` code→source mapping is U24x's, which is M3-exact against the labelled country file.
+
+## Wrap-up — 2026-08-23
+
+1. **Three experiments, no keeps, and the reachable untouched micro surface is now exhausted.** B18
+   did not fire (corrections **2 of 5**, count **6 of 10**), so this was a normal cycle: **U26x**
+   (exploratory — two modules opened), **U26** (`discard`), **U27** (`discard`). Ledger now **92
+   rows, 40 keeps**, `make_index.py --check` clean. B2 paid by U26x/U26 (16 untouched columns), B17
+   paid a third consecutive time, B3 not extended (the E53 chain was left alone as its cap requires).
+2. **U26x — the last two untouched micro families are open, and one of them is UNUSABLE for
+   country-level work.** Neither has any country-file twin, so U24x/U25x share-matching could not
+   run and identification is structural and **not M3-validated**. `fin39` is a **skip tree** on a
+   within-economy split sample (`fin39c` asked only of `fin39a == 2`), 61 economies at n ≥ 100.
+   `fin48`+`fin49` is **one 12-item battery** on an identical 8,037-respondent sample that is
+   **61.1% unbanked against 26.2% in the file** and reaches n ≥ 100 in only **23 of 82** economies —
+   the registered eligibility rule excluded it, as written, before any correlation was computed.
+   A documentation error in the fixed `micro.py` was found and disclosed (`pay_utilities` and
+   `receive_wages` are 1–5 mode codes, not 0/1); **no ledger claim is affected** — U14 and U23 both
+   already treat them correctly.
+3. **U26 — DISCARD, and the denominator moves the classification the OTHER way to U25's.** Zero
+   counter-moving items: `fin39a` **+0.284/+0.482** `mixed-lens`, `fin39b` **+0.694/+0.363**
+   `aligned`, against a registered NEGATIVE sign. BH rejected **2 of 2**, so the family-wise
+   correction registered in advance was not what killed it. Moving `fin39a` to the population
+   denominator **raises** it to +0.484/+0.600 and flips it to `aligned`, because the complement
+   factor is itself negative (**−0.273/−0.437**). Agenda item 9.1 should therefore read *report both
+   denominators*, not *the own denominator is the safe one*.
+4. **U27 — DISCARD on one of two magnitude bars, and the rejection is the finding.** All four
+   registered signs are correct and the savings source clears its bar at **+8.17pp**, but
+   family/friends is **−0.35pp** [−2.49, +1.65] against a −5pp bar. Recourse to family and friends is
+   **flat across the education distribution** (38.7% vs 39.0%); the savings gain is accounted for by
+   **selling assets (−5.74)** and **"not possible" (−4.68)**. On the income axis all four signs hold
+   again and family/friends reaches −4.10 — still short. Within-country the savings gap is positive
+   in **82 of 88** economies, median **+7.84pp**, composition wedge **+0.09pp**, the smallest the
+   ledger has recorded.
+5. **The access-absorption ruler gains a third margin and it lands on the welfare side.** Account
+   holding absorbs **5.1%** of the education gradient in the savings *source* (CI **[−12.3%,
+   +29.4%]**, containing zero) against U24's **56.9%** usage and **8.6%** welfare benchmarks on the
+   identical 98-economy sample. **B18 state after this cycle: corrections 2 of 5, count 9 of 10 —
+   the next cycle fires on the count branch if it registers anything at all.** Prediction stream
+   unchanged and **CLOSED**: `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND`
+   **6.625**.

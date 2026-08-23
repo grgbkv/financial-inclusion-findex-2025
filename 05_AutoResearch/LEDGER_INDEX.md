@@ -4,7 +4,7 @@
 
 This file is the required cycle read (rule: Documentation obligation 1, 2026-08-15c). `RESEARCH_LOG.md` stays the append-only record and is consulted by `grep` for one experiment at a time, never front to back.
 
-**89 logged experiments** · 40 keeps · 38 prediction rows
+**92 logged experiments** · 40 keeps · 38 prediction rows
 
 ## Status counts
 
@@ -16,16 +16,16 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `keep-window` | 10 |
 | `inconclusive` | 2 |
 | `discard-weighted` | 4 |
-| `discard` | 39 |
-| `exploratory` | 4 |
+| `discard` | 41 |
+| `exploratory` | 5 |
 
 ## Design families
 
 | design | n | keeps |
 |---|---|---|
-| `micro-cross-section` | 26 | 17 |
+| `micro-cross-section` | 27 | 17 |
 | `delta-delta` | 19 | 9 |
-| `measurement` | 10 | 1 |
+| `measurement` | 12 | 1 |
 | `level-to-change` | 7 | 0 |
 | `partial` | 6 | 3 |
 | `gap-trajectory` | 6 | 2 |
@@ -173,6 +173,9 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `U24` | keep | micro-cross-section | 2024 | micro (98-economy module set) | none | The access-absorption ruler does NOT transfer from usage to welfare: account holding absorbs 56.9% of th… |
 | `U25x` | exploratory | measurement | 2024 | micro (36-economy mobile-money module set) | na | EXPLORATORY mapping pass OPENS the untouched fin13/fin14 mobile-money usage module and finds a BLOCK STR… |
 | `U25` | discard | measurement | 2024 | micro (36-economy mobile-money module set) | none | Registered four-way orientation screen on the newly-opened fin13/fin14 mobile-money usage module is a DI… |
+| `U26x` | exploratory | measurement | 2024 | micro (90-economy fin39 split sample / 82-economy fin48-fin49 battery) | na | EXPLORATORY structural mapping pass OPENS the last two reachable untouched micro families and returns a … |
+| `U26` | discard | measurement | 2024 | micro (61-economy fin39 M2-filtered split sample) | none | Registered four-way orientation screen on the newly-opened fin39 module is a DISCARD -- 0 counter-moving… |
+| `U27` | discard | micro-cross-section | 2024 | micro (98-economy emergency-fund module set) | U24 | Registered SOURCE-COMPOSITION claim REJECTED on one of its two magnitude bars, and the rejection carries… |
 
 ## Prediction stream (CLOSED at P28)
 
