@@ -7890,3 +7890,109 @@ beside the nominal respondent count. **The pooled-weighting caveat (`HARNESS_V2_
 carried explicitly**: pooled `wgt` weights economies roughly equally rather than by population, so
 the pooled pp values are "the typical module economy", not "the typical person in the module
 economies", and Secondary 3 is what carries the within-country reading.
+
+# Cycle 2026-08-23 — RESULTS
+
+## U26x — EXPLORATORY. Both remaining untouched micro families are OPENED structurally, and one of them cannot carry a country-level design at all
+
+Commit `86862c8`. Status `exploratory`. No hypothesis, no keep — logged before U26's verdict under
+the peek rule. **Identification is STRUCTURAL ONLY.** As registered, the country-file has **zero**
+`fin39*` / `fin48*` / `fin49*` columns, so U24x's and U25x's share-matching method — which produced
+median |dev| of exactly 0.000pp on those modules — **cannot be run here at all**. Nothing below is
+M3-validated, and that is a materially weaker footing than the two previous module openings.
+
+**`fin39` — 4 columns, 17,342 respondents (12.0% of the file), 90 economies.**
+
+- **A within-economy split sample, not an economy-level subsample.** The share of each block
+  economy's respondents who are asked runs **3.8% → 51.4% (median 15.8%)**. Every statistic on this
+  block is conditional, and the per-economy asked-n has median **27**.
+- **The four columns are a SKIP TREE, not four parallel items.** `fin39c` is asked **only** of
+  respondents who answered `fin39a == 2` (6,184 of 6,250; the rest are the DK/RF codes) and `fin39d`
+  **only** of `fin39b == 2` (3,310 of 3,326). So `fin39a`/`fin39b` sit on the module denominator and
+  `fin39c`/`fin39d` are "if not, then…" branches on their own. This is exactly the structure agenda
+  item 9.1 was written for.
+- **Response scale:** 1/2 substantive, 3/4 residual (DK/RF at 0.1–0.6% weighted throughout).
+  Weighted code-1 shares: `fin39a` **55.8%**, `fin39b` **16.7%**, `fin39c` **45.0%**, `fin39d` 17.7%.
+- **M2 economy counts: `fin39a` 61, `fin39b` 61, `fin39c` 16, `fin39d` 5.** Only the first two can
+  carry a country-level screen.
+- **The `coverage.py` label "utility payments" is NOT supported by the filter and should be treated
+  as unverified.** Among the asked, `pay_utilities` reads 4,194 / 6,209 / 476 / **6,425 "did not
+  pay"** / 38 — i.e. **37% of the respondents asked `fin39` did not pay a utility bill**, so the
+  block is not a utility-payment follow-up. The asked sample is *more* banked than the file
+  (`account` 0.820 vs 0.738) and *more* digital (`anydigpayment` 0.770 vs 0.561) but **less** online
+  (`internet_use` 0.628 vs 0.753).
+
+**`fin48`/`fin49` — 12 columns, 8,037 respondents (5.6% of the file), 82 economies. The finding here
+is a NEGATIVE structural result and it is the useful one.**
+
+- **All twelve are asked of one identical sample** (n = 8,037; `fin49d` 8,036), so the block is a
+  single 12-item battery, not two modules — `fin48a`–`f` and `fin49a`–`f` are one instrument.
+- **Response scale 1/2 substantive, 3/4 residual**; weighted code-1 shares span 18.1%–40.5%, i.e.
+  every item has usable variance.
+- **The sample is heavily skewed toward the unbanked and the offline.** Inside the asked sample
+  `account` reads **0.389** against **0.738** for the file, `account_fin` **0.186** vs 0.666,
+  `internet_use` **0.458** vs 0.753, `merchantpay_dig` **0.089** vs 0.306. **61.1% of the asked have
+  no account** against **26.2%** of the file, and 1,623 of them also answered the `fin11`
+  barriers-to-account battery, which is asked only of the unbanked. Whatever the twelve items mean,
+  they are **not** fielded on a representative adult sample.
+- **It cannot carry a country-level design.** Per-economy asked-n has median **50** (min 1, max 538)
+  and only **23 of 82 economies** reach an unweighted n of 100 — against the registered
+  eligibility rule of 30. **The registered rule fired as written and excluded the block**, which is
+  the point of fixing such a rule before the run rather than after.
+
+**A DOCUMENTATION ERROR IN THE FIXED MODULE, disclosed here (not acted on — `micro.py` is fixed).**
+`micro.py`'s `BINARY_OUTCOMES` comment declares its ten columns "already coded 0/1 in v02".
+**`pay_utilities` and `receive_wages` are not**: both carry codes **1–5** (mode of payment) on 91,901
+respondents. U14 and U23 already treat them correctly and disclosed the coding themselves, so **no
+ledger claim is affected**; what is wrong is the module's own comment. Consequence for this pass: the
+two `pay_utilities` / `receive_wages` rows in U26x's filter-profile table are **means of a 1–5 code,
+not rates, and must not be read as such** — the other eight rows are genuine 0/1 rates. Owed to
+`HARNESS_V2_NOTES` as a v2 item.
+
+**Coverage consumed.** Sixteen previously untouched micro columns (4 + 12). With this pass the only
+untouched micro families left are `con` (52, still blocked) and `fin22` (thin, 1 of 9 used) —
+**rule B2's breadth cell for this cycle, and the end of the reachable untouched micro surface.**
+
+## U26 — DISCARD as registered. The `fin39` screen returns no counter-moving item, and the denominator diagnostic runs in the OPPOSITE direction to U25's
+
+Commit `86862c8`. Stream micro. Status **`discard`**. Parent: none (new module). Design
+`measurement`, **2024, single wave, cross-sectional** — no trend language.
+
+**Eligibility, decided by the registered rule.** `fin39` clears (61 economies at n ≥ 100 ≥ the
+registered 30); `fin48`/`fin49` does **not** (23). The screen therefore ran on `fin39a` and `fin39b`
+only — `fin39c` (16 economies) and `fin39d` (5) fail M2 at the economy level.
+
+**The registered screen vs `g20_any`, own-block denominator, 61 economies, `neff` 4.7:**
+
+| item | r_w | r_u | class | G6 drop-5 | largest LOO (named) | bootstrap [2.5, 97.5], p_boot |
+|---|---|---|---|---|---|---|
+| `fin39a` | **+0.284** | **+0.482** | `mixed-lens` (independent / aligned) | +0.299 | **India +0.231** | [+0.001, +0.684], 0.049 |
+| `fin39b` | **+0.694** | **+0.363** | `aligned` | +0.497 | Brazil −0.085 | [+0.417, +0.845], 0.000 |
+
+**VERDICT: 0 counter-moving items → DISCARD as registered.** The registered sign was NEGATIVE and
+both items are positive; under B15 a positive result of any magnitude is **not** partial confirmation.
+BH at q = 0.10 over the module's own 2-test family rejects **2 of 2**, so the family-wise correction
+registered in advance was **not** what killed this screen — the classification was.
+
+**The denominator diagnostic (agenda item 9.1) runs the OTHER way here, and that is the cycle's
+methodological result.** U25 found a screen that manufactured counter-movement out of its
+denominator. `fin39` shows the mirror case: moving `fin39a` from its own block denominator to the
+population denominator **raises** the association (+0.284/+0.482 → +0.484/+0.600) and flips its class
+from `mixed-lens` to `aligned`, because the complement factor is itself negatively related to the
+anchor — **r(100 − block-asked share, `g20_any`) = −0.273 weighted / −0.437 unweighted**. `fin39b` is
+nearly denominator-invariant (+0.694/+0.363 → +0.691/+0.541). **So the denominator can move a
+classification in either direction, and the size of the move is item-specific, not block-specific.**
+Item 9.1's standing addition to the screen should be worded as "report both denominators", not "the
+own denominator is the safe one".
+
+**Secondary (registered, no bar) — vs `account_t_d`, same 61 economies.** `fin39a` **+0.698/+0.579
+`aligned`** (drop-5 +0.385, largest LOO India −0.145, CI [+0.288, +0.872], p_boot 0.002); `fin39b`
+**+0.159/+0.209 `independent`** (CI [−0.148, +0.736], p_boot 0.293). The two items separate cleanly
+on the E47 distinction: `fin39a` tracks the **access** margin more strongly than the digital-payment
+headline, `fin39b` the reverse. Reported, not claimed.
+
+**G4 / declared frame.** 61 economies after M2 filtering, **42.5% of country-file 2024 adult
+population** — well under the ledger's usual 97–100% on headline columns, and the frame is *the
+economies that field the `fin39` split sample*, not the developing panel. Income mix: 30 upper-middle,
+22 lower-middle, 5 low, 4 high income. **`neff` = 4.7**, the lowest in the ledger to date, so no
+significance language attaches to the nominal 61 (rule B10).

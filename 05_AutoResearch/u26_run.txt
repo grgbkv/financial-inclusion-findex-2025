@@ -1,0 +1,157 @@
+====================================================================================================
+U26x — EXPLORATORY structural mapping pass: the last two untouched micro families
+====================================================================================================
+No country-file twin exists for fin39/fin48/fin49 (verified: 0 matching columns in GlobalFindexDatabase2025.csv),
+so U24x/U25x share-matching cannot run. Identification below is STRUCTURAL ONLY and is not M3-validated.
+
+----------------------------------------------------------------------------------------------------
+BLOCK fin39 — 4 columns
+  asked: 17342 respondents (12.0% of file) in 90 economies; those economies hold 91901 respondents
+  share of each block economy's respondents asked: min 3.8% median 15.8% max 51.4%
+  => WITHIN-ECONOMY conditional/split subsample — every statistic on this block is CONDITIONAL
+
+  col               n   n_econ   n>=100  code1_pct  code distribution (unweighted)
+  fin39a        17342       90       61      55.8%  1:10076  2:7192  3:52  4:22
+  fin39b        17342       90       61      16.7%  1:2801  2:14479  3:56  4:6
+  fin39c         6250       90       16      45.0%  1:2924  2:3298  3:17  4:11
+  fin39d         3326       90        5      17.7%  1:619  2:2680  3:17  4:10
+  per-economy asked-n: median 27 min 4 max 161
+
+  FILTER PROFILE — pooled unweighted mean of labelled binaries, inside the asked sample vs whole file:
+    account          asked 0.820 (n=17342)   file 0.738   diff +0.083
+    account_fin      asked 0.769 (n=17342)   file 0.666   diff +0.103
+    account_mob      asked 0.385 (n=11802)   file 0.344   diff +0.040
+    anydigpayment    asked 0.770 (n=17342)   file 0.561   diff +0.209
+    internet_use     asked 0.628 (n=17342)   file 0.753   diff -0.126
+    merchantpay_dig  asked 0.315 (n=17342)   file 0.306   diff +0.008
+    pay_utilities    asked 2.533 (n=17342)   file 2.815   diff -0.282
+    saved            asked 0.501 (n=17342)   file 0.512   diff -0.011
+    borrowed         asked 0.574 (n=17342)   file 0.587   diff -0.012
+    receive_wages    asked 3.308 (n=17342)   file 3.199   diff +0.110
+
+  PARTITION CHECK (weighted composition over each column's own denominator):
+    fin39a    1: 55.8%  2: 43.7%  3:  0.3%  4:  0.1%
+    fin39b    1: 16.7%  2: 82.9%  3:  0.3%  4:  0.0%
+    fin39c    1: 45.0%  2: 54.5%  3:  0.3%  4:  0.2%
+    fin39d    1: 17.7%  2: 81.4%  3:  0.6%  4:  0.3%
+
+  NESTING (is a column a follow-up of another in the same block?):
+    fin39b    n= 17342 | subset of fin39a: yes | overlap 17342
+    fin39c    n=  6250 | subset of fin39a: yes | overlap 6250
+    fin39d    n=  3326 | subset of fin39a: yes | overlap 3326
+
+----------------------------------------------------------------------------------------------------
+BLOCK fin48_fin49 — 12 columns
+  asked: 8037 respondents (5.6% of file) in 82 economies; those economies hold 87408 respondents
+  share of each block economy's respondents asked: min 0.1% median 5.0% max 53.7%
+  => WITHIN-ECONOMY conditional/split subsample — every statistic on this block is CONDITIONAL
+
+  col               n   n_econ   n>=100  code1_pct  code distribution (unweighted)
+  fin48a         8037       82       23      33.4%  1:2746  2:5185  3:66  4:40
+  fin48b         8037       82       23      24.1%  1:1828  2:6073  3:84  4:52
+  fin48c         8037       82       23      34.9%  1:2750  2:4971  3:277  4:39
+  fin48d         8037       82       23      37.2%  1:2893  2:4996  3:102  4:46
+  fin48e         8037       82       23      36.8%  1:2849  2:5051  3:104  4:33
+  fin48f         8037       82       23      18.1%  1:1461  2:6446  3:91  4:39
+  fin49a         8037       82       23      26.7%  1:2196  2:5682  3:132  4:27
+  fin49b         8037       82       23      31.0%  1:2580  2:5297  3:130  4:30
+  fin49c         8037       82       23      40.5%  1:3314  2:4615  3:82  4:26
+  fin49d         8036       81       23      34.7%  1:2806  2:5087  3:102  4:41
+  fin49e         8037       82       23      31.2%  1:2565  2:5342  3:100  4:30
+  fin49f         8037       82       23      22.1%  1:1771  2:6165  3:76  4:25
+  per-economy asked-n: median 50 min 1 max 538
+
+  FILTER PROFILE — pooled unweighted mean of labelled binaries, inside the asked sample vs whole file:
+    account          asked 0.389 (n=8037)   file 0.738   diff -0.348
+    account_fin      asked 0.186 (n=8037)   file 0.666   diff -0.480
+    account_mob      asked 0.286 (n=7576)   file 0.344   diff -0.058
+    anydigpayment    asked 0.345 (n=8021)   file 0.561   diff -0.216
+    internet_use     asked 0.458 (n=8037)   file 0.753   diff -0.295
+    merchantpay_dig  asked 0.089 (n=8021)   file 0.306   diff -0.217
+    pay_utilities    asked 3.334 (n=7808)   file 2.815   diff +0.519
+    saved            asked 0.468 (n=8021)   file 0.512   diff -0.044
+    borrowed         asked 0.644 (n=8021)   file 0.587   diff +0.057
+    receive_wages    asked 3.607 (n=7808)   file 3.199   diff +0.408
+
+  PARTITION CHECK (weighted composition over each column's own denominator):
+    fin48a    1: 33.4%  2: 65.3%  3:  0.9%  4:  0.5%
+    fin48b    1: 24.1%  2: 73.9%  3:  1.2%  4:  0.7%
+    fin48c    1: 34.9%  2: 60.8%  3:  3.8%  4:  0.5%
+    fin48d    1: 37.2%  2: 60.8%  3:  1.4%  4:  0.6%
+    fin48e    1: 36.8%  2: 61.4%  3:  1.4%  4:  0.4%
+    fin48f    1: 18.1%  2: 80.1%  3:  1.2%  4:  0.6%
+    fin49a    1: 26.7%  2: 71.2%  3:  1.7%  4:  0.3%
+    fin49b    1: 31.0%  2: 66.6%  3:  1.9%  4:  0.4%
+    fin49c    1: 40.5%  2: 58.1%  3:  1.1%  4:  0.4%
+    fin49d    1: 34.7%  2: 63.3%  3:  1.4%  4:  0.6%
+    fin49e    1: 31.2%  2: 67.0%  3:  1.4%  4:  0.4%
+    fin49f    1: 22.1%  2: 76.7%  3:  0.9%  4:  0.3%
+
+  NESTING (is a column a follow-up of another in the same block?):
+    fin48b    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin48c    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin48d    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin48e    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin48f    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin49a    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin49b    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin49c    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin49d    n=  8036 | subset of fin48a: yes | overlap 8036
+    fin49e    n=  8037 | subset of fin48a: yes | overlap 8037
+    fin49f    n=  8037 | subset of fin48a: yes | overlap 8037
+
+====================================================================================================
+REGISTERED SCREEN-ELIGIBILITY RULE (fixed before the run): a block carries the screen only if
+>= 30 economies clear unweighted n >= 100.
+  fin39        max economies at n>=100 across its columns:  61  ->  ELIGIBLE
+  fin48_fin49  max economies at n>=100 across its columns:  23  ->  NOT ELIGIBLE
+====================================================================================================
+
+
+####################################################################################################
+# U26 REGISTERED SCREEN — block fin39, screenable columns ['fin39a', 'fin39b']
+####################################################################################################
+
+====================================================================================================
+U26 — four-way orientation screen vs `g20_any  [OWN-BLOCK denominator, M2-filtered]`
+====================================================================================================
+item               r_w     r_u           class     n    neff  G6 drop5 / largest LOO (named)
+fin39a          +0.284  +0.482      mixed-lens    61     4.7  drop5 +0.299 / India +0.231
+                 bootstrap 2,000 economy draws: [+0.001, +0.684]  p_boot=0.0490
+fin39b          +0.694  +0.363         aligned    61     4.7  drop5 +0.497 / Brazil -0.085
+                 bootstrap 2,000 economy draws: [+0.417, +0.845]  p_boot=0.0000
+
+BH FAMILY-WISE CORRECTION over the module's own family of 2 tests (q = 0.10) — registered IN ADVANCE (agenda item 9.2):
+  fin39b         p_boot=0.0000  BH crit=0.0500  reject
+  fin39a         p_boot=0.0490  BH crit=0.1000  reject
+  BH rejects 2 of 2.
+
+REGISTERED KEEP CONDITION (>=1 counter-moving on BOTH lenses, G6 sign-stable,
+bootstrap excluding zero, AND rejected by BH at q=0.10 over the module family):
+  0 counter-moving items -> DISCARD as registered.
+
+classification counts vs g20_any: {'mixed-lens': np.int64(1), 'aligned': np.int64(1)}
+G4 (declared frame = the economies that field the module, M2-filtered): 61 economies, 42.5% of country-file 2024 adult population
+income mix: {'Upper middle income': np.int64(30), 'Lower middle income': np.int64(22), 'Low income': np.int64(5), 'High income': np.int64(4)}
+
+DENOMINATOR DIAGNOSTIC (agenda item 9.1) — the same items on the POPULATION denominator,
+plus the complement factor's own correlation with the anchor:
+
+====================================================================================================
+U26 — four-way orientation screen vs `g20_any  [POPULATION denominator — contrast only]`
+====================================================================================================
+item               r_w     r_u           class     n    neff  G6 drop5 / largest LOO (named)
+fin39a          +0.484  +0.600         aligned    90     8.3  drop5 +0.580 / India +0.139
+fin39b          +0.691  +0.541         aligned    90     8.3  drop5 +0.619 / Brazil -0.073
+  fin39a         own-denom r_w +0.284 r_u +0.482 (mixed-lens    ) | pop-denom r_w +0.484 r_u +0.600 (aligned)
+  fin39b         own-denom r_w +0.694 r_u +0.363 (aligned       ) | pop-denom r_w +0.691 r_u +0.541 (aligned)
+  COMPLEMENT FACTOR r(100 - block-asked share, g20_any) over 61 economies: weighted -0.273, unweighted -0.437 -> class mixed-lens
+
+====================================================================================================
+U26 — four-way orientation screen vs `account_t_d  [OWN-BLOCK denominator, M2-filtered]`
+====================================================================================================
+item               r_w     r_u           class     n    neff  G6 drop5 / largest LOO (named)
+fin39a          +0.698  +0.579         aligned    61     4.7  drop5 +0.385 / India -0.145
+                 bootstrap 2,000 economy draws: [+0.288, +0.872]  p_boot=0.0020
+fin39b          +0.159  +0.209     independent    61     4.7  drop5 +0.379 / India +0.413
+                 bootstrap 2,000 economy draws: [-0.148, +0.736]  p_boot=0.2930
