@@ -141,3 +141,51 @@ counter-moved with digital payment and not with access.
 decline and a 2021→24 rebound, the same path as `fin31d` (47.1 → 20.5 → 26.6), `fin34c`
 (15.9 → 8.0 → 15.2) and `fin42` (24.6 → 10.8 → 13.4). Four items in four modules. Every cash-side
 margin the loop has mapped turns up in the last window.
+
+---
+
+## 11. `micro.py`'s `BINARY_OUTCOMES` comment is wrong for two columns (U26x, 2026-08-23)
+
+`micro.py` declares its ten `BINARY_OUTCOMES` "already coded 0/1 in v02". **Two of them are not.**
+`pay_utilities` and `receive_wages` carry **codes 1–5** on 91,901 respondents — the payment-mode
+scale U14 identified structurally (1 = through an account, 2 = cash, 3 = other/in-kind, 4 = did not
+receive/pay, 5 = DK). The module coerces them to numeric, which succeeds silently, so
+`Micro.rate("pay_utilities")` returns **a mean of a 1–5 code presented as a percentage** and is
+meaningless.
+
+**No ledger claim is affected.** U14 and U23 are the only experiments that use these columns and both
+treat them as mode codes, restricting to `∈ {1,2,3}` and taking the rate of `== 1`; both disclosed
+the coding at registration. The error is in the module's comment, not in the ledger.
+
+**The fix is a comment and a guard, applied in the same versioned pass as the rest of this file** —
+`micro.py` is fixed during runs and was not touched. Until then: **check `sorted(df[col].unique())`
+before taking a rate off any column in `BINARY_OUTCOMES`.** The eight genuinely 0/1 columns are
+`account`, `account_fin`, `account_mob`, `saved`, `borrowed`, `anydigpayment`, `receive_transfers`,
+`merchantpay_dig`.
+
+## 12. The last two untouched micro families, opened structurally (U26x, 2026-08-23) — and the first module the loop has had to declare UNUSABLE
+
+Neither `fin39` nor `fin48`/`fin49` has **any** country-file twin, so the share-matching
+identification that opened `fin24` (U24x) and `fin13`/`fin14` (U25x) at median |dev| 0.000pp
+**cannot be run on either**. Everything below is structural and **not M3-validated**.
+
+| block | asked | economies | share asked per economy | per-economy n | economies at n ≥ 100 |
+|---|---|---|---|---|---|
+| `fin39` (4 cols) | 17,342 (12.0%) | 90 | 3.8% – 51.4% (median 15.8%) | median 27 | **61 / 61 / 16 / 5** (a/b/c/d) |
+| `fin48`+`fin49` (12 cols) | 8,037 (5.6%) | 82 | 0.1% – 53.7% (median 5.0%) | median 50 | **23** (all twelve) |
+
+**`fin39` is a skip tree.** `fin39c` is asked only of `fin39a == 2` and `fin39d` only of
+`fin39b == 2`, so only `fin39a`/`fin39b` sit on the module denominator. Weighted code-1 shares
+55.8 / 16.7 / 45.0 / 17.7; codes 3/4 are DK/RF at 0.1–0.6%. **The `coverage.py` label "utility
+payments" is unverified and the filter contradicts it** — 37% of those asked report not having paid a
+utility bill. The asked sample is more banked (0.820 vs 0.738) and more digital (0.770 vs 0.561) than
+the file, and *less* online (0.628 vs 0.753).
+
+**`fin48`+`fin49` is ONE 12-item battery** on a single identical sample (n = 8,037), not two modules.
+Its sample is **61.1% unbanked against 26.2% in the file** (`account_fin` 0.186 vs 0.666,
+`internet_use` 0.458 vs 0.753, `merchantpay_dig` 0.089 vs 0.306), and 1,623 of those asked also
+answered the unbanked-only `fin11` battery. **It is the first module the loop has had to declare
+unusable for country-level work**: 23 economies at n ≥ 100 cannot support a screen, and the
+`coverage.py` label "digital-risk exposure" stays an unverified guess. It remains available for
+**pooled individual-level** description on a sample that must be described as unbanked-skewed, never
+as representative.
