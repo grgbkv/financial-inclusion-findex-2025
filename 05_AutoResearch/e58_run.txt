@@ -1,0 +1,52 @@
+========================================================================================================
+E58 — all-windows promotion test of E22 (B14 + B8): d(mobile money) ~ d(formal saving),
+      Sub-Saharan Africa vs the five other developing regions pooled
+========================================================================================================
+regions in `rest`: ['East Asia & Pacific (excluding high income)', 'Europe & Central Asia (excluding high income)', 'Latin America & Caribbean (excluding high income)', 'Middle East & North Africa (excluding high income)', 'South Asia (excluding high income)', 'Sub-Saharan Africa (excluding high income)']
+2011->2014 is NOT TESTABLE: mobileaccount_t_d reporting economies in 2011 = 0
+
+--------------------------------------------------------------------------------------------------------
+SUBSAMPLE: SSA
+--------------------------------------------------------------------------------------------------------
+  2014->2017  n= 0  NOT TESTABLE (< 15 economies)
+  2017->2021  n= 0  NOT TESTABLE (< 15 economies)
+  2021->2024  n= 0  NOT TESTABLE (< 15 economies)
+
+--------------------------------------------------------------------------------------------------------
+SUBSAMPLE: rest-of-developing
+--------------------------------------------------------------------------------------------------------
+  2014->2017  n=54 (64.7% of subsample adult pop)  neff   6.7   r_w -0.041  r_u +0.145
+           G6 +0.423 (sign LOST, E4 retention 10.42)   boot [-0.403,+0.554] p_boot 0.993   largest LOO India +0.421
+           d(mobile money) terciles -> mean d(saving): low -0.9 / mid -2.6 / high +0.7
+  2017->2021  n=57 (66.6% of subsample adult pop)  neff   6.9   r_w +0.463  r_u +0.371
+           G6 +0.412 (sign kept, E4 retention 0.89)   boot [+0.187,+0.666] p_boot 0.004   largest LOO Thailand -0.066
+           d(mobile money) terciles -> mean d(saving): low +2.5 / mid +3.4 / high +11.4
+  2021->2024  n=58 (68.0% of subsample adult pop)  neff   7.1   r_w +0.719  r_u +0.744
+           G6 +0.743 (sign kept, E4 retention 1.03)   boot [+0.561,+0.853] p_boot 0.000   largest LOO Brazil +0.058
+           d(mobile money) terciles -> mean d(saving): low +2.7 / mid +9.1 / high +14.8
+
+--------------------------------------------------------------------------------------------------------
+SUBSAMPLE: pooled pan_dev (reference)
+--------------------------------------------------------------------------------------------------------
+  2014->2017  n=54 (64.7% of subsample adult pop)  neff   6.7   r_w -0.041  r_u +0.145
+           G6 +0.423 (sign LOST, E4 retention 10.42)   boot [-0.389,+0.550] p_boot 0.975   largest LOO India +0.421
+           d(mobile money) terciles -> mean d(saving): low -0.9 / mid -2.6 / high +0.7
+  2017->2021  n=57 (66.6% of subsample adult pop)  neff   6.9   r_w +0.463  r_u +0.371
+           G6 +0.412 (sign kept, E4 retention 0.89)   boot [+0.177,+0.669] p_boot 0.005   largest LOO Thailand -0.066
+           d(mobile money) terciles -> mean d(saving): low +2.5 / mid +3.4 / high +11.4
+  2021->2024  n=58 (68.0% of subsample adult pop)  neff   7.1   r_w +0.719  r_u +0.744
+           G6 +0.743 (sign kept, E4 retention 1.03)   boot [+0.559,+0.853] p_boot 0.000   largest LOO Brazil +0.058
+           d(mobile money) terciles -> mean d(saving): low +2.7 / mid +9.1 / high +14.8
+
+========================================================================================================
+REGISTERED PROMOTION CONDITION (B8: every one of the six cells)
+========================================================================================================
+  rest-of-developing   2014->2017   weighted bar FAIL (r_w -0.041, G6 sign LOST, retention 10.42)   unweighted bar FAIL (r_u +0.145)
+  rest-of-developing   2017->2021   weighted bar PASS (r_w +0.463, G6 sign kept, retention 0.89)   unweighted bar PASS (r_u +0.371)
+  rest-of-developing   2021->2024   weighted bar PASS (r_w +0.719, G6 sign kept, retention 1.03)   unweighted bar PASS (r_u +0.744)
+
+  not testable: [('SSA', 2014, 2017), ('SSA', 2017, 2021), ('SSA', 2021, 2024)]
+  weighted-lens failures:   [('rest-of-developing', 2014, 2017)]
+  unweighted-lens failures: [('rest-of-developing', 2014, 2017)]
+
+  ==> NO PROMOTION — COVERAGE-LIMITED (a registered cell is not testable)

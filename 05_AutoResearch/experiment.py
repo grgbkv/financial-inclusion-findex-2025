@@ -117,8 +117,9 @@ def terciles(dmm, dsv):
 def main():
     fx = Findex()
     dev = fx.pan_dev
-    ssa = dev[dev["regionwb24_hi"] == "Sub-Saharan Africa"]
-    rest = dev[dev["regionwb24_hi"] != "Sub-Saharan Africa"]
+    is_ssa = dev["regionwb24_hi"].str.startswith("Sub-Saharan Africa")
+    ssa = dev[is_ssa]
+    rest = dev[~is_ssa]
     subs = [("SSA", ssa), ("rest-of-developing", rest), ("pooled pan_dev (reference)", dev)]
 
     print("=" * 104)
