@@ -193,7 +193,74 @@ def main():
         cm = [r for r in rows if r["cls"] == "counter-moving"]
         print("\nREGISTERED KEEP CONDITION (%s): counter-moving on BOTH lenses = %d item(s) -> %s"
               % (tag, len(cm), [r["col"] for r in cm] or "NONE"))
+    return fx
+
+
+def depths(fx, d24, w, col, anchor, bar=0.30):
+    """B21, computed AFTER the registered primary and carrying no verdict rule:
+    fragility depth  = fewest greedy removals of the largest-population economies that drive |r_w|
+                       BELOW the bar; ascent depth = fewest greedy removals that drive |r_u| ABOVE it.
+    Economies named in removal order."""
+    x, a = d24[col] * 100, d24[anchor] * 100
+    order = w.sort_values(ascending=False).index.tolist()
+
+    keep = list(x.dropna().index)
+    frag = []
+    for e in order:
+        if e not in keep:
+            continue
+        r = wcorr(x.reindex(keep), a.reindex(keep), w.reindex(keep))
+        if pd.isna(r) or abs(r) < bar:
+            break
+        keep.remove(e)
+        frag.append(e)
+        r2 = wcorr(x.reindex(keep), a.reindex(keep), w.reindex(keep))
+        if pd.isna(r2) or abs(r2) < bar:
+            break
+
+    keep2 = list(x.dropna().index)
+    asc = []
+    for _ in range(len(keep2)):
+        r = ucorr(x.reindex(keep2), a.reindex(keep2))
+        if pd.notna(r) and abs(r) >= bar:
+            break
+        best, bestr = None, abs(r) if pd.notna(r) else 0.0
+        for e in keep2:
+            k = [i for i in keep2 if i != e]
+            rr = ucorr(x.reindex(k), a.reindex(k))
+            if pd.notna(rr) and abs(rr) > bestr:
+                best, bestr = e, abs(rr)
+        if best is None:
+            break
+        keep2.remove(best)
+        asc.append(best)
+    r_end_w = wcorr(x.reindex(keep), a.reindex(keep), w.reindex(keep))
+    r_end_u = ucorr(x.reindex(keep2), a.reindex(keep2))
+    return frag, r_end_w, asc, r_end_u
+
+
+def post_primary(fx):
+    """Diagnostics added AFTER the registered primary printed. No bar, no verdict rule."""
+    dev = fx.pan_dev
+    d24 = dev[dev["year"] == 2024].set_index("countrynewwb")
+    w = d24["pop_adult"]
+    print("\n" + "=" * 100)
+    print("POST-PRIMARY DIAGNOSTICS (no bar, no verdict rule) — B21 depths and G4 coverage")
+    print("=" * 100)
+    for col in ["fin22d", "fin22b"]:
+        for anchor in [ANCHOR]:
+            frag, rw_end, asc, ru_end = depths(fx, d24, w, col, anchor)
+            print("%-8s vs %-12s fragility depth %d  [%s]  -> r_w %+.3f"
+                  % (col, anchor, len(frag), ", ".join(frag) or "-", rw_end))
+            print("%-8s %-15s ascent   depth %d  [%s]  -> r_u %+.3f"
+                  % ("", "", len(asc), ", ".join(asc) or "-", ru_end))
+    for col in ["fin22d", ANCHOR, BASE]:
+        print("G4 %-14s %s" % (col, fx.gate_coverage(dev, col, 2024)))
+    print("G3: every fin22 item is an UNREGISTERED narrow variant (declared in the pre-registration).")
+    print("G5: no official aggregate series for a cross-sectional correlation — n/a.")
+    print("E4 magnitude rule on fin22d: |r_droptop|/|r_full| = %.3f" % (0.358 / 0.557))
 
 
 if __name__ == "__main__":
-    main()
+    fx_out = main()
+    post_primary(fx_out)

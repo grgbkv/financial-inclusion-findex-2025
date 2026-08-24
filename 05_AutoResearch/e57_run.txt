@@ -1,0 +1,88 @@
+====================================================================================================
+E57x — EXPLORATORY mapping pass: the `fin22` borrowing-sources module (developing panel)
+====================================================================================================
+column                           2011          2014          2017          2021          2024
+fin22a                         --/  0      15.7/ 77      15.6/ 77      21.6/ 77      22.0/ 76
+fin22a_1                       --/  0        --/  0        --/  0       2.5/ 61       3.5/ 61
+fin22a_22a1_22g_d              --/  0      15.7/ 77      15.6/ 77      22.6/ 77      23.2/ 76
+fin22b                         --/  0      29.2/ 77      29.4/ 77      30.3/ 77      31.6/ 76
+fin22c                         --/  0        --/  0       4.0/ 77       2.8/ 77       4.8/ 76
+fin22d                         --/  0      14.0/ 77      10.7/ 77      17.2/ 77      19.9/ 76
+fin22e                         --/  0       8.1/ 77       7.2/ 77        --/  0      10.7/ 76
+fin22f                         --/  0        --/  0        --/  0        --/  0      23.7/ 76
+fin22g                         --/  0       8.4/ 77       8.6/ 77      13.3/ 77      13.6/ 76
+fin22h                         --/  0        --/  0        --/  0      10.9/ 77      11.4/ 76
+fin22h_s                       --/  0        --/  0        --/  0      83.3/ 10      85.7/  8
+
+(cell = weighted developing-panel level pp / number of economies reporting)
+  fin22a                   waves at >=70 economies: 4   excluded-in-advance: False
+  fin22a_1                 waves at >=70 economies: 0   excluded-in-advance: False
+  fin22a_22a1_22g_d        waves at >=70 economies: 4   excluded-in-advance: True
+  fin22b                   waves at >=70 economies: 4   excluded-in-advance: False
+  fin22c                   waves at >=70 economies: 3   excluded-in-advance: False
+  fin22d                   waves at >=70 economies: 4   excluded-in-advance: False
+  fin22e                   waves at >=70 economies: 3   excluded-in-advance: False
+  fin22f                   waves at >=70 economies: 1   excluded-in-advance: False
+  fin22g                   waves at >=70 economies: 4   excluded-in-advance: False
+  fin22h                   waves at >=70 economies: 2   excluded-in-advance: False
+  fin22h_s                 waves at >=70 economies: 0   excluded-in-advance: True
+
+ELIGIBLE SCREEN FAMILY (>=3 waves at >=70 economies, exclusions applied): ['fin22a', 'fin22b', 'fin22c', 'fin22d', 'fin22e', 'fin22g']
+
+====================================================================================================
+E57 — four-way orientation screen, 2024 developing-panel cross-section (PRIMARY vs g20_any)
+====================================================================================================
+item            n   neff      r_w     r_u  class (all-adult denom)           G6  boot [2.5,97.5]       p_boot  conditional-rate denom    
+fin22a         76    7.2   +0.843  +0.579  mixed-lens(restatement/aligned)  +0.489  [+0.428,+0.924]   0.000  +0.844/+0.557 mixed-lens(restatement/aligned)
+                 largest LOO (B12): China -0.246
+fin22b         76    7.2   -0.450  -0.079  mixed-lens(counter-moving/independent)  +0.088  [-0.672,+0.147]   0.144  -0.473/-0.101 mixed-lens(counter-moving/independent)
+                 largest LOO (B12): China +0.265
+fin22c         76    7.2   -0.145  +0.028  independent                   +0.158  [-0.360,+0.269]   0.458  -0.150/+0.016 independent       
+                 largest LOO (B12): China +0.173
+fin22d         76    7.2   -0.557  -0.400  counter-moving                -0.358  [-0.740,-0.163]   0.002  -0.582/-0.534 counter-moving    
+                 largest LOO (B12): China +0.195
+fin22e         76    7.2   -0.142  -0.124  independent                   +0.013  [-0.373,+0.125]   0.284  -0.034/-0.173 independent       
+                 largest LOO (B12): Bangladesh -0.055
+fin22g         76    7.2   +0.828  +0.488  mixed-lens(restatement/aligned)  +0.423  [+0.406,+0.919]   0.000  +0.835/+0.489 mixed-lens(restatement/aligned)
+                 largest LOO (B12): China -0.264
+
+BH at q=0.10 over this module's own 6-test family: rejects 3 of 6  -> fin22a, fin22d, fin22g
+   fin22a       p_boot 0.0000  vs critical 0.0167  REJECT
+   fin22g       p_boot 0.0000  vs critical 0.0333  REJECT
+   fin22d       p_boot 0.0020  vs critical 0.0500  REJECT
+   fin22b       p_boot 0.1440  vs critical 0.0667  -
+   fin22e       p_boot 0.2840  vs critical 0.0833  -
+   fin22c       p_boot 0.4580  vs critical 0.1000  -
+
+BASE FACTOR r(borrow_any_t_d, g20_any): weighted -0.261 / unweighted -0.026
+
+REGISTERED KEEP CONDITION (PRIMARY vs g20_any): counter-moving on BOTH lenses = 1 item(s) -> ['fin22d']
+
+====================================================================================================
+E57 — four-way orientation screen, 2024 developing-panel cross-section (SECONDARY vs account_t_d)
+====================================================================================================
+item            n   neff      r_w     r_u  class (all-adult denom)           G6  boot [2.5,97.5]       p_boot  conditional-rate denom    
+fin22a         76    7.2   +0.589  +0.617  aligned                       +0.548  [+0.354,+0.874]   0.000  +0.560/+0.635 aligned           
+                 largest LOO (B12): India +0.218
+fin22b         76    7.2   -0.419  -0.230  mixed-lens(counter-moving/independent)  -0.023  [-0.684,+0.019]   0.059  -0.466/-0.196 mixed-lens(counter-moving/independent)
+                 largest LOO (B12): China +0.137
+fin22c         76    7.2   -0.152  -0.100  independent                   +0.052  [-0.352,+0.089]   0.200  -0.160/-0.099 independent       
+                 largest LOO (B12): China +0.083
+fin22d         76    7.2   -0.160  -0.500  mixed-lens(independent/counter-moving)  -0.467  [-0.672,+0.303]   0.537  -0.121/-0.582 mixed-lens(independent/counter-moving)
+                 largest LOO (B12): India -0.400
+fin22e         76    7.2   -0.096  -0.261  independent                   -0.109  [-0.388,+0.167]   0.459  -0.021/-0.279 independent       
+                 largest LOO (B12): India -0.074
+fin22g         76    7.2   +0.473  +0.502  aligned                       +0.460  [+0.055,+0.859]   0.018  +0.468/+0.524 aligned           
+                 largest LOO (B12): India +0.306
+
+BH at q=0.10 over this module's own 6-test family: rejects 2 of 6  -> fin22a, fin22g
+   fin22a       p_boot 0.0000  vs critical 0.0167  REJECT
+   fin22g       p_boot 0.0180  vs critical 0.0333  REJECT
+   fin22b       p_boot 0.0590  vs critical 0.0500  -
+   fin22c       p_boot 0.2000  vs critical 0.0667  -
+   fin22e       p_boot 0.4590  vs critical 0.0833  -
+   fin22d       p_boot 0.5370  vs critical 0.1000  -
+
+BASE FACTOR r(borrow_any_t_d, account_t_d): weighted -0.157 / unweighted -0.176
+
+REGISTERED KEEP CONDITION (SECONDARY vs account_t_d): counter-moving on BOTH lenses = 0 item(s) -> NONE
