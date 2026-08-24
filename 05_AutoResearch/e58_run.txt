@@ -2,28 +2,34 @@
 E58 — all-windows promotion test of E22 (B14 + B8): d(mobile money) ~ d(formal saving),
       Sub-Saharan Africa vs the five other developing regions pooled
 ========================================================================================================
-regions in `rest`: ['East Asia & Pacific (excluding high income)', 'Europe & Central Asia (excluding high income)', 'Latin America & Caribbean (excluding high income)', 'Middle East & North Africa (excluding high income)', 'South Asia (excluding high income)', 'Sub-Saharan Africa (excluding high income)']
+regions in `rest`: ['East Asia & Pacific (excluding high income)', 'Europe & Central Asia (excluding high income)', 'Latin America & Caribbean (excluding high income)', 'Middle East & North Africa (excluding high income)', 'South Asia (excluding high income)']
 2011->2014 is NOT TESTABLE: mobileaccount_t_d reporting economies in 2011 = 0
 
 --------------------------------------------------------------------------------------------------------
 SUBSAMPLE: SSA
 --------------------------------------------------------------------------------------------------------
-  2014->2017  n= 0  NOT TESTABLE (< 15 economies)
-  2017->2021  n= 0  NOT TESTABLE (< 15 economies)
-  2021->2024  n= 0  NOT TESTABLE (< 15 economies)
+  2014->2017  n=26 (100.0% of subsample adult pop)  neff   9.4   r_w +0.543  r_u +0.368
+           G6 +0.128 (sign kept, E4 retention 0.24)   boot [+0.036,+0.740] p_boot 0.041   largest LOO Nigeria -0.145
+           d(mobile money) terciles -> mean d(saving): low -5.5 / mid +0.1 / high +0.4
+  2017->2021  n=26 (100.0% of subsample adult pop)  neff   9.5   r_w +0.405  r_u +0.319
+           G6 +0.371 (sign kept, E4 retention 0.92)   boot [-0.054,+0.764] p_boot 0.089   largest LOO Kenya +0.139
+           d(mobile money) terciles -> mean d(saving): low +9.8 / mid +8.7 / high +13.9
+  2021->2024  n=25 (99.5% of subsample adult pop)  neff   9.5   r_w +0.923  r_u +0.853
+           G6 +0.878 (sign kept, E4 retention 0.95)   boot [+0.735,+0.975] p_boot 0.000   largest LOO Nigeria -0.049
+           d(mobile money) terciles -> mean d(saving): low +3.5 / mid +10.6 / high +16.9
 
 --------------------------------------------------------------------------------------------------------
 SUBSAMPLE: rest-of-developing
 --------------------------------------------------------------------------------------------------------
-  2014->2017  n=54 (64.7% of subsample adult pop)  neff   6.7   r_w -0.041  r_u +0.145
-           G6 +0.423 (sign LOST, E4 retention 10.42)   boot [-0.403,+0.554] p_boot 0.993   largest LOO India +0.421
-           d(mobile money) terciles -> mean d(saving): low -0.9 / mid -2.6 / high +0.7
-  2017->2021  n=57 (66.6% of subsample adult pop)  neff   6.9   r_w +0.463  r_u +0.371
-           G6 +0.412 (sign kept, E4 retention 0.89)   boot [+0.187,+0.666] p_boot 0.004   largest LOO Thailand -0.066
-           d(mobile money) terciles -> mean d(saving): low +2.5 / mid +3.4 / high +11.4
-  2021->2024  n=58 (68.0% of subsample adult pop)  neff   7.1   r_w +0.719  r_u +0.744
-           G6 +0.743 (sign kept, E4 retention 1.03)   boot [+0.561,+0.853] p_boot 0.000   largest LOO Brazil +0.058
-           d(mobile money) terciles -> mean d(saving): low +2.7 / mid +9.1 / high +14.8
+  2014->2017  n=28 (60.7% of subsample adult pop)  neff   4.8   r_w +0.054  r_u +0.143
+           G6 +0.601 (sign kept, E4 retention 11.17)   boot [-0.462,+0.691] p_boot 0.697   largest LOO India +0.443
+           d(mobile money) terciles -> mean d(saving): low +0.3 / mid -1.9 / high +0.9
+  2017->2021  n=31 (62.5% of subsample adult pop)  neff   4.9   r_w +0.675  r_u +0.627
+           G6 +0.695 (sign kept, E4 retention 1.03)   boot [+0.347,+0.862] p_boot 0.004   largest LOO Thailand -0.086
+           d(mobile money) terciles -> mean d(saving): low -1.9 / mid -1.4 / high +7.0
+  2021->2024  n=33 (63.9% of subsample adult pop)  neff   5.0   r_w +0.676  r_u +0.657
+           G6 +0.706 (sign kept, E4 retention 1.05)   boot [+0.447,+0.843] p_boot 0.000   largest LOO Thailand -0.050
+           d(mobile money) terciles -> mean d(saving): low +2.8 / mid +7.8 / high +12.7
 
 --------------------------------------------------------------------------------------------------------
 SUBSAMPLE: pooled pan_dev (reference)
@@ -41,12 +47,35 @@ SUBSAMPLE: pooled pan_dev (reference)
 ========================================================================================================
 REGISTERED PROMOTION CONDITION (B8: every one of the six cells)
 ========================================================================================================
-  rest-of-developing   2014->2017   weighted bar FAIL (r_w -0.041, G6 sign LOST, retention 10.42)   unweighted bar FAIL (r_u +0.145)
-  rest-of-developing   2017->2021   weighted bar PASS (r_w +0.463, G6 sign kept, retention 0.89)   unweighted bar PASS (r_u +0.371)
-  rest-of-developing   2021->2024   weighted bar PASS (r_w +0.719, G6 sign kept, retention 1.03)   unweighted bar PASS (r_u +0.744)
+  SSA                  2014->2017   weighted bar FAIL (r_w +0.543, G6 sign kept, retention 0.24)   unweighted bar PASS (r_u +0.368)
+  SSA                  2017->2021   weighted bar PASS (r_w +0.405, G6 sign kept, retention 0.92)   unweighted bar PASS (r_u +0.319)
+  SSA                  2021->2024   weighted bar PASS (r_w +0.923, G6 sign kept, retention 0.95)   unweighted bar PASS (r_u +0.853)
+  rest-of-developing   2014->2017   weighted bar FAIL (r_w +0.054, G6 sign kept, retention 11.17)   unweighted bar FAIL (r_u +0.143)
+  rest-of-developing   2017->2021   weighted bar PASS (r_w +0.675, G6 sign kept, retention 1.03)   unweighted bar PASS (r_u +0.627)
+  rest-of-developing   2021->2024   weighted bar PASS (r_w +0.676, G6 sign kept, retention 1.05)   unweighted bar PASS (r_u +0.657)
 
-  not testable: [('SSA', 2014, 2017), ('SSA', 2017, 2021), ('SSA', 2021, 2024)]
-  weighted-lens failures:   [('rest-of-developing', 2014, 2017)]
+  not testable: none
+  weighted-lens failures:   [('SSA', 2014, 2017), ('rest-of-developing', 2014, 2017)]
   unweighted-lens failures: [('rest-of-developing', 2014, 2017)]
 
-  ==> NO PROMOTION — COVERAGE-LIMITED (a registered cell is not testable)
+  ==> DISCARD the promotion — E22 stays `keep-window`; the failing windows are recorded as FAILED
+
+========================================================================================================
+E58 POST-PRIMARY DIAGNOSTIC (no bar, no verdict rule): the G6 removal path in SSA 2014->2017
+========================================================================================================
+
+2014->2017  top-5 by adult population: Nigeria, Congo, Dem. Rep., South Africa, Tanzania, Kenya
+   full            r_w +0.543  (n=26)
+   after dropping Nigeria        r_w +0.398  (n=25)
+   after dropping Congo, Dem. Rep. r_w +0.483  (n=24)
+   after dropping South Africa   r_w +0.235  (n=23)
+   after dropping Tanzania       r_w +0.144  (n=22)
+   after dropping Kenya          r_w +0.128  (n=21)
+
+2021->2024  top-5 by adult population: Nigeria, Congo, Dem. Rep., South Africa, Tanzania, Kenya
+   full            r_w +0.923  (n=25)
+   after dropping Nigeria        r_w +0.874  (n=24)
+   after dropping Congo, Dem. Rep. r_w +0.878  (n=23)
+   after dropping South Africa   r_w +0.801  (n=22)
+   after dropping Tanzania       r_w +0.803  (n=21)
+   after dropping Kenya          r_w +0.878  (n=20)

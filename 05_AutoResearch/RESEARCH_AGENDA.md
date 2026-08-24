@@ -1118,3 +1118,54 @@ closed and frozen at one item, executed; two new rules **B20** and **B21** in `p
   the mobile-money~saving-surge co-movement outside Sub-Saharan Africa), which has no descendants and
   has never been tested outside 2021→24. Under B14 it must be an all-windows design over 2014→17 /
   2017→21 / 2021→24 with sign agreement required in every window (B8).
+
+## Addendum (2026-08-24, from the E57x/E57/E58 cycle)
+
+- **THE `fin22` BORROWING-SOURCES MODULE IS OPEN and it produced the cycle's keep (E57x/E57).** Six
+  of eleven columns are screenable under the standing eligibility rule; `fin22f` (1 wave) and
+  `fin22h` (2) fail it, and `fin22a_22a1_22g_d` (declared composite / registered headline) and
+  `fin22h_s` (`_s`, 8–10 economies) were excluded **before** the run. Item meanings are **not**
+  established — no questionnaire — but the harness's own headline definition fixes `fin22a` and
+  `fin22g` as the **formal** sources, which is enough to place `fin22d` as non-formal.
+- **NEW ITEM 11.1 — the counter-moving count is THREE and the standing description is retired.**
+  `fin22d` at **−0.557 / −0.400** joins `fin31d` and `fin34c`. Both of those are payment-mode items
+  and this one is **liability-side**, so "the counter-moving margins are payment modes" is no longer
+  the right sentence and must be removed wherever the drafts say it. It is also the **first**
+  counter-moving item in six screened modules to survive **BH over its own family** (agenda 9.2),
+  which is the bar that retired U25's `fin14d`.
+- **NEW ITEM 11.2 — `fin22d` is the best-conditioned cell the screen has produced, and it is worth a
+  Δ design.** Fragility depth **14** (against `fin22b`'s 1 and E52's 2–5 on the `fin31d`/`fin34c`
+  cells), ascent depth **0**, denominator-invariant (**−0.582 / −0.534** conditional), base factor
+  only **−0.261 / −0.026**, and **M3-exact** against the micro file (median and max |dev| 0.000pp on
+  98 economies). E57 is a **cross-sectional composition** claim by construction and E48 is the
+  standing proof that cross-section and Δ come apart. The registered next move is an **all-windows
+  Δ→Δ** (B14) of `d fin22d` against `d g20_any` over 2014→17 / 2017→21 / 2021→24, with **B20's
+  balanced denominator declared in advance** — `fin22` is in E56's payments block risk zone and the
+  2024 reporting set is 76 against 77 earlier.
+- **NEW ITEM 11.3 — E22 is DISCARDED as a promotion and its intensity sentence is retired (E58).**
+  E22 stays `keep-window`. Four of six cells pass on both lenses; **both failures are 2014→2017**,
+  and the regional split shows the pooled null in that window is **not** two regional stories
+  cancelling. Separately, E22's declared "mobile money is the more dominant rail inside SSA" reverses
+  in 2017→2021 (**SSA +0.405 vs rest +0.675**), so it is a **window** property. `PAPER_DRAFT_v4.md`
+  repeats the intensity reading and the **next distillation must fix it**.
+- **NEW ITEM 11.4 — the E4 magnitude rule needs one clause.** It is a ratio `|r_droptop| / |r_full|`
+  and explodes near zero: E58's `rest` 2014→17 cell "passes" E4 at **11.17** on an `r_full` of
+  **+0.054**. Harmless there because the 0.30 bar rejects first, but the rule reads like a stability
+  test and is only meaningful **conditional on the association clearing its threshold**. Registered
+  form: add that clause at the next amendment pass.
+- **A `neff` fact worth carrying (E58).** The SSA subsample has `neff` **9.4–9.5 on 25–26 economies**
+  while rest-of-developing has **4.8–5.0 on 28–33** — the smaller subsample has the **larger**
+  effective n. Regional splits are therefore not uniformly worse-conditioned than the pooled frame,
+  and the pooled `pan_dev` figure of ~7 is an average over two very different weight structures.
+- **B2 note for the next cycle.** Country file **107 of 429 (25%)** after E57x's nine; micro
+  unchanged at 94/192 (49%). Untouched and reachable: micro `fin22` (8 of 9 — and E57's M3 result
+  means U24x's method already works there), `dig_account` (1), `fin13d`/`fin14e` (no twin). `con`
+  stays blocked at both levels. **`urbanicity` is still the only untouched country frame.**
+- **B17.** Not due (paid in each of the three preceding cycles) and **not paid** this cycle; the
+  reachable untouched micro surface is exhausted and both strong leads were country-level. **Owed by
+  the first cycle after the rewrite.**
+- **B18 state after this cycle. Corrections branch 2 of 5** (still annotated, not executed).
+  **Count branch 12 of 10 — OVER THRESHOLD.** The next cycle **must** be a distillation/rewrite
+  cycle producing `PAPER_DRAFT_v5.md`: it executes E55's two corrections with E56's replacement
+  numbers, retires the payment-mode description (11.1) and E22's intensity sentence (11.3), and
+  folds in U24, U27, E53–E58.

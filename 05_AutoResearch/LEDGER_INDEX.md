@@ -4,7 +4,7 @@
 
 This file is the required cycle read (rule: Documentation obligation 1, 2026-08-15c). `RESEARCH_LOG.md` stays the append-only record and is consulted by `grep` for one experiment at a time, never front to back.
 
-**92 logged experiments** · 40 keeps · 38 prediction rows
+**95 logged experiments** · 41 keeps · 38 prediction rows
 
 ## Status counts
 
@@ -12,12 +12,12 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 |---|---|
 | `keep-general` | 6 |
 | `keep-general-unweighted` | 1 |
-| `keep` | 23 |
+| `keep` | 24 |
 | `keep-window` | 10 |
 | `inconclusive` | 2 |
 | `discard-weighted` | 4 |
-| `discard` | 41 |
-| `exploratory` | 5 |
+| `discard` | 42 |
+| `exploratory` | 6 |
 
 ## Design families
 
@@ -25,12 +25,12 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 |---|---|---|
 | `micro-cross-section` | 27 | 17 |
 | `delta-delta` | 19 | 9 |
-| `measurement` | 12 | 1 |
+| `measurement` | 14 | 2 |
 | `level-to-change` | 7 | 0 |
 | `partial` | 6 | 3 |
 | `gap-trajectory` | 6 | 2 |
+| `delta-delta-multi` | 6 | 3 |
 | `audit` | 6 | 1 |
-| `delta-delta-multi` | 5 | 3 |
 | `distribution` | 2 | 2 |
 | `level-cross-section` | 1 | 1 |
 | `long-difference` | 1 | 1 |
@@ -69,6 +69,7 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E39` | keep | distribution | all4 | — / — | — / — | The 2021-24 formal-saving surge IS a within-country episode, not an aggregate artifact -- but it is a BALANCE-SHEET win… |
 | `E40` | keep | audit | all windows | — / — | — / 9.5 | Ledger-wide BH + de-weighting audit (33 association tests, six designs, three windows): the kept ledger survives BH on … |
 | `E47` | keep | measurement | 2024 | -0.552 / -0.486 | 71 / 7.2 | The untouched fin34 wage-payment-mode module contains a SECOND counter-moving margin, in a different module from E45 fi… |
+| `E57` | keep | measurement | 2024 | -0.557 / -0.400 | 76 / 7.2 | A THIRD counter-moving country-level margin exists and it is the FIRST that is not a payment-mode item: in the 2024 dev… |
 | `E22` | keep-window | delta-delta | 2021->2024 | — / — | — / — | The E1 mobile-money~saving-surge co-movement is a general developing-world regularity, not a Sub-Saharan Africa story (… |
 | `E23` | keep-window | partial | 2021->2024 | — / — | — / — | Mobile-money growth and digital-payment growth are two SEPARATE rails into the 2021-24 formal-saving surge, not one dig… |
 | `E24` | keep-window | partial | 2021->2024 | — / — | — / — | Wage digitalization is a third separate rail into the 2021-24 formal-saving surge, not the account-usage face of the di… |
@@ -144,6 +145,9 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E54` | discard | audit | 2014-2017 / 2017-2021 / 2021-2024 | pan_dev | E52 | Registered POPULATION-GRADIENT claim REJECTED: within-tercile association strength does NOT rise with ec… |
 | `E55` | discard | audit | 2011-2014 / 2014-2017 / 2017-2021 / 2021-2024 | pan_dev | E53 | Registered LOCALIZATION claim REJECTED (Branch 3): the reporting-set risk rule B20 exposes is NOT confin… |
 | `E56` | discard | audit | 2021-2024 (block test) / 2014-2017-2021-2024 (balanced paths) | pan_dev | E55 | Registered SINGLE-BLOCK claim REJECTED as registered (70.5% against an 80% bar) but the failure is carri… |
+| `E57x` | exploratory | measurement | 2014-2017-2021-2024 | pan_dev | na | EXPLORATORY mapping pass OPENS the ledger's thinnest reachable country module, `fin22` borrowing sources… |
+| `E57` | keep | measurement | 2024 | pan_dev | none | A THIRD counter-moving country-level margin exists and it is the FIRST that is not a payment-mode item: … |
+| `E58` | discard | delta-delta-multi | 2014->17|2017->21|2021->24 | pan_dev split by regionwb24_hi (SSA / five other developing regions pooled) | E22 | Registered PROMOTION of E22 REJECTED and E22 stays `keep-window`: the mobile-money~formal-saving co-move… |
 | `M1` | keep | micro-cross-section | 2024 | micro | — | Not enough money (fin11a) barrier among unbanked adults is an income-graded reason, most cited by the po… |
 | `U1` | discard | micro-cross-section | 2024 | micro | — | Gender gap in account ownership is wider among the poorest income quintile than the richest (2024 wave, … |
 | `M2` | keep | micro-cross-section | 2024 | micro | — | Mobile-only accountholders are younger and less educated than bank-only accountholders (2024 wave) |

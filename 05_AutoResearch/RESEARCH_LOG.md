@@ -8404,3 +8404,131 @@ within-country retreat. E48 is the standing proof those two things come apart, a
 here. The item's **meaning is not established** — only that it is a non-formal borrowing source
 (the formal ones being `fin22a` and `fin22g` by the headline's own definition), that it is asked of
 all adults, and that it is M3-exact.
+
+---
+
+## E58 — DISCARD the promotion. E22 stays `keep-window`, and the failure is a WINDOW, not a region
+
+Commit `209967a` (+ the disclosed region-label fix below). Stream hypothesis. Design
+`delta-delta-multi`. Frame `pan_dev` partitioned by `regionwb24_hi`. **Parent E22**, chain length 1.
+
+**A DISCLOSED IMPLEMENTATION PATCH, and no verdict was taken from the run it broke.** The first run
+tested `regionwb24_hi == "Sub-Saharan Africa"`; the actual label is **"Sub-Saharan Africa (excluding
+high income)"**, so the SSA subsample came out **empty** and "rest" was identical to pooled `pan_dev`
+— visible in the output as three `NOT TESTABLE` cells and a `rest` column that reproduced the pooled
+reference to three decimals. The equality test was replaced with a prefix match, committed, and the
+experiment re-run end to end. **The registered bars were applied only to the corrected run.** The
+correctness check is that the 2021→2024 cells now reproduce **E22 exactly** — SSA **+0.923 on n = 25**,
+rest **+0.676 on n = 33** — which is the same-sample confirmation E22 itself used.
+
+**The six registered cells:**
+
+| subsample | window | n | pop share | `neff` | r_w | r_u | G6 | E4 retention | boot [2.5, 97.5] | p_boot | largest LOO |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| SSA | 2014→17 | 26 | 100.0% | 9.4 | **+0.543** | +0.368 | +0.128 | **0.24** | [+0.036, +0.740] | 0.041 | Nigeria −0.145 |
+| SSA | 2017→21 | 26 | 100.0% | 9.5 | +0.405 | +0.319 | +0.371 | 0.92 | [−0.054, +0.764] | 0.089 | Kenya +0.139 |
+| SSA | 2021→24 | 25 | 99.5% | 9.5 | +0.923 | +0.853 | +0.878 | 0.95 | [+0.735, +0.975] | 0.000 | Nigeria −0.049 |
+| rest | 2014→17 | 28 | 60.7% | 4.8 | **+0.054** | **+0.143** | +0.601 | 11.17 | [−0.462, +0.691] | 0.697 | India +0.443 |
+| rest | 2017→21 | 31 | 62.5% | 4.9 | +0.675 | +0.627 | +0.695 | 1.03 | [+0.347, +0.862] | 0.004 | Thailand −0.086 |
+| rest | 2021→24 | 33 | 63.9% | 5.0 | +0.676 | +0.657 | +0.706 | 1.05 | [+0.447, +0.843] | 0.000 | Thailand −0.050 |
+
+**VERDICT: the promotion is DISCARDED. E22 stays `keep-window`.** Four of the six cells pass the
+registered bar on **both** lenses. The two failures are **both in 2014→2017** and they fail in
+different ways: `rest` at **r_w +0.054 / r_u +0.143** is simply nowhere near the bar, while **SSA
+clears the +0.30 bar at +0.543 and is killed by the standing E4 magnitude rule** — G6 takes it to
+**+0.128**, a retention of **0.24** against the 0.50 floor. Under B8 one disagreeing window is
+enough; the 2014→2017 window is recorded as **FAILED**, not as *not attempted*. 2011→2014 is
+**not testable** and is recorded as such: the country file carries `mobileaccount_t_d` for **zero**
+economies in 2011.
+
+**The substantive result is that the failure is not regional.** E28 already found the pooled
+2014→2017 mobile-money cell at **−0.048** and read it as a window with no usable signal in either
+direction. The obvious alternative — that a pooled null in that window hides two regional stories
+cancelling — is what a regional split can test and nothing in the ledger had tested. **It does not
+hold.** Neither subsample carries a stable association in 2014→2017: outside SSA there is nothing at
+all (+0.054 / +0.143, interval [−0.462, +0.691] straddling zero, p_boot 0.697), and inside SSA what
+looks like an association is carried by three economies.
+
+**The removal path in the failing SSA cell, computed after the primary and carrying no verdict rule
+(B12 in its greedy form).** SSA's top five by adult population are Nigeria, DR Congo, South Africa,
+Tanzania and Kenya. In **2014→2017** the walk is **+0.543 → +0.398 → +0.483 → +0.235 → +0.144 →
++0.128**: Nigeria, South Africa and Tanzania alone take it from above the bar to less than half of it.
+The identical walk in **2021→2024** is **+0.923 → +0.874 → +0.878 → +0.801 → +0.803 → +0.878** — it
+never leaves the +0.80s. Same subsample, same five economies, same construction: the 2024-window
+association is a property of the 25 economies and the 2017-window one is a property of three.
+
+**SECONDARY (registered, no bar) — E22's dose-response, and the regional intensity ordering does NOT
+survive the window change.** Δ(mobile money) terciles → mean Δ(saving): SSA **−5.5 / +0.1 / +0.4**
+(2014→17), **+9.8 / +8.7 / +13.9** (2017→21), **+3.5 / +10.6 / +16.9** (2021→24); rest **+0.3 / −1.9 /
++0.9**, **−1.9 / −1.4 / +7.0**, **+2.8 / +7.8 / +12.7**. Monotone in both subsamples only in
+2021→2024. **E22 declared an "intensity gradient" — mobile money the more dominant rail inside SSA
+(0.92 vs 0.68) — and in 2017→2021 that ordering is REVERSED (SSA +0.405, rest +0.675).** The gradient
+is a property of the 2021→24 window, not of the regions, and any repetition of E22's intensity
+sentence must now say so.
+
+**A methodological note the run produced by accident, and the agenda should carry it.** The E4
+magnitude rule is a **ratio**, `|r_droptop| / |r_full|`, and when `r_full` is near zero the ratio
+explodes: the `rest` 2014→17 cell "passes" E4 at a retention of **11.17** on an `r_full` of +0.054.
+It is harmless here because the +0.30 bar rejects the cell first, but the rule is written as though
+it were a stability test and it is only meaningful **conditional on the association clearing its
+threshold**. It should be stated that way.
+
+**Inference and gates.** B6: 2,000-draw country bootstrap on every cell, intervals above. B10: `neff`
+runs **9.4–9.5 inside SSA and 4.8–5.0 outside** — the *smaller* subsample has the *larger* effective
+n, because SSA's population weight is spread over 25 economies while the rest-of-developing weight
+concentrates in India, China, Indonesia, Brazil and Pakistan; no significance language attaches to
+the nominal 26–33. G3: both indicators are registered headlines (`mobile_money`, `saved_formally`).
+G4: E22's declared `min_countries = 15` deviation carried unchanged, and every cell clears it — SSA
+at 99.5–100% of subsample adult population, rest at 60.7–63.9%. G5 n/a. G6 in the table. **B14** is
+satisfied: this is an all-windows design, not a single adjacent Δ→Δ. **B20**: Δ→Δ correlations are
+pairwise-complete and therefore balanced across each pair of waves by construction; what changes
+across windows is the sample, and the economy count and population share are reported per cell above.
+
+**Wording, as always.** Descriptive co-movement, never causal. Account growth and common income
+shocks are uncontrolled in every cell, exactly as in E1 and E22. `mobileaccount_t_d` reporting is
+itself regionally selected, which is a property of the indicator and not attrition.
+
+## Wrap-up — 2026-08-24
+
+1. **Three experiments, one keep, and the keep is the first counter-moving margin ever to survive a
+   family-wise correction.** B18 did not fire (corrections **2 of 5**, count **9 of 10** at the check
+   point), so this was a normal cycle: **E57x** (exploratory — module opened), **E57** (`keep`),
+   **E58** (`discard`). Ledger now **95 rows, 41 keeps**, `make_index.py --check` clean. B2 paid twice
+   (E57 on the `fin22` module, E58 on the 2014→17 / 2017→21 transitions and a regional partition);
+   B17 not due and not paid, stated with its reason; B3 not extended (E57 parent none, E58 parent E22
+   at chain length 1).
+2. **E57 — the counter-moving count goes from two to three, and the standing description is now
+   wrong.** `fin22d`, a non-formal borrowing source, reads **−0.557 weighted / −0.400 unweighted**
+   against `g20_any` in the 2024 developing-panel cross-section, with G6 **−0.358** (E4 retention
+   0.643), bootstrap **[−0.740, −0.163]**, and — the first time in six screened modules — **survival
+   of BH at q = 0.10 over its own family** (p_boot 0.002, critical 0.0500). The other two
+   counter-moving margins (`fin31d`, `fin34c`) are payment-mode items; this one is on the
+   **liability side**. Its **fragility depth is 14** — the fourteen largest-population economies must
+   all be removed before `r_w` falls below the bar — against `fin22b`'s depth of **1 (China alone)**.
+   The denominator diagnostic does not move it (**−0.582 / −0.534** on the conditional-rate
+   denominator, base factor only −0.261 / −0.026), and a disclosed post-hoc M3 check finds micro
+   `fin22d` reproducing the country file at **median and max |dev| 0.000pp on all 98 economies**.
+   Against `account_t_d` it is `mixed-lens` with an interval containing zero: it counter-moves with
+   **digital payment**, not with financial access in general — E47's distinction, reproduced in a
+   third module.
+3. **E58 — E22's promotion is DISCARDED and E22 stays `keep-window`, but the shape of the failure is
+   the result.** Four of six cells pass on both lenses; both failures sit in **2014→2017**. Outside
+   SSA that window carries nothing (**+0.054 / +0.143**, p_boot 0.697); inside SSA the apparent
+   **+0.543** collapses to **+0.128** under G6 (retention **0.24**), and the greedy removal path shows
+   Nigeria, South Africa and Tanzania doing all of it — while the *same five removals* in 2021→24
+   never move that cell out of the +0.80s. **So the pooled 2014→17 null E28 recorded is not two
+   regional stories cancelling.**
+4. **E22's "intensity gradient" does not survive the window change.** E22 read SSA as the more
+   mobile-money-dominant region (0.923 vs 0.676 in 2021→24). In **2017→2021 the ordering reverses**
+   (SSA **+0.405**, rest **+0.675**). The gradient is a property of the 2021→24 window, not of the
+   regions, and the sentence must not be repeated without that.
+5. **Two methodological items for the agenda, and the B18 state.** (i) The **E4 magnitude rule is a
+   ratio** and explodes near `r_full` = 0 — the `rest` 2014→17 cell "passes" at a retention of
+   **11.17** on an `r_full` of +0.054 — so it is only meaningful conditional on the association
+   clearing its threshold. (ii) `neff` runs **9.4–9.5 inside SSA against 4.8–5.0 outside**: the
+   smaller subsample has the larger effective n, because SSA's weight is spread over 25 economies
+   while the rest concentrates in five. **B18 state after this cycle: corrections 2 of 5, count 12 of
+   10 — the count branch is now OVER its threshold and the next cycle MUST be a distillation/rewrite
+   producing `PAPER_DRAFT_v5.md` and executing E55's two outstanding corrections with E56's
+   numbers.** Prediction stream unchanged and **CLOSED**: `account_t_d` **5.014**, `fin17a_17a1_d`
+   **6.831**, `fin24aSD_ND` **6.625**.
