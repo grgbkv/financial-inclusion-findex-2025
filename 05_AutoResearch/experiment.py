@@ -1,190 +1,198 @@
-"""E56 (registered 2026-08-22) — agenda item 8.2: is the 2021->2024 item-level dropout ONE block or
-per-item attrition, and what do the balanced paths of the two exposed keeps say?
+"""E57x / E57 (pre-registered 2026-08-24) — the `fin22` borrowing-sources module.
 
-Parent E55 (chain E53 -> E55 -> E56, at the B3 cap). Audit / measurement pass, not an association
-experiment, so B14 does not bind.
+E57x  PART A, EXPLORATORY (peek rule): mapping pass. Weighted developing-panel level by wave and
+      economy count for every `fin22*` country column. Meanings INFERRED from levels/coverage only
+      (no questionnaire in the repo, HARNESS_V2_NOTES 5-6).
 
-PRIMARY (registered): for every country column with >=30 developing-panel economies reporting in
-2021, D(col) = economies reporting in 2021 and NOT in 2024. Restrict to |D| >= 3. D* = the modal
-dropper set. BAR: >= 80% of non-trivially-dropping columns have Jaccard(D, D*) >= 0.90 -> the
-dropout is a single block; below the bar -> per-item attrition. Registered sign/direction: the sets
-COINCIDE.
-SECONDARY 1 (no bar): module membership of the columns whose D matches D*.
-SECONDARY 2 (rule B16): the fully balanced wave path of fin32_acc (E10, keep-general) and fh1 / fh2 /
-fh1_fh2 (E33, keep-window) -- the two corrections E55 opened in PAPER_DRAFT_v4.md.
+E57   PART B, the registered primary: the four-way orientation screen against `g20_any` in the 2024
+      developing-panel cross-section.
+          restatement |r|>=0.80 | aligned +0.30<=r<0.80 | counter-moving r<=-0.30 | independent |r|<0.30
+          both lenses must agree, else `mixed-lens`.
+      Eligibility declared in advance: >=3 waves at >=70 developing-panel economies.
+      Excluded in advance: `fin22a_22a1_22g_d` (declared composite / registered headline),
+      `fin22h_s` (`_s` conditional column, documented unusable).
+      KEEP: >=1 item counter-moving on BOTH lenses, G6 sign intact, 2,000-draw bootstrap interval
+      excluding zero, AND surviving BH at q=0.10 over this module's own screen family.
+      REGISTERED SIGN: NEGATIVE.
+      Denominator diagnostic (agenda 9.1, U26 wording): all-adult r, conditional-rate r
+      (item / borrow_any_t_d) and the base factor r(borrow_any_t_d, anchor).
+      SECONDARY (no bar): the same screen against `account_t_d`.
 """
-import re
-from collections import Counter
-
 import numpy as np
 import pandas as pd
 
 from harness import Findex, YEARS
 
-MIN_2021 = 30
-MIN_DROP = 3
-JACCARD_BAR = 0.90
-SHARE_BAR = 0.80
+ANCHOR = "g20_any"
+ANCHOR2 = "account_t_d"
+BASE = "borrow_any_t_d"
+MIN_ECON_PER_WAVE = 70
+MIN_WAVES = 3
+EXCLUDE = {"fin22a_22a1_22g_d", "fin22h_s"}
+NDRAW = 2000
+Q = 0.10
+RNG = np.random.default_rng(20260824)
 
 
-def reporters(dev, col, year):
-    d = dev[(dev["year"] == year) & dev[col].notna()]
-    return frozenset(d["countrynewwb"].unique())
+def kish(w):
+    w = np.asarray(w, dtype=float)
+    return float(w.sum() ** 2 / (w ** 2).sum())
 
 
-def jaccard(a, b):
-    return len(a & b) / len(a | b) if (a | b) else 1.0
+def wcorr(x, y, w):
+    return Findex.weighted_corr(x, y, w)[0]
 
 
-def module_of(col):
-    m = re.match(r"([a-z_]+[0-9]*)", col)
-    return m.group(1) if m else col
+def ucorr(x, y):
+    m = pd.notna(x) & pd.notna(y)
+    return float(np.corrcoef(x[m], y[m])[0, 1]) if m.sum() >= 10 else np.nan
+
+
+def classify(rw, ru):
+    def one(r):
+        if pd.isna(r):
+            return "na"
+        if abs(r) >= 0.80:
+            return "restatement"
+        if r >= 0.30:
+            return "aligned"
+        if r <= -0.30:
+            return "counter-moving"
+        return "independent"
+    a, b = one(rw), one(ru)
+    return a if a == b else "mixed-lens(%s/%s)" % (a, b)
+
+
+def boot(x, y, w, ndraw=NDRAW):
+    """Percentile interval and p_boot for the weighted correlation; resample economies."""
+    m = pd.notna(x) & pd.notna(y) & pd.notna(w)
+    xx, yy, ww = x[m].to_numpy(), y[m].to_numpy(), w[m].to_numpy()
+    n = len(xx)
+    out = []
+    for _ in range(ndraw):
+        idx = RNG.integers(0, n, n)
+        xs, ys, ws = xx[idx], yy[idx], ww[idx]
+        if np.average(ws) <= 0:
+            continue
+        mx, my = np.average(xs, weights=ws), np.average(ys, weights=ws)
+        sx = np.sqrt(np.average((xs - mx) ** 2, weights=ws))
+        sy = np.sqrt(np.average((ys - my) ** 2, weights=ws))
+        if sx <= 0 or sy <= 0:
+            continue
+        out.append(np.average((xs - mx) * (ys - my), weights=ws) / (sx * sy))
+    out = np.array(out)
+    lo, hi = np.percentile(out, [2.5, 97.5])
+    p = 2 * min((out <= 0).mean(), (out >= 0).mean())
+    return float(lo), float(hi), float(min(p, 1.0))
+
+
+def loo_named(x, y, w):
+    """B12: the largest single leave-one-out change in r_w, with the economy named."""
+    r0 = wcorr(x, y, w)
+    best_name, best_d = None, 0.0
+    for e in x.dropna().index:
+        keep = [i for i in x.index if i != e]
+        r1 = wcorr(x.reindex(keep), y.reindex(keep), w.reindex(keep))
+        if pd.notna(r1) and abs(r1 - r0) > abs(best_d):
+            best_name, best_d = e, r1 - r0
+    return best_name, best_d
+
+
+def bh(pvals, q=Q):
+    """Benjamini-Hochberg: returns the set of indices rejected at level q."""
+    order = np.argsort(pvals)
+    m = len(pvals)
+    rejected, kmax = set(), -1
+    for rank, i in enumerate(order, start=1):
+        if pvals[i] <= q * rank / m:
+            kmax = rank
+    if kmax > 0:
+        rejected = set(order[:kmax])
+    return rejected, [(i, pvals[i], q * (list(order).index(i) + 1) / m) for i in order]
 
 
 def main():
     fx = Findex()
     dev = fx.pan_dev
-    pop24 = dev[dev["year"] == 2024].set_index("countrynewwb")["pop_adult"]
-    skip = {"year", "pop_adult", "countrynewwb", "codewb", "regionwb24_hi", "group",
-            "incomegroupwb24", "adultpopulation", "pop_adult_18"}
-    cols = [c for c in dev.columns
-            if c not in skip and pd.api.types.is_numeric_dtype(dev[c])]
+    cols = sorted([c for c in dev.columns if c.startswith("fin22")])
 
-    print("=" * 96)
-    print("E56 — agenda item 8.2: ONE dropout block or per-item attrition? (developing panel)")
-    print("=" * 96)
-
-    recs = []
+    print("=" * 100)
+    print("E57x — EXPLORATORY mapping pass: the `fin22` borrowing-sources module (developing panel)")
+    print("=" * 100)
+    print("%-24s %s" % ("column", "  ".join("%12s" % y for y in YEARS)))
+    cover = {}
     for c in cols:
-        r21, r24 = reporters(dev, c, 2021), reporters(dev, c, 2024)
-        if len(r21) < MIN_2021:
-            continue
-        D = r21 - r24
-        recs.append({"col": c, "n21": len(r21), "n24": len(r24), "nD": len(D), "D": D,
-                     "dead": len(r24) == 0})
-    print("eligible columns (>=%d developing-panel economies in 2021): %d" % (MIN_2021, len(recs)))
+        s = fx.series(dev, c, YEARS)
+        counts = {y: int(dev[(dev["year"] == y) & dev[c].notna()]["countrynewwb"].nunique())
+                  for y in YEARS}
+        cover[c] = counts
+        cells = []
+        for y in YEARS:
+            cells.append("%6s/%3d" % ("%.1f" % s[y] if y in s.index else "--", counts[y]))
+        print("%-24s %s" % (c, "  ".join("%12s" % v for v in cells)))
+    print("\n(cell = weighted developing-panel level pp / number of economies reporting)")
 
-    nz = [r for r in recs if r["nD"] >= MIN_DROP]
-    dead = [r for r in nz if r["dead"]]
-    print("columns with a non-trivial drop (|D| >= %d): %d   (of which DISCONTINUED, "
-          "zero 2024 reporters: %d)" % (MIN_DROP, len(nz), len(dead)))
-    print("columns with |D| in {1,2}: %d ; perfectly stable (|D| = 0): %d"
-          % (sum(1 for r in recs if 1 <= r["nD"] <= 2), sum(1 for r in recs if r["nD"] == 0)))
+    for c in cols:
+        ok_waves = sum(1 for y in YEARS if cover[c][y] >= MIN_ECON_PER_WAVE)
+        print("  %-24s waves at >=%d economies: %d   excluded-in-advance: %s"
+              % (c, MIN_ECON_PER_WAVE, ok_waves, c in EXCLUDE))
 
-    def primary(rows, label):
-        if not rows:
-            print("\n[%s] no columns" % label)
-            return None, 0.0
-        counts = Counter(r["D"] for r in rows)
-        Dstar, k = counts.most_common(1)[0]
-        near = [r for r in rows if jaccard(r["D"], Dstar) >= JACCARD_BAR]
-        share = len(near) / len(rows)
-        print("\n[%s] %d columns; modal dropper set D* has |D*| = %d and is EXACTLY shared by "
-              "%d columns (%.1f%%)" % (label, len(rows), len(Dstar), k, 100 * k / len(rows)))
-        print("  D* = %s" % ", ".join(sorted(Dstar)))
-        print("  columns with Jaccard(D, D*) >= %.2f: %d of %d = %.1f%%  (bar %.0f%%)  -> %s"
-              % (JACCARD_BAR, len(near), len(rows), 100 * share, 100 * SHARE_BAR,
-                 "PASS" if share >= SHARE_BAR else "FAIL"))
-        js = sorted(jaccard(r["D"], Dstar) for r in rows)
-        print("  Jaccard(D, D*) distribution: min %.2f p25 %.2f median %.2f p75 %.2f max %.2f"
-              % (js[0], np.percentile(js, 25), np.median(js), np.percentile(js, 75), js[-1]))
-        print("  distinct dropper sets among these columns: %d" % len(counts))
-        for D, n in counts.most_common(6):
-            print("    n=%-3d |D|=%-3d %s" % (n, len(D), ", ".join(sorted(D))[:70]))
-        return Dstar, share
+    eligible = [c for c in cols
+                if c not in EXCLUDE
+                and sum(1 for y in YEARS if cover[c][y] >= MIN_ECON_PER_WAVE) >= MIN_WAVES]
+    print("\nELIGIBLE SCREEN FAMILY (>=%d waves at >=%d economies, exclusions applied): %s"
+          % (MIN_WAVES, MIN_ECON_PER_WAVE, eligible))
 
-    Dstar, share = primary(nz, "REGISTERED PRIMARY — all non-trivially-dropping columns")
-    primary([r for r in nz if not r["dead"]],
-            "declared robustness — excluding discontinued columns")
-    # DISCLOSED POST-RUN ROBUSTNESS, NOT USED TO MOVE THE BAR: `_s` conditional columns are
-    # recorded as unusable in HARNESS_V2_NOTES item 10 and no claim rests on one. E55 reported
-    # the same cut and its verdict did not turn on it; here it DOES, which is stated as a
-    # finding about the RULE, not as a reason to overturn the registered verdict.
-    primary([r for r in nz if not r["col"].endswith("_s")],
-            "POST-HOC (verdict NOT taken from here) — excluding _s conditional columns")
+    # -------------------------------------------------------------- E57 the screen
+    d24 = dev[dev["year"] == 2024].set_index("countrynewwb")
+    w = d24["pop_adult"]
 
-    # --- D* provenance: are its economies still in the 2024 wave?
-    print("\nD* ECONOMIES IN THE 2024 WAVE (E53's test: items dropping out, not economies):")
-    for e in sorted(Dstar):
-        row = dev[(dev["year"] == 2024) & (dev["countrynewwb"] == e)]
-        acc = row["account_t_d"].notna().any() if len(row) else False
-        p = pop24.get(e, np.nan)
-        print("  %-14s in 2024 wave: %-5s account_t_d recorded: %-5s  2024 adult pop %.1fm"
-              % (e, bool(len(row)), bool(acc), p / 1e6 if pd.notna(p) else float("nan")))
-    tot = pop24.sum()
-    print("  D* holds %.1f%% of 2024 developing-panel adult population"
-          % (100 * pop24.reindex(sorted(Dstar)).sum() / tot))
+    for anchor, tag in [(ANCHOR, "PRIMARY vs g20_any"), (ANCHOR2, "SECONDARY vs account_t_d")]:
+        print("\n" + "=" * 100)
+        print("E57 — four-way orientation screen, 2024 developing-panel cross-section (%s)" % tag)
+        print("=" * 100)
+        a = d24[anchor] * 100
+        base = d24[BASE] * 100
+        rows, pv = [], []
+        for c in eligible:
+            x = d24[c] * 100
+            m = pd.notna(x) & pd.notna(a) & pd.notna(w)
+            n = int(m.sum())
+            rw, ru = wcorr(x, a, w), ucorr(x, a)
+            g6 = fx.gate_jackknife(x, a, w)
+            lo, hi, p = boot(x, a, w)
+            nm, dd = loo_named(x, a, w)
+            # denominator diagnostic (agenda 9.1, U26 wording)
+            cond = (x / base) * 100
+            rw_c, ru_c = wcorr(cond, a, w), ucorr(cond, a)
+            rows.append(dict(col=c, n=n, neff=kish(w[m]), rw=rw, ru=ru,
+                             cls=classify(rw, ru), g6=g6["r_droptop"], lo=lo, hi=hi, p=p,
+                             loo="%s %+.3f" % (nm, dd), rw_c=rw_c, ru_c=ru_c,
+                             cls_c=classify(rw_c, ru_c)))
+            pv.append(p)
+        rej, table = bh(np.array(pv))
+        print("%-12s %4s %6s  %7s %7s  %-28s %7s  %-20s %7s  %-26s"
+              % ("item", "n", "neff", "r_w", "r_u", "class (all-adult denom)", "G6", "boot [2.5,97.5]",
+                 "p_boot", "conditional-rate denom"))
+        for i, r in enumerate(rows):
+            print("%-12s %4d %6.1f  %+7.3f %+7.3f  %-28s %+7.3f  [%+.3f,%+.3f] %7.3f  %+.3f/%+.3f %-18s"
+                  % (r["col"], r["n"], r["neff"], r["rw"], r["ru"], r["cls"], r["g6"],
+                     r["lo"], r["hi"], r["p"], r["rw_c"], r["ru_c"], r["cls_c"]))
+            print("%-12s     largest LOO (B12): %s" % ("", r["loo"]))
+        print("\nBH at q=%.2f over this module's own %d-test family: rejects %d of %d  -> %s"
+              % (Q, len(pv), len(rej), len(pv),
+                 ", ".join(rows[i]["col"] for i in sorted(rej)) or "none"))
+        for i, p, crit in table:
+            print("   %-12s p_boot %.4f  vs critical %.4f  %s"
+                  % (rows[i]["col"], p, crit, "REJECT" if i in rej else "-"))
 
-    # --- SECONDARY 1: module membership of the block
-    exact = [r["col"] for r in nz if r["D"] == Dstar]
-    mods = Counter(module_of(c) for c in exact)
-    print("\nSECONDARY 1 — module membership of the %d columns sharing D* EXACTLY:" % len(exact))
-    for m, n in mods.most_common():
-        print("  %-12s %3d   %s" % (m, n, ", ".join(sorted(c for c in exact
-                                                           if module_of(c) == m))[:70]))
-    allmods = Counter(module_of(r["col"]) for r in recs)
-    print("  coverage of each affected module: " + "; ".join(
-        "%s %d/%d" % (m, n, allmods[m]) for m, n in mods.most_common(8)))
+        # the base factor, agenda 9.1's analogue of U25's complement factor
+        print("\nBASE FACTOR r(%s, %s): weighted %+.3f / unweighted %+.3f"
+              % (BASE, anchor, wcorr(base, a, w), ucorr(base, a)))
 
-    # DISCLOSED POST-RUN DESCRIPTIVE DETAIL (no bar, no verdict attached): what the 23
-    # non-matching columns are, and whether the unaffected columns of an affected module
-    # are stable or drop a different set.
-    print("\n  the %d columns NOT matching D* at Jaccard >= %.2f:" % (
-        len(nz) - sum(1 for r in nz if jaccard(r["D"], Dstar) >= JACCARD_BAR), JACCARD_BAR))
-    for r in sorted((r for r in nz if jaccard(r["D"], Dstar) < JACCARD_BAR),
-                    key=lambda r: -r["nD"]):
-        print("    %-18s |D|=%-3d Jaccard %.2f  %s"
-              % (r["col"], r["nD"], jaccard(r["D"], Dstar), ", ".join(sorted(r["D"]))[:58]))
-    print("\n  inside the affected modules, the columns with |D| < %d (stable items):" % MIN_DROP)
-    for m in [m for m, _n in mods.most_common()]:
-        stable = [r["col"] for r in recs if module_of(r["col"]) == m and r["nD"] < MIN_DROP]
-        if stable:
-            print("    %-12s %s" % (m, ", ".join(sorted(stable))[:74]))
-    subset = [r["col"] for r in nz if r["D"] < Dstar and len(r["D"]) >= 5]
-    print("\n  columns whose dropper set is a STRICT SUBSET of D* (>=5 economies): %d  %s"
-          % (len(subset), ", ".join(sorted(subset))[:80]))
-
-    # --- SECONDARY 2 (B16): balanced wave paths for the two corrections E55 opened
-    print("\n" + "=" * 96)
-    print("SECONDARY 2 (rule B16) — balanced wave paths for the columns E55 exposed")
-    print("=" * 96)
-    for col, yrs in (("fin32_acc", [2014, 2017, 2021, 2024]),
-                     ("fh1", [2021, 2024]), ("fh2", [2021, 2024]),
-                     ("fh1_fh2", [2021, 2024])):
-        sets = [reporters(dev, col, y) for y in yrs]
-        bal = frozenset.intersection(*sets)
-        print("\n%s — reporters by wave: %s ; BALANCED set %d economies, %.1f%% of 2024 "
-              "developing-panel adult population"
-              % (col, dict(zip(yrs, [len(s) for s in sets])), len(bal),
-                 100 * pop24.reindex(sorted(bal)).sum() / tot))
-        unb, ba = [], []
-        for y in yrs:
-            d = dev[dev["year"] == y]
-            unb.append(fx.wmean(d, col) * 100)
-            ba.append(fx.wmean(d[d["countrynewwb"].isin(bal)], col) * 100)
-        print("  unbalanced (each wave over its own reporters): "
-              + "  ".join("%d %6.2f" % (y, v) for y, v in zip(yrs, unb)))
-        print("  BALANCED   (one fixed denominator):            "
-              + "  ".join("%d %6.2f" % (y, v) for y, v in zip(yrs, ba)))
-        d_unb, d_bal = unb[-1] - unb[-2], ba[-1] - ba[-2]
-        print("  last-window delta: unbalanced %+.2fpp, balanced %+.2fpp, discrepancy %+.2fpp%s"
-              % (d_unb, d_bal, d_unb - d_bal,
-                 "   [SIGN FLIP]" if np.sign(d_unb) != np.sign(d_bal) else ""))
-        if len(ba) > 2:
-            diffs = np.diff(ba)
-            mono = np.all(diffs >= 0) or np.all(diffs <= 0)
-            print("  balanced path is %s: steps %s"
-                  % ("MONOTONE" if mono else "NON-MONOTONE",
-                     " ".join("%+.2f" % d for d in diffs)))
-        # G4 on the balanced set
-        g4 = fx.gate_coverage(dev[dev["countrynewwb"].isin(bal)], col, yrs[-1])
-        print("  G4 on the balanced set: %s" % g4)
-
-    print("\n" + "=" * 96)
-    print("VERDICT: registered bar %.0f%% of non-trivially-dropping columns at Jaccard >= %.2f; "
-          "observed %.1f%% -> %s" % (100 * SHARE_BAR, JACCARD_BAR, 100 * share,
-                                     "KEEP" if share >= SHARE_BAR else "DISCARD"))
-    print("=" * 96)
+        cm = [r for r in rows if r["cls"] == "counter-moving"]
+        print("\nREGISTERED KEEP CONDITION (%s): counter-moving on BOTH lenses = %d item(s) -> %s"
+              % (tag, len(cm), [r["col"] for r in cm] or "NONE"))
 
 
 if __name__ == "__main__":
