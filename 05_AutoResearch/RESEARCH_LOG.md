@@ -8328,7 +8328,7 @@ country module. **Rule B2's breadth cell for slot 1.**
 
 ## E57 — KEEP. A THIRD counter-moving country margin, and the first one that is not a payment mode
 
-Commit `808412c` (+ `2d1e8e1`, the post-primary diagnostic block). Stream hypothesis. Design
+Commit `808412c` (+ `af55b14`, the post-primary diagnostic block). Stream hypothesis. Design
 `measurement`. Frame `pan_dev`, **2024 cross-section**. **Parent: none** (new module). Status
 **`keep`** — both lenses agree, so the status is bare (B9/B11).
 

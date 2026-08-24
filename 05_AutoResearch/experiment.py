@@ -1,36 +1,42 @@
-"""E57x / E57 (pre-registered 2026-08-24) — the `fin22` borrowing-sources module.
+"""E58 (pre-registered 2026-08-24) — the ALL-WINDOWS promotion test of E22 (rules B14 + B8).
 
-E57x  PART A, EXPLORATORY (peek rule): mapping pass. Weighted developing-panel level by wave and
-      economy count for every `fin22*` country column. Meanings INFERRED from levels/coverage only
-      (no questionnaire in the repo, HARNESS_V2_NOTES 5-6).
+Parent E22 (`keep-window`, chain length 1). E22 claimed that E1 -- the co-movement of
+d mobileaccount_t_d with d fin17a_17a1_d -- is a general developing-world regularity and not a
+Sub-Saharan Africa story: inside SSA r_w = +0.923 (n=25), outside SSA +0.676 (n=33), 2021->2024.
 
-E57   PART B, the registered primary: the four-way orientation screen against `g20_any` in the 2024
-      developing-panel cross-section.
-          restatement |r|>=0.80 | aligned +0.30<=r<0.80 | counter-moving r<=-0.30 | independent |r|<0.30
-          both lenses must agree, else `mixed-lens`.
-      Eligibility declared in advance: >=3 waves at >=70 developing-panel economies.
-      Excluded in advance: `fin22a_22a1_22g_d` (declared composite / registered headline),
-      `fin22h_s` (`_s` conditional column, documented unusable).
-      KEEP: >=1 item counter-moving on BOTH lenses, G6 sign intact, 2,000-draw bootstrap interval
-      excluding zero, AND surviving BH at q=0.10 over this module's own screen family.
-      REGISTERED SIGN: NEGATIVE.
-      Denominator diagnostic (agenda 9.1, U26 wording): all-adult r, conditional-rate r
-      (item / borrow_any_t_d) and the base factor r(borrow_any_t_d, anchor).
-      SECONDARY (no bar): the same screen against `account_t_d`.
+DESIGN (B14-compliant, an ALL-WINDOWS design): E22's construction run over every transition
+mobileaccount_t_d supports -- 2014->2017, 2017->2021, 2021->2024 -- inside each of the two
+subsamples of pan_dev partitioned by regionwb24_hi (Sub-Saharan Africa vs the five other developing
+regions pooled). Six cells. 2011->2014 is NOT TESTABLE (no 2011 mobileaccount_t_d) and is recorded.
+
+REGISTERED PROMOTION CONDITION (B8: EVERY tested window, not a majority): in all six cells
+r_w >= +0.30 -- the original threshold and the original POSITIVE sign (B15) -- AND G6 keeps the sign
+AND the E4 magnitude rule |r_droptop| >= 0.5*|r_full| holds. Anything else leaves E22 at
+`keep-window` and the failing window is recorded as FAILED, never as not attempted.
+
+REGISTERED COVERAGE RULE: E22's declared G4 deviation min_countries=15 per subsample is carried. A
+cell below 15 economies is NOT TESTABLE; any such cell means no promotion, reported as
+COVERAGE-LIMITED rather than as a sign disagreement.
+
+REGISTERED LENS RULE (B9/B11): the bar is E22's own weighted lens; the unweighted twin is computed
+for all six cells. Both lenses pass all six -> `keep-general`. Weighted only -> `keep-weighted`.
+Unweighted only -> `keep-unweighted`. Neither -> discard the promotion.
+
+SECONDARY (no bar): per-window d(mobile money) terciles with mean d(saving) inside each subsample,
+plus the pooled pan_dev cell in each window as the E1/E28 reference line.
 """
 import numpy as np
 import pandas as pd
 
-from harness import Findex, YEARS
+from harness import Findex
 
-ANCHOR = "g20_any"
-ANCHOR2 = "account_t_d"
-BASE = "borrow_any_t_d"
-MIN_ECON_PER_WAVE = 70
-MIN_WAVES = 3
-EXCLUDE = {"fin22a_22a1_22g_d", "fin22h_s"}
+MM = "mobileaccount_t_d"
+SAV = "fin17a_17a1_d"
+WINDOWS = [(2014, 2017), (2017, 2021), (2021, 2024)]
+MIN_ECON = 15          # E22's declared G4 deviation, carried unchanged
+BAR = 0.30
+E4_RETENTION = 0.5
 NDRAW = 2000
-Q = 0.10
 RNG = np.random.default_rng(20260824)
 
 
@@ -39,41 +45,19 @@ def kish(w):
     return float(w.sum() ** 2 / (w ** 2).sum())
 
 
-def wcorr(x, y, w):
-    return Findex.weighted_corr(x, y, w)[0]
-
-
 def ucorr(x, y):
     m = pd.notna(x) & pd.notna(y)
-    return float(np.corrcoef(x[m], y[m])[0, 1]) if m.sum() >= 10 else np.nan
-
-
-def classify(rw, ru):
-    def one(r):
-        if pd.isna(r):
-            return "na"
-        if abs(r) >= 0.80:
-            return "restatement"
-        if r >= 0.30:
-            return "aligned"
-        if r <= -0.30:
-            return "counter-moving"
-        return "independent"
-    a, b = one(rw), one(ru)
-    return a if a == b else "mixed-lens(%s/%s)" % (a, b)
+    return float(np.corrcoef(x[m], y[m])[0, 1]) if m.sum() >= 3 else np.nan
 
 
 def boot(x, y, w, ndraw=NDRAW):
-    """Percentile interval and p_boot for the weighted correlation; resample economies."""
     m = pd.notna(x) & pd.notna(y) & pd.notna(w)
     xx, yy, ww = x[m].to_numpy(), y[m].to_numpy(), w[m].to_numpy()
     n = len(xx)
     out = []
     for _ in range(ndraw):
-        idx = RNG.integers(0, n, n)
-        xs, ys, ws = xx[idx], yy[idx], ww[idx]
-        if np.average(ws) <= 0:
-            continue
+        i = RNG.integers(0, n, n)
+        xs, ys, ws = xx[i], yy[i], ww[i]
         mx, my = np.average(xs, weights=ws), np.average(ys, weights=ws)
         sx = np.sqrt(np.average((xs - mx) ** 2, weights=ws))
         sy = np.sqrt(np.average((ys - my) ** 2, weights=ws))
@@ -82,185 +66,126 @@ def boot(x, y, w, ndraw=NDRAW):
         out.append(np.average((xs - mx) * (ys - my), weights=ws) / (sx * sy))
     out = np.array(out)
     lo, hi = np.percentile(out, [2.5, 97.5])
-    p = 2 * min((out <= 0).mean(), (out >= 0).mean())
-    return float(lo), float(hi), float(min(p, 1.0))
+    return float(lo), float(hi), float(min(2 * min((out <= 0).mean(), (out >= 0).mean()), 1.0))
 
 
-def loo_named(x, y, w):
-    """B12: the largest single leave-one-out change in r_w, with the economy named."""
-    r0 = wcorr(x, y, w)
-    best_name, best_d = None, 0.0
+def loo_named(fx, x, y, w):
+    r0 = fx.weighted_corr(x, y, w)[0]
+    nm, d = None, 0.0
     for e in x.dropna().index:
-        keep = [i for i in x.index if i != e]
-        r1 = wcorr(x.reindex(keep), y.reindex(keep), w.reindex(keep))
-        if pd.notna(r1) and abs(r1 - r0) > abs(best_d):
-            best_name, best_d = e, r1 - r0
-    return best_name, best_d
+        k = [i for i in x.index if i != e]
+        r1 = fx.weighted_corr(x.reindex(k), y.reindex(k), w.reindex(k))[0]
+        if pd.notna(r1) and abs(r1 - r0) > abs(d):
+            nm, d = e, r1 - r0
+    return nm, d
 
 
-def bh(pvals, q=Q):
-    """Benjamini-Hochberg: returns the set of indices rejected at level q."""
-    order = np.argsort(pvals)
-    m = len(pvals)
-    rejected, kmax = set(), -1
-    for rank, i in enumerate(order, start=1):
-        if pvals[i] <= q * rank / m:
-            kmax = rank
-    if kmax > 0:
-        rejected = set(order[:kmax])
-    return rejected, [(i, pvals[i], q * (list(order).index(i) + 1) / m) for i in order]
+def cell(fx, frame, y0, y1, pop_base):
+    """One (subsample, window) cell: the identical E1/E22 construction."""
+    a = frame[frame["year"] == y0].set_index("countrynewwb")
+    b = frame[frame["year"] == y1].set_index("countrynewwb")
+    idx = a.index.intersection(b.index)
+    dmm = (b.loc[idx, MM] - a.loc[idx, MM]) * 100
+    dsv = (b.loc[idx, SAV] - a.loc[idx, SAV]) * 100
+    w = b.loc[idx, "pop_adult"]
+    m = pd.notna(dmm) & pd.notna(dsv) & pd.notna(w)
+    dmm, dsv, w = dmm[m], dsv[m], w[m]
+    n = len(dmm)
+    out = {"n": n, "pop_share": float(w.sum() / pop_base) if pop_base else np.nan}
+    if n < MIN_ECON:
+        out.update(testable=False)
+        return out, dmm, dsv, w
+    rw = fx.weighted_corr(dmm, dsv, w)[0]
+    ru = ucorr(dmm, dsv)
+    g6 = fx.gate_jackknife(dmm, dsv, w)
+    lo, hi, p = boot(dmm, dsv, w)
+    nm, dd = loo_named(fx, dmm, dsv, w)
+    ret = abs(g6["r_droptop"]) / abs(rw) if rw else np.nan
+    out.update(testable=True, rw=rw, ru=ru, neff=kish(w), g6=g6["r_droptop"],
+               sign_ok=bool(np.sign(g6["r_droptop"]) == np.sign(rw)), retention=ret,
+               lo=lo, hi=hi, p=p, loo="%s %+.3f" % (nm, dd))
+    return out, dmm, dsv, w
+
+
+def terciles(dmm, dsv):
+    if len(dmm) < 6:
+        return "n/a"
+    q = pd.qcut(dmm.rank(method="first"), 3, labels=["low", "mid", "high"])
+    return " / ".join("%s %+.1f" % (g, dsv[q == g].mean()) for g in ["low", "mid", "high"])
 
 
 def main():
     fx = Findex()
     dev = fx.pan_dev
-    cols = sorted([c for c in dev.columns if c.startswith("fin22")])
+    ssa = dev[dev["regionwb24_hi"] == "Sub-Saharan Africa"]
+    rest = dev[dev["regionwb24_hi"] != "Sub-Saharan Africa"]
+    subs = [("SSA", ssa), ("rest-of-developing", rest), ("pooled pan_dev (reference)", dev)]
 
-    print("=" * 100)
-    print("E57x — EXPLORATORY mapping pass: the `fin22` borrowing-sources module (developing panel)")
-    print("=" * 100)
-    print("%-24s %s" % ("column", "  ".join("%12s" % y for y in YEARS)))
-    cover = {}
-    for c in cols:
-        s = fx.series(dev, c, YEARS)
-        counts = {y: int(dev[(dev["year"] == y) & dev[c].notna()]["countrynewwb"].nunique())
-                  for y in YEARS}
-        cover[c] = counts
-        cells = []
-        for y in YEARS:
-            cells.append("%6s/%3d" % ("%.1f" % s[y] if y in s.index else "--", counts[y]))
-        print("%-24s %s" % (c, "  ".join("%12s" % v for v in cells)))
-    print("\n(cell = weighted developing-panel level pp / number of economies reporting)")
+    print("=" * 104)
+    print("E58 — all-windows promotion test of E22 (B14 + B8): d(mobile money) ~ d(formal saving),")
+    print("      Sub-Saharan Africa vs the five other developing regions pooled")
+    print("=" * 104)
+    print("regions in `rest`: %s" % sorted(rest["regionwb24_hi"].dropna().unique()))
+    print("2011->2014 is NOT TESTABLE: %s reporting economies in 2011 = %d\n"
+          % (MM, int(dev[(dev["year"] == 2011) & dev[MM].notna()]["countrynewwb"].nunique())))
 
-    for c in cols:
-        ok_waves = sum(1 for y in YEARS if cover[c][y] >= MIN_ECON_PER_WAVE)
-        print("  %-24s waves at >=%d economies: %d   excluded-in-advance: %s"
-              % (c, MIN_ECON_PER_WAVE, ok_waves, c in EXCLUDE))
+    results = {}
+    for name, frame in subs:
+        print("-" * 104)
+        print("SUBSAMPLE: %s" % name)
+        print("-" * 104)
+        for (y0, y1) in WINDOWS:
+            base = frame[frame["year"] == y1]["pop_adult"].sum()
+            res, dmm, dsv, w = cell(fx, frame, y0, y1, base)
+            key = (name, y0, y1)
+            results[key] = res
+            if not res["testable"]:
+                print("  %d->%d  n=%2d  NOT TESTABLE (< %d economies)" % (y0, y1, res["n"], MIN_ECON))
+                continue
+            print("  %d->%d  n=%2d (%.1f%% of subsample adult pop)  neff %5.1f   r_w %+.3f  r_u %+.3f"
+                  % (y0, y1, res["n"], 100 * res["pop_share"], res["neff"], res["rw"], res["ru"]))
+            print("           G6 %+.3f (sign %s, E4 retention %.2f)   boot [%+.3f,%+.3f] p_boot %.3f   largest LOO %s"
+                  % (res["g6"], "kept" if res["sign_ok"] else "LOST", res["retention"],
+                     res["lo"], res["hi"], res["p"], res["loo"]))
+            print("           d(mobile money) terciles -> mean d(saving): %s" % terciles(dmm, dsv))
+        print()
 
-    eligible = [c for c in cols
-                if c not in EXCLUDE
-                and sum(1 for y in YEARS if cover[c][y] >= MIN_ECON_PER_WAVE) >= MIN_WAVES]
-    print("\nELIGIBLE SCREEN FAMILY (>=%d waves at >=%d economies, exclusions applied): %s"
-          % (MIN_WAVES, MIN_ECON_PER_WAVE, eligible))
-
-    # -------------------------------------------------------------- E57 the screen
-    d24 = dev[dev["year"] == 2024].set_index("countrynewwb")
-    w = d24["pop_adult"]
-
-    for anchor, tag in [(ANCHOR, "PRIMARY vs g20_any"), (ANCHOR2, "SECONDARY vs account_t_d")]:
-        print("\n" + "=" * 100)
-        print("E57 — four-way orientation screen, 2024 developing-panel cross-section (%s)" % tag)
-        print("=" * 100)
-        a = d24[anchor] * 100
-        base = d24[BASE] * 100
-        rows, pv = [], []
-        for c in eligible:
-            x = d24[c] * 100
-            m = pd.notna(x) & pd.notna(a) & pd.notna(w)
-            n = int(m.sum())
-            rw, ru = wcorr(x, a, w), ucorr(x, a)
-            g6 = fx.gate_jackknife(x, a, w)
-            lo, hi, p = boot(x, a, w)
-            nm, dd = loo_named(x, a, w)
-            # denominator diagnostic (agenda 9.1, U26 wording)
-            cond = (x / base) * 100
-            rw_c, ru_c = wcorr(cond, a, w), ucorr(cond, a)
-            rows.append(dict(col=c, n=n, neff=kish(w[m]), rw=rw, ru=ru,
-                             cls=classify(rw, ru), g6=g6["r_droptop"], lo=lo, hi=hi, p=p,
-                             loo="%s %+.3f" % (nm, dd), rw_c=rw_c, ru_c=ru_c,
-                             cls_c=classify(rw_c, ru_c)))
-            pv.append(p)
-        rej, table = bh(np.array(pv))
-        print("%-12s %4s %6s  %7s %7s  %-28s %7s  %-20s %7s  %-26s"
-              % ("item", "n", "neff", "r_w", "r_u", "class (all-adult denom)", "G6", "boot [2.5,97.5]",
-                 "p_boot", "conditional-rate denom"))
-        for i, r in enumerate(rows):
-            print("%-12s %4d %6.1f  %+7.3f %+7.3f  %-28s %+7.3f  [%+.3f,%+.3f] %7.3f  %+.3f/%+.3f %-18s"
-                  % (r["col"], r["n"], r["neff"], r["rw"], r["ru"], r["cls"], r["g6"],
-                     r["lo"], r["hi"], r["p"], r["rw_c"], r["ru_c"], r["cls_c"]))
-            print("%-12s     largest LOO (B12): %s" % ("", r["loo"]))
-        print("\nBH at q=%.2f over this module's own %d-test family: rejects %d of %d  -> %s"
-              % (Q, len(pv), len(rej), len(pv),
-                 ", ".join(rows[i]["col"] for i in sorted(rej)) or "none"))
-        for i, p, crit in table:
-            print("   %-12s p_boot %.4f  vs critical %.4f  %s"
-                  % (rows[i]["col"], p, crit, "REJECT" if i in rej else "-"))
-
-        # the base factor, agenda 9.1's analogue of U25's complement factor
-        print("\nBASE FACTOR r(%s, %s): weighted %+.3f / unweighted %+.3f"
-              % (BASE, anchor, wcorr(base, a, w), ucorr(base, a)))
-
-        cm = [r for r in rows if r["cls"] == "counter-moving"]
-        print("\nREGISTERED KEEP CONDITION (%s): counter-moving on BOTH lenses = %d item(s) -> %s"
-              % (tag, len(cm), [r["col"] for r in cm] or "NONE"))
-    return fx
-
-
-def depths(fx, d24, w, col, anchor, bar=0.30):
-    """B21, computed AFTER the registered primary and carrying no verdict rule:
-    fragility depth  = fewest greedy removals of the largest-population economies that drive |r_w|
-                       BELOW the bar; ascent depth = fewest greedy removals that drive |r_u| ABOVE it.
-    Economies named in removal order."""
-    x, a = d24[col] * 100, d24[anchor] * 100
-    order = w.sort_values(ascending=False).index.tolist()
-
-    keep = list(x.dropna().index)
-    frag = []
-    for e in order:
-        if e not in keep:
+    print("=" * 104)
+    print("REGISTERED PROMOTION CONDITION (B8: every one of the six cells)")
+    print("=" * 104)
+    cells = [k for k in results if k[0] in ("SSA", "rest-of-developing")]
+    not_testable = [k for k in cells if not results[k]["testable"]]
+    fails_w, fails_u = [], []
+    for k in sorted(cells):
+        r = results[k]
+        if not r["testable"]:
             continue
-        r = wcorr(x.reindex(keep), a.reindex(keep), w.reindex(keep))
-        if pd.isna(r) or abs(r) < bar:
-            break
-        keep.remove(e)
-        frag.append(e)
-        r2 = wcorr(x.reindex(keep), a.reindex(keep), w.reindex(keep))
-        if pd.isna(r2) or abs(r2) < bar:
-            break
+        ok_w = (r["rw"] >= BAR) and r["sign_ok"] and (r["retention"] >= E4_RETENTION)
+        ok_u = r["ru"] >= BAR
+        if not ok_w:
+            fails_w.append(k)
+        if not ok_u:
+            fails_u.append(k)
+        print("  %-20s %d->%d   weighted bar %s (r_w %+.3f, G6 sign %s, retention %.2f)   unweighted bar %s (r_u %+.3f)"
+              % (k[0], k[1], k[2], "PASS" if ok_w else "FAIL", r["rw"],
+                 "kept" if r["sign_ok"] else "LOST", r["retention"],
+                 "PASS" if ok_u else "FAIL", r["ru"]))
+    print("\n  not testable: %s" % (not_testable or "none"))
+    print("  weighted-lens failures:   %s" % (sorted(fails_w) or "none"))
+    print("  unweighted-lens failures: %s" % (sorted(fails_u) or "none"))
 
-    keep2 = list(x.dropna().index)
-    asc = []
-    for _ in range(len(keep2)):
-        r = ucorr(x.reindex(keep2), a.reindex(keep2))
-        if pd.notna(r) and abs(r) >= bar:
-            break
-        best, bestr = None, abs(r) if pd.notna(r) else 0.0
-        for e in keep2:
-            k = [i for i in keep2 if i != e]
-            rr = ucorr(x.reindex(k), a.reindex(k))
-            if pd.notna(rr) and abs(rr) > bestr:
-                best, bestr = e, abs(rr)
-        if best is None:
-            break
-        keep2.remove(best)
-        asc.append(best)
-    r_end_w = wcorr(x.reindex(keep), a.reindex(keep), w.reindex(keep))
-    r_end_u = ucorr(x.reindex(keep2), a.reindex(keep2))
-    return frag, r_end_w, asc, r_end_u
-
-
-def post_primary(fx):
-    """Diagnostics added AFTER the registered primary printed. No bar, no verdict rule."""
-    dev = fx.pan_dev
-    d24 = dev[dev["year"] == 2024].set_index("countrynewwb")
-    w = d24["pop_adult"]
-    print("\n" + "=" * 100)
-    print("POST-PRIMARY DIAGNOSTICS (no bar, no verdict rule) — B21 depths and G4 coverage")
-    print("=" * 100)
-    for col in ["fin22d", "fin22b"]:
-        for anchor in [ANCHOR]:
-            frag, rw_end, asc, ru_end = depths(fx, d24, w, col, anchor)
-            print("%-8s vs %-12s fragility depth %d  [%s]  -> r_w %+.3f"
-                  % (col, anchor, len(frag), ", ".join(frag) or "-", rw_end))
-            print("%-8s %-15s ascent   depth %d  [%s]  -> r_u %+.3f"
-                  % ("", "", len(asc), ", ".join(asc) or "-", ru_end))
-    for col in ["fin22d", ANCHOR, BASE]:
-        print("G4 %-14s %s" % (col, fx.gate_coverage(dev, col, 2024)))
-    print("G3: every fin22 item is an UNREGISTERED narrow variant (declared in the pre-registration).")
-    print("G5: no official aggregate series for a cross-sectional correlation — n/a.")
-    print("E4 magnitude rule on fin22d: |r_droptop|/|r_full| = %.3f" % (0.358 / 0.557))
+    if not_testable:
+        verdict = "NO PROMOTION — COVERAGE-LIMITED (a registered cell is not testable)"
+    elif not fails_w and not fails_u:
+        verdict = "PROMOTE E22 to `keep-general` (both lenses pass all six cells)"
+    elif not fails_w:
+        verdict = "PROMOTE as `keep-weighted` (weighted lens passes all six, unweighted does not)"
+    elif not fails_u:
+        verdict = "PROMOTE as `keep-unweighted` (unweighted lens passes all six, weighted does not)"
+    else:
+        verdict = "DISCARD the promotion — E22 stays `keep-window`; the failing windows are recorded as FAILED"
+    print("\n  ==> %s" % verdict)
 
 
 if __name__ == "__main__":
-    fx_out = main()
-    post_primary(fx_out)
+    main()
