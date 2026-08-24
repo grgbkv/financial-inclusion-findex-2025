@@ -86,3 +86,17 @@ BH at q=0.10 over this module's own 6-test family: rejects 2 of 6  -> fin22a, fi
 BASE FACTOR r(borrow_any_t_d, account_t_d): weighted -0.157 / unweighted -0.176
 
 REGISTERED KEEP CONDITION (SECONDARY vs account_t_d): counter-moving on BOTH lenses = 0 item(s) -> NONE
+
+====================================================================================================
+POST-PRIMARY DIAGNOSTICS (no bar, no verdict rule) — B21 depths and G4 coverage
+====================================================================================================
+fin22d   vs g20_any      fragility depth 14  [China, India, Indonesia, Brazil, Pakistan, Nigeria, Bangladesh, Mexico, Philippines, Egypt, Arab Rep., Viet Nam, Iran, Islamic Rep., Turkiye, Thailand]  -> r_w -0.274
+                         ascent   depth 0  [-]  -> r_u -0.400
+fin22b   vs g20_any      fragility depth 1  [China]  -> r_w -0.185
+                         ascent   depth 7  [Uganda, Kenya, Nicaragua, Guatemala, El Salvador, Senegal, Ghana]  -> r_u -0.335
+G4 fin22d         {'gate': 'G4_coverage', 'ok': True, 'n_countries': 76, 'pop_share': 0.974}
+G4 g20_any        {'gate': 'G4_coverage', 'ok': True, 'n_countries': 76, 'pop_share': 0.974}
+G4 borrow_any_t_d {'gate': 'G4_coverage', 'ok': True, 'n_countries': 76, 'pop_share': 0.974}
+G3: every fin22 item is an UNREGISTERED narrow variant (declared in the pre-registration).
+G5: no official aggregate series for a cross-sectional correlation — n/a.
+E4 magnitude rule on fin22d: |r_droptop|/|r_full| = 0.643

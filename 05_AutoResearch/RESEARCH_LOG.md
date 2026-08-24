@@ -8284,3 +8284,123 @@ so the coverage change is visible rather than assumed away.
 **Declared.** Descriptive co-movement only, never causal — account growth and common income shocks
 are uncontrolled in every cell, exactly as in E1 and E22. `mobileaccount_t_d` reporting is itself
 regionally selected, which is a property of the indicator and not attrition.
+
+---
+
+## E57x — EXPLORATORY. The `fin22` borrowing-sources module is mapped, and six of eleven columns are screenable
+
+Commit `808412c`. Status `exploratory`. No hypothesis, no keep — logged before E57 under the peek
+rule. Frame `pan_dev`. **Parent: none.**
+
+**The wave map** (weighted developing-panel level pp / economies reporting; 2011 is empty for the
+whole module):
+
+| column | 2014 | 2017 | 2021 | 2024 |
+|---|---|---|---|---|
+| `fin22a` | 15.7 / 77 | 15.6 / 77 | 21.6 / 77 | 22.0 / 76 |
+| `fin22b` | 29.2 / 77 | 29.4 / 77 | 30.3 / 77 | 31.6 / 76 |
+| `fin22c` | — | 4.0 / 77 | 2.8 / 77 | 4.8 / 76 |
+| `fin22d` | 14.0 / 77 | 10.7 / 77 | 17.2 / 77 | 19.9 / 76 |
+| `fin22e` | 8.1 / 77 | 7.2 / 77 | — | 10.7 / 76 |
+| `fin22f` | — | — | — | 23.7 / 76 |
+| `fin22g` | 8.4 / 77 | 8.6 / 77 | 13.3 / 77 | 13.6 / 76 |
+| `fin22h` | — | — | 10.9 / 77 | 11.4 / 76 |
+| `fin22a_1` | — | — | 2.5 / 61 | 3.5 / 61 |
+| `fin22a_22a1_22g_d` | 15.7 / 77 | 15.6 / 77 | 22.6 / 77 | 23.2 / 76 |
+| `fin22h_s` | — | — | 83.3 / **10** | 85.7 / **8** |
+
+**Eligibility, decided by the rule fixed in the pre-registration** (≥3 waves at ≥70 developing
+economies, then the two declared exclusions): the screen family is **`fin22a`, `fin22b`, `fin22c`,
+`fin22d`, `fin22e`, `fin22g`** — six items. `fin22f` (one wave) and `fin22h` (two) fail eligibility;
+`fin22a_22a1_22g_d` and `fin22h_s` were excluded **before the run** as a declared composite and a
+documented-unusable `_s` column. `fin22h_s` at 8–10 economies is a live example of why item 10.1's
+eligibility rule exists.
+
+**Meanings are NOT established.** There is no questionnaire in the repo. What is established is
+behaviour and structure. One structural anchor is available and worth recording: the harness
+registers `fin22a_22a1_22g_d` as the headline for `borrowed_formally` and its name declares it a
+union of `fin22a`, `fin22a_1` and `fin22g`, so **`fin22a` and `fin22g` are two formal borrowing
+sources** and everything else in the family is a non-formal or unclassified source. The screen below
+reads consistently with that and nothing further is inferred.
+
+**Coverage consumed.** Nine previously unscreened country columns in the ledger's thinnest reachable
+country module. **Rule B2's breadth cell for slot 1.**
+
+## E57 — KEEP. A THIRD counter-moving country margin, and the first one that is not a payment mode
+
+Commit `808412c` (+ `2d1e8e1`, the post-primary diagnostic block). Stream hypothesis. Design
+`measurement`. Frame `pan_dev`, **2024 cross-section**. **Parent: none** (new module). Status
+**`keep`** — both lenses agree, so the status is bare (B9/B11).
+
+**The registered screen, `g20_any` anchor, 76 economies, `neff` 7.2:**
+
+| item | r_w | r_u | class | G6 drop-5 | largest LOO (named) | boot [2.5, 97.5] | p_boot |
+|---|---|---|---|---|---|---|---|
+| `fin22a` | +0.843 | +0.579 | `mixed-lens` (restatement/aligned) | +0.489 | China −0.246 | [+0.428, +0.924] | 0.000 |
+| `fin22b` | −0.450 | −0.079 | `mixed-lens` (counter-moving/independent) | +0.088 | China +0.265 | [−0.672, +0.147] | 0.144 |
+| `fin22c` | −0.145 | +0.028 | `independent` | +0.158 | China +0.173 | [−0.360, +0.269] | 0.458 |
+| **`fin22d`** | **−0.557** | **−0.400** | **`counter-moving`** | **−0.358** | China +0.195 | **[−0.740, −0.163]** | **0.002** |
+| `fin22e` | −0.142 | −0.124 | `independent` | +0.013 | Bangladesh −0.055 | [−0.373, +0.125] | 0.284 |
+| `fin22g` | +0.828 | +0.488 | `mixed-lens` (restatement/aligned) | +0.423 | China −0.264 | [+0.406, +0.919] | 0.000 |
+
+**VERDICT: KEEP.** `fin22d` meets **every** registered condition, all four of them fixed in advance:
+counter-moving on **both** lenses (−0.557 / −0.400); **G6** keeps the sign at −0.358, and the E4
+magnitude rule holds at a retention of **0.643**; the 2,000-draw country bootstrap interval
+**[−0.740, −0.163] excludes zero**; and it **survives BH at q = 0.10 over its own six-test family**
+(p_boot 0.002 against a critical value of 0.0500 — BH rejects `fin22a`, `fin22g`, `fin22d`).
+**Registered sign was NEGATIVE and the result is negative** (B15). The largest single leave-one-out
+effect is **China at +0.195**, which leaves the item counter-moving.
+
+**This is the first counter-moving margin the BH filter has ever passed.** U25's `fin14d` met every
+mechanical bar and was retired by BH rejecting 0 of 19 over its family; agenda item 9.2 was written
+because five screened modules had never produced a survivor of the family-wise correction. `fin22d`
+is the sixth module screened and the first to carry one.
+
+**The denominator diagnostic (agenda item 9.1, in U26's "report both denominators" wording) does not
+move it, and the base factor is weak.** On the conditional-rate denominator — the item divided by
+`borrow_any_t_d`, i.e. the share of *borrowers* rather than of adults — `fin22d` reads
+**−0.582 / −0.534**, i.e. **the same class and slightly stronger on both lenses**. The base factor
+itself, r(`borrow_any_t_d`, `g20_any`), is **−0.261 weighted / −0.026 unweighted** — nothing like
+U25's −0.903 complement factor, so the classification is not a penetration artifact. **A structural
+fact closes this line completely** (post-hoc, disclosed): in the micro file `fin22d` is asked of the
+**whole 102,954-respondent module sample**, not of a conditional subsample, so the all-adult
+denominator *is* the item's own denominator and the U25 trap cannot arise here by construction.
+
+**M3, exact, and it was not registered — reported as a disclosed post-hoc check.** The micro
+`fin22d == 1` share reproduces the country-file `fin22d` at **median and maximum |dev| of 0.000pp
+across all 98 module economies**. `fin22b` and `fin22e` are exact too. `fin22c` (25.5pp) and
+`fin22g` (56.6pp) are **conditionally asked in the micro file** (16,444 and 11,798 respondents) while
+their country twins sit on the all-adult denominator — a fact worth carrying, and one that does not
+touch the keep.
+
+**B21 depths, computed after the primary and carrying no verdict rule.** For `fin22d` the two
+diagnostics point the same way for once: **fragility depth 14** — the fourteen largest-population
+economies, China through Thailand, must *all* be removed before `r_w` falls below the bar (to
+−0.274) — and **ascent depth 0**, because `r_u` is already past it at −0.400. Against this,
+`fin22b`'s mixed-lens cell has **fragility depth 1 (China alone**, +0.265 on removal, to −0.185) and
+**ascent depth 7** (Uganda, Kenya, Nicaragua, Guatemala, El Salvador, Senegal, Ghana → −0.335). The
+contrast is the point of B21: the two mixed-lens items are one-economy objects in one direction and
+seven-economy objects in the other, and `fin22d` is neither.
+
+**SECONDARY vs `account_t_d` — the E47 distinction, and it separates the item.** `fin22d` reads
+**−0.160 / −0.500**, a `mixed-lens` cell whose weighted interval [−0.672, +0.303] contains zero and
+which BH does not reject (p_boot 0.537). So `fin22d` counter-moves with **digital payment**, not with
+**financial access in general** — the same shape E47 found for `fin34c`. `fin22a` and `fin22g`, the
+two formal sources, are `aligned` with access on both lenses (+0.589 / +0.617 and +0.473 / +0.502),
+which is the expected direction and is reported as such.
+
+**Gates.** G3 declared: every `fin22` item is an unregistered narrow variant. G4 clean: 76 economies,
+**97.4%** of developing-panel 2024 adult population. G5 n/a (no official series for a cross-sectional
+correlation). G6 above. B10: `neff` = **7.2** against a nominal 76, so no significance language
+attaches to the nominal n; the bootstrap interval and the depths are what carry the stability
+statement. B14 does not bind (no Δ primary); B20 is trivial (single wave).
+
+**What this changes, and what it does not.** The counter-moving count goes from **two to three**
+(`fin31d`, `fin34c`, `fin22d`) and the standing description — "the counter-moving margins are
+payment-mode items" — is now **wrong**: `fin22d` is a **liability-side** item in the borrowing-source
+battery, and its level *rose* over the decade (14.0 → 10.7 → 17.2 → **19.9**) while digital payment
+rose too, so the negative correlation is **cross-sectional composition between economies**, not a
+within-country retreat. E48 is the standing proof those two things come apart, and no Δ claim is made
+here. The item's **meaning is not established** — only that it is a non-formal borrowing source
+(the formal ones being `fin22a` and `fin22g` by the headline's own definition), that it is asked of
+all adults, and that it is M3-exact.

@@ -1,0 +1,10 @@
+fin22a   micro-asked n=102954  economies= 98  M3 median|dev|=2.932pp  max=30.167pp  (n_cmp=98)
+fin22b   micro-asked n=102954  economies= 98  M3 median|dev|=0.000pp  max=0.000pp  (n_cmp=98)
+fin22c   micro-asked n= 16444  economies= 98  M3 median|dev|=25.522pp  max=55.526pp  (n_cmp=98)
+fin22d   micro-asked n=102954  economies= 98  M3 median|dev|=0.000pp  max=0.000pp  (n_cmp=98)
+fin22e   micro-asked n=102954  economies= 98  M3 median|dev|=0.000pp  max=0.000pp  (n_cmp=98)
+fin22g   micro-asked n= 11798  economies= 98  M3 median|dev|=56.560pp  max=99.231pp  (n_cmp=98)
+
+fin22d asked-sample profile: n=102954, economies=98; borrowed==1 share among asked 0.587 (file 0.587)
+fin22d==1 among the asked: 20414 (19.8% unweighted)
+Overlap with fin22b==1 among fin22d==1: 0.678 ; with fin22a==1: 0.154
