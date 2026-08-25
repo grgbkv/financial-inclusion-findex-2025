@@ -1169,3 +1169,45 @@ closed and frozen at one item, executed; two new rules **B20** and **B21** in `p
   cycle producing `PAPER_DRAFT_v5.md`: it executes E55's two corrections with E56's replacement
   numbers, retires the payment-mode description (11.1) and E22's intensity sentence (11.3), and
   folds in U24, U27, E53–E58.
+
+## Addendum (2026-08-25, the third B18 distillation cycle — no experiments)
+
+- **B18 FIRED on the COUNT branch, 12 of 10** (U24x, U24, E55, U25x, U25, E56, U26x, U26, U27, E57x,
+  E57, E58 since the 2026-08-20 rewrite), corrections branch at 2 of 5. Output: **`PAPER_DRAFT_v5.md`**;
+  `PAPER_DRAFT_v4.md` marked SUPERSEDED with its corrections block **closed and frozen at two items,
+  both EXECUTED**. `EXTENSIONS_DRAFT.md`'s status block re-pointed at v5 and its two E22 intensity
+  passages explicitly retired. **The B18 counter resets here: count branch runs from 2026-08-25 at
+  experiment count 95; corrections branch opens at 0 of 5.**
+- **BOTH v4 CORRECTIONS EXECUTED.** (i) v5 §10 Result 7 and §12 item 3 replace "unquantified" with the
+  E55/E56 numbers — 137 cells over 57 columns, three transitions clean at a median discrepancy of
+  **exactly 0.000pp**, 2021→24 at **29.1%** of cells ≥2pp, cause a **six-economy release block**
+  (Algeria, China, Iran, Mauritius, Russia, Ukraine, 31.4% of panel population, all six present in
+  2024) spanning ten column families. (ii) v5 §2 Table 1 now prints the **balanced 71-economy** wage
+  series **8.04 → 10.35 → 12.03 → 16.43** (monotone, largest step +4.40 in the window the unbalanced
+  series called a −3.21pp retreat) and §7 prints the balanced 69-economy `fh` family, all three rising.
+  **Agenda item 8.1 is closed and was v4's highest-priority open item.**
+- **TWO STANDING SENTENCES RETIRED, as items 11.1 and 11.3 required.** "The counter-moving margins are
+  payment-mode items" is gone — there are three, and `fin22d` is liability-side (v5 §8.1). "Mobile
+  money is the more dominant saving rail inside SSA" is gone — the ordering reverses in 2017→21 (v5 §5,
+  and the two `EXTENSIONS_DRAFT.md` passages).
+- **NEW ITEM 12.1 — the promotion record is itself a finding and should be stated as one.** Before B8
+  (2026-08-11) two multi-window designs promoted six bivariates (E28, E30) and E42 established the
+  four-transition result. **Since B8, three promotions have been attempted and three have failed**
+  (E43→E44, E48b→E50, E22→E58). v5 §12 item 8 states it. Any future cycle proposing a promotion should
+  register against that base rate rather than against the pre-B8 record.
+- **NEW ITEM 12.2 — the two oldest counter-moving margins have NOT been denominator-checked.** v5 §12
+  item 4 records this honestly: only `fin22d` has been run on both denominators. `fin31d` and `fin34c`
+  were screened before rule 9.1 existed and both plausibly describe a subsample. **Registered form: a
+  denominator re-check on `fin31d` and `fin34c` with the complement factor reported, cheap and owed
+  before either is used in another design.** This is the natural companion to item 11.2's Δ design.
+- **PRIORITY ORDER coming out of the rewrite** (v5 §13, in its own numbering): (1) the all-windows
+  Δ→Δ on `fin22d` with a balanced denominator declared in advance — item 11.2; (2) a fourth and fifth
+  margin on the access-absorption ruler — item 4.7; (3) `urbanicity`, the last untouched country frame,
+  single-wave; (4) the payer-set ordering; (5) the cash-margin anchor question; (6) the access-minus-
+  usage monotonicity statistic; (7) the earlier forecasting holdout; (8) obtain the questionnaire.
+- **B2 / B17 for the NEXT cycle.** No experiments ran, so nothing was paid. **B17's micro quota is OWED
+  by the next cycle** (last paid U27, 2026-08-23; three cycles counting this one). B2's breadth cell is
+  owed too, and with the reachable untouched micro surface exhausted (U26x) the default is
+  **`urbanicity`** — the only untouched country frame — or the micro `fin22` block, where E57's M3-exact
+  result means U24x's share-matching method already works.
+- **B3.** No lineage extended (no experiments). The E53 → E55 → E56 chain is now two cycles cold.

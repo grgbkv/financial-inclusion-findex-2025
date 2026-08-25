@@ -8582,3 +8582,37 @@ frame, since the reachable untouched micro surface was declared exhausted by U26
 closed and frozen at two items, **both executed**. v4's Appendix B discharge tables for v2 and v3 are
 carried forward as v5's Appendix B. The B18 counter resets here: the next count branch runs from
 2026-08-25 at experiment count 95.
+
+## Wrap-up — 2026-08-25
+
+1. **A rewrite cycle, not an experiment cycle.** B18's count branch fired at **12 of 10** and the
+   corrections branch stood at **2 of 5**, so under the rule no new experiments were registered.
+   Output: **`PAPER_DRAFT_v5.md`** (95 experiments, 41 keeps, unchanged ledger). `PAPER_DRAFT_v4.md`
+   is SUPERSEDED with its corrections block **closed and frozen at two items, both executed**;
+   `EXTENSIONS_DRAFT.md` re-pointed at v5 with its two E22 passages retired. `make_index.py --check`
+   clean at 95 rows, 0 problems.
+2. **Both of v4's corrections are executed, and the second one changes a headline table.** The wage
+   rail's decade path in Table 1 is now the **balanced 71-economy series 8.04 → 10.35 → 12.03 →
+   16.43** — monotone, largest step **+4.40pp in the very window** the unbalanced series reported as a
+   −3.21pp retreat — and the financial-health family in §7 rises on all three items where it fell
+   unbalanced. The reporting-set limitation in §12 is no longer "unquantified": three of four
+   transitions clean at a median discrepancy of **exactly 0.000pp**, 2021→24 biasing **29.1%** of its
+   cells by ≥2pp through a **six-economy release block** across ten column families. Agenda item 8.1,
+   v4's highest-priority open item, is **closed**.
+3. **Two sentences this project had been repeating are gone.** "The counter-moving margins are
+   payment-mode items" — there are three now and `fin22d` is liability-side (§8.1). "Mobile money is
+   the more dominant saving rail inside SSA" — the ordering reverses in 2017→21, SSA +0.405 against
+   +0.675 outside (§5).
+4. **Two things the rewrite noticed that no single experiment had stated.** (i) **The promotion record
+   splits on the rule change**: before B8, two designs promoted six bivariates and E42 established the
+   four-transition result; **since B8, three attempts, three failures** (E43→E44, E48b→E50, E22→E58) —
+   logged as new agenda item 12.1 and written into §12. (ii) **Only `fin22d` has ever been
+   denominator-checked**; `fin31d` and `fin34c` predate rule 9.1 and both plausibly describe a
+   subsample, so v4's implied all-clear was an overclaim and §12 item 4 now says so — new agenda item
+   12.2, a cheap re-check owed before either margin is used again.
+5. **State for the next cycle.** B18 resets: **corrections 0 of 5, count 0 of 10** from experiment
+   count 95. **B17's micro quota is OWED** by the next cycle (last paid U27, 2026-08-23), as is B2's
+   breadth cell — default **`urbanicity`**, the only untouched country frame, or the micro `fin22`
+   block. Highest-priority open design is the **all-windows Δ→Δ on `fin22d`** with a balanced
+   denominator declared in advance. Prediction stream unchanged and **CLOSED**: `account_t_d`
+   **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.

@@ -1,5 +1,13 @@
 # A balance-sheet window: formal saving, digital rails and resource-graded use in developing economies, 2021–2024
 
+> **SUPERSEDED 2026-08-25 by `PAPER_DRAFT_v5.md`.** This file is kept as the historical record and
+> must not be cited. Its CORRECTIONS OWED block below is **closed and frozen at two items, BOTH
+> EXECUTED in v5**: item 1 (the reporting-set limitation stated as unquantified) is discharged by v5
+> §10 Result 7 and §12 item 3; item 2 (the two standing keeps whose aggregate 2021→24 direction is
+> wrong on a balanced set) is discharged by v5 §2 Table 1 and §7. Two further statements in this file
+> are known wrong and are corrected in v5 rather than here: "the counter-moving margins are
+> payment-mode items" (v5 §8.1) and E22's regional intensity reading (v5 §5).
+
 **Working-paper draft v4 (2026-08-20).** Descriptive evidence from a pre-registered experiment
 ledger over the Global Findex 2025 database (117-economy balanced panel, 2011–2024) and the 2024
 individual-level file (144,090 respondents, 140 economies).
