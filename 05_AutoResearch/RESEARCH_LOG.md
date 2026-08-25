@@ -8532,3 +8532,53 @@ itself regionally selected, which is a property of the indicator and not attriti
    producing `PAPER_DRAFT_v5.md` and executing E55's two outstanding corrections with E56's
    numbers.** Prediction stream unchanged and **CLOSED**: `account_t_d` **5.014**, `fin17a_17a1_d`
    **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-25 — B18 DISTILLATION CYCLE (no experiments registered)
+
+## Mandatory cycle-start checks
+
+**B1 coverage run (done before anything else; computes no outcome, so not a peek).** Country file
+**107 of 429 columns touched (25%)**, unchanged since E57x opened `fin22`. The only fully untouched
+country module is `con` (133 columns) and it stays **blocked** — numeric codes, no questionnaire
+(`HARNESS_V2_NOTES` 5–6). Micro **93 of 192 (48%)**; the only untouched micro family is `con` (52,
+blocked), with `fin22` (1 of 9) and `dig_account` (1) thin but reachable. Frames: `urbanicity` is
+still the only untouched country frame and is single-wave. All four wave transitions are now used
+(24 / 84 / 143 / 313 ledger mentions for 2011→14 / 2014→17 / 2017→21 / 2021→24).
+
+**B18 distillation-trigger check, read against the highest-numbered draft `PAPER_DRAFT_v4.md`
+(B18 amendment 2026-08-16).**
+
+- **Corrections branch: 2 of 5** — E55's two items, annotated with E56's replacement numbers and
+  still **not executed**. Does not fire on its own.
+- **Count branch: 12 of 10 — FIRES.** Twelve experiments since the 2026-08-20 rewrite: U24x, U24,
+  E55, U25x, U25, E56, U26x, U26, U27, E57x, E57, E58.
+- **⇒ B18 FIRES on the count branch. This is a distillation/rewrite cycle and it registers NO new
+  experiments.** The previous cycle recorded this consequence in advance and it is honoured as
+  written.
+
+**B2 / B3 / B17.** Not applicable to a rewrite cycle, which runs no experiments. B17's micro quota
+was paid in three of the last four cycles (U24, U25, U26/U27) and is **owed by the first cycle after
+this rewrite**, together with B2's breadth cell — by default `urbanicity`, the last untouched country
+frame, since the reachable untouched micro surface was declared exhausted by U26x.
+
+## The rewrite's scope, fixed before writing
+
+1. **Execute E55's two outstanding corrections with E56's replacement numbers** (the corrections
+   branch closes at 0 and v4's block is frozen).
+2. **Retire the standing sentence "the counter-moving margins are payment-mode items"** (agenda 11.1,
+   E57).
+3. **Retire E22's regional intensity sentence** (agenda 11.3, E58) and record the promotion as
+   FAILED rather than not attempted.
+4. **Fold in** U24, U27 and the three module openings (U24x, U25x, U26x) on the micro side; E55, E56,
+   E57x, E57, E58 on the country side; and the two denominator results (U25, U26) as a method.
+5. **Rewrite §12 limitation 3 and §13 item 1**: the ledger-wide reporting-set audit the draft called
+   its largest *unquantified* risk has been run, and it is now quantified.
+
+## The rewrite, executed — 2026-08-25
+
+`PAPER_DRAFT_v5.md` written; `PAPER_DRAFT_v4.md` marked **SUPERSEDED** with its corrections block
+closed and frozen at two items, **both executed**. v4's Appendix B discharge tables for v2 and v3 are
+carried forward as v5's Appendix B. The B18 counter resets here: the next count branch runs from
+2026-08-25 at experiment count 95.
