@@ -1,0 +1,78 @@
+============================================================================================================
+E59 — all-windows delta->delta on `fin22d` (agenda item 11.2). Parent E57.
+      registered sign NEGATIVE; bar r <= -0.30 in ALL THREE windows on BOTH lenses
+============================================================================================================
+
+B20 DENOMINATOR (declared before the run: economies reporting BOTH items in ALL FOUR waves)
+  2014: fin22d reported by 77 economies, g20_any by 77
+  2017: fin22d reported by 77 economies, g20_any by 77
+  2021: fin22d reported by 77 economies, g20_any by 77
+  2024: fin22d reported by 76 economies, g20_any by 76
+  FIXED SET: 76 economies (of 77 ever reporting). Dropped 1 = 2.6% of that adult population.
+  dropped economies NAMED: Russian Federation
+
+B16 PATH (population-weighted developing-panel level, pp, on the FIXED 76-economy set)
+  fin22d       2014  14.7  2017  11.0  2021  17.5  2024  19.9   [NON-MONOTONE]
+  g20_any      2014  33.6  2017  43.9  2021  55.1  2024  60.9   [monotone rising]
+  account_t_d  2014  54.1  2017  64.3  2021  69.7  2024  75.2   [monotone rising]
+
+============================================================================================================
+PRIMARY — r(d fin22d, d g20_any), all three windows, FIXED economy set
+============================================================================================================
+  2014->2017 fixed set         n=76  neff   7.2   r_w +0.130  r_u +0.157   G6 +0.072 (sign kept, E4 ret 0.55)
+                               boot [-0.273,+0.470]  p_boot 0.593   largest LOO China -0.123
+  2014->2017 pairwise          n=77  r_w +0.137  r_u +0.158   [reporting-set movement vs fixed: dr_w +0.007, dr_u +0.001]
+
+  2017->2021 fixed set         n=76  neff   7.2   r_w -0.295  r_u -0.215   G6 -0.305 (sign kept, E4 ret 1.03)
+                               boot [-0.606,+0.177]  p_boot 0.221   largest LOO India +0.172
+  2017->2021 pairwise          n=77  r_w -0.303  r_u -0.217   [reporting-set movement vs fixed: dr_w -0.008, dr_u -0.003]
+
+  2021->2024 fixed set         n=76  neff   7.2   r_w +0.355  r_u +0.246   G6 +0.211 (sign kept, E4 ret 0.59)
+                               boot [+0.114,+0.543]  p_boot 0.002   largest LOO India -0.118
+  2021->2024 pairwise          n=76  r_w +0.355  r_u +0.246   [reporting-set movement vs fixed: dr_w +0.000, dr_u +0.000]
+
+REGISTERED KEEP CONDITION (all three windows, both lenses)
+  2014->2017  weighted bar FAIL (r_w +0.130, sign kept, ret 0.55, boot excl 0 no)   unweighted bar FAIL (r_u +0.157)
+  2017->2021  weighted bar FAIL (r_w -0.295, sign kept, ret 1.03, boot excl 0 no)   unweighted bar FAIL (r_u -0.215)
+  2021->2024  weighted bar FAIL (r_w +0.355, sign kept, ret 0.59, boot excl 0 no)   unweighted bar FAIL (r_u +0.246)
+
+  weighted-lens failures:   [(2014, 2017), (2017, 2021), (2021, 2024)]
+  unweighted-lens failures: [(2014, 2017), (2017, 2021), (2021, 2024)]
+
+  ==> DISCARD the delta claim — E57's CROSS-SECTIONAL keep stands unchanged (registered in advance; E48/E50 precedent)
+
+B21 DEPTHS (computed only where the two lenses disagree against the bar)
+  no window has the lenses disagreeing against the bar — not computed (as registered)
+
+============================================================================================================
+SECONDARY 1 (no bar) — the 2014->2024 long difference, fixed set
+============================================================================================================
+  2014->2024 fixed set         n=76  neff   7.2   r_w +0.072  r_u +0.125   G6 +0.055 (sign kept, E4 ret 0.76)
+                               boot [-0.249,+0.410]  p_boot 0.615   largest LOO Mexico -0.103
+
+============================================================================================================
+SECONDARY 2 (no bar) — the same design against d account_t_d (E47/E57 anchor distinction)
+============================================================================================================
+  fixed set for this pair: 76 economies
+  2014->2017                   n=76  neff   7.2   r_w -0.286  r_u +0.088   G6 +0.163 (sign LOST, E4 ret 0.57)
+                               boot [-0.569,+0.204]  p_boot 0.367   largest LOO India +0.273
+  2017->2021                   n=76  neff   7.2   r_w -0.448  r_u -0.172   G6 -0.288 (sign kept, E4 ret 0.64)
+                               boot [-0.709,+0.146]  p_boot 0.174   largest LOO India +0.312
+  2021->2024                   n=76  neff   7.2   r_w +0.306  r_u +0.186   G6 +0.174 (sign kept, E4 ret 0.57)
+                               boot [+0.036,+0.531]  p_boot 0.032   largest LOO India -0.124
+  2014->2024                   n=76  neff   7.2   r_w +0.305  r_u +0.157   G6 +0.136 (sign kept, E4 ret 0.45)
+                               boot [-0.077,+0.512]  p_boot 0.160   largest LOO India -0.232
+
+============================================================================================================
+SECONDARY 3 (no bar) — agenda item 12.2: the denominator re-check owed on fin31d, fin34c
+============================================================================================================
+
+  fin34c  all-adult denominator (as published): r_w -0.552  r_u -0.486   n=71
+       conditional on `fin32`:            r_w -0.773  r_u -0.735   n=71
+       base factor r(fin32, g20_any):        r_w +0.411  r_u +0.599
+       => classification does NOT move between denominators
+
+  fin31d  all-adult denominator (as published): r_w -0.401  r_u -0.358   n=71
+       conditional twin: NOT IDENTIFIED — the only candidate base in the repo is the
+       anchor `g20_any` itself, so the conditional correlation would be circular. Declared
+       in the pre-registration; NOT computed. (`fin31d_s` is a different item, notes 10.)
