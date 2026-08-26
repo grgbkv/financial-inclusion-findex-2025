@@ -4,7 +4,7 @@
 
 This file is the required cycle read (rule: Documentation obligation 1, 2026-08-15c). `RESEARCH_LOG.md` stays the append-only record and is consulted by `grep` for one experiment at a time, never front to back.
 
-**86 logged experiments** · 40 keeps · 38 prediction rows
+**98 logged experiments** · 41 keeps · 38 prediction rows
 
 ## Status counts
 
@@ -12,25 +12,25 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 |---|---|
 | `keep-general` | 6 |
 | `keep-general-unweighted` | 1 |
-| `keep` | 23 |
+| `keep` | 24 |
 | `keep-window` | 10 |
 | `inconclusive` | 2 |
 | `discard-weighted` | 4 |
-| `discard` | 37 |
-| `exploratory` | 3 |
+| `discard` | 44 |
+| `exploratory` | 7 |
 
 ## Design families
 
 | design | n | keeps |
 |---|---|---|
-| `micro-cross-section` | 26 | 17 |
+| `micro-cross-section` | 28 | 17 |
 | `delta-delta` | 19 | 9 |
-| `measurement` | 8 | 1 |
+| `measurement` | 15 | 2 |
 | `level-to-change` | 7 | 0 |
+| `delta-delta-multi` | 7 | 3 |
 | `partial` | 6 | 3 |
 | `gap-trajectory` | 6 | 2 |
-| `delta-delta-multi` | 5 | 3 |
-| `audit` | 5 | 1 |
+| `audit` | 6 | 1 |
 | `distribution` | 2 | 2 |
 | `level-cross-section` | 1 | 1 |
 | `long-difference` | 1 | 1 |
@@ -69,6 +69,7 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E39` | keep | distribution | all4 | — / — | — / — | The 2021-24 formal-saving surge IS a within-country episode, not an aggregate artifact -- but it is a BALANCE-SHEET win… |
 | `E40` | keep | audit | all windows | — / — | — / 9.5 | Ledger-wide BH + de-weighting audit (33 association tests, six designs, three windows): the kept ledger survives BH on … |
 | `E47` | keep | measurement | 2024 | -0.552 / -0.486 | 71 / 7.2 | The untouched fin34 wage-payment-mode module contains a SECOND counter-moving margin, in a different module from E45 fi… |
+| `E57` | keep | measurement | 2024 | -0.557 / -0.400 | 76 / 7.2 | A THIRD counter-moving country-level margin exists and it is the FIRST that is not a payment-mode item: in the 2024 dev… |
 | `E22` | keep-window | delta-delta | 2021->2024 | — / — | — / — | The E1 mobile-money~saving-surge co-movement is a general developing-world regularity, not a Sub-Saharan Africa story (… |
 | `E23` | keep-window | partial | 2021->2024 | — / — | — / — | Mobile-money growth and digital-payment growth are two SEPARATE rails into the 2021-24 formal-saving surge, not one dig… |
 | `E24` | keep-window | partial | 2021->2024 | — / — | — / — | Wage digitalization is a third separate rail into the 2021-24 formal-saving surge, not the account-usage face of the di… |
@@ -143,6 +144,11 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E53` | keep-window | distribution | 2014-2017-2021-2024 (path) / 2021-2024 (rebound) | pan_dev | none (design ancestor E39) | MARGIN-DEPENDENT KEEP plus a PREMISE CORRECTION: the aggregate four-item 2021-24 cash rebound (agenda it… |
 | `E54` | discard | audit | 2014-2017 / 2017-2021 / 2021-2024 | pan_dev | E52 | Registered POPULATION-GRADIENT claim REJECTED: within-tercile association strength does NOT rise with ec… |
 | `E55` | discard | audit | 2011-2014 / 2014-2017 / 2017-2021 / 2021-2024 | pan_dev | E53 | Registered LOCALIZATION claim REJECTED (Branch 3): the reporting-set risk rule B20 exposes is NOT confin… |
+| `E56` | discard | audit | 2021-2024 (block test) / 2014-2017-2021-2024 (balanced paths) | pan_dev | E55 | Registered SINGLE-BLOCK claim REJECTED as registered (70.5% against an 80% bar) but the failure is carri… |
+| `E57x` | exploratory | measurement | 2014-2017-2021-2024 | pan_dev | na | EXPLORATORY mapping pass OPENS the ledger's thinnest reachable country module, `fin22` borrowing sources… |
+| `E57` | keep | measurement | 2024 | pan_dev | none | A THIRD counter-moving country-level margin exists and it is the FIRST that is not a payment-mode item: … |
+| `E58` | discard | delta-delta-multi | 2014->17|2017->21|2021->24 | pan_dev split by regionwb24_hi (SSA / five other developing regions pooled) | E22 | Registered PROMOTION of E22 REJECTED and E22 stays `keep-window`: the mobile-money~formal-saving co-move… |
+| `E59` | discard | delta-delta-multi | 2014->17|2017->21|2021->24 (primary) + 2014->2024 (secondary) | pan_dev, B20 fixed 76-economy set (all four waves, both items) | E57 | Registered DELTA claim REJECTED, and the failure is a SIGN REVERSAL ACROSS WINDOWS rather than a null: E… |
 | `M1` | keep | micro-cross-section | 2024 | micro | — | Not enough money (fin11a) barrier among unbanked adults is an income-graded reason, most cited by the po… |
 | `U1` | discard | micro-cross-section | 2024 | micro | — | Gender gap in account ownership is wider among the poorest income quintile than the richest (2024 wave, … |
 | `M2` | keep | micro-cross-section | 2024 | micro | — | Mobile-only accountholders are younger and less educated than bank-only accountholders (2024 wave) |
@@ -170,6 +176,13 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `U23` | keep | micro-cross-section | 2024 | micro | U14 | The last-mile education gradient in DIGITAL PAYMENT MODE is a property of the ADULT, not of one payer: c… |
 | `U24x` | exploratory | measurement | 2024 | micro | na | EXPLORATORY mapping pass OPENS the untouched micro emergency-fund module: the 11 columns carry NUMERIC c… |
 | `U24` | keep | micro-cross-section | 2024 | micro (98-economy module set) | none | The access-absorption ruler does NOT transfer from usage to welfare: account holding absorbs 56.9% of th… |
+| `U25x` | exploratory | measurement | 2024 | micro (36-economy mobile-money module set) | na | EXPLORATORY mapping pass OPENS the untouched fin13/fin14 mobile-money usage module and finds a BLOCK STR… |
+| `U25` | discard | measurement | 2024 | micro (36-economy mobile-money module set) | none | Registered four-way orientation screen on the newly-opened fin13/fin14 mobile-money usage module is a DI… |
+| `U26x` | exploratory | measurement | 2024 | micro (90-economy fin39 split sample / 82-economy fin48-fin49 battery) | na | EXPLORATORY structural mapping pass OPENS the last two reachable untouched micro families and returns a … |
+| `U26` | discard | measurement | 2024 | micro (61-economy fin39 M2-filtered split sample) | none | Registered four-way orientation screen on the newly-opened fin39 module is a DISCARD -- 0 counter-moving… |
+| `U27` | discard | micro-cross-section | 2024 | micro (98-economy emergency-fund module set) | U24 | Registered SOURCE-COMPOSITION claim REJECTED on one of its two magnitude bars, and the rejection carries… |
+| `U28x` | exploratory | measurement | 2024 | micro (98-economy fin22 module set) | na | EXPLORATORY mapping pass OPENS the last reachable untouched micro family, the 9-column `fin22` borrowing… |
+| `U28` | discard | micro-cross-section | 2024 | micro (98-economy fin22 module set) | E57 (subject); design ancestor U24 | Registered SUBSTITUTION claim REJECTED on two of its three legs, and the rejection is the informative ha… |
 
 ## Prediction stream (CLOSED at P28)
 

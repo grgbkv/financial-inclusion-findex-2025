@@ -1,0 +1,203 @@
+================================================================================================
+U25x — EXPLORATORY mapping pass, micro MOBILE-MONEY USAGE module (13 untouched columns)
+================================================================================================
+col         n_nonmiss     share   n_econ  n_econ>=100
+fin13_1          9633      6.7%       36           26
+fin13a          16410     11.4%       36           34
+fin13b          16410     11.4%       36           34
+fin13c          16410     11.4%       36           34
+fin13d          16410     11.4%       36           34
+fin13e          16410     11.4%       36           34
+fin13f          16410     11.4%       36           34
+fin13f_1         4305      3.0%       36           17
+fin14a          15100     10.5%       36           35
+fin14b          15100     10.5%       36           35
+fin14c          15100     10.5%       36           35
+fin14d          15100     10.5%       36           35
+fin14e          15100     10.5%       36           35
+
+DENOMINATOR STRUCTURE — 36 module economies, 36093 respondents in those economies, 16410 asked fin13a
+  share of each module economy's respondents asked fin13a: min 6.2% median 49.6% max 88.9%
+  => WITHIN-ECONOMY CONDITIONAL subsample
+  account_mob inside the module sample: mean 1.000, n_nonnull 16410  (variance usable: NO)
+  fin13_1 sample vs fin13a sample: 9633 vs 16410 respondents
+  BLOCK STRUCTURE: fin13a n=16410 (account_mob mean 1.000) | fin14a n=15100 (account_mob mean 0.000) | overlap 0 respondents
+  => the two blocks are DISJOINT COMPLEMENTARY subsamples: fin13 is asked of mobile-money HOLDERS, fin14 of NON-holders (any-account rate 0.214 among them).
+
+BEST single-code match per code, TWO denominators:  [own] = the column's own nonmissing set;  [pop] = all respondents in the 36 economies
+  [pop] fin13_1   code 1   -> fin13_1a       med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13_1   code 2   -> fin13_1b       med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13_1   code 3   -> fin13cn        med|dev|=  0.668 max=  5.656 (n=36) close
+  [pop] fin13a    code 1   -> fin13aw        med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13a    code 2   -> fin13am        med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13a    code 3   -> fin13alm       med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13a    code 4   -> fin13an        med|dev|=  0.025 max=  0.825 (n=36) IDENT
+  [pop] fin13a    code 5   -> fin13cn        med|dev|=  0.828 max=  5.645 (n=36) close
+  [pop] fin13b    code 1   -> fin13bw        med|dev|=  0.123 max=  0.767 (n=36) close
+  [pop] fin13b    code 2   -> fin13bm        med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13b    code 3   -> fin13blm       med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13b    code 4   -> fin13bn        med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13b    code 5   -> fin13cn        med|dev|=  0.837 max=  5.645 (n=36) close
+  [pop] fin13c    code 1   -> fin13cw        med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13c    code 2   -> fin13cm        med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13c    code 3   -> fin13clm       med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13c    code 4   -> fin13cn        med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13c    code 5   -> fin13cn        med|dev|=  0.640 max=  5.618 (n=36) close
+  [pop] fin13e    code 1   -> fin13e         med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13f    code 1   -> fin13f         med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin13f_1  code 1   -> fin13f_1       med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin14a    code 1   -> fin14a         med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin14b    code 1   -> fin14b         med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [own] fin14c    code 3   -> fin13cn        med|dev|=  0.828 max=  4.978 (n=36) close
+  [pop] fin14c    code 1   -> fin14c         med|dev|=  0.489 max=  2.568 (n=36) close
+  [pop] fin14c    code 3   -> fin13cn        med|dev|=  0.955 max=  5.454 (n=36) close
+  [own] fin14d    code 3   -> fin13cn        med|dev|=  0.843 max=  4.565 (n=36) close
+  [pop] fin14d    code 1   -> fin14d         med|dev|=  0.000 max=  0.000 (n=36) IDENT
+  [pop] fin14d    code 3   -> fin13cn        med|dev|=  0.819 max=  5.247 (n=36) close
+
+IDENTIFIED (median |dev| <= 0.10pp): 19 code-cells
+
+PARTITION CHECK (weighted composition of each column over its own denominator):
+  fin13_1   1: 59.3%  2: 37.8%  3:  2.5%  4:  0.4%
+  fin13a    1: 22.6%  2: 34.3%  3: 37.9%  4:  4.1%  5:  1.1%  6:  0.1%
+  fin13b    1: 20.1%  2: 29.9%  3: 41.6%  4:  7.0%  5:  1.1%  6:  0.1%
+  fin13c    1: 27.2%  2: 29.4%  3: 37.9%  4:  3.9%  5:  1.4%  6:  0.2%
+  fin13d    1: 61.5%  2: 38.2%  3:  0.1%  4:  0.1%
+  fin13e    1: 33.9%  2: 66.0%  3:  0.1%  4:  0.0%
+  fin13f    1: 24.9%  2: 74.9%  3:  0.1%  4:  0.0%
+  fin13f_1  1: 47.4%  2: 52.4%  3:  0.2%
+  fin14a    1: 30.8%  2: 65.8%  3:  3.2%  4:  0.2%
+  fin14b    1: 29.3%  2: 63.9%  3:  6.5%  4:  0.2%
+  fin14c    1: 32.2%  2: 66.1%  3:  1.5%  4:  0.2%
+  fin14d    1: 63.4%  2: 35.6%  3:  0.7%  4:  0.3%
+  fin14e    1: 24.3%  2: 73.1%  3:  2.4%  4:  0.2%
+
+screenable items: 19 (each in TWO denominators: population and own-block)
+
+================================================================================================
+U25 — four-way orientation screen vs `g20_any  [POPULATION denominator]`
+================================================================================================
+item                           r_w     r_u            class      n     neff G6 / largest LOO      
+fin13_1=1 [fin13_1a]        +0.589  +0.676          aligned     36     11.7  drop5 +0.575 / Nigeria +0.149
+                             bootstrap 2,000 economy draws: [+0.233, +0.923]  p_boot=0.003
+fin13_1=2 [fin13_1b]        +0.625  +0.611          aligned     36     11.7  drop5 +0.521 / Nigeria +0.115
+                             bootstrap 2,000 economy draws: [+0.228, +0.892]  p_boot=0.001
+fin13a=1 [fin13aw]          +0.814  +0.758       mixed-lens     36     11.7  drop5 +0.757 / South Africa +0.083
+fin13a=2 [fin13am]          +0.804  +0.851      restatement     36     11.7  drop5 +0.833 / Pakistan +0.068
+                             bootstrap 2,000 economy draws: [+0.610, +0.953]  p_boot=0.000
+fin13a=3 [fin13alm]         +0.689  +0.689          aligned     36     11.7  drop5 +0.569 / Nigeria +0.085
+                             bootstrap 2,000 economy draws: [+0.367, +0.905]  p_boot=0.001
+fin13a=4 [fin13an]          +0.583  +0.452          aligned     36     11.7  drop5 +0.342 / Pakistan -0.112
+                             bootstrap 2,000 economy draws: [+0.233, +0.779]  p_boot=0.004
+fin13b=2 [fin13bm]          +0.776  +0.843       mixed-lens     36     11.7  drop5 +0.812 / Pakistan +0.067
+fin13b=3 [fin13blm]         +0.674  +0.714          aligned     36     11.7  drop5 +0.581 / Nigeria +0.105
+                             bootstrap 2,000 economy draws: [+0.327, +0.916]  p_boot=0.001
+fin13b=4 [fin13bn]          +0.352  +0.411          aligned     36     11.7  drop5 +0.311 / Pakistan -0.152
+                             bootstrap 2,000 economy draws: [-0.117, +0.716]  p_boot=0.126
+fin13c=1 [fin13cw]          +0.846  +0.790       mixed-lens     36     11.7  drop5 +0.781 / South Africa +0.066
+fin13c=2 [fin13cm]          +0.726  +0.802       mixed-lens     36     11.7  drop5 +0.741 / Nigeria +0.072
+fin13c=3 [fin13clm]         +0.648  +0.690          aligned     36     11.7  drop5 +0.585 / Nigeria +0.124
+                             bootstrap 2,000 economy draws: [+0.304, +0.910]  p_boot=0.002
+fin13c=4 [fin13cn]          +0.621  +0.502          aligned     36     11.7  drop5 +0.529 / Nigeria +0.070
+                             bootstrap 2,000 economy draws: [+0.300, +0.789]  p_boot=0.002
+fin13e=1 [fin13e]           +0.736  +0.766          aligned     36     11.7  drop5 +0.735 / Kenya -0.090
+                             bootstrap 2,000 economy draws: [+0.438, +0.950]  p_boot=0.000
+fin13f=1 [fin13f]           +0.689  +0.711          aligned     36     11.7  drop5 +0.678 / Nigeria +0.075
+                             bootstrap 2,000 economy draws: [+0.400, +0.923]  p_boot=0.000
+fin13f_1=1 [fin13f_1]       +0.660  +0.651          aligned     36     11.7  drop5 +0.635 / Nigeria +0.061
+                             bootstrap 2,000 economy draws: [+0.410, +0.863]  p_boot=0.001
+fin14a=1 [fin14a]           -0.611  -0.760   counter-moving     36     11.7  drop5 -0.832 / Bangladesh -0.161
+                             bootstrap 2,000 economy draws: [-0.878, -0.308]  p_boot=0.001
+fin14b=1 [fin14b]           -0.685  -0.744   counter-moving     36     11.7  drop5 -0.834 / Bangladesh -0.095
+                             bootstrap 2,000 economy draws: [-0.917, -0.424]  p_boot=0.001
+fin14d=1 [fin14d]           -0.945  -0.900      restatement     36     11.7  drop5 -0.921 / Kenya +0.012
+                             bootstrap 2,000 economy draws: [-0.974, -0.905]  p_boot=0.000
+
+REGISTERED KEEP CONDITION (>=1 counter-moving on BOTH lenses, G6 sign-stable, bootstrap excluding zero):
+  fin14a=1 [fin14a]          G6 sign OK | CI excludes 0 OK -> KEEP
+  fin14b=1 [fin14b]          G6 sign OK | CI excludes 0 OK -> KEEP
+
+classification counts vs g20_any: {'aligned': np.int64(11), 'mixed-lens': np.int64(4), 'restatement': np.int64(2), 'counter-moving': np.int64(2)}
+G4 (declared frame = the module's own economy set): 36 economies, 16.3% of country-file 2024 adult population
+income mix of the module set: {'Lower middle income': np.int64(16), 'Low income': np.int64(16), 'Upper middle income': np.int64(4)}
+
+================================================================================================
+U25 — four-way orientation screen vs `g20_any  [OWN-BLOCK conditional denominator]`
+================================================================================================
+item                           r_w     r_u            class      n     neff G6 / largest LOO      
+fin13_1=1 [fin13_1a]        +0.062  +0.251      independent     36     11.7  drop5 +0.184 / Ethiopia -0.498
+fin13_1=2 [fin13_1b]        -0.071  -0.222      independent     36     11.7  drop5 -0.146 / Ethiopia +0.558
+fin13a=1 [fin13aw]          +0.511  +0.249       mixed-lens     36     11.7  drop5 +0.369 / South Africa +0.112
+fin13a=2 [fin13am]          -0.307  +0.123       mixed-lens     36     11.7  drop5 +0.187 / Pakistan +0.513
+fin13a=3 [fin13alm]         -0.044  -0.222      independent     36     11.7  drop5 -0.375 / Pakistan -0.416
+fin13a=4 [fin13an]          -0.289  -0.396       mixed-lens     36     11.7  drop5 -0.563 / Pakistan -0.309
+fin13b=2 [fin13bm]          -0.289  -0.038      independent     36     11.7  drop5 -0.087 / Pakistan +0.467
+fin13b=3 [fin13blm]         -0.034  -0.113      independent     36     11.7  drop5 -0.294 / Pakistan -0.214
+fin13b=4 [fin13bn]          -0.255  -0.227      independent     36     11.7  drop5 -0.334 / Pakistan -0.250
+fin13c=1 [fin13cw]          +0.479  +0.340          aligned     36     11.7  drop5 +0.545 / Kenya -0.055
+                             bootstrap 2,000 economy draws: [+0.185, +0.722]  p_boot=0.008
+fin13c=2 [fin13cm]          -0.446  -0.059       mixed-lens     36     11.7  drop5 -0.181 / Pakistan +0.331
+fin13c=3 [fin13clm]         -0.091  -0.188      independent     36     11.7  drop5 -0.321 / Pakistan -0.225
+fin13c=4 [fin13cn]          -0.110  -0.234      independent     36     11.7  drop5 -0.272 / Ethiopia +0.241
+fin13e=1 [fin13e]           +0.368  +0.428          aligned     36     11.7  drop5 +0.415 / Kenya -0.145
+                             bootstrap 2,000 economy draws: [-0.144, +0.764]  p_boot=0.143
+fin13f=1 [fin13f]           +0.490  +0.338          aligned     36     11.7  drop5 +0.363 / Kenya -0.232
+                             bootstrap 2,000 economy draws: [-0.205, +0.804]  p_boot=0.136
+fin13f_1=1 [fin13f_1]       +0.493  +0.072       mixed-lens     36     11.7  drop5 +0.093 / Pakistan -0.188
+fin14a=1 [fin14a]           -0.073  -0.322       mixed-lens     36     11.7  drop5 -0.543 / Bangladesh -0.176
+fin14b=1 [fin14b]           -0.245  -0.247      independent     36     11.7  drop5 -0.350 / Pakistan +0.329
+fin14d=1 [fin14d]           -0.556  -0.396   counter-moving     36     11.7  drop5 -0.515 / Pakistan -0.078
+                             bootstrap 2,000 economy draws: [-0.759, -0.150]  p_boot=0.017
+
+BOTH-DENOMINATOR COMPARISON on the population-denominator counter-movers:
+  fin14a=1 [fin14a]          pop: r_w -0.611 r_u -0.760 (counter-moving)  |  conditional: r_w -0.073 r_u -0.322 (mixed-lens)
+  fin14b=1 [fin14b]          pop: r_w -0.685 r_u -0.744 (counter-moving)  |  conditional: r_w -0.245 r_u -0.247 (independent)
+
+COMPLEMENT-DENOMINATOR DECOMPOSITION (is the counter-movement the item or the 1 - mobile-money-rate factor?):
+  r(100 - mobileaccount_t_d, g20_any) over the 36 module economies: weighted -0.903, unweighted -0.938 -> class restatement
+
+BH FAMILY-WISE CORRECTION over the 19 conditional-denominator tests vs g20_any (q = 0.10):
+  fin13c=1 [fin13cw]         p_boot=0.0080  BH crit=0.0053  
+  fin14d=1 [fin14d]          p_boot=0.0160  BH crit=0.0105  
+  fin13a=1 [fin13aw]         p_boot=0.0330  BH crit=0.0158  
+  fin13f_1=1 [fin13f_1]      p_boot=0.0560  BH crit=0.0211  
+  fin13f=1 [fin13f]          p_boot=0.1270  BH crit=0.0263  
+  fin13e=1 [fin13e]          p_boot=0.1500  BH crit=0.0316  
+  fin13c=2 [fin13cm]         p_boot=0.2100  BH crit=0.0368  
+  fin13a=4 [fin13an]         p_boot=0.2360  BH crit=0.0421  
+  fin13b=4 [fin13bn]         p_boot=0.2710  BH crit=0.0474  
+  fin14b=1 [fin14b]          p_boot=0.4700  BH crit=0.0526  
+  fin13b=2 [fin13bm]         p_boot=0.5370  BH crit=0.0579  
+  fin13a=2 [fin13am]         p_boot=0.5880  BH crit=0.0632  
+  fin14a=1 [fin14a]          p_boot=0.5990  BH crit=0.0684  
+  fin13c=3 [fin13clm]        p_boot=0.6430  BH crit=0.0737  
+  fin13c=4 [fin13cn]         p_boot=0.7050  BH crit=0.0789  
+  fin13a=3 [fin13alm]        p_boot=0.8520  BH crit=0.0842  
+  fin13b=3 [fin13blm]        p_boot=0.8620  BH crit=0.0895  
+  fin13_1=2 [fin13_1b]       p_boot=0.8640  BH crit=0.0947  
+  fin13_1=1 [fin13_1a]       p_boot=0.9040  BH crit=0.1000  
+  BH rejects 0 of 19; fin14d in the rejected set: NO
+
+================================================================================================
+U25 — four-way orientation screen vs `mobileaccount_t_d  [POPULATION denominator]`
+================================================================================================
+item                           r_w     r_u            class      n     neff G6 / largest LOO      
+fin13_1=1 [fin13_1a]        +0.847  +0.844      restatement     36     11.7  drop5 +0.850 / Nigeria +0.055
+fin13_1=2 [fin13_1b]        +0.848  +0.769       mixed-lens     36     11.7  drop5 +0.779 / Kenya -0.043
+fin13a=1 [fin13aw]          +0.901  +0.827      restatement     36     11.7  drop5 +0.899 / Kenya -0.033
+fin13a=2 [fin13am]          +0.916  +0.866      restatement     36     11.7  drop5 +0.922 / Pakistan +0.040
+fin13a=3 [fin13alm]         +0.864  +0.812      restatement     36     11.7  drop5 +0.790 / Kenya -0.021
+fin13a=4 [fin13an]          +0.645  +0.479          aligned     36     11.7  drop5 +0.393 / Pakistan -0.062
+fin13b=2 [fin13bm]          +0.906  +0.876      restatement     36     11.7  drop5 +0.912 / Pakistan +0.041
+fin13b=3 [fin13blm]         +0.874  +0.840      restatement     36     11.7  drop5 +0.820 / Nigeria +0.027
+fin13b=4 [fin13bn]          +0.423  +0.428          aligned     36     11.7  drop5 +0.318 / Bangladesh +0.134
+fin13c=1 [fin13cw]          +0.878  +0.837      restatement     36     11.7  drop5 +0.892 / Kenya -0.049
+fin13c=2 [fin13cm]          +0.881  +0.852      restatement     36     11.7  drop5 +0.872 / Pakistan +0.044
+fin13c=3 [fin13clm]         +0.847  +0.810      restatement     36     11.7  drop5 +0.807 / Nigeria +0.037
+fin13c=4 [fin13cn]          +0.682  +0.466          aligned     36     11.7  drop5 +0.538 / Ghana -0.050
+fin13e=1 [fin13e]           +0.906  +0.852      restatement     36     11.7  drop5 +0.914 / Kenya -0.036
+fin13f=1 [fin13f]           +0.830  +0.793       mixed-lens     36     11.7  drop5 +0.808 / Kenya +0.054
+fin13f_1=1 [fin13f_1]       +0.779  +0.715          aligned     36     11.7  drop5 +0.741 / Kenya +0.033
+fin14a=1 [fin14a]           -0.609  -0.761   counter-moving     36     11.7  drop5 -0.843 / Bangladesh -0.193
+fin14b=1 [fin14b]           -0.577  -0.741   counter-moving     36     11.7  drop5 -0.871 / Bangladesh -0.111
+fin14d=1 [fin14d]           -0.903  -0.901      restatement     36     11.7  drop5 -0.877 / South Africa -0.026

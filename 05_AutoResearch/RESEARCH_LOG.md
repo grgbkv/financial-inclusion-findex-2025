@@ -7424,3 +7424,1626 @@ of its cells by ≥2pp. **Corrections are owed on `fin32_acc` (E10, `keep-genera
    `fin14` and `fin22` should be tried with it before being written off. B2's cell was paid by these
    eleven columns; **B17 paid by U24**, next due in three cycles. Prediction stream unchanged and
    **CLOSED**: `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-22 — pre-registration
+
+**B18 TRIGGER CHECK (rule B18, amended 2026-08-16 — read the highest-numbered draft).** Current
+draft is `PAPER_DRAFT_v4.md`. Corrections branch: **2 of 5** (both opened 2026-08-21 by E55). Count
+branch: **3 of 10** (U24x, U24, E55 since the 2026-08-20 rewrite). **Neither branch fires — this is
+a normal experiment cycle.**
+
+**B1 COVERAGE RUN (done before any hypothesis was chosen).** Country file 83 of 429 columns touched
+(19%); untouched families `con` (133, blocked — unlabelled twin), **`fin13` (30) and `fin14` (8)**.
+Micro file 62 of 192 (32%); untouched families `con` (52, blocked), `fin22` (9), **`fin13` (8)**,
+`fin48`/`fin49` (12), **`fin14` (5)**, `fin39` (4), `dig_account` (1). Wave transitions: all four
+used, 2021→24 still 304 mentions against 21 for 2011→14. Frames: `urbanicity` still untouched and
+single-wave.
+
+**COVERAGE CELLS THIS CYCLE LANDS ON (rule B2).** `fin13` + `fin14` — the mobile-money usage module
+— have **zero ledger mentions on either the country side or the micro side**, and the 36-economy
+module set is a **frame the ledger has never used**. That pays B2 twice over. E56 buys no new
+columns and buys its breadth in design (an audit over the touched set, as E55 did).
+
+**B17 (micro quota).** Paid 2026-08-21 by U24; next due in three cycles. U25x/U25 pay it again
+early, which is deliberate: the micro stream holds 23 of the ledger's 40 keeps.
+
+**B3 (lineage cap).** U25x/U25 **parent: none** (a new module). E56 **parent: E55**, which makes
+E53 → E55 → E56 a chain of **three** — the cap. **The next cycle may not extend this chain.**
+
+## Slot 1 — U25x (exploratory) + U25 (registered): the untouched `fin13`/`fin14` mobile-money usage module
+
+**PART A — U25x, MAPPING PASS, logged as EXPLORATORY under the peek rule (2026-07-11).** The 13 micro
+columns (`fin13_1`, `fin13a`–`fin13f_1`, `fin14a`–`fin14e`) carry **numeric codes**, not text labels,
+exactly as U24x found for the emergency-fund module. U24x's method is applied unchanged: for every
+column × every code, the per-economy weighted share is matched against every labelled country-file
+`fin13*`/`fin14*` column (38 columns), and a code is declared identified at **median |dev| ≤ 0.10pp**
+across the common economies. The pass also prints, for each column, the denominator (which
+respondents are asked), the module's economy count and its unweighted n. **Item meanings are inferred
+from the country column NAMES and from the share match only** — there is no questionnaire in the repo
+(`HARNESS_V2_NOTES.md` items 5–6) and that caveat travels with everything below.
+
+**M3 is the identification.** A code is only usable if its weighted micro share reproduces the
+country file within the M3 tolerance (1pp); the mapping *is* the gate, as in U24x.
+
+**Registered in advance about the denominator.** The module is fielded in **36 economies** and, on
+its face, is asked of a conditional subsample (mobile-money users). U25x reports whether the module
+sample is an **economy-level subsample** (all respondents in those 36) or a **within-economy
+conditional subsample**; if the latter, every statistic below is a conditional one and the claim text
+must say so. If `account_mob` has no usable variance inside the module sample, the module's own
+access anchor is dropped and the screen runs on the remaining anchors — declared here so the choice
+is not made after seeing the answer.
+
+**PART B — U25, THE FOUR-WAY ORIENTATION SCREEN (Documentation obligation 2), the registered
+primary.** Every identified item is aggregated to a **per-economy weighted share** and screened in
+the **2024 cross-section across the 36 module economies**, against the anchor `g20_any` (the
+digital-payment headline — E45/E47/E49/E51's anchor, so the numbers are comparable), **both lenses**
+(population-weighted and unweighted across economies):
+
+    restatement    |r| >= 0.80
+    aligned        +0.30 <= r < 0.80
+    counter-moving -0.80 < r <= -0.30
+    independent    |r| < 0.30
+    both lenses must AGREE, else `mixed-lens` (B9/B11)
+
+**REGISTERED KEEP CONDITION:** at least one item classifies as **`counter-moving` on BOTH lenses**,
+survives **G6** with the sign intact, and has a **bootstrap interval (2,000 economy draws) excluding
+zero**. A screen returning only restatement / aligned / independent items is a **DISCARD**.
+
+**REGISTERED SIGN (B15): the keep direction is NEGATIVE.** An item at r ≥ +0.80 is a restatement of
+the digital-payment headline and is the **opposite** result, not partial confirmation. Note in
+advance: a frequency question whose categories **partition** (weekly / monthly / less than monthly /
+never) will produce a mechanically negative "never" category — that is an **inverse restatement**,
+caught by the |r| ≥ 0.80 bar, and if it lands in the −0.30 to −0.80 band instead, the claim must
+name the partition and say which level of it the claim is about (E51's composition rule).
+
+**SECONDARY (registered, no bar):** the same screen against `mobileaccount_t_d` — the E47 distinction
+between "counter-moves with digital payment" and "counter-moves with the module's own access margin".
+
+**Declared limitations, in advance.** (i) n ≈ 36 economies against the ledger's usual 71–77: **G4 is
+reported and the frame is declared as *the economies that field the mobile-money usage module*, not
+the developing panel** — this is a composition statement about a self-selected set of economies.
+(ii) A 2024 cross-sectional **level** correlation is not a within-country dynamic statement (E48 is
+the standing proof the two come apart); no Δ claim is registered. (iii) G3: every `fin13`/`fin14`
+item is an unregistered narrow variant. **B6/B9/B10/B12 on every cell**: weighted and unweighted r,
+percentile bootstrap and `p_boot`, Kish `neff` beside nominal n, G6 drop-top-5, and the largest
+single leave-one-out effect **with the economy named**.
+
+## Slot 3 — E56 (agenda item 8.2): is the 2021→24 dropout ONE cause or many, and what do the balanced paths say?
+
+**Parent: E55** (chain E53 → E55 → E56, at the B3 cap). **This is an audit / measurement pass, not an
+association experiment**, so B14's long-difference-or-all-windows requirement does not bind — no
+co-movement is registered here. It is the agenda's item 8.2 and it discharges E55's two corrections.
+
+**Why it matters, stated before the run.** E55 found eight keep-backing cells biased ≥2pp by a
+five-or-six-economy item-level dropout between 2021 and 2024, all naming China. If those columns
+share **one** dropper set, the cause is a single release rule or a single questionnaire block and
+every affected claim can be corrected at once with a known adjustment. If the dropper sets are
+column-specific, each affected claim needs its own recomputation and the risk is open-ended.
+
+**REGISTERED PRIMARY.** Over every country column with ≥30 developing-panel economies reporting in
+2021 (E55's eligibility, unchanged), compute `D(col)` = the set of economies reporting the column in
+2021 and **not** in 2024. Restrict to columns with a **non-trivial drop** (|D| ≥ 3). Let `D*` be the
+**modal** dropper set. **Registered bar: ≥ 80% of non-trivially-dropping columns have Jaccard(D,
+D*) ≥ 0.90.** Meeting it is a **keep** for the claim *the 2021→24 dropout is a single block, not
+per-item attrition*; below the bar is a **discard**, and between-the-lines outcomes are reported at
+whatever the number is, without moving the bar.
+
+**REGISTERED SIGN / DIRECTION (B15):** the claim is that the sets **coincide** (Jaccard → 1). A
+result showing many distinct dropper sets of similar size is the **opposite** finding and is reported
+as such.
+
+**REGISTERED SECONDARY 1 (no bar, descriptive):** the module membership of the affected columns —
+whether `D*`'s columns fall in one questionnaire block (`fin30`–`fin34`, `fh`, …) or scatter across
+unrelated families. A single block supports "questionnaire module"; scattering supports "release
+rule".
+
+**REGISTERED SECONDARY 2 — the corrections owed (rule B16, path before span).** The **fully balanced
+four-wave path** (economies reporting the column in **all four** of 2014/2017/2021/2024, one fixed
+denominator, count and population share printed) for `fin32_acc` (E10's wage rail, `keep-general`)
+and `fh1`, `fh2`, `fh1_fh2` (E33's welfare margin, `keep-window`) — the two corrections E55 opened in
+`PAPER_DRAFT_v4.md`. The `fh` family exists only from 2021, so its balanced path is stated over the
+waves it has, and **any non-monotone path is stated in the claim text itself**. This is a measurement
+statement about aggregate direction; the E10/E33 **associations** are Δ→Δ and balanced by
+construction, and nothing here revisits them.
+
+**Declared.** No new column is opened; the audit set is the ledger's own touched set, so this cycle's
+B2 obligation rests entirely on U25x/U25 (which is why slot 1 went to a doubly-untouched module).
+Deferred by budget, and named here so it is not lost: **agenda item 4.6**, the education/income
+gradient in the *source* of emergency funds, which U24x opened and which is the strongest
+unregistered lead on the micro side.
+
+---
+
+## U25x — EXPLORATORY. The mobile-money usage module is open, and it is TWO blocks, not one
+
+Commit `3d6f39b`. Stream micro. Design `measurement`. Frame: the 36 economies that field the module.
+**Parent: none.** Nothing here is claimable (peek rule).
+
+**The identification failed as registered and succeeded on the second denominator, which is
+disclosed.** U24x's method run with the column's **own** nonmissing set as the denominator
+identified **0 of 40 code-cells** (best median |dev| 0.828pp). The reason is structural: the country
+twin is a share of **all adults** while the micro block is asked of a subsample. Re-run with the
+**population** denominator — all respondents in the 36 module economies — it identified **19
+code-cells, 18 of them at median |dev| of exactly 0.000pp and max 0.000pp on 36 economies**. Adding
+the second denominator is a mapping choice inside an exploratory pass, not a hypothesis test, and the
+registered U25 screen (anchor, bars, keep condition) was not touched.
+
+**What the module is.** `fin13a`/`fin13b`/`fin13c` are a **four-level frequency partition** —
+weekly / monthly / less than monthly / never = `fin13aw`/`am`/`alm`/`an` — over three different uses;
+`fin13_1`, `fin13e`, `fin13f`, `fin13f_1`, `fin14a`, `fin14b`, `fin14d` map one-to-one onto their
+country twins. `fin13d` and `fin14e` have **no country twin** and stay unidentified. Meanings beyond
+the column names are not available: there is no questionnaire in the repo (`HARNESS_V2_NOTES` 5–6).
+
+**The block structure is the durable deliverable, and the country file does not show it.**
+`fin13` is asked **only of mobile-money accountholders** (n = 16,410, `account_mob` mean **1.000**);
+`fin14` is asked **only of NON-holders** (n = 15,100, `account_mob` mean **0.000**, of whom just
+21.4% hold any account at all). The two blocks **overlap in exactly 0 respondents**. Any future use
+of `fin13` is conditional on holding mobile money and any use of `fin14` is conditional on not
+holding it — which is the fact that decides U25 below.
+
+## U25 — DISCARD. The screen's counter-movers are the DENOMINATOR, not the items
+
+Commit `3d6f39b`. Stream micro. Design `measurement`. Frame: 36 module economies, `neff` **11.7**.
+**Parent: none.** Registered sign: **negative**.
+
+**The registered condition was met on the population denominator — by two items that are an
+artifact.** `fin14a` (**−0.611 / −0.760**) and `fin14b` (**−0.685 / −0.744**) classify
+`counter-moving` on both lenses, keep their sign under G6 (drop-top-5 **−0.832 / −0.834**, i.e.
+stronger) and have bootstrap intervals **[−0.878, −0.308]** and **[−0.917, −0.424]** excluding zero.
+Every mechanical bar passes.
+
+**The decomposition retires them.** `fin14` items are asked of non-holders, so their population share
+is *(1 − mobile-money rate) × (rate within non-holders)*. Correlating the **complement factor alone**
+with the anchor gives **−0.903 / −0.938** — a `restatement` of `g20_any` by the screen's own bars.
+On their own block denominator both items collapse: `fin14a` to **−0.073 / −0.322** (`mixed-lens`)
+and `fin14b` to **−0.245 / −0.247** (`independent`). The same fact appears with the sign flipped on
+the secondary anchor: **9 of 19 items restate `mobileaccount_t_d` at |r| ≥ 0.80**. The
+population-denominator screen was measuring **penetration**.
+
+**The one item that survives the correct denominator does not survive its own family.** The
+pre-registration's denominator clause makes the conditional statistic the claim-bearing one. On it,
+exactly one item meets every registered bar: `fin14d` at **−0.556 / −0.396**, G6 **−0.515**, largest
+leave-one-out **Pakistan −0.078** (B12), bootstrap **[−0.759, −0.150]**, `p_boot` **0.017**. The
+registered bar is **existential over a 19-item family**, which is where multiplicity bites, so a BH
+correction at q = 0.10 was computed with the decision rule fixed **before** it ran: meet the bars but
+fail BH and the item is retired. **BH rejects 0 of 19.** `fin14d` ranks second at 0.016 against a
+critical value of **0.0105**, and the top-ranked test misses too (0.008 against 0.0053).
+**⇒ DISCARD.**
+
+**What the cycle gets instead, and a rule proposed for it.** Five modules have now been screened with
+this instrument (`fin31`, `fin34`, `fin`, `fin43`, `fin13`/`fin14`) and the counter-moving count
+stands unchanged at **two** (`fin31d`, `fin34c`). The new failure mode is not a thin module but a
+**denominator**: *when a micro module asked of a conditional subsample is aggregated to the
+population denominator its country twin uses, the resulting share is penetration × conditional rate,
+and a screen run on it measures penetration.* Proposed as a standing rule for the next amendment
+pass — **run the screen on the block's own denominator, and report the complement factor's own
+correlation with the anchor beside any negative classification**. It costs one loop and it would have
+caught this before the bootstrap did not.
+
+## E56 — DISCARD as registered (70.5% against an 80% bar), and agenda item 8.2 answered anyway
+
+Stream hypothesis. Design `audit`. Frame `pan_dev`. **Parent E55** (chain E53 → E55 → E56, at the B3
+cap — the next cycle may not extend it). Agenda item **8.2**.
+
+**The registered primary FAILS.** Of 128 developing-panel columns with ≥30 economies reporting in
+2021, **78 drop three or more economies** by 2024. The modal dropper set `D*` is shared **exactly**
+by **55 of them = 70.5%**, against a registered bar of 80% at Jaccard ≥ 0.90. **⇒ DISCARD.** Also
+recorded: 44 columns drop one or two economies and 6 drop none.
+
+**`D*` is E53's six economies, and they are all still in the wave.**
+**Algeria, China, Iran, Mauritius, Russia, Ukraine** — **31.4%** of 2024 developing-panel adult
+population — every one of them present in the 2024 wave with `account_t_d` recorded. This is items
+leaving a file, not economies leaving a survey, confirmed on a set built from 128 columns rather
+than from the four E53 happened to test.
+
+**Why the bar failed, and it is a fact about the ledger's own bookkeeping rather than about the
+data.** Thirteen of the 23 non-matching columns are **`_s` conditional columns**, which
+`HARNESS_V2_NOTES` item 10 records as **unusable** and on which no claim rests. Among the **63
+usable** non-trivially-dropping columns there are only **three distinct dropper sets in total**:
+`D*` (55 columns), `D*` minus Iran (6 — `fh1`, `fh2`, `fh1_fh2`, `fin28`, `fin29`, `fin28_29`), and
+a three-economy set (`fin17b`, `fin22a_1`: Georgia, Mauritania, Russia). On that set the statistic is
+**87.3%** and the bar would **pass**.
+
+**This is reported and the verdict is NOT taken from it.** E55 ran the same `_s` cut and its verdict
+did not turn on it; today's would. A restriction that flips a verdict must be **declared in advance**
+or it is a moved bar, so E56 stands as a discard. **Rule proposed for the next amendment pass:
+exclude `_s` columns from audit denominators by a standing declared rule** — they are already
+documented as unusable, and the choice should not be available to a cycle after it has seen the
+number.
+
+**SECONDARY 1 — the block is a SECTION, not a module, which answers item 8.2's actual question.**
+The 55 exact matchers span **ten column families**: `fin32` 14 of 17 · `fin37` 12 of 13 · `fin38` 6
+of 6 · `fing2p` 6 of 8 · `fin31` 4 of 8 · `fin34` 4 of 6 · `fin43` 4 of 4 · `fin42` 2 of 2 ·
+`g20_made` + `g20_received` · `fin30`. That is the **payments section** of the instrument, not one
+questionnaire module — so the cause is better read as a **release-level rule for these six economies
+over a block of payment items** than as a single dropped module. The one column inside an affected
+family that stays stable is **`g20_any`**, the headline, which is why every headline-based claim in
+the ledger was safe (E55's "headline coverage is no defence" note, seen from the other side).
+
+**SECONDARY 2 (rule B16) — the two corrections E55 opened are now DISCHARGED with numbers.**
+Balanced on a fixed denominator:
+
+| column | balanced path | balanced Δ (last window) | unbalanced Δ | set |
+|---|---|---|---|---|
+| `fin32_acc` (E10, `keep-general`) | **8.04 → 10.35 → 12.03 → 16.43** | **+4.40** | −3.21 | 71 economies, 68.6% of panel pop |
+| `fh1` (E33, `keep-window`) | **17.88 → 19.69** | **+1.81** | −1.40 | 69 economies, 67.0% |
+| `fh2` | **21.69 → 24.41** | **+2.72** | −0.67 | 69, 67.0% |
+| `fh1_fh2` | **29.39 → 32.09** | **+2.70** | −0.85 | 69, 67.0% |
+
+**All four last-window deltas change sign.** `fin32_acc`'s balanced path is **monotone rising in all
+three steps** (+2.31, +1.68, **+4.40**) — on a fixed denominator the wage rail's largest advance is
+the 2021→24 window the unbalanced series reports as a *retreat*. The `fh` family has only two waves
+and rises in both columns and in their union. **What this does not touch:** the E10 and E33
+*associations* are Δ→Δ and balanced by construction; only statements about these margins' **aggregate
+direction** were wrong, and those now have replacement numbers.
+
+## Wrap-up — 2026-08-22
+
+1. **Three experiments, no keeps, and two of the three failures are more useful than a keep would
+   have been.** B18 did not fire (corrections 2 of 5, count 3 of 10), so this was a normal cycle:
+   **U25x** (exploratory — module opened), **U25** (`discard`), **E56** (`discard`). Ledger now
+   **89 rows, 40 keeps**, `make_index.py --check` clean.
+2. **U25x — the mobile-money usage module is open and it is two disjoint blocks.** 19 code-cells
+   identified against labelled country twins, **18 at median |dev| of exactly 0.000pp** on 36
+   economies. `fin13` is asked **only of mobile-money holders**, `fin14` **only of non-holders**,
+   overlap **zero respondents** — a structure the country file's names do not carry. Micro coverage
+   rises to **81 of 192 columns (42%)**; B2 and B17 both paid.
+3. **U25 — DISCARD, and the reason is a denominator.** The screen's two counter-moving items passed
+   every mechanical bar (**−0.611/−0.760** and **−0.685/−0.744**, G6-stable, bootstrap intervals
+   excluding zero) and are the **complement factor**: `r(100 − mobileaccount_t_d, g20_any)` is
+   **−0.903/−0.938**, and both items collapse to `mixed-lens`/`independent` on their own denominator.
+   The one survivor on the correct denominator (`fin14d`) **fails BH at q = 0.10 over its own 19-test
+   family — 0 of 19 rejected**. Two rules proposed: screen on the block's own denominator with the
+   complement factor reported, and make BH over the module family part of the screen.
+4. **E56 — DISCARD at 70.5% against an 80% bar, with agenda item 8.2 answered anyway.** The 2021→24
+   dropout is **one six-economy release block** (Algeria, China, Iran, Mauritius, Russia, Ukraine —
+   **31.4%** of developing-panel adult population, all six present in the 2024 wave) spanning **ten
+   column families across the payments section**, not one questionnaire module. Among the **63
+   usable** columns there are only **three distinct dropper sets** and the figure is **87.3%** — but
+   the `_s` exclusion was not declared in advance, so the verdict stands as registered and the rule
+   is proposed instead (item 8.4).
+5. **Both of E55's corrections now have replacement numbers.** On a fixed denominator `fin32_acc`
+   runs **8.04 → 10.35 → 12.03 → 16.43**, monotone, its **largest step (+4.40) in the window the
+   unbalanced series calls a −3.21pp retreat**; `fh1` +1.81, `fh2` +2.72, `fh1_fh2` +2.70. All four
+   sign-flip. `PAPER_DRAFT_v4.md` is annotated and **execution is owed at the next distillation**;
+   corrections branch stays **2 of 5**, count branch now **6 of 10**. **B3 is at its cap** — the next
+   cycle may not extend the E53 → E55 → E56 lineage. Prediction stream unchanged and **CLOSED**:
+   `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
+
+# Cycle 2026-08-23 — pre-registration
+
+**B18 TRIGGER CHECK (rule B18, amended 2026-08-16 — read the highest-numbered draft).** Current
+draft is `PAPER_DRAFT_v4.md`. Corrections branch: **2 of 5** (both opened 2026-08-21 by E55,
+annotated with E56's replacement numbers on 2026-08-22 but **not executed**, so they stay open).
+Count branch: **6 of 10** (U24x, U24, E55, U25x, U25, E56 since the 2026-08-20 rewrite). **Neither
+branch fires — this is a normal experiment cycle.** This cycle adds three to the count branch, which
+takes it to 9 of 10; the cycle after next fires on the count branch if it registers anything at all.
+
+**B1 COVERAGE RUN (done before any hypothesis was chosen).** Country file **98 of 429 columns
+touched (23%)**; the one untouched family is `con` (133 columns, **blocked** — no questionnaire in
+the repo and its country twin is unlabelled too, `HARNESS_V2_NOTES` item 5). Micro file **78 of 192
+(41%)**; untouched families are `con` (52, blocked), **`fin48`/`fin49` (12, "digital-risk exposure"),
+`fin39` (4, "utility payments")**, `fin22` (9, thin — 1 of 9 used) and `dig_account` (1). Wave
+transitions: all four used, 2021→24 at 306 mentions against 21 for 2011→14. Frames: `urbanicity`
+remains the only untouched country frame and is single-wave.
+
+**COVERAGE CELLS THIS CYCLE LANDS ON (rule B2).** **`fin39` (4 columns) and `fin48`/`fin49` (12
+columns) have zero ledger mentions on either side of the file, and neither has a country-file twin
+at all** — there is no `fin39*`, `fin48*` or `fin49*` column in `GlobalFindexDatabase2025.csv`
+(checked before registration). They are the last reachable untouched micro families outside the
+blocked `con` block, and opening them is Program 7's first movement since it was declared blocked on
+2026-08-09. U27 lands on an **already-open** module (`fin24`) and buys no new columns; this cycle's
+B2 obligation rests entirely on U26x/U26.
+
+**B17 (micro quota).** Paid 2026-08-21 (U24) and 2026-08-22 (U25). Paid a third consecutive time
+here, deliberately: 24 of the ledger's 40 keeps are micro and the country side has one blocked family
+left to open.
+
+**B3 (lineage cap).** U26x/U26 **parent: none** (new modules). U27 **parent: U24** — chain length
+**1**. The E53 → E55 → E56 chain is at its cap and **this cycle does not extend it**; nothing
+registered below touches the reporting-set line.
+
+**B14.** Neither registered experiment is a country-level Δ→Δ association, so B14's
+long-difference-or-all-windows requirement does not bind. U26 is a 2024 cross-sectional measurement
+screen; U27 is a single-wave micro cross-section. Both are worded without trend language.
+
+**SLOT 3 IS DEFERRED BY BUDGET and named here so it is not lost:** an **all-windows** promotion test
+of **E22** (`keep-window`, "the mobile-money~saving-surge co-movement is a general developing-world
+regularity, not a Sub-Saharan Africa story"), which has no descendants and has never been replicated
+outside 2021→24. Under B14 it must be run as an all-windows design over 2014→17 / 2017→21 / 2021→24
+with sign agreement required in every window (B8).
+
+## Slot 1 — U26x (exploratory) + U26 (registered): the last two untouched micro families
+
+### PART A — U26x, MAPPING PASS, logged as EXPLORATORY under the peek rule (2026-07-11)
+
+**The obstacle is different from U24x's and U25x's, and is stated in advance.** Both of those modules
+were opened by matching per-economy weighted micro shares against a **labelled country-file twin**.
+**`fin39`, `fin48` and `fin49` have no country-file twin whatsoever**, so that method cannot run and
+identification must be **structural only**: (i) the denominator — how many respondents, how many
+economies, what share of each economy's sample is asked, and whether the block is an economy-level
+subsample or a within-economy conditional one; (ii) the response scale — the value distribution of
+each code and whether the codes partition; (iii) the filter profile — the pooled rate of the labelled
+micro binaries (`account`, `account_mob`, `anydigpayment`, `internet_use`, `merchantpay_dig`,
+`pay_utilities`) **inside** the asked sample against the whole file, which says who is being asked;
+(iv) the M2 economy count — how many economies clear an unweighted n of 100 in each column.
+
+**The module labels "utility payments" and "digital-risk exposure" are `coverage.py`'s own hand-written
+dictionary entries, not questionnaire text.** They are inferences by an earlier cycle. No behavioural
+meaning is attached to any individual item below, and that caveat travels with every number.
+
+**Registered in advance about which block can carry the screen.** The screen requires per-economy
+aggregation, so a block whose median economy has fewer than 100 asked respondents cannot carry one
+under M2. **U26x reports the M2 economy count for both blocks and the registered screen (Part B) runs
+on whichever of `fin39` / `fin48`+`fin49` clears at least 30 economies at n ≥ 100; if both clear, it
+runs on both; if neither clears, U26 is a DISCARD on coverage and is reported as such.** This choice
+is fixed here, before any correlation is computed.
+
+### PART B — U26, THE FOUR-WAY ORIENTATION SCREEN (Documentation obligation 2), the registered primary
+
+Every usable item is aggregated to a **per-economy weighted share of code 1** over **the column's own
+non-missing denominator** (agenda item 9.1 — the denominator trap; the own-block denominator is the
+primary, not the population one), restricted to economies with **unweighted n ≥ 100 in that column**
+(M2), and screened in the **2024 cross-section** against the anchor `g20_any` (the digital-payment
+headline — the same anchor E45/E47/E49/E51/U25 used, so the numbers are comparable), **both lenses**:
+
+    restatement    |r| >= 0.80
+    aligned        +0.30 <= r < 0.80
+    counter-moving -0.80 < r <= -0.30
+    independent    |r| < 0.30
+    both lenses must AGREE, else `mixed-lens` (B9/B11)
+
+**REGISTERED KEEP CONDITION, with agenda item 9.2's family-wise correction declared IN ADVANCE this
+time.** At least one item must (a) classify as **`counter-moving` on BOTH lenses**, (b) survive **G6**
+with the sign intact, (c) carry a **bootstrap interval (2,000 economy draws) excluding zero**, and
+(d) **be rejected by Benjamini–Hochberg at q = 0.10 over the module's own family of tests**. A screen
+returning only restatement / aligned / independent items is a **DISCARD**; so is one whose sole
+counter-mover fails BH — U25's `fin14d` failed exactly there and the rule is now registered before
+the run rather than disclosed after it.
+
+**REGISTERED SIGN (B15): the keep direction is NEGATIVE.** An item at r ≥ +0.80 is a restatement of
+the digital-payment headline and is the **opposite** result, not partial confirmation. Where the
+codes of a column **partition** (a yes/no/DK/RF item is a partition of two substantive levels), a
+mechanically negative complement is an **inverse restatement**, caught by the |r| ≥ 0.80 bar; if it
+lands in the −0.30 to −0.80 band instead the claim must name the partition and say which level of it
+the claim is about (E51's composition rule).
+
+**REGISTERED DENOMINATOR DIAGNOSTIC (agenda item 9.1, standing addition to the screen).** Beside any
+negative classification, report **the complement factor's own correlation with the anchor** — for a
+conditionally-asked column, r(100 − penetration of the filter, `g20_any`) — so that a counter-movement
+manufactured by the denominator is visible rather than inferred. U25's counter-movers collapsed from
+−0.611/−0.760 to −0.073/−0.322 under exactly this check.
+
+**SECONDARY (registered, no bar):** the same screen against `account_t_d` — the E47 distinction
+between counter-moving with digital payment and counter-moving with the access margin.
+
+**Declared limitations, in advance.** (i) **M3 cannot be run**: there is no country twin, so the
+identification is structural and unvalidated against an external aggregate — a weaker footing than
+U24x's and U25x's exact 0.000pp matches, and it is stated as such in any claim. (ii) The frame is
+declared as **the economies that field the module**, not the developing panel; G4 reports its count
+and population share. (iii) A 2024 cross-sectional **level** correlation is not a within-country
+dynamic statement (E48 is the standing proof the two come apart); **no Δ claim is registered** and no
+trend language may be used — the micro file is a single wave. (iv) G3: every item is an unregistered
+narrow variant. **B6/B9/B10/B12 on every reported cell**: weighted and unweighted r, percentile
+bootstrap and `p_boot`, Kish `neff` beside nominal n, G6 drop-top-5, and the largest single
+leave-one-out effect **with the economy named**.
+
+## Slot 2 — U27 (agenda item 4.6): is the SOURCE of emergency funds education-graded, and does account holding absorb it?
+
+**Parent: U24** (chain length 1). Stream **micro**. Design `micro-cross-section`, **2024, single
+wave** — a cross-sectional description, **no trend language**, on the 98-economy emergency-fund module
+set U24x opened and U24 used.
+
+**Why it matters, stated before the run.** U24 established that the ledger's access-absorption ruler
+is a **usage** instrument: account holding absorbs **56.9%** of the education gradient in
+digital-payment use and **8.6%** of the gradient in emergency-fund *resilience*. That result says the
+account does not buy the outcome. It says nothing about **how** people get the money, and the
+balance-sheet story the country stream tells (E11/E39: saving and borrowing deepen together, and the
+2021–24 surge is a balance-sheet episode) makes a specific compositional prediction that has never
+been tested at the individual level.
+
+**The sample.** `fin24` (main source of emergency funds), over its own non-missing denominator,
+excluding DK/RF codes 8/9, pooled across the module's economies, weighted by `wgt`. The split is
+**`educ >= 2` (secondary or more) vs `educ == 1` (primary or less)** — U24's own split, so the two
+results are directly comparable. M2 applies to every reported cell.
+
+**REGISTERED SIGNS, PER SOURCE (rule B15), fixed before the run.** Gap = (share among `educ >= 2`) −
+(share among `educ == 1`), in pp:
+
+| code | source | registered sign |
+|---|---|---|
+| 1 | savings | **POSITIVE** — the balance-sheet prediction |
+| 2 | family/friends | **NEGATIVE** |
+| 5 | selling assets | **NEGATIVE** — a distress source |
+| 7 | not possible | **NEGATIVE** — U24's resilience gradient seen from its complement |
+| 3 | money from working | **no sign predicted** — reported descriptively, cannot count toward the keep |
+| 4 | borrowing | **no sign predicted** — reported descriptively, cannot count toward the keep |
+
+Codes 3 and 4 are registered as **unpredicted**: the balance-sheet story does not say which way
+either should run, and a result on them is not partial confirmation in either direction.
+
+**REGISTERED KEEP CONDITION.** **All four** directionally-registered signs correct, **AND** the two
+headline sources clear the ledger's group-difference threshold: **savings gap ≥ +5pp and
+family/friends gap ≤ −5pp**. Signs correct with magnitudes under 5pp is a **DISCARD as registered**,
+reported at whatever the numbers are, and the bar is not moved after the fact.
+
+**REGISTERED SECONDARY 1 (no bar) — the absorption number, which is the point of the design.**
+Recompute the savings-source gap **conditional on holding an account** and report
+absorption = 1 − (conditional gap / unconditional gap), on the same sample and split, beside U24's
+two benchmarks (**56.9%** usage, **8.6%** welfare). This places a third margin on the
+access-absorption ruler and is reported whatever the primary does.
+
+**REGISTERED SECONDARY 2 (no bar) — the income axis.** The same composition split **poorest 40%
+(`inc_q` ∈ {1,2}) vs richest 60% (`inc_q` ∈ {3,4,5})**, to match the country file's income frame,
+with the same registered signs.
+
+**REGISTERED SECONDARY 3 (no bar) — the within-country check (U19/U20/U24's design).** The share of
+qualifying economies (both cells at unweighted n ≥ 100) in which the savings-source gap is positive,
+with the median economy gap — a pooled composition difference can be a between-country composition
+artifact and this is the standing test for it.
+
+**Inference (B6/B10).** Percentile **bootstrap intervals from 2,000 economy-cluster resamples** on
+every gap and on the absorption ratio, and the **Kish effective n** of the pooled respondent weights
+beside the nominal respondent count. **The pooled-weighting caveat (`HARNESS_V2_NOTES` item 3) is
+carried explicitly**: pooled `wgt` weights economies roughly equally rather than by population, so
+the pooled pp values are "the typical module economy", not "the typical person in the module
+economies", and Secondary 3 is what carries the within-country reading.
+
+# Cycle 2026-08-23 — RESULTS
+
+## U26x — EXPLORATORY. Both remaining untouched micro families are OPENED structurally, and one of them cannot carry a country-level design at all
+
+Commit `86862c8`. Status `exploratory`. No hypothesis, no keep — logged before U26's verdict under
+the peek rule. **Identification is STRUCTURAL ONLY.** As registered, the country-file has **zero**
+`fin39*` / `fin48*` / `fin49*` columns, so U24x's and U25x's share-matching method — which produced
+median |dev| of exactly 0.000pp on those modules — **cannot be run here at all**. Nothing below is
+M3-validated, and that is a materially weaker footing than the two previous module openings.
+
+**`fin39` — 4 columns, 17,342 respondents (12.0% of the file), 90 economies.**
+
+- **A within-economy split sample, not an economy-level subsample.** The share of each block
+  economy's respondents who are asked runs **3.8% → 51.4% (median 15.8%)**. Every statistic on this
+  block is conditional, and the per-economy asked-n has median **27**.
+- **The four columns are a SKIP TREE, not four parallel items.** `fin39c` is asked **only** of
+  respondents who answered `fin39a == 2` (6,184 of 6,250; the rest are the DK/RF codes) and `fin39d`
+  **only** of `fin39b == 2` (3,310 of 3,326). So `fin39a`/`fin39b` sit on the module denominator and
+  `fin39c`/`fin39d` are "if not, then…" branches on their own. This is exactly the structure agenda
+  item 9.1 was written for.
+- **Response scale:** 1/2 substantive, 3/4 residual (DK/RF at 0.1–0.6% weighted throughout).
+  Weighted code-1 shares: `fin39a` **55.8%**, `fin39b` **16.7%**, `fin39c` **45.0%**, `fin39d` 17.7%.
+- **M2 economy counts: `fin39a` 61, `fin39b` 61, `fin39c` 16, `fin39d` 5.** Only the first two can
+  carry a country-level screen.
+- **The `coverage.py` label "utility payments" is NOT supported by the filter and should be treated
+  as unverified.** Among the asked, `pay_utilities` reads 4,194 / 6,209 / 476 / **6,425 "did not
+  pay"** / 38 — i.e. **37% of the respondents asked `fin39` did not pay a utility bill**, so the
+  block is not a utility-payment follow-up. The asked sample is *more* banked than the file
+  (`account` 0.820 vs 0.738) and *more* digital (`anydigpayment` 0.770 vs 0.561) but **less** online
+  (`internet_use` 0.628 vs 0.753).
+
+**`fin48`/`fin49` — 12 columns, 8,037 respondents (5.6% of the file), 82 economies. The finding here
+is a NEGATIVE structural result and it is the useful one.**
+
+- **All twelve are asked of one identical sample** (n = 8,037; `fin49d` 8,036), so the block is a
+  single 12-item battery, not two modules — `fin48a`–`f` and `fin49a`–`f` are one instrument.
+- **Response scale 1/2 substantive, 3/4 residual**; weighted code-1 shares span 18.1%–40.5%, i.e.
+  every item has usable variance.
+- **The sample is heavily skewed toward the unbanked and the offline.** Inside the asked sample
+  `account` reads **0.389** against **0.738** for the file, `account_fin` **0.186** vs 0.666,
+  `internet_use` **0.458** vs 0.753, `merchantpay_dig` **0.089** vs 0.306. **61.1% of the asked have
+  no account** against **26.2%** of the file, and 1,623 of them also answered the `fin11`
+  barriers-to-account battery, which is asked only of the unbanked. Whatever the twelve items mean,
+  they are **not** fielded on a representative adult sample.
+- **It cannot carry a country-level design.** Per-economy asked-n has median **50** (min 1, max 538)
+  and only **23 of 82 economies** reach an unweighted n of 100 — against the registered
+  eligibility rule of 30. **The registered rule fired as written and excluded the block**, which is
+  the point of fixing such a rule before the run rather than after.
+
+**A DOCUMENTATION ERROR IN THE FIXED MODULE, disclosed here (not acted on — `micro.py` is fixed).**
+`micro.py`'s `BINARY_OUTCOMES` comment declares its ten columns "already coded 0/1 in v02".
+**`pay_utilities` and `receive_wages` are not**: both carry codes **1–5** (mode of payment) on 91,901
+respondents. U14 and U23 already treat them correctly and disclosed the coding themselves, so **no
+ledger claim is affected**; what is wrong is the module's own comment. Consequence for this pass: the
+two `pay_utilities` / `receive_wages` rows in U26x's filter-profile table are **means of a 1–5 code,
+not rates, and must not be read as such** — the other eight rows are genuine 0/1 rates. Owed to
+`HARNESS_V2_NOTES` as a v2 item.
+
+**Coverage consumed.** Sixteen previously untouched micro columns (4 + 12). With this pass the only
+untouched micro families left are `con` (52, still blocked) and `fin22` (thin, 1 of 9 used) —
+**rule B2's breadth cell for this cycle, and the end of the reachable untouched micro surface.**
+
+## U26 — DISCARD as registered. The `fin39` screen returns no counter-moving item, and the denominator diagnostic runs in the OPPOSITE direction to U25's
+
+Commit `86862c8`. Stream micro. Status **`discard`**. Parent: none (new module). Design
+`measurement`, **2024, single wave, cross-sectional** — no trend language.
+
+**Eligibility, decided by the registered rule.** `fin39` clears (61 economies at n ≥ 100 ≥ the
+registered 30); `fin48`/`fin49` does **not** (23). The screen therefore ran on `fin39a` and `fin39b`
+only — `fin39c` (16 economies) and `fin39d` (5) fail M2 at the economy level.
+
+**The registered screen vs `g20_any`, own-block denominator, 61 economies, `neff` 4.7:**
+
+| item | r_w | r_u | class | G6 drop-5 | largest LOO (named) | bootstrap [2.5, 97.5], p_boot |
+|---|---|---|---|---|---|---|
+| `fin39a` | **+0.284** | **+0.482** | `mixed-lens` (independent / aligned) | +0.299 | **India +0.231** | [+0.001, +0.684], 0.049 |
+| `fin39b` | **+0.694** | **+0.363** | `aligned` | +0.497 | Brazil −0.085 | [+0.417, +0.845], 0.000 |
+
+**VERDICT: 0 counter-moving items → DISCARD as registered.** The registered sign was NEGATIVE and
+both items are positive; under B15 a positive result of any magnitude is **not** partial confirmation.
+BH at q = 0.10 over the module's own 2-test family rejects **2 of 2**, so the family-wise correction
+registered in advance was **not** what killed this screen — the classification was.
+
+**The denominator diagnostic (agenda item 9.1) runs the OTHER way here, and that is the cycle's
+methodological result.** U25 found a screen that manufactured counter-movement out of its
+denominator. `fin39` shows the mirror case: moving `fin39a` from its own block denominator to the
+population denominator **raises** the association (+0.284/+0.482 → +0.484/+0.600) and flips its class
+from `mixed-lens` to `aligned`, because the complement factor is itself negatively related to the
+anchor — **r(100 − block-asked share, `g20_any`) = −0.273 weighted / −0.437 unweighted**. `fin39b` is
+nearly denominator-invariant (+0.694/+0.363 → +0.691/+0.541). **So the denominator can move a
+classification in either direction, and the size of the move is item-specific, not block-specific.**
+Item 9.1's standing addition to the screen should be worded as "report both denominators", not "the
+own denominator is the safe one".
+
+**Secondary (registered, no bar) — vs `account_t_d`, same 61 economies.** `fin39a` **+0.698/+0.579
+`aligned`** (drop-5 +0.385, largest LOO India −0.145, CI [+0.288, +0.872], p_boot 0.002); `fin39b`
+**+0.159/+0.209 `independent`** (CI [−0.148, +0.736], p_boot 0.293). The two items separate cleanly
+on the E47 distinction: `fin39a` tracks the **access** margin more strongly than the digital-payment
+headline, `fin39b` the reverse. Reported, not claimed.
+
+**G4 / declared frame.** 61 economies after M2 filtering, **42.5% of country-file 2024 adult
+population** — well under the ledger's usual 97–100% on headline columns, and the frame is *the
+economies that field the `fin39` split sample*, not the developing panel. Income mix: 30 upper-middle,
+22 lower-middle, 5 low, 4 high income. **`neff` = 4.7**, the lowest in the ledger to date, so no
+significance language attaches to the nominal 61 (rule B10).
+
+## U27 — DISCARD as registered (one of two magnitude bars fails), and the rejection is more informative than the keep would have been: the savings source substitutes for DISTRESS sources, not for family and friends
+
+Commit `4099cf2`. Stream micro. Status **`discard`**. Parent: **U24** (chain length 1). Design
+`micro-cross-section`, **2024, single wave, cross-sectional** — no trend language. Sample: `fin24`
+∈ {1..7} (DK/RF dropped), **99,641 respondents in 98 economies**. Kish `neff` of the pooled
+respondent weights **65,115** against a nominal 99,641.
+
+**Verdict against the registered bar:**
+
+1. savings gap **+8.17pp** ≥ +5.0 — **PASS**;
+2. family/friends gap **−0.35pp** ≤ −5.0 — **FAIL**;
+3. all four registered signs correct — **PASS**.
+
+**→ DISCARD as registered.** Two of three conditions hold and the bar is not moved after the fact.
+
+**The primary table** (gap = share(`educ` ≥ 2) − share(`educ` == 1), pp; 2,000-draw economy-cluster
+percentile bootstrap; M2 n = 65,694 / 33,616):
+
+| source | educ ≥ 2 | educ == 1 | gap | CI | registered sign |
+|---|---|---|---|---|---|
+| savings | 20.48 | 12.31 | **+8.17** | [+6.36, +10.16] | POS — **correct** |
+| family/friends | 38.67 | 39.03 | **−0.35** | [−2.49, +1.65] | NEG — correct in sign, **flat**, and the interval contains zero |
+| money from working | 18.82 | 15.59 | +3.23 | [+1.53, +5.06] | none registered |
+| borrowing | 7.51 | 7.78 | −0.27 | [−1.59, +0.90] | none registered |
+| selling assets | 8.77 | 14.51 | **−5.74** | [−7.45, −4.15] | NEG — **correct** |
+| other | 1.24 | 1.60 | −0.35 | [−0.69, −0.01] | none registered |
+| not possible | 4.50 | 9.18 | **−4.68** | [−5.92, −3.55] | NEG — **correct** |
+
+**What the failure says, which is the result.** The registration encoded the balance-sheet story's
+prediction that the savings source displaces **informal transfers**. It does not: the family/friends
+share is **38.7% among the more-educated and 39.0% among the least-educated**, a difference of
+one third of a point whose interval straddles zero. The +8.17pp of savings is accounted for almost
+exactly by **selling assets (−5.74)** and **"not possible" (−4.68)** — the two distress cells. Recourse
+to family and friends is the one source of emergency funds in this module that is **flat across the
+education distribution**, and any future write-up of the balance-sheet story must say so. Under B15
+the four correct signs do **not** rescue the claim, because the registered bar was a magnitude bar on
+two named sources and one of them failed.
+
+**SECONDARY 1 (registered, no bar) — the third margin on the access-absorption ruler, and it lands on
+the WELFARE side.** Account holding absorbs **5.1%** of the education gradient in the savings source
+(unconditional +8.17 → account-conditional +7.75), **CI [−12.3%, +29.4%]**, on 48,727 / 16,494
+accountholding respondents. The benchmarks computed on this same 98-economy sample by U24 are
+**56.9%** for the usage margin (`anydigpayment`) and **8.6%** for the welfare margin
+(`fin24aSD_ND`). **5.1% sits with the welfare margin, not the usage margin**, and its interval
+contains zero. The "not possible" cell absorbs **25.6%**; the family/friends cell's absorption ratio
+(−329.7%) is arithmetically meaningless because its denominator is a gap of −0.35pp and is reported
+only to say so. **U24's conclusion — the access-absorption ruler is a usage instrument that does not
+reach welfare — now holds on a second, compositional welfare margin.**
+
+**SECONDARY 2 (registered, no bar) — the income axis, richest 60% minus poorest 40%.** savings
+**+8.31** [+7.16, +9.44], family/friends **−4.10** [−5.47, −2.69], selling assets **−2.72**
+[−3.59, −1.91], not possible **−5.10** [−5.96, −4.31], money from working +4.61, borrowing −0.82.
+**All four registered signs correct on this axis too**, and family/friends comes much closer to the
+5pp bar (−4.10) than on the education axis (−0.35) without clearing it. The income axis is where the
+informal-transfer substitution is visible at all; the education axis is where it is absent.
+
+**SECONDARY 3 (registered, no bar) — within-country, and it is the strongest part of the run.** On
+the **88 of 98** economies with both education cells at unweighted n ≥ 100, the savings-source gap is
+**positive in 82 (93.2%)**, median **+7.84pp**, IQR [+4.35, +11.84]. Pooling over that same
+qualifying set gives **+7.93pp** against a median economy of **+7.84pp** — a **composition wedge of
++0.09pp**, the smallest the ledger has recorded. The pooled gradient is therefore a **within-country**
+regularity, not a between-country composition artifact. The family/friends gap is negative in only
+**52 of 88 (59.1%)**, median −1.37pp — consistent with its pooled flatness rather than with a
+cancelling mixture. Extremes: Bulgaria +21.76, Costa Rica +20.97, Bolivia +20.48; Algeria −6.33,
+Comoros −3.09, Türkiye −1.97.
+
+**Declared limitations.** Single 2024 wave, cross-sectional, descriptive — no trend and no causal
+language; education is not randomly assigned and nothing here identifies anything. Conditioning on
+account holding in Secondary 1 conditions on a post-treatment variable, the same caveat U14/U23/U24
+carry. **Pooled-weighting caveat (`HARNESS_V2_NOTES` item 3) applies to every pooled pp value above**:
+pooled `wgt` weights economies roughly equally rather than by population, so the pooled figures
+describe *the typical module economy*; Secondary 3 is what carries the within-country reading. The
+`fin24` code→source mapping is U24x's, which is M3-exact against the labelled country file.
+
+## Wrap-up — 2026-08-23
+
+1. **Three experiments, no keeps, and the reachable untouched micro surface is now exhausted.** B18
+   did not fire (corrections **2 of 5**, count **6 of 10**), so this was a normal cycle: **U26x**
+   (exploratory — two modules opened), **U26** (`discard`), **U27** (`discard`). Ledger now **92
+   rows, 40 keeps**, `make_index.py --check` clean. B2 paid by U26x/U26 (16 untouched columns), B17
+   paid a third consecutive time, B3 not extended (the E53 chain was left alone as its cap requires).
+2. **U26x — the last two untouched micro families are open, and one of them is UNUSABLE for
+   country-level work.** Neither has any country-file twin, so U24x/U25x share-matching could not
+   run and identification is structural and **not M3-validated**. `fin39` is a **skip tree** on a
+   within-economy split sample (`fin39c` asked only of `fin39a == 2`), 61 economies at n ≥ 100.
+   `fin48`+`fin49` is **one 12-item battery** on an identical 8,037-respondent sample that is
+   **61.1% unbanked against 26.2% in the file** and reaches n ≥ 100 in only **23 of 82** economies —
+   the registered eligibility rule excluded it, as written, before any correlation was computed.
+   A documentation error in the fixed `micro.py` was found and disclosed (`pay_utilities` and
+   `receive_wages` are 1–5 mode codes, not 0/1); **no ledger claim is affected** — U14 and U23 both
+   already treat them correctly.
+3. **U26 — DISCARD, and the denominator moves the classification the OTHER way to U25's.** Zero
+   counter-moving items: `fin39a` **+0.284/+0.482** `mixed-lens`, `fin39b` **+0.694/+0.363**
+   `aligned`, against a registered NEGATIVE sign. BH rejected **2 of 2**, so the family-wise
+   correction registered in advance was not what killed it. Moving `fin39a` to the population
+   denominator **raises** it to +0.484/+0.600 and flips it to `aligned`, because the complement
+   factor is itself negative (**−0.273/−0.437**). Agenda item 9.1 should therefore read *report both
+   denominators*, not *the own denominator is the safe one*.
+4. **U27 — DISCARD on one of two magnitude bars, and the rejection is the finding.** All four
+   registered signs are correct and the savings source clears its bar at **+8.17pp**, but
+   family/friends is **−0.35pp** [−2.49, +1.65] against a −5pp bar. Recourse to family and friends is
+   **flat across the education distribution** (38.7% vs 39.0%); the savings gain is accounted for by
+   **selling assets (−5.74)** and **"not possible" (−4.68)**. On the income axis all four signs hold
+   again and family/friends reaches −4.10 — still short. Within-country the savings gap is positive
+   in **82 of 88** economies, median **+7.84pp**, composition wedge **+0.09pp**, the smallest the
+   ledger has recorded.
+5. **The access-absorption ruler gains a third margin and it lands on the welfare side.** Account
+   holding absorbs **5.1%** of the education gradient in the savings *source* (CI **[−12.3%,
+   +29.4%]**, containing zero) against U24's **56.9%** usage and **8.6%** welfare benchmarks on the
+   identical 98-economy sample. **B18 state after this cycle: corrections 2 of 5, count 9 of 10 —
+   the next cycle fires on the count branch if it registers anything at all.** Prediction stream
+   unchanged and **CLOSED**: `account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND`
+   **6.625**.
+
+---
+
+# Cycle 2026-08-24 — pre-registration
+
+## Mandatory cycle-start checks
+
+**B1 coverage run (done before any hypothesis was chosen; computes no outcome, so not a peek).**
+Country file **98 of 429 columns touched (23%)**, unchanged. The only fully untouched country module
+is `con` (133 columns) and it stays **blocked** — numeric codes, no questionnaire
+(`HARNESS_V2_NOTES` 5–6). The **thinnest reachable** country module is **`fin22` borrowing sources,
+2 of 11 columns used, four waves at 76–77 developing economies** — the only such family left with
+more than one wave. Micro **94 of 192 (49%)**; the reachable untouched micro surface was declared
+exhausted by U26x, leaving `fin22` (1 of 9) and `dig_account` (1). Frames: `urbanicity` is still the
+only untouched country frame and is single-wave.
+
+**B18 distillation-trigger check, read against the highest-numbered draft `PAPER_DRAFT_v4.md`
+(B18 amendment 2026-08-16).**
+
+- **Corrections branch: 2 of 5** — E55's two items, annotated with E56's replacement numbers and
+  **not executed**. Does not fire.
+- **Count branch: 9 of 10** — U24x, U24, E55, U25x, U25, E56, U26x, U26, U27 since the 2026-08-20
+  rewrite. Does not fire.
+- **⇒ B18 DOES NOT FIRE. This is a normal cycle.**
+
+**A disclosed divergence from the previous cycle's written plan.** The 2026-08-23 wrap-up recommended
+that *this* cycle be planned as a distillation, on the reasoning that the count branch "fires the
+moment it registers anything". That reasoning is about the state the count reaches *after* the cycle;
+B18 fixes the check at rule B1's coverage point, and at that point the count is **9**. A trigger with
+a numeric threshold that a cycle may fire early is the same discretionary object B18 was written to
+abolish, so the threshold is read as written and the cycle proceeds normally. **Consequence recorded
+in advance: this cycle takes the count to 12, and the next cycle fires on the count branch
+unconditionally and must be a rewrite producing `PAPER_DRAFT_v5.md` that executes E55's two
+outstanding corrections with E56's numbers.**
+
+**B17 (micro quota).** Paid in each of the last three cycles (U24, U25, U26/U27). **Not due**, and
+this cycle does not pay it: the reachable untouched micro surface is exhausted (U26x) and the two
+strongest open leads — the `fin22` block and the E22 promotion — are both country-level. Stated here
+as the rule requires. The next cycle after the rewrite owes it.
+
+**B3 (lineage).** E57x/E57 parent **none** (new module). E58 parent **E22**, chain length **1**. The
+E53 → E55 → E56 chain is not extended.
+
+## Cycle shape (2026-08-15c shape)
+
+- **slot 1** — untouched/thin-module pass on **`fin22`**: mandatory mapping pass (exploratory,
+  **E57x**) followed by the **four-way orientation screen** (**E57**).
+- **slot 2** — micro: **skipped**, see B17 above.
+- **slot 3** — the standing promotion test deferred by the last two cycles: **E58**, the all-windows
+  promotion of **E22** under B14 + B8.
+
+**B2 breadth cells this cycle, named as the rule requires.** E57 lands on **`fin22`**, the thinnest
+reachable country module (2 of 11 columns, nine unscreened). E58 lands on the **2014→2017 and
+2017→2021 transitions** and on a **regional partition of `pan_dev`**, i.e. neither the standard
+window nor `group == "all"` pooled.
+
+---
+
+## E57x (slot 1, part A) — EXPLORATORY mapping pass on the `fin22` borrowing-sources module
+
+Logged as **exploratory** under the peek rule (2026-07-11), **before** E57's screen. No hypothesis,
+no keep. For every `fin22*` country column: population-weighted developing-panel level by wave, the
+economy count per wave, and the 2024 reporting set. **Item meanings are INFERRED from levels and
+coverage only** — there is no questionnaire in the repo — and that caveat travels with anything E57
+claims.
+
+**The composition warning is registered before the run** (HARNESS_V2_NOTES item 9(i), carried from
+E49x/E51). `fin22a_22a1_22g_d` is by its name a **union of `fin22a`, `fin22a_1` and `fin22g`** and is
+the harness's registered headline for the concept `borrowed_formally`; it is therefore a **declared
+composite and is excluded from the screen family in advance**, not after seeing its correlation.
+`fin22h_s` is an `_s` conditional column, documented unusable (`HARNESS_V2_NOTES` item 10), and is
+**excluded in advance** — E56's verdict turned on exactly this choice being made too late.
+
+## E57 (slot 1, part B) — the four-way orientation screen on `fin22`, the registered primary
+
+**Anchor and frame.** Each eligible `fin22` item against the digital-payment headline **`g20_any`**
+in the **2024 developing-panel cross-section** — the identical anchor and frame used by E45, E47,
+E49 and E51, so the numbers are comparable across all six screened modules.
+
+    restatement     |r| >= 0.80
+    aligned         +0.30 <= r < 0.80
+    counter-moving  r <= -0.30
+    independent     |r| < 0.30
+    both lenses must AGREE, else `mixed-lens` (B9/B11)
+
+**Registered eligibility (E49/E51 thresholds, unchanged):** ≥3 waves at ≥70 developing-panel
+economies. Declared in advance, as agenda item 10.1 now requires, so that a thin item is never
+screened and then explained away.
+
+**REGISTERED KEEP CONDITION.** At least one item classifies **`counter-moving` on BOTH lenses**,
+keeps its sign under **G6**, has a **2,000-draw country bootstrap interval excluding zero**, **and
+survives Benjamini–Hochberg at q = 0.10 over this module's own screen family** (agenda item 9.2,
+registered in advance and part of the screen since U25). A screen returning only
+restatement / aligned / independent / mixed-lens items is a **DISCARD**.
+
+**REGISTERED SIGN (B15): the keep direction is NEGATIVE.** An item at r ≥ +0.80 is a restatement and
+is the **opposite** result, not partial confirmation.
+
+**REGISTERED DENOMINATOR DIAGNOSTIC (agenda item 9.1, in U26's reworded form — "report both
+denominators", not "the own denominator is the safe one").** Several `fin22` items are asked only of
+borrowers, so their all-adult share is *borrowing rate × conditional rate*. For every screened item
+the run reports, beside the classification: (i) r(item, anchor) on the all-adult denominator the
+country file publishes, (ii) r(item / `borrow_any_t_d`, anchor) — the conditional rate — and (iii)
+**r(`borrow_any_t_d`, anchor)** itself, the base factor that plays the role U25's complement factor
+played. A classification that moves between (i) and (ii) is reported as denominator-driven.
+
+**SECONDARY (registered, no bar).** The same screen against **`account_t_d`** — the E47 distinction
+between counter-moving with *digital payment* and counter-moving with *financial access in general*.
+
+**B6/B9/B10/B12 on every cell:** weighted and unweighted r, 2,000-draw percentile interval and
+`p_boot`, Kish `neff` beside nominal n, G6 drop-top-5, and the **largest single leave-one-out effect
+with the economy named**. **B21** where the lenses disagree.
+
+**Declared.** A 2024 cross-sectional **level** correlation is a **composition** statement about
+economies, not a within-country dynamic one (E48 is the standing proof the two come apart). No Δ
+claim is registered here, so **B14 does not bind** and **B20** is satisfied trivially by the single
+wave. G3: every `fin22` item is an unregistered narrow variant.
+
+**What is at stake, stated in advance.** Five modules have been screened with this instrument
+(`fin31`, `fin34`, `fin`, `fin43`, `fin13`/`fin14`) and the counter-moving count stands at **two**
+(`fin31d`, `fin34c`), both payment-mode items. `fin22` is the first **liability-side** module to be
+screened: if informal borrowing sources retreat where digital payment advances, this is where the
+ledger would see it. A discard makes the two-margin count harder still to read as a sampling
+accident, and makes "the counter-moving margins are payment-mode items" the standing description.
+
+---
+
+## E58 (slot 3) — the all-windows promotion test of E22 (B14 + B8)
+
+**Parent: E22** (`keep-window`, chain length 1). Agenda: the promotion deferred by the 2026-08-23
+cycle. E22 is the ledger's only regional-split test and has **never been run outside 2021→2024**.
+
+**What E22 claimed.** That E1 — the co-movement of Δ`mobileaccount_t_d` with Δ`fin17a_17a1_d` — is a
+general developing-world regularity rather than a Sub-Saharan Africa story: inside SSA r = **+0.923**
+(n = 25), outside SSA r = **+0.676** (n = 33), 2021→2024, weighted.
+
+**Design (B14-compliant): an ALL-WINDOWS design, not a fresh single adjacent window.** The identical
+E22 construction — `pan_dev` partitioned by `regionwb24_hi` into Sub-Saharan Africa vs the five other
+developing regions pooled — run over **every transition `mobileaccount_t_d` supports: 2014→2017,
+2017→2021, 2021→2024**. Six cells (3 windows × 2 subsamples). 2011→2014 is **not testable** — the
+country file carries no 2011 `mobileaccount_t_d` — and that is recorded, not treated as a pass.
+
+**REGISTERED PROMOTION CONDITION (B8: every tested window, not a majority).** E22 is promoted from
+`keep-window` to `keep-general` only if, in **all six cells**: `r_w ≥ +0.30` — the original
+threshold and the original **POSITIVE** sign (B15) — **and** G6 keeps the sign **and** the E4
+magnitude rule holds (`|r_droptop| ≥ 0.5 × |r_full|`). **Anything else leaves E22 at `keep-window`
+and the failing window is recorded as *failed*, never as *not attempted*.**
+
+**REGISTERED COVERAGE RULE, fixed before the run.** E22's declared G4 deviation `min_countries = 15`
+per subsample is carried unchanged. A cell with fewer than 15 reporting economies is **not testable**;
+if any cell is not testable the promotion is **not granted**, and the verdict is reported as
+**coverage-limited** rather than as a sign disagreement, so the two failure modes are never conflated.
+
+**REGISTERED LENS RULE (B9/B11), fixed before the run.** The bar above is E22's own
+population-weighted lens. The unweighted twin is computed for all six cells. If both lenses pass all
+six, the promotion is `keep-general`. If only the weighted lens passes, the promotion is granted as
+**`keep-weighted`** with the window scope named in the claim; if only the unweighted lens passes, as
+**`keep-unweighted`**. If neither passes all six, **discard the promotion**.
+
+**SECONDARY (registered, no bar).** Per-window Δ(mobile money) terciles with mean Δ(saving) inside
+each subsample — E22's dose-response, which is where its "intensity gradient" reading came from —
+plus the pooled `pan_dev` cell in each window as the E1/E28 reference line.
+
+**B6/B10/B12 on every cell:** 2,000-draw country bootstrap percentile interval and `p_boot`, Kish
+`neff` beside nominal n, and the largest single leave-one-out effect with the economy named.
+
+**B20 (denominator).** Δ→Δ correlations are computed pairwise-complete and are therefore balanced
+across the two waves by construction (E55's labelled diagnostic). What varies across windows is the
+**sample**, and the run reports the economy count and the subsample population share for every cell
+so the coverage change is visible rather than assumed away.
+
+**Declared.** Descriptive co-movement only, never causal — account growth and common income shocks
+are uncontrolled in every cell, exactly as in E1 and E22. `mobileaccount_t_d` reporting is itself
+regionally selected, which is a property of the indicator and not attrition.
+
+---
+
+## E57x — EXPLORATORY. The `fin22` borrowing-sources module is mapped, and six of eleven columns are screenable
+
+Commit `808412c`. Status `exploratory`. No hypothesis, no keep — logged before E57 under the peek
+rule. Frame `pan_dev`. **Parent: none.**
+
+**The wave map** (weighted developing-panel level pp / economies reporting; 2011 is empty for the
+whole module):
+
+| column | 2014 | 2017 | 2021 | 2024 |
+|---|---|---|---|---|
+| `fin22a` | 15.7 / 77 | 15.6 / 77 | 21.6 / 77 | 22.0 / 76 |
+| `fin22b` | 29.2 / 77 | 29.4 / 77 | 30.3 / 77 | 31.6 / 76 |
+| `fin22c` | — | 4.0 / 77 | 2.8 / 77 | 4.8 / 76 |
+| `fin22d` | 14.0 / 77 | 10.7 / 77 | 17.2 / 77 | 19.9 / 76 |
+| `fin22e` | 8.1 / 77 | 7.2 / 77 | — | 10.7 / 76 |
+| `fin22f` | — | — | — | 23.7 / 76 |
+| `fin22g` | 8.4 / 77 | 8.6 / 77 | 13.3 / 77 | 13.6 / 76 |
+| `fin22h` | — | — | 10.9 / 77 | 11.4 / 76 |
+| `fin22a_1` | — | — | 2.5 / 61 | 3.5 / 61 |
+| `fin22a_22a1_22g_d` | 15.7 / 77 | 15.6 / 77 | 22.6 / 77 | 23.2 / 76 |
+| `fin22h_s` | — | — | 83.3 / **10** | 85.7 / **8** |
+
+**Eligibility, decided by the rule fixed in the pre-registration** (≥3 waves at ≥70 developing
+economies, then the two declared exclusions): the screen family is **`fin22a`, `fin22b`, `fin22c`,
+`fin22d`, `fin22e`, `fin22g`** — six items. `fin22f` (one wave) and `fin22h` (two) fail eligibility;
+`fin22a_22a1_22g_d` and `fin22h_s` were excluded **before the run** as a declared composite and a
+documented-unusable `_s` column. `fin22h_s` at 8–10 economies is a live example of why item 10.1's
+eligibility rule exists.
+
+**Meanings are NOT established.** There is no questionnaire in the repo. What is established is
+behaviour and structure. One structural anchor is available and worth recording: the harness
+registers `fin22a_22a1_22g_d` as the headline for `borrowed_formally` and its name declares it a
+union of `fin22a`, `fin22a_1` and `fin22g`, so **`fin22a` and `fin22g` are two formal borrowing
+sources** and everything else in the family is a non-formal or unclassified source. The screen below
+reads consistently with that and nothing further is inferred.
+
+**Coverage consumed.** Nine previously unscreened country columns in the ledger's thinnest reachable
+country module. **Rule B2's breadth cell for slot 1.**
+
+## E57 — KEEP. A THIRD counter-moving country margin, and the first one that is not a payment mode
+
+Commit `808412c` (+ `af55b14`, the post-primary diagnostic block). Stream hypothesis. Design
+`measurement`. Frame `pan_dev`, **2024 cross-section**. **Parent: none** (new module). Status
+**`keep`** — both lenses agree, so the status is bare (B9/B11).
+
+**The registered screen, `g20_any` anchor, 76 economies, `neff` 7.2:**
+
+| item | r_w | r_u | class | G6 drop-5 | largest LOO (named) | boot [2.5, 97.5] | p_boot |
+|---|---|---|---|---|---|---|---|
+| `fin22a` | +0.843 | +0.579 | `mixed-lens` (restatement/aligned) | +0.489 | China −0.246 | [+0.428, +0.924] | 0.000 |
+| `fin22b` | −0.450 | −0.079 | `mixed-lens` (counter-moving/independent) | +0.088 | China +0.265 | [−0.672, +0.147] | 0.144 |
+| `fin22c` | −0.145 | +0.028 | `independent` | +0.158 | China +0.173 | [−0.360, +0.269] | 0.458 |
+| **`fin22d`** | **−0.557** | **−0.400** | **`counter-moving`** | **−0.358** | China +0.195 | **[−0.740, −0.163]** | **0.002** |
+| `fin22e` | −0.142 | −0.124 | `independent` | +0.013 | Bangladesh −0.055 | [−0.373, +0.125] | 0.284 |
+| `fin22g` | +0.828 | +0.488 | `mixed-lens` (restatement/aligned) | +0.423 | China −0.264 | [+0.406, +0.919] | 0.000 |
+
+**VERDICT: KEEP.** `fin22d` meets **every** registered condition, all four of them fixed in advance:
+counter-moving on **both** lenses (−0.557 / −0.400); **G6** keeps the sign at −0.358, and the E4
+magnitude rule holds at a retention of **0.643**; the 2,000-draw country bootstrap interval
+**[−0.740, −0.163] excludes zero**; and it **survives BH at q = 0.10 over its own six-test family**
+(p_boot 0.002 against a critical value of 0.0500 — BH rejects `fin22a`, `fin22g`, `fin22d`).
+**Registered sign was NEGATIVE and the result is negative** (B15). The largest single leave-one-out
+effect is **China at +0.195**, which leaves the item counter-moving.
+
+**This is the first counter-moving margin the BH filter has ever passed.** U25's `fin14d` met every
+mechanical bar and was retired by BH rejecting 0 of 19 over its family; agenda item 9.2 was written
+because five screened modules had never produced a survivor of the family-wise correction. `fin22d`
+is the sixth module screened and the first to carry one.
+
+**The denominator diagnostic (agenda item 9.1, in U26's "report both denominators" wording) does not
+move it, and the base factor is weak.** On the conditional-rate denominator — the item divided by
+`borrow_any_t_d`, i.e. the share of *borrowers* rather than of adults — `fin22d` reads
+**−0.582 / −0.534**, i.e. **the same class and slightly stronger on both lenses**. The base factor
+itself, r(`borrow_any_t_d`, `g20_any`), is **−0.261 weighted / −0.026 unweighted** — nothing like
+U25's −0.903 complement factor, so the classification is not a penetration artifact. **A structural
+fact closes this line completely** (post-hoc, disclosed): in the micro file `fin22d` is asked of the
+**whole 102,954-respondent module sample**, not of a conditional subsample, so the all-adult
+denominator *is* the item's own denominator and the U25 trap cannot arise here by construction.
+
+**M3, exact, and it was not registered — reported as a disclosed post-hoc check.** The micro
+`fin22d == 1` share reproduces the country-file `fin22d` at **median and maximum |dev| of 0.000pp
+across all 98 module economies**. `fin22b` and `fin22e` are exact too. `fin22c` (25.5pp) and
+`fin22g` (56.6pp) are **conditionally asked in the micro file** (16,444 and 11,798 respondents) while
+their country twins sit on the all-adult denominator — a fact worth carrying, and one that does not
+touch the keep.
+
+**B21 depths, computed after the primary and carrying no verdict rule.** For `fin22d` the two
+diagnostics point the same way for once: **fragility depth 14** — the fourteen largest-population
+economies, China through Thailand, must *all* be removed before `r_w` falls below the bar (to
+−0.274) — and **ascent depth 0**, because `r_u` is already past it at −0.400. Against this,
+`fin22b`'s mixed-lens cell has **fragility depth 1 (China alone**, +0.265 on removal, to −0.185) and
+**ascent depth 7** (Uganda, Kenya, Nicaragua, Guatemala, El Salvador, Senegal, Ghana → −0.335). The
+contrast is the point of B21: the two mixed-lens items are one-economy objects in one direction and
+seven-economy objects in the other, and `fin22d` is neither.
+
+**SECONDARY vs `account_t_d` — the E47 distinction, and it separates the item.** `fin22d` reads
+**−0.160 / −0.500**, a `mixed-lens` cell whose weighted interval [−0.672, +0.303] contains zero and
+which BH does not reject (p_boot 0.537). So `fin22d` counter-moves with **digital payment**, not with
+**financial access in general** — the same shape E47 found for `fin34c`. `fin22a` and `fin22g`, the
+two formal sources, are `aligned` with access on both lenses (+0.589 / +0.617 and +0.473 / +0.502),
+which is the expected direction and is reported as such.
+
+**Gates.** G3 declared: every `fin22` item is an unregistered narrow variant. G4 clean: 76 economies,
+**97.4%** of developing-panel 2024 adult population. G5 n/a (no official series for a cross-sectional
+correlation). G6 above. B10: `neff` = **7.2** against a nominal 76, so no significance language
+attaches to the nominal n; the bootstrap interval and the depths are what carry the stability
+statement. B14 does not bind (no Δ primary); B20 is trivial (single wave).
+
+**What this changes, and what it does not.** The counter-moving count goes from **two to three**
+(`fin31d`, `fin34c`, `fin22d`) and the standing description — "the counter-moving margins are
+payment-mode items" — is now **wrong**: `fin22d` is a **liability-side** item in the borrowing-source
+battery, and its level *rose* over the decade (14.0 → 10.7 → 17.2 → **19.9**) while digital payment
+rose too, so the negative correlation is **cross-sectional composition between economies**, not a
+within-country retreat. E48 is the standing proof those two things come apart, and no Δ claim is made
+here. The item's **meaning is not established** — only that it is a non-formal borrowing source
+(the formal ones being `fin22a` and `fin22g` by the headline's own definition), that it is asked of
+all adults, and that it is M3-exact.
+
+---
+
+## E58 — DISCARD the promotion. E22 stays `keep-window`, and the failure is a WINDOW, not a region
+
+Commit `209967a` (+ the disclosed region-label fix below). Stream hypothesis. Design
+`delta-delta-multi`. Frame `pan_dev` partitioned by `regionwb24_hi`. **Parent E22**, chain length 1.
+
+**A DISCLOSED IMPLEMENTATION PATCH, and no verdict was taken from the run it broke.** The first run
+tested `regionwb24_hi == "Sub-Saharan Africa"`; the actual label is **"Sub-Saharan Africa (excluding
+high income)"**, so the SSA subsample came out **empty** and "rest" was identical to pooled `pan_dev`
+— visible in the output as three `NOT TESTABLE` cells and a `rest` column that reproduced the pooled
+reference to three decimals. The equality test was replaced with a prefix match, committed, and the
+experiment re-run end to end. **The registered bars were applied only to the corrected run.** The
+correctness check is that the 2021→2024 cells now reproduce **E22 exactly** — SSA **+0.923 on n = 25**,
+rest **+0.676 on n = 33** — which is the same-sample confirmation E22 itself used.
+
+**The six registered cells:**
+
+| subsample | window | n | pop share | `neff` | r_w | r_u | G6 | E4 retention | boot [2.5, 97.5] | p_boot | largest LOO |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| SSA | 2014→17 | 26 | 100.0% | 9.4 | **+0.543** | +0.368 | +0.128 | **0.24** | [+0.036, +0.740] | 0.041 | Nigeria −0.145 |
+| SSA | 2017→21 | 26 | 100.0% | 9.5 | +0.405 | +0.319 | +0.371 | 0.92 | [−0.054, +0.764] | 0.089 | Kenya +0.139 |
+| SSA | 2021→24 | 25 | 99.5% | 9.5 | +0.923 | +0.853 | +0.878 | 0.95 | [+0.735, +0.975] | 0.000 | Nigeria −0.049 |
+| rest | 2014→17 | 28 | 60.7% | 4.8 | **+0.054** | **+0.143** | +0.601 | 11.17 | [−0.462, +0.691] | 0.697 | India +0.443 |
+| rest | 2017→21 | 31 | 62.5% | 4.9 | +0.675 | +0.627 | +0.695 | 1.03 | [+0.347, +0.862] | 0.004 | Thailand −0.086 |
+| rest | 2021→24 | 33 | 63.9% | 5.0 | +0.676 | +0.657 | +0.706 | 1.05 | [+0.447, +0.843] | 0.000 | Thailand −0.050 |
+
+**VERDICT: the promotion is DISCARDED. E22 stays `keep-window`.** Four of the six cells pass the
+registered bar on **both** lenses. The two failures are **both in 2014→2017** and they fail in
+different ways: `rest` at **r_w +0.054 / r_u +0.143** is simply nowhere near the bar, while **SSA
+clears the +0.30 bar at +0.543 and is killed by the standing E4 magnitude rule** — G6 takes it to
+**+0.128**, a retention of **0.24** against the 0.50 floor. Under B8 one disagreeing window is
+enough; the 2014→2017 window is recorded as **FAILED**, not as *not attempted*. 2011→2014 is
+**not testable** and is recorded as such: the country file carries `mobileaccount_t_d` for **zero**
+economies in 2011.
+
+**The substantive result is that the failure is not regional.** E28 already found the pooled
+2014→2017 mobile-money cell at **−0.048** and read it as a window with no usable signal in either
+direction. The obvious alternative — that a pooled null in that window hides two regional stories
+cancelling — is what a regional split can test and nothing in the ledger had tested. **It does not
+hold.** Neither subsample carries a stable association in 2014→2017: outside SSA there is nothing at
+all (+0.054 / +0.143, interval [−0.462, +0.691] straddling zero, p_boot 0.697), and inside SSA what
+looks like an association is carried by three economies.
+
+**The removal path in the failing SSA cell, computed after the primary and carrying no verdict rule
+(B12 in its greedy form).** SSA's top five by adult population are Nigeria, DR Congo, South Africa,
+Tanzania and Kenya. In **2014→2017** the walk is **+0.543 → +0.398 → +0.483 → +0.235 → +0.144 →
++0.128**: Nigeria, South Africa and Tanzania alone take it from above the bar to less than half of it.
+The identical walk in **2021→2024** is **+0.923 → +0.874 → +0.878 → +0.801 → +0.803 → +0.878** — it
+never leaves the +0.80s. Same subsample, same five economies, same construction: the 2024-window
+association is a property of the 25 economies and the 2017-window one is a property of three.
+
+**SECONDARY (registered, no bar) — E22's dose-response, and the regional intensity ordering does NOT
+survive the window change.** Δ(mobile money) terciles → mean Δ(saving): SSA **−5.5 / +0.1 / +0.4**
+(2014→17), **+9.8 / +8.7 / +13.9** (2017→21), **+3.5 / +10.6 / +16.9** (2021→24); rest **+0.3 / −1.9 /
++0.9**, **−1.9 / −1.4 / +7.0**, **+2.8 / +7.8 / +12.7**. Monotone in both subsamples only in
+2021→2024. **E22 declared an "intensity gradient" — mobile money the more dominant rail inside SSA
+(0.92 vs 0.68) — and in 2017→2021 that ordering is REVERSED (SSA +0.405, rest +0.675).** The gradient
+is a property of the 2021→24 window, not of the regions, and any repetition of E22's intensity
+sentence must now say so.
+
+**A methodological note the run produced by accident, and the agenda should carry it.** The E4
+magnitude rule is a **ratio**, `|r_droptop| / |r_full|`, and when `r_full` is near zero the ratio
+explodes: the `rest` 2014→17 cell "passes" E4 at a retention of **11.17** on an `r_full` of +0.054.
+It is harmless here because the +0.30 bar rejects the cell first, but the rule is written as though
+it were a stability test and it is only meaningful **conditional on the association clearing its
+threshold**. It should be stated that way.
+
+**Inference and gates.** B6: 2,000-draw country bootstrap on every cell, intervals above. B10: `neff`
+runs **9.4–9.5 inside SSA and 4.8–5.0 outside** — the *smaller* subsample has the *larger* effective
+n, because SSA's population weight is spread over 25 economies while the rest-of-developing weight
+concentrates in India, China, Indonesia, Brazil and Pakistan; no significance language attaches to
+the nominal 26–33. G3: both indicators are registered headlines (`mobile_money`, `saved_formally`).
+G4: E22's declared `min_countries = 15` deviation carried unchanged, and every cell clears it — SSA
+at 99.5–100% of subsample adult population, rest at 60.7–63.9%. G5 n/a. G6 in the table. **B14** is
+satisfied: this is an all-windows design, not a single adjacent Δ→Δ. **B20**: Δ→Δ correlations are
+pairwise-complete and therefore balanced across each pair of waves by construction; what changes
+across windows is the sample, and the economy count and population share are reported per cell above.
+
+**Wording, as always.** Descriptive co-movement, never causal. Account growth and common income
+shocks are uncontrolled in every cell, exactly as in E1 and E22. `mobileaccount_t_d` reporting is
+itself regionally selected, which is a property of the indicator and not attrition.
+
+## Wrap-up — 2026-08-24
+
+1. **Three experiments, one keep, and the keep is the first counter-moving margin ever to survive a
+   family-wise correction.** B18 did not fire (corrections **2 of 5**, count **9 of 10** at the check
+   point), so this was a normal cycle: **E57x** (exploratory — module opened), **E57** (`keep`),
+   **E58** (`discard`). Ledger now **95 rows, 41 keeps**, `make_index.py --check` clean. B2 paid twice
+   (E57 on the `fin22` module, E58 on the 2014→17 / 2017→21 transitions and a regional partition);
+   B17 not due and not paid, stated with its reason; B3 not extended (E57 parent none, E58 parent E22
+   at chain length 1).
+2. **E57 — the counter-moving count goes from two to three, and the standing description is now
+   wrong.** `fin22d`, a non-formal borrowing source, reads **−0.557 weighted / −0.400 unweighted**
+   against `g20_any` in the 2024 developing-panel cross-section, with G6 **−0.358** (E4 retention
+   0.643), bootstrap **[−0.740, −0.163]**, and — the first time in six screened modules — **survival
+   of BH at q = 0.10 over its own family** (p_boot 0.002, critical 0.0500). The other two
+   counter-moving margins (`fin31d`, `fin34c`) are payment-mode items; this one is on the
+   **liability side**. Its **fragility depth is 14** — the fourteen largest-population economies must
+   all be removed before `r_w` falls below the bar — against `fin22b`'s depth of **1 (China alone)**.
+   The denominator diagnostic does not move it (**−0.582 / −0.534** on the conditional-rate
+   denominator, base factor only −0.261 / −0.026), and a disclosed post-hoc M3 check finds micro
+   `fin22d` reproducing the country file at **median and max |dev| 0.000pp on all 98 economies**.
+   Against `account_t_d` it is `mixed-lens` with an interval containing zero: it counter-moves with
+   **digital payment**, not with financial access in general — E47's distinction, reproduced in a
+   third module.
+3. **E58 — E22's promotion is DISCARDED and E22 stays `keep-window`, but the shape of the failure is
+   the result.** Four of six cells pass on both lenses; both failures sit in **2014→2017**. Outside
+   SSA that window carries nothing (**+0.054 / +0.143**, p_boot 0.697); inside SSA the apparent
+   **+0.543** collapses to **+0.128** under G6 (retention **0.24**), and the greedy removal path shows
+   Nigeria, South Africa and Tanzania doing all of it — while the *same five removals* in 2021→24
+   never move that cell out of the +0.80s. **So the pooled 2014→17 null E28 recorded is not two
+   regional stories cancelling.**
+4. **E22's "intensity gradient" does not survive the window change.** E22 read SSA as the more
+   mobile-money-dominant region (0.923 vs 0.676 in 2021→24). In **2017→2021 the ordering reverses**
+   (SSA **+0.405**, rest **+0.675**). The gradient is a property of the 2021→24 window, not of the
+   regions, and the sentence must not be repeated without that.
+5. **Two methodological items for the agenda, and the B18 state.** (i) The **E4 magnitude rule is a
+   ratio** and explodes near `r_full` = 0 — the `rest` 2014→17 cell "passes" at a retention of
+   **11.17** on an `r_full` of +0.054 — so it is only meaningful conditional on the association
+   clearing its threshold. (ii) `neff` runs **9.4–9.5 inside SSA against 4.8–5.0 outside**: the
+   smaller subsample has the larger effective n, because SSA's weight is spread over 25 economies
+   while the rest concentrates in five. **B18 state after this cycle: corrections 2 of 5, count 12 of
+   10 — the count branch is now OVER its threshold and the next cycle MUST be a distillation/rewrite
+   producing `PAPER_DRAFT_v5.md` and executing E55's two outstanding corrections with E56's
+   numbers.** Prediction stream unchanged and **CLOSED**: `account_t_d` **5.014**, `fin17a_17a1_d`
+   **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-25 — B18 DISTILLATION CYCLE (no experiments registered)
+
+## Mandatory cycle-start checks
+
+**B1 coverage run (done before anything else; computes no outcome, so not a peek).** Country file
+**107 of 429 columns touched (25%)**, unchanged since E57x opened `fin22`. The only fully untouched
+country module is `con` (133 columns) and it stays **blocked** — numeric codes, no questionnaire
+(`HARNESS_V2_NOTES` 5–6). Micro **93 of 192 (48%)**; the only untouched micro family is `con` (52,
+blocked), with `fin22` (1 of 9) and `dig_account` (1) thin but reachable. Frames: `urbanicity` is
+still the only untouched country frame and is single-wave. All four wave transitions are now used
+(24 / 84 / 143 / 313 ledger mentions for 2011→14 / 2014→17 / 2017→21 / 2021→24).
+
+**B18 distillation-trigger check, read against the highest-numbered draft `PAPER_DRAFT_v4.md`
+(B18 amendment 2026-08-16).**
+
+- **Corrections branch: 2 of 5** — E55's two items, annotated with E56's replacement numbers and
+  still **not executed**. Does not fire on its own.
+- **Count branch: 12 of 10 — FIRES.** Twelve experiments since the 2026-08-20 rewrite: U24x, U24,
+  E55, U25x, U25, E56, U26x, U26, U27, E57x, E57, E58.
+- **⇒ B18 FIRES on the count branch. This is a distillation/rewrite cycle and it registers NO new
+  experiments.** The previous cycle recorded this consequence in advance and it is honoured as
+  written.
+
+**B2 / B3 / B17.** Not applicable to a rewrite cycle, which runs no experiments. B17's micro quota
+was paid in three of the last four cycles (U24, U25, U26/U27) and is **owed by the first cycle after
+this rewrite**, together with B2's breadth cell — by default `urbanicity`, the last untouched country
+frame, since the reachable untouched micro surface was declared exhausted by U26x.
+
+## The rewrite's scope, fixed before writing
+
+1. **Execute E55's two outstanding corrections with E56's replacement numbers** (the corrections
+   branch closes at 0 and v4's block is frozen).
+2. **Retire the standing sentence "the counter-moving margins are payment-mode items"** (agenda 11.1,
+   E57).
+3. **Retire E22's regional intensity sentence** (agenda 11.3, E58) and record the promotion as
+   FAILED rather than not attempted.
+4. **Fold in** U24, U27 and the three module openings (U24x, U25x, U26x) on the micro side; E55, E56,
+   E57x, E57, E58 on the country side; and the two denominator results (U25, U26) as a method.
+5. **Rewrite §12 limitation 3 and §13 item 1**: the ledger-wide reporting-set audit the draft called
+   its largest *unquantified* risk has been run, and it is now quantified.
+
+## The rewrite, executed — 2026-08-25
+
+`PAPER_DRAFT_v5.md` written; `PAPER_DRAFT_v4.md` marked **SUPERSEDED** with its corrections block
+closed and frozen at two items, **both executed**. v4's Appendix B discharge tables for v2 and v3 are
+carried forward as v5's Appendix B. The B18 counter resets here: the next count branch runs from
+2026-08-25 at experiment count 95.
+
+## Wrap-up — 2026-08-25
+
+1. **A rewrite cycle, not an experiment cycle.** B18's count branch fired at **12 of 10** and the
+   corrections branch stood at **2 of 5**, so under the rule no new experiments were registered.
+   Output: **`PAPER_DRAFT_v5.md`** (95 experiments, 41 keeps, unchanged ledger). `PAPER_DRAFT_v4.md`
+   is SUPERSEDED with its corrections block **closed and frozen at two items, both executed**;
+   `EXTENSIONS_DRAFT.md` re-pointed at v5 with its two E22 passages retired. `make_index.py --check`
+   clean at 95 rows, 0 problems.
+2. **Both of v4's corrections are executed, and the second one changes a headline table.** The wage
+   rail's decade path in Table 1 is now the **balanced 71-economy series 8.04 → 10.35 → 12.03 →
+   16.43** — monotone, largest step **+4.40pp in the very window** the unbalanced series reported as a
+   −3.21pp retreat — and the financial-health family in §7 rises on all three items where it fell
+   unbalanced. The reporting-set limitation in §12 is no longer "unquantified": three of four
+   transitions clean at a median discrepancy of **exactly 0.000pp**, 2021→24 biasing **29.1%** of its
+   cells by ≥2pp through a **six-economy release block** across ten column families. Agenda item 8.1,
+   v4's highest-priority open item, is **closed**.
+3. **Two sentences this project had been repeating are gone.** "The counter-moving margins are
+   payment-mode items" — there are three now and `fin22d` is liability-side (§8.1). "Mobile money is
+   the more dominant saving rail inside SSA" — the ordering reverses in 2017→21, SSA +0.405 against
+   +0.675 outside (§5).
+4. **Two things the rewrite noticed that no single experiment had stated.** (i) **The promotion record
+   splits on the rule change**: before B8, two designs promoted six bivariates and E42 established the
+   four-transition result; **since B8, three attempts, three failures** (E43→E44, E48b→E50, E22→E58) —
+   logged as new agenda item 12.1 and written into §12. (ii) **Only `fin22d` has ever been
+   denominator-checked**; `fin31d` and `fin34c` predate rule 9.1 and both plausibly describe a
+   subsample, so v4's implied all-clear was an overclaim and §12 item 4 now says so — new agenda item
+   12.2, a cheap re-check owed before either margin is used again.
+5. **State for the next cycle.** B18 resets: **corrections 0 of 5, count 0 of 10** from experiment
+   count 95. **B17's micro quota is OWED** by the next cycle (last paid U27, 2026-08-23), as is B2's
+   breadth cell — default **`urbanicity`**, the only untouched country frame, or the micro `fin22`
+   block. Highest-priority open design is the **all-windows Δ→Δ on `fin22d`** with a balanced
+   denominator declared in advance. Prediction stream unchanged and **CLOSED**: `account_t_d`
+   **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-26 — pre-registration (written BEFORE any outcome was computed)
+
+**B1 coverage run (done before any hypothesis was chosen; computes no outcome, so not a peek).**
+Country file **107 of 429 columns touched (25%)**, unchanged since E57x opened `fin22`. The only
+fully untouched country module is `con` (133 columns, 2024-only) and it stays **blocked** — numeric
+codes, no questionnaire (`HARNESS_V2_NOTES` 5–6). Micro **93 of 192 (48%)**; `con` is blocked at the
+micro level too (52 columns). The reachable untouched micro surface, declared exhausted by U26x, is
+the **`fin22` borrowing-source block (8 of 9 columns unused)** plus `dig_account` (1). Frames:
+`urbanicity` remains the only untouched country frame and is single-wave. Wave transitions:
+2011→2014 is the thinnest at 24 ledger mentions, but the whole `fin22` module is empty in 2011, so it
+is not reachable by this cycle's designs.
+
+**B18 distillation-trigger check, read against the highest-numbered draft `PAPER_DRAFT_v5.md`
+(B18 amendment 2026-08-16).**
+
+- **Corrections branch: 0 of 5.** v5 opened at zero — v4's two items were both executed in it.
+  Does not fire.
+- **Count branch: 0 of 10.** The counter reset at the 2026-08-25 rewrite (experiment count 95); no
+  experiment has run since. Does not fire.
+- **⇒ B18 DOES NOT FIRE. This is a normal experiment cycle.**
+
+**B17 (micro quota).** **OWED and PAID this cycle.** Last paid U27 (2026-08-23); the 2026-08-25
+distillation registered nothing, so this is the first cycle after the rewrite and the quota falls
+due. Slot 2 is **U28**.
+
+**B3 (lineage).** **E59** parent **E57**, chain length 1. **U28** parent **E57** on subject matter
+(the same item, at the individual level), design ancestor **U24**; chain length 1. Two consecutive
+experiments therefore descend from E57 and the cap of three is not reached — recorded so the next
+cycle knows the chain is at two. **U28x** parent none (module-opening pass).
+
+## Cycle shape (2026-08-15c shape)
+
+- **slot 1** — untouched-module pass: **U28x**, the mandatory exploratory mapping pass on the
+  untouched micro `fin22` block. **This is rule B2's breadth cell for the cycle.**
+- **slot 2** — micro: **U28**, the registered claim built on what U28x identifies (B17 quota).
+- **slot 3** — the agenda's priority-1 open design: **E59**, the all-windows Δ→Δ on `fin22d`
+  (agenda item 11.2), carrying the item-12.2 denominator re-check as a registered no-bar diagnostic.
+
+**B2 breadth cells this cycle, named as the rule requires.** U28x/U28 land on the **micro `fin22`
+block**, eight columns the ledger has never touched and the last reachable untouched micro family.
+E59 lands on the **2014→2017 and 2017→2021 transitions** (not the standard 2021→24 window) in a
+module opened two days ago.
+
+---
+
+## E59 (slot 3) — the all-windows Δ→Δ on `fin22d` (agenda item 11.2)
+
+**Parent: E57** (`keep`, chain length 1). **Stream** hypothesis. **Design** `delta-delta-multi`.
+**Frame** `pan_dev`.
+
+**Why it is registered.** E57 found a **third** counter-moving country margin, `fin22d`, and the
+first that is not a payment-mode item: in the 2024 developing-panel cross-section r(`fin22d`,
+`g20_any`) = **−0.557 weighted / −0.400 unweighted**, surviving G6, a bootstrap interval excluding
+zero, and BH over its own six-item family. E57 is a **cross-sectional composition** statement by
+construction, and **E48 is the standing proof that cross-section and Δ come apart** (the same cash
+margin classified counter-moving in the 2024 cross-section and failed its Δ test on the unweighted
+lens). Agenda item 11.2 registers the Δ design as the next move because `fin22d` is the
+best-conditioned cell the module screen has ever produced — fragility depth 14, ascent depth 0,
+denominator-invariant, base factor −0.261 / −0.026, M3-exact.
+
+**The question.** Does the counter-movement exist **within** economies over time — do economies where
+digital payment grew faster see `fin22d` grow more slowly — or is it only a statement about which
+economies sit where in a single year?
+
+**Design (B14-compliant): an ALL-WINDOWS design.** r(Δ`fin22d`, Δ`g20_any`) over **every transition
+both items support: 2014→2017, 2017→2021, 2021→2024**. **2011→2014 is NOT TESTABLE** — the whole
+`fin22` module and `g20_any` are empty in 2011 — and that is recorded, not treated as a pass.
+
+**REGISTERED SIGN (B15): NEGATIVE.** The predicted direction is that Δ`fin22d` and Δ`g20_any` move
+*against* each other, i.e. r ≤ −0.30. A cell at r ≥ +0.30 is the **opposite** pattern, is reported as
+such, and may not be counted toward the keep.
+
+**REGISTERED KEEP CONDITION (all-windows, B8's every-window form).** The Δ claim is kept only if in
+**all three windows**: r ≤ **−0.30** on **BOTH** lenses (B9/B11), **and** G6 keeps the sign, **and**
+the E4 magnitude rule `|r_droptop| ≥ 0.5 × |r_full|` holds, **and** the 2,000-draw country bootstrap
+percentile interval **excludes zero**. If only the weighted lens clears all three windows the result
+is `keep-weighted`; if only the unweighted lens, `keep-unweighted`; if neither clears all three,
+**DISCARD the Δ claim**. A discard leaves **E57 exactly as it stands** — a cross-sectional keep is not
+falsified by a Δ null (E48/E50 is the precedent, and that precedent is registered here in advance so
+the discard cannot later be read as a demotion).
+
+**REGISTERED DENOMINATOR RULE (B20), declared BEFORE the run.** `fin22` sits inside E56's payments
+release-block risk zone and its 2024 reporting set is **76 against 77 in the three earlier waves**.
+The **primary** is therefore computed on a **single fixed economy set**: the economies reporting
+**both** `fin22d` **and** `g20_any` in **all four** waves 2014/2017/2021/2024. The per-window
+pairwise-complete set is computed too and printed beside it; **where the two disagree the fixed-set
+number is the primary and the difference is reported as reporting-set movement**. The count,
+population share and **names** of the economies that drop are printed (B20's naming requirement).
+
+**REGISTERED SECONDARY 1 (no bar) — the long difference, with B16's path.** r(Δ`fin22d`,
+Δ`g20_any`) over **2014→2024** on the same fixed set, printed beside the **intermediate wave levels**
+of both items (B16). Any non-monotone path is stated.
+
+**REGISTERED SECONDARY 2 (no bar) — the E47/E57 anchor distinction.** The same all-windows design
+against Δ`account_t_d` instead of Δ`g20_any`: does the Δ pattern, if any, attach to digital payment
+or to financial access in general?
+
+**REGISTERED SECONDARY 3 (no bar) — agenda item 12.2, the denominator re-check owed on the two OLDER
+counter-moving margins.** `fin31d` and `fin34c` were screened before rule 9.1 existed and neither has
+been run on both denominators; v5 §12 item 4 records this and the agenda registers the re-check as
+"cheap and owed before either is used in another design". For each, in the 2024 cross-section against
+`g20_any`, report (i) r on the all-adult published denominator, (ii) r on the conditional rate
+item ÷ base, and (iii) the base factor r(base, `g20_any`). **Bases are declared now:** `fin32`
+(wage receipt, all-adult, 71–77 economies) for `fin34c`; for `fin31d` the only candidate base in the
+repo **is the anchor `g20_any` itself**, so the conditional twin is **NOT IDENTIFIED** and is reported
+as such rather than computed circularly. The published `_s` twins are **not** used — `HARNESS_V2_NOTES`
+item 10 documents them as *different items*, not the same concept conditionalised.
+
+**B6 / B9 / B10 / B12 / B21 on every cell.** Weighted and unweighted r; 2,000-draw country bootstrap
+percentile interval and `p_boot`; Kish `neff` beside the nominal n; G6 drop-top-5; the **largest
+single leave-one-out effect with the economy named**; and, on any cell where the two lenses disagree
+against the bar, **both** stability depths (fragility and ascent, economies named).
+
+**Declared.** G3: `fin22d` is an unregistered narrow variant of no registered concept; `g20_any` is
+the registered headline for `digital_payment`; `account_t_d` for `account`. Descriptive co-movement
+only, never causal. G5 n/a (no official series for a Δ correlation). G4 reported per window.
+
+---
+
+## U28x (slot 1) — EXPLORATORY mapping pass on the untouched micro `fin22` block
+
+Logged as **exploratory** under the peek rule (2026-07-11), **before** U28's registration. No
+hypothesis, no keep, no bar. **Parent: none.**
+
+**What it does.** For **every** `fin22*` column in the 2024 individual-level file: the column's
+value coding, the **number of respondents to whom it is asked** and the **number of economies**, the
+weighted pooled rate, and — the point of the pass — **which denominator each item sits on**, i.e.
+whether it is asked of all adults in the module sample or only of a conditional subsample. E57
+established that `fin22b`, `fin22d` and `fin22e` are M3-exact against the country file while
+`fin22c` and `fin22g` are **conditionally asked** in the micro file with all-adult country twins;
+this pass extends that to the whole block and fixes the denominators **before** any gradient is
+registered, so U28's comparison cannot be a denominator artifact (the U25 trap).
+
+**Also reported:** the M3 deviation of each item against its country-file twin over the module's
+economies, and the unweighted cell sizes of the education and income splits that U28 will use, so
+that **M2** is checked before the claim is written rather than after.
+
+**Coverage consumed.** The eight unused micro `fin22` columns — rule **B2's breadth cell** for this
+cycle and the last reachable untouched micro family.
+
+**U28's registration is written after this pass and before U28 is run.** What the pass may fix is
+**structure** — denominators, coverage, cell sizes. It computes **no gradient and no group
+difference**, so no outcome relevant to U28's bar is visible when U28 is registered. That boundary is
+stated here so the peek rule can be audited against it.
+
+---
+
+## U28 (slot 2) — registered AFTER U28x's structural pass and BEFORE any gradient was computed
+
+**Parent: E57** on subject matter (the same item, at the individual level); **design ancestor U24**
+(the access-absorption ruler). Chain length 1. **Stream** micro. **Design** `micro-cross-section`.
+**Frame** micro 2024, the **98-economy `fin22` module set**, pooled, weighted (`wgt`), M1 by
+construction. Single wave — cross-sectional description, **no trend language**.
+
+**What U28x fixed, and what it did not.** Structure only: the module base is **102,954 respondents
+over 98 economies**; `fin22a`, `fin22b`, `fin22d`, `fin22e` sit on that full base and `fin22f` on
+89.3% of it, while `fin22c`, `fin22g`, `fin22h` and `fin22a_1` are **conditional subsamples** (11–29%
+of the base); `fin22b`, `fin22d`, `fin22e`, `fin22f` are **M3-exact** (median and max |dev| 0.000pp)
+and `fin22a` is **not** (median 2.93pp) despite sitting on the full base. Education cells are 35,073
+primary-or-less against 67,457 secondary-or-more; **89 of 98 economies** carry ≥100 unweighted in
+both. **No rate, gradient or group difference was computed in that pass.**
+
+**Hypothesis.** E57 found `fin22d` counter-moving with digital payment **across economies** in the
+2024 cross-section. E59, run this cycle, found no within-economy Δ counterpart. The remaining reading
+of E57's composition fact is an **individual-level substitution** one: a non-formal borrowing source
+is what an adult uses when formal access is absent, so **within** economies the adult who uses
+`fin22d` should be the adult with **fewer resources and no account**. That is a directional,
+falsifiable prediction, and it is the opposite direction to every gradient the micro stream has kept
+(U4, U7, U10, U13, U14 are all *positive* in education).
+
+**Item, and what is established about it.** `fin22d` is a **non-formal borrowing source** — the
+harness's own headline `fin22a_22a1_22g_d` declares `fin22a` and `fin22g` the formal ones — asked of
+**all** module adults, and M3-exact against the country file. Its **meaning is not established**;
+there is no questionnaire in the repo, and that caveat travels with the claim.
+
+**Declared coding, fixed before the run.** `fin22d == 1` is the outcome; codes **2, 3 and 4 are
+retained in the denominator** as "not this source". This matches the country file's own
+construction — it is *why* the item is M3-exact at 0.000pp — and dropping the 281 DK/RF responses
+(0.27% of the base) would break that correspondence. Declared rather than chosen after the fact.
+
+**REGISTERED SIGN (B15): NEGATIVE on every leg.** A positive gradient of any size is the **opposite**
+pattern, is reported as such, and cannot count toward the keep.
+
+**REGISTERED KEEP CONDITION — all three legs must fire.**
+
+1. **Education.** gap = rate(`educ` ∈ {2,3}) − rate(`educ` == 1) is ≤ **−5pp** (the protocol's default
+   group-difference threshold) **and** its **log-odds twin** ≤ **−0.20** (rule B13: the scale-free
+   statistic is reported beside every pp comparison and wins where they disagree).
+2. **Access.** gap = rate(`account` == 1) − rate(`account` == 0) is ≤ **−5pp** **and** log-odds
+   ≤ **−0.20**.
+3. **Within-country (U19/U20/U22 form, against the pooled-weighting caveat).** In ≥ **75%** of the
+   **M2-qualifying** economies (≥100 unweighted in both education cells — 89 of 98 by U28x) the
+   education gap is **negative**.
+
+Any leg failing is a **DISCARD**, and the failing leg is named. Pooled `wgt` weights economies
+roughly equally (`HARNESS_V2_NOTES` item 3), which is exactly why leg 3 is a keep condition here and
+not a footnote.
+
+**REGISTERED SECONDARY 1 (family test, signs registered, NO bar).** The same two gradients on the
+other three all-module M3-exact items — **`fin22b`, `fin22e`, `fin22f`** — with **NEGATIVE predicted
+for all three** (B15). Reported as a count of items firing; descriptive breadth, and it may not
+rescue a failed primary.
+
+**REGISTERED SECONDARY 2 (no bar) — agenda item 4.7, a fourth margin on the access-absorption
+ruler.** absorption = 1 − (account-conditional education gap ÷ unconditional education gap), placed
+beside U24's **56.9%** (usage) and **8.6%** (welfare). Where the unconditional gap is negative,
+absorption < 0 means the account-conditional gap is **larger** in magnitude, i.e. **amplification**,
+and is reported with that word rather than as a small absorption.
+
+**REGISTERED SECONDARY 3 (no bar) — the reference margin, computed on the SAME sample.**
+`anydigpayment`, the ruler's usage anchor (U10), on the same 98-economy module base, so the contrast
+is internal and not against a number from a different sample.
+
+**Inference.** 2,000-draw **economy-cluster** percentile bootstrap (resample economies with
+replacement) on every gap, on both statistics, and on the absorption share; **Kish `neff`** of the
+pooled respondent weights beside the nominal respondent count (B10 — no significance language
+attaches to 102,954). **M2** ≥100 unweighted on every reported cell; **M3** carried from U28x.
+
+---
+
+## E59 — DISCARD the Δ claim. E57's counter-moving margin has no within-economy counterpart, and the failure is a SIGN REVERSAL
+
+Commit `82d74c8`. Stream hypothesis. Design `delta-delta-multi`. Frame `pan_dev`, **B20 fixed
+76-economy set**. **Parent E57**, chain length 1. Status **`discard`**.
+
+**B20 first, because it is the rule that governs the design.** `fin22d` and `g20_any` are reported by
+**77** developing-panel economies in 2014, 2017 and 2021 and by **76** in 2024. The fixed set — both
+items in all four waves — is **76 economies**; the single economy that drops is the **Russian
+Federation**, 2.6% of the item's adult population. The reporting-set movement B20 exists to catch is
+**negligible here**: the per-window pairwise-complete correlation differs from the fixed-set one by
+**Δr_w ≤ 0.008** in every window. This is the first time the rule has been applied prospectively and
+returned "no problem", which is worth recording — B20 is not a rule that always finds something.
+
+**B16 path, printed before the correlations** (weighted level, pp, fixed set):
+
+| item | 2014 | 2017 | 2021 | 2024 | path |
+|---|---|---|---|---|---|
+| `fin22d` | 14.7 | 11.0 | 17.5 | 19.9 | **NON-MONOTONE** — a fall, then a rise |
+| `g20_any` | 33.6 | 43.9 | 55.1 | 60.9 | monotone rising |
+| `account_t_d` | 54.1 | 64.3 | 69.7 | 75.2 | monotone rising |
+
+**The primary, and the verdict:**
+
+| window | r_w | r_u | G6 | E4 ret | boot [2.5, 97.5] | p_boot | largest LOO | bar |
+|---|---|---|---|---|---|---|---|---|
+| 2014→2017 | +0.130 | +0.157 | +0.072 | 0.55 | [−0.273, +0.470] | 0.593 | China −0.123 | **FAIL** |
+| 2017→2021 | −0.295 | −0.215 | −0.305 | 1.03 | [−0.606, +0.177] | 0.221 | India +0.172 | **FAIL** |
+| 2021→2024 | **+0.355** | +0.246 | +0.211 | 0.59 | **[+0.114, +0.543]** | **0.002** | India −0.118 | **FAIL** |
+
+**VERDICT: DISCARD, and the shape of the failure is the finding.** The registered sign was
+**NEGATIVE** and **no window reaches the −0.30 bar on either lens**. The one window whose bootstrap
+interval **excludes zero** is 2021→2024 at **+0.355** — pointing the **other way**. Under **B15** that
+is the **opposite pattern**, reported separately and not counted as partial support: in the most
+recent transition, economies where digital payment grew fastest are economies where this non-formal
+borrowing source grew **fastest too**. The sign runs **+ / − / +** across the three windows, which is
+E39's autocorrelation result seen once more — country-level Δ is dominated by wave-specific variation.
+The **2014→2024 long difference is +0.072 / +0.125**, i.e. the decade span sees nothing at all.
+
+**E57 is UNCHANGED, and that was registered in advance.** A cross-sectional composition keep is not
+falsified by a Δ null; **E48/E50** is the standing precedent and it was named in the pre-registration
+precisely so this discard could not later be read as a demotion. What the two results say jointly is
+sharper than either alone: **economies with more digital payment have less `fin22d` (composition),
+and economies where digital payment grew faster did not see `fin22d` grow more slowly (dynamics)**.
+Those are compatible, and the ledger now has a third module where they come apart.
+
+**SECONDARY 2 — the anchor distinction moves the other way from E57's.** Against Δ`account_t_d` the
+weighted lens gives **−0.286 / −0.448 / +0.306** while the unweighted gives **+0.088 / −0.172 /
++0.186**: lens-split in the two earlier windows, positive in the last, and every bootstrap interval
+except 2021→24's contains zero. E57's cross-section found `fin22d` counter-moving with **digital
+payment** and not with **access**; in Δ neither anchor produces the registered pattern.
+
+**SECONDARY 3 — agenda item 12.2 is DISCHARGED for one of its two items and closed as unidentifiable
+for the other.**
+
+- **`fin34c`**: all-adult **−0.552 / −0.486**; conditional on `fin32` (wage receipt) **−0.773 /
+  −0.735** — the **same class and markedly stronger on both lenses**. The base factor
+  r(`fin32`, `g20_any`) is **+0.411 / +0.599**, so the classification is **not** a penetration
+  artifact. The counter-moving reading of `fin34c` survives the denominator check that v5 §12 item 4
+  said it had never had.
+- **`fin31d`**: all-adult **−0.401 / −0.358**. The conditional twin is **NOT IDENTIFIED** — the only
+  candidate base in the repo *is* the anchor `g20_any`, so the conditional correlation would be
+  circular, and `fin31d_s` is a **different item** (`HARNESS_V2_NOTES` item 10), not the same concept
+  conditionalised. Declared in the pre-registration and **not computed**. This item's denominator
+  question cannot be closed without the questionnaire.
+
+**Gates.** G3 declared. G4: 76 of 77 economies. G5 n/a. G6: sign kept in all three windows. B10:
+`neff` **7.2** against a nominal 76 in every cell. B21 not computed — no window has the two lenses
+disagreeing against the bar, which is the registered trigger.
+
+---
+
+## U28x — EXPLORATORY. The micro `fin22` block is opened, and it is a BRANCHED module with two denominators
+
+Commit (mapping pass, run before U28's registration). Status `exploratory`. **Parent: none.** No
+hypothesis, no bar, no keep.
+
+**The module base is 102,954 respondents over 98 economies.** Denominators:
+
+| on the FULL module base | CONDITIONAL subsamples |
+|---|---|
+| `fin22a`, `fin22b`, `fin22d`, `fin22e` (102,954) · `fin22f` (91,901 / 90 economies, 89.3%) | `fin22a_1` (29,567) · `fin22c` (16,444) · `fin22g` (11,798) · `fin22h` (8,439) |
+
+`fin22h` is asked of **exactly** the 8,439 respondents who answered `fin22g == 1`, so the module has
+an explicit **follow-up branch** — structure the ledger did not have.
+
+**M3 against the country file, over the module economies:** `fin22b`, `fin22d`, `fin22e`, `fin22f`
+are **EXACT** (median and max |dev| **0.000pp**); `fin22c`, `fin22g`, `fin22h` diverge by 25.5 / 56.6
+/ 68.3pp median, which is the expected consequence of a conditionally-asked item against an all-adult
+country twin (E57 recorded two of these).
+
+**The one genuinely open discrepancy: `fin22a` diverges at median 2.93pp / max 30.17pp DESPITE sitting
+on the full module base.** Every other full-base item is exact to 0.000pp. There is no explanation in
+the repo, and it is recorded as an open question rather than reasoned away. Its consequence is
+concrete: **every micro claim on a formal borrowing source is blocked until it is resolved**, which is
+why U28 was built on the non-formal side.
+
+**M2, checked before the claim was written:** education cells 35,073 primary-or-less against 67,457
+secondary-or-more on the base; **89 of 98 economies** carry ≥100 unweighted in **both**.
+`educ` 1/2/3 = 35,073 / 53,354 / 14,103; `account` 0/1 = 35,823 / 67,131.
+
+**Coverage consumed.** Eight previously untouched micro columns — **rule B2's breadth cell** for this
+cycle, and with it the reachable untouched micro surface is down to `dig_account` alone.
+
+---
+
+## U28 — DISCARD. The substitution reading of E57 is rejected, and the education gradient that fails with it is the ledger's first NEGATIVE one
+
+Commit `8034aaa` (+ the disclosed bootstrap patch). Stream micro. Design `micro-cross-section`,
+2024, single wave. Frame: the 98-economy `fin22` module set, pooled, weighted. **Parent E57**
+(subject), **design ancestor U24**. Status **`discard`** — two of three registered legs fail.
+
+| leg | registered bar | result | verdict |
+|---|---|---|---|
+| 1 education | gap ≤ −5pp **and** log-odds ≤ −0.20 | 15.47% vs 25.73%, **−10.26pp**, log-odds **−0.638**, boot pp **[−12.35, −8.07]** | **PASS** |
+| 2 access | gap ≤ −5pp **and** log-odds ≤ −0.20 | 19.13% vs 21.26%, **−2.13pp**, log-odds −0.132, boot pp **[−4.64, +0.36]** — contains zero | **FAIL** |
+| 3 within-country | ≥75% of 89 qualifying economies negative | 65 of 89 = **73.0%**, median gap −3.95pp | **FAIL** (narrowly) |
+
+**VERDICT: DISCARD as registered, and the rejected leg is the substantive result.** The hypothesis
+was **substitution** — that a non-formal borrowing source is what an adult uses when formal access is
+absent. If that were the mechanism, **having an account** would be the variable that separates users
+from non-users. It is not: accountholders use `fin22d` **2.13pp** less than the unbanked, an interval
+that **contains zero**. Meanwhile the **education** gradient is large, and it is the **first negative
+education gradient in the micro stream** — U4, U7, U10, U13 and U14 are all positive, and this item
+runs the other way at −10.26pp with a log-odds twin agreeing at −0.638 (**B13**: the two statistics
+agree here, so there is no artifact question).
+
+**Read together: it is a RESOURCE gradient, not an ACCESS gradient.** Less-educated adults use this
+source much more; whether they hold an account barely matters. That is the opposite structure to
+every usage margin the ledger has measured, where access is the gate.
+
+**SECONDARY 1 — the family, with signs registered in advance: 0 of 3 fire, and two go the WRONG WAY on
+access.** `fin22b` **−1.53pp** education / **+3.92pp** access (log-odds +0.179); `fin22e` −2.03pp /
+**+4.08pp** (log-odds +0.473); `fin22f` **−11.56pp** / −2.00pp. So `fin22b` and `fin22e` are used
+**more** by accountholders — the direct opposite of substitution — while `fin22f`, the item E57x had
+to exclude from the country screen for having only one wave, **mirrors `fin22d` closely**. Under B15
+these positive results are the opposite pattern and are reported, not counted.
+
+**SECONDARY 2 — agenda item 4.7: the fourth margin on the access-absorption ruler, and it is
+AMPLIFICATION.** The account-conditional education gap is **−10.46pp** against an unconditional
+**−10.26pp**, so absorption is **−2.0%**: conditioning on account holding does not shrink the gradient
+at all, it very slightly widens it. The ruler now reads
+
+    usage (U10/U24)  56.9%   ·   welfare (U24)  8.6%   ·   liability (U28)  -2.0%
+
+and U24's finding that the ruler does not transfer from usage to welfare extends to a **third** margin
+type. Access absorbs resource gradients in things you need an account **to do**, and nothing else.
+
+**SECONDARY 3 — the reference on the SAME sample, which is what makes the contrast internal.**
+`anydigpayment` on these 98 economies: education gap **+27.71pp** (log-odds +1.139), access gap
+**+84.76pp**, absorption **56.9%** — reproducing U24's usage figure **exactly** on a different sample.
+That the anchor replicates to the decimal is the reason the −2.0% can be read as a property of the
+item rather than of the frame.
+
+**Gates and inference.** M1 weighted throughout. M2 ok on every reported cell (smallest 32,670). M3
+carried from U28x: `fin22d` exact at 0.000pp. **B10**: Kish `neff` **67,226** against a nominal
+102,954 — the micro file's weights are far less concentrated than the country file's, and no
+significance language attaches to the nominal n regardless. Economy-cluster bootstrap, 2,000 draws,
+on every primary gap. **Single wave — no trend language anywhere in this entry.**
+
+**A disclosed implementation patch.** The registered economy-cluster bootstrap was first written as a
+row-resample of a 102,954-row frame repeated 2,000 times and did not finish. It was rewritten on
+**per-economy sufficient statistics** — Σw and Σ(w·y) inside each cell — and resamples economies over
+those. A weighted mean is Σ(w·y)/Σw, so this is **arithmetically identical** to block-resampling each
+economy's rows; the registered statistic and the registered cluster unit are unchanged. Patch
+committed before the run that produced the verdict.
+
+**What may NOT be claimed from this, and why.** The negative education gradient passed its leg but was
+registered as **one leg of a conjunctive test**, so it cannot be logged as a keep here — that would be
+picking the surviving leg after seeing the result. It is registered as a **standalone next move**.
+
+---
+
+# Wrap-up — 2026-08-26 (E59 · U28x · U28)
+
+**Two registered tests, two discards, and in both the rejected direction carried the information.**
+B18 did not fire (v5 opened both branches at zero on 2026-08-25), so this was a normal cycle under the
+2026-08-15c shape: slot 1 the mandatory mapping pass **U28x** on the last reachable untouched micro
+family, slot 2 the micro claim **U28** paying B17's owed quota, slot 3 the agenda's priority-1 design
+**E59**.
+
+**E59 — DISCARD.** The all-windows Δ→Δ on `fin22d` finds **no** within-economy counterpart to E57's
+cross-sectional counter-movement: **+0.130 / −0.295 / +0.355** weighted against a registered −0.30
+bar, with the **only** zero-excluding interval in the **opposite** direction (2021→24, +0.355,
+p_boot 0.002) and a 2014→2024 long difference of **+0.072**. E57 stands unchanged, as registered in
+advance under the E48/E50 precedent. **B20 ran prospectively for the first time and came back clean**
+(fixed vs pairwise Δr_w ≤ 0.008). Agenda item 12.2 is closed: `fin34c` is denominator-robust and
+**stronger** conditionally (−0.773 / −0.735), `fin31d` is **unidentifiable** without a questionnaire.
+
+**U28x — EXPLORATORY.** The micro `fin22` block is opened: a **branched** module, 102,954 respondents
+over 98 economies, five items on the full base and four conditional subsamples, `fin22h` asked of
+exactly the 8,439 who answered `fin22g == 1`. Four full-base items are M3-exact at 0.000pp; **`fin22a`
+is not** (median 2.93pp) despite sitting on the full base, which blocks the formal side of the module
+and is logged as an open question, not explained away.
+
+**U28 — DISCARD.** The substitution reading of E57 fails on the leg that carried the mechanism:
+accountholders use `fin22d` only **−2.13pp** less than the unbanked, an interval containing zero, and
+two family items go the **other** way (+3.92, +4.08pp). What survives is a **resource** gradient — the
+micro stream's **first negative education gradient**, −10.26pp / log-odds −0.638 against five standing
+positive ones — which cannot be claimed here because it was one leg of a conjunctive test and is
+registered instead as a standalone next move (item 13.5). The access-absorption ruler gains its
+fourth margin at **−2.0% (amplification)** beside usage 56.9% and welfare 8.6%, with the reference
+margin reproducing U24's 56.9% **exactly** on the same 98 economies.
+
+**State.** 98 logged experiments, 41 keeps. Country coverage **107 of 429 (25%)**, micro **101 of 192
+(53%)** — the reachable untouched micro surface is now `dig_account` alone, so `urbanicity` is the
+default breadth cell next cycle. B17 paid; B3 has E57 at two children of three; B18 next cycle at
+**0 of 5** corrections and **3 of 10** count. Prediction stream unchanged and **CLOSED**:
+`account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.

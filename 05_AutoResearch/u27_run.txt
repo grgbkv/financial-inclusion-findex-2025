@@ -1,0 +1,62 @@
+====================================================================================================
+U27 — agenda item 4.6: the SOURCE of emergency funds, education-graded? (parent U24)
+====================================================================================================
+sample: fin24 in 1..7 (DK/RF 8/9 dropped) — 99641 respondents, 98 economies
+Kish neff of the pooled respondent weights: 65115 against a nominal n of 99641
+pooled composition (weighted, all respondents):
+  ALL                    n= 99641  savings  16.9%  family/frien  38.8%  money from w  17.4%  borrowing   7.6%  selling asse  11.3%  other   1.4%  not possible   6.6%
+  educ >= 2 (sec+)       n= 65694  savings  20.5%  family/frien  38.7%  money from w  18.8%  borrowing   7.5%  selling asse   8.8%  other   1.2%  not possible   4.5%
+  educ == 1 (prim-)      n= 33616  savings  12.3%  family/frien  39.0%  money from w  15.6%  borrowing   7.8%  selling asse  14.5%  other   1.6%  not possible   9.2%
+
+----------------------------------------------------------------------------------------------------
+PRIMARY — education gap per source, gap = share(educ>=2) - share(educ==1), pp
+M2: n(educ>=2) = 65694, n(educ==1) = 33616 — both cells >> 100
+source                      hi        lo       gap  bootstrap CI (2,000)    reg. sign verdict
+savings                 +20.48    +12.31     +8.17  [ +6.36, +10.16]      POS       sign OK
+family/friends          +38.67    +39.03     -0.35  [ -2.49,  +1.65]      NEG       sign OK
+money from working      +18.82    +15.59     +3.23  [ +1.53,  +5.06]      —         no sign registered
+borrowing                +7.51     +7.78     -0.27  [ -1.59,  +0.90]      —         no sign registered
+selling assets           +8.77    +14.51     -5.74  [ -7.45,  -4.15]      NEG       sign OK
+other                    +1.24     +1.60     -0.35  [ -0.69,  -0.01]      —         no sign registered
+not possible             +4.50     +9.18     -4.68  [ -5.92,  -3.55]      NEG       sign OK
+
+REGISTERED KEEP CONDITION:
+  (i)   savings gap +8.17pp >= +5.0        -> PASS
+  (ii)  family/friends gap -0.35pp <= -5.0 -> FAIL
+  (iii) all four registered signs correct  -> PASS
+  VERDICT: DISCARD as registered
+
+----------------------------------------------------------------------------------------------------
+SECONDARY 1 (no bar) — does account holding absorb the savings-source gradient?
+  M2: n(acc & educ>=2) = 48727, n(acc & educ==1) = 16494
+  savings          unconditional  +8.17  account-conditional  +7.75  CI [ +4.75, +10.54]  ABSORPTION    5.1%
+  family/friends   unconditional  -0.35  account-conditional  -1.52  CI [ -3.79,  +0.48]  ABSORPTION -329.7%
+  not possible     unconditional  -4.68  account-conditional  -3.48  CI [ -4.89,  -2.38]  ABSORPTION   25.6%
+  ABSORPTION of the savings-source gradient: 5.1%  CI [-12.3%, 29.4%] (2,000 economy draws)
+  benchmarks on the SAME 98-economy sample (U24): usage margin 56.9%, welfare margin 8.6%
+
+----------------------------------------------------------------------------------------------------
+SECONDARY 2 (no bar) — the income axis: richest 60% (inc_q 3-5) minus poorest 40%
+  M2: n(rich60) = 64836, n(poor40) = 33867
+  savings              gap  +8.31  CI [ +7.16,  +9.44]  reg POS  sign OK
+  family/friends       gap  -4.10  CI [ -5.47,  -2.69]  reg NEG  sign OK
+  money from working   gap  +4.61  CI [ +3.67,  +5.64]  reg —    —
+  borrowing            gap  -0.82  CI [ -1.39,  -0.22]  reg —    —
+  selling assets       gap  -2.72  CI [ -3.59,  -1.91]  reg NEG  sign OK
+  other                gap  -0.18  CI [ -0.38,  +0.03]  reg —    —
+  not possible         gap  -5.10  CI [ -5.96,  -4.31]  reg NEG  sign OK
+
+----------------------------------------------------------------------------------------------------
+SECONDARY 3 (no bar) — within-country: is the pooled savings gap a composition artifact?
+  qualifying economies (both education cells n >= 100): 88 of 98 in the module
+  savings-source gap:       positive in 82 of 88 (93.2%), median +7.84pp, IQR [+4.35, +11.84]
+  family/friends gap:       negative in 52 of 88 (59.1%), median -1.37pp
+  pooled savings gap over the SAME qualifying set: +7.93pp vs median economy +7.84pp -> composition wedge +0.09pp
+
+  three largest and three smallest economy savings gaps:
+    Bulgaria                 +21.76
+    Costa Rica               +20.97
+    Bolivia                  +20.48
+    Algeria                   -6.33
+    Comoros                   -3.09
+    Turkiye                   -1.97

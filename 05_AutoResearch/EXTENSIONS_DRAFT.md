@@ -1,8 +1,14 @@
 # Extensions draft — autoresearch session, 2026-07-11 (branch `autoresearch/jul11`)
 
-> ## STATUS BLOCK — updated 2026-08-20. THIS FILE IS ABSORBED INTO `PAPER_DRAFT_v4.md`.
+> ## STATUS BLOCK — updated 2026-08-25. THIS FILE IS ABSORBED INTO `PAPER_DRAFT_v5.md`.
 >
-> **Everything in this file that still stands is now written into `PAPER_DRAFT_v4.md` (2026-08-20),
+> **Retired 2026-08-25:** the two passages below that read E22 as "a general developing-world
+> regularity with a declared SSA intensity gradient" are **withdrawn**. E22's all-windows promotion
+> was run (E58) and **failed** — both failures sit in 2014→17 — and the intensity ordering
+> **reverses** in 2017→21 (SSA +0.405 against +0.675 outside). E22 stays `keep-window` and the
+> regional-intensity sentence must not be reused. See `PAPER_DRAFT_v5.md` §5.
+>
+> **Everything in this file that still stands is now written into `PAPER_DRAFT_v5.md` (2026-08-25),
 > which supersedes `PAPER_DRAFT_v2.md`, `PAPER_DRAFT_v3.md` and this extensions file as the place candidate material
 > is carried.** The prose below dates from **2026-07-11, at experiment 27**, and fifty-six
 > experiments have run since; it is retained as the audit trail for what was proposed and when, not

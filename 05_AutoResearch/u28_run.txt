@@ -1,0 +1,65 @@
+========================================================================================================
+U28 — the SUBSTITUTION prediction on `fin22d` (registered sign NEGATIVE on every leg)
+========================================================================================================
+module base: 102954 respondents, 98 economies   Kish neff of pooled wgt = 67226
+B10: no significance language attaches to the nominal 102954 — neff is the figure that binds.
+
+pooled weighted rate of fin22d: 19.94%   (anydigpayment ruler reference computed below)
+
+========================================================================================================
+PRIMARY — the three registered keep legs
+========================================================================================================
+
+LEG 1 — education gradient (secondary-or-more minus primary-or-less)
+  fin22d, all module adults           15.47 vs  25.73 pp   gap -10.26pp   log-odds -0.638   n  67457/ 35073  M2 ok
+                                     boot pp [-12.35, -8.07]   boot log-odds [-0.755,-0.512]
+
+LEG 2 — access gradient (accountholders minus non-accountholders)
+  fin22d, all module adults           19.13 vs  21.26 pp   gap  -2.13pp   log-odds -0.132   n  67131/ 35823  M2 ok
+                                     boot pp [ -4.64, +0.36]   boot log-odds [-0.289,+0.023]
+
+LEG 3 — within-country sign of the education gap, M2-qualifying economies only
+  qualifying economies: 89 of 98   negative education gap in 65 (73.0%)   median gap -3.95pp
+
+--------------------------------------------------------------------------------------------------------
+  LEG 1 education  PASS  (gap -10.26pp vs bar -5.0, log-odds -0.638 vs bar -0.20)
+  LEG 2 access     FAIL  (gap -2.13pp vs bar -5.0, log-odds -0.132 vs bar -0.20)
+  LEG 3 within     FAIL  (73.0% negative vs bar 75%)
+
+  ==> DISCARD — failing leg(s): 2 access, 3 within-country
+
+========================================================================================================
+SECONDARY 1 (no bar; registered sign NEGATIVE for all three) — the rest of the all-module family
+========================================================================================================
+
+  fin22b  (asked of 102954 respondents, 98 economies; pooled rate 32.79%)
+  education gap                       32.16 vs  33.69 pp   gap  -1.53pp   log-odds -0.069   n  67457/ 35073  M2 ok
+  access gap                          34.28 vs  30.36 pp   gap  +3.92pp   log-odds +0.179   n  67131/ 35823  M2 ok
+       both gradients at the primary's bars with the registered sign: no
+
+  fin22e  (asked of 102954 respondents, 98 economies; pooled rate 10.15%)
+  education gap                        9.26 vs  11.29 pp   gap  -2.03pp   log-odds -0.221   n  67457/ 35073  M2 ok
+  access gap                          11.70 vs   7.63 pp   gap  +4.08pp   log-odds +0.473   n  67131/ 35823  M2 ok
+       both gradients at the primary's bars with the registered sign: no
+
+  fin22f  (asked of 91901 respondents, 90 economies; pooled rate 29.01%)
+  education gap                       23.81 vs  35.37 pp   gap -11.56pp   log-odds -0.561   n  58859/ 32670  M2 ok
+  access gap                          28.21 vs  30.21 pp   gap  -2.00pp   log-odds -0.097   n  58419/ 33482  M2 ok
+       both gradients at the primary's bars with the registered sign: no
+
+  items firing on both gradients: 0 of 3 (descriptive; cannot rescue a failed primary)
+
+========================================================================================================
+SECONDARY 2 (no bar) — agenda item 4.7: `fin22d` on the access-absorption ruler
+========================================================================================================
+  unconditional education gap            -10.26pp   (log-odds -0.638)
+  account-conditional education gap      -10.46pp   (log-odds -0.646)  n=67131
+  absorption = 1 - cond/uncond           -2.0%   [AMPLIFICATION — the account-conditional gap is LARGER in magnitude]
+  ruler so far: U10/U24 usage 56.9%  ·  U24 welfare 8.6%  ·  U28 liability -2.0%
+
+========================================================================================================
+SECONDARY 3 (no bar) — the reference usage margin on the SAME 98-economy sample
+========================================================================================================
+  anydigpayment education gap         64.99 vs  37.28 pp   gap +27.71pp   log-odds +1.139   n  67457/ 35073  M2 ok
+  anydigpayment access gap            85.16 vs   0.40 pp   gap +84.76pp   log-odds +7.263   n  67131/ 35823  M2 ok
+  anydigpayment absorption on this sample: 56.9%
