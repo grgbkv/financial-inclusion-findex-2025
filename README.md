@@ -1,82 +1,158 @@
-# Financial inclusion 2011–2024: a Global Findex analysis
+# Financial inclusion, 2011–2024
 
-What happened to financial access, usage and resilience worldwide over the last decade? An end-to-end analysis of the World Bank's **Global Findex Database 2025** — 162 economies, five survey waves (2011–2024) — built on a balanced country panel and validated, series by series, against the World Bank's own published aggregates.
+**What happened to financial access, usage and resilience worldwide over the last decade — and
+how much of the answer depends on how you aggregate?**
 
-**Everything lives in [02_Notebooks/financial-inclusion-findex-2025.ipynb](02_Notebooks/financial-inclusion-findex-2025.ipynb).**
+An end-to-end analysis of the World Bank's **Global Findex Database 2025**: 162 economies, five
+survey waves, built on a balanced country panel and validated series by series against the World
+Bank's own published aggregates. Plus a second project layered on top of it — a pre-registered
+research loop that has now run **98 experiments** and discarded roughly half of them on purpose.
 
-## Key findings
+<picture><source media="(prefers-color-scheme: dark)" srcset="03_Outputs/figures/dark/fig2_regional_account.png"><img alt="Account ownership by region, 2011–2024" src="03_Outputs/figures/fig2_regional_account.png"></picture>
 
-- **Access is the success story.** Account ownership rose from 51% of adults in 2011 to 79% in 2024. South Asia (33% → 78%) and Sub-Saharan Africa (24% → 60%) converged fastest; in Sub-Saharan Africa the on-ramp is mobile money (44% of adults by 2024).
+---
 
-  ![Regional account ownership](03_Outputs/figures/fig2_regional_account.png)
+## Start where you like
 
-- **Usage finally caught up in the last wave.** Digital payments reached 61% of adults in developing economies, and formal saving — flat for a decade — **surged ~14 pp between 2021 and 2024**, the largest wave-to-wave change in the Findex series, largely over mobile-money rails.
+| | | |
+|---|---|---|
+| 📓 | **[The analysis](02_Notebooks/)** | one notebook, raw file to headline series, validation inline |
+| 📄 | **[*Access Without Depth*](04_Paper/)** | the finished working paper — trends, and four aggregation pitfalls that can reverse them |
+| 🔬 | **[The research loop](05_AutoResearch/)** | 98 pre-registered experiments, kept **and** discarded, and a second live paper |
+| 📊 | **[Figures](03_Outputs/)** | 13 charts, light and dark, one checked visual system |
 
-  ![Formal saving and borrowing](03_Outputs/figures/fig6_saving_borrowing.png)
+Every folder has its own README stating what it contains and what its contract is.
 
-- **Resilience is the unfinished agenda.** The share of adults in developing economies who could raise emergency funds was broadly flat (~55%): access expanded much faster than the financial security it is meant to enable.
+---
 
-- **Gaps narrowed but persist.** The global gender gap in account ownership halved to 4.0 pp; the income gap (10.5 pp) remains the wider divide.
+## What the data says
 
-  ![Gender gap](03_Outputs/figures/fig9_gender_gap.png)
+**Access is the success story — and it is nearly done.** Account ownership went from **51.4%** of
+adults in 2011 to **78.9%** in 2024: 2.43 billion adults with an account to **4.39 billion**. South
+Asia (33% → 78%) and Sub-Saharan Africa (24% → 60%) converged fastest.
 
-## Methodology
+**Usage finally caught up in the last wave.** Digital payments reached **60.9%** of adults in
+developing economies. Formal saving — flat for a decade at 18–24% — **jumped 13.7 points between
+2021 and 2024**, to 38.0%. It is the largest wave-to-wave movement of any margin Findex has
+measured since 2011.
 
-- **Balanced panel:** all headline series use the 117 economies present in every survey wave (96.5% of the surveyed adult population) so that trends reflect behavior, not a changing country mix. The 16 economies whose 2021-round fieldwork slipped to 2022 are merged into the 2021 wave, following World Bank practice.
-- **Population-weighted aggregation:** country values are weighted by adult population, matching World Bank methodology.
-- **Validation as a first-class step:** the dataset ships with the World Bank's own aggregate rows (world, regions, income groups). Every headline chart carries them as hollow markers; the panel deviates from the official world series by at most 1.5 pp, with the direction explained by the World Bank's imputation of non-surveyed economies.
-- **Deliberate handling of data gaps:** mobile money is only surveyed where such services operate — averaging only surveyed economies overstates the global figure almost 2× (28.5% vs the official 16.0% in 2024). Digital-payment data covers just 5 of 40 high-income panel economies in the 2024 wave, so that line ends in 2021 instead of faking a trend.
+<picture><source media="(prefers-color-scheme: dark)" srcset="03_Outputs/figures/dark/fig6_saving_borrowing.png"><img alt="Formal saving and borrowing in developing economies" src="03_Outputs/figures/fig6_saving_borrowing.png"></picture>
 
-This analysis started as the empirical chapter of my bachelor's thesis. Rebuilding it with the validation pipeline above surfaced five substantive errors in the original version — including two trend signs that flipped once the country composition was held fixed and the disaggregation rows were filtered correctly. Section 7 of the notebook documents each one; they are a better lesson in aggregation discipline than any textbook example I know.
+**Resilience is the unfinished agenda.** The share of adults in developing economies who could
+raise emergency funds was **54.7% in 2021 and 54.5% in 2024** — flat, while access expanded
+underneath it. Access grew much faster than the financial security it is meant to enable.
 
-## Working paper
+**Gaps narrowed, and the wider one is not the one people name.** The gender gap in account
+ownership more than halved, **8.8 pp → 4.0 pp**. The income gap is **10.5 pp** — still the wider
+divide, and it widened again between 2021 and 2024.
 
-The analysis is also written up as a working paper: **"Access Without Depth: Financial Inclusion 2011–2024 and Aggregation Pitfalls in the Global Findex Database 2025"** — [PDF](04_Paper/findex_2025_working_paper.pdf). Beyond the trends, the paper formalizes four aggregation pitfalls in the Findex country file and shows that while each biases levels by only 1–2 percentage points in isolation, plausible combinations reverse the sign of headline trends. Every figure, table and statistic in the paper is regenerated by two scripts in [04_Paper/](04_Paper) (`make_paper_assets.py` → `build_paper.py`).
+<picture><source media="(prefers-color-scheme: dark)" srcset="03_Outputs/figures/dark/fig10_income_gap.png"><img alt="Account ownership by income group, and the gap" src="03_Outputs/figures/fig10_income_gap.png"></picture>
 
-## Extension: a pre-registered research loop
+---
 
-[05_AutoResearch/](05_AutoResearch) is a second, separate project built on top of this one: an
-autonomous empirical-research loop that runs pre-registered experiments against the same Findex data
-and logs every one of them — kept **and** discarded — to an append-only ledger.
+## How it is built
 
-The point is the discipline, not the volume. Each experiment states its hypothesis, its exact test
-and its keep threshold *before* the answer is computed; a fixed data harness makes the rigor gates
-impossible to skip; and results that fail their own bar are recorded as results rather than quietly
-dropped. As of the latest run the ledger holds **86 experiments, 40 keeps** — meaning roughly half of
-everything tried was discarded, which is the number that makes the other half worth reading.
+```mermaid
+flowchart LR
+  D["01_Data<br/>Findex 2025 country file<br/>162 economies · 5 waves"]
+  N["02_Notebooks<br/>the analysis"]
+  H["05_AutoResearch<br/>harness.py · micro.py<br/><i>fixed</i>"]
+  F["03_Outputs<br/>build_figures.py<br/>one visual system"]
+  P["04_Paper<br/><b>Access Without Depth</b><br/>paper of record"]
+  L["05_AutoResearch<br/>findings.tsv → LEDGER_INDEX.md<br/>98 experiments"]
+  R["05_AutoResearch<br/><b>A balance-sheet window</b><br/>live draft, v5"]
 
-A few things it found that the notebook above could not:
+  D --> N --> P
+  D --> H --> L --> R
+  N --> F
+  L --> F
 
-- **Replication is where claims go to die.** Of the co-movements that hold in 2021→24, most fail on
-  earlier wave transitions. Every *partial* and every *level-to-change* design in the ledger failed
-  replication; the six associations that survived did so because they were tested across windows.
-- **Population weighting is doing more work than it looks.** A population-weighted correlation over
-  ~77 economies has a Kish effective sample size near **7** — five or six economies decide it. The
-  ledger now reports the unweighted twin beside every weighted statistic, and names the single
-  economy whose removal moves the result most.
-- **Denominators drift.** A ledger-wide audit found that between 2021 and 2024 a handful of
-  economies stop reporting individual survey items while remaining in the wave. On the affected
-  items this manufactures apparent co-movement: several margins reverse sign once the economy set is
-  held fixed.
+  classDef data fill:#2a78d6,stroke:none,color:#fff
+  classDef out fill:#1baf7a,stroke:none,color:#fff
+  classDef paper fill:#eb6834,stroke:none,color:#fff
+  class D data
+  class F,L out
+  class P,R paper
+```
 
-Start with [`program_findex.md`](05_AutoResearch/program_findex.md) for the protocol and its
-amendments, [`LEDGER_INDEX.md`](05_AutoResearch/LEDGER_INDEX.md) for one line per experiment, and
-[`PAPER_DRAFT_v4.md`](05_AutoResearch/PAPER_DRAFT_v4.md) for the current write-up.
+Four methodological commitments, applied everywhere:
 
-**Note on data.** This extension also uses the Global Findex 2025 *individual-level* microdata, which
-is licensed for research use with no redistribution. That file is gitignored and is not in this
-repository at any point in its history; only aggregates and findings derived from it are published
-here. To re-run the micro-stream experiments you need your own copy from the World Bank Microdata
-Library.
+- **Balanced panel.** All headline series use the **117 economies present in every wave** (96.5% of
+  the surveyed adult population), so a trend reflects behaviour and not a changing country mix. The
+  16 economies whose 2021 fieldwork slipped into 2022 are merged into the 2021 wave.
+- **Population-weighted aggregation**, matching World Bank methodology.
+- **Validation as a first-class step.** The dataset ships with the World Bank's own aggregate rows;
+  every headline chart carries them as hollow diamonds. The panel deviates from the official world
+  account series by at most **1.5 pp**, and the direction is explained by the Bank's imputation of
+  non-surveyed economies.
+- **Data gaps handled out loud.** Mobile money is only surveyed where such services operate —
+  averaging only surveyed economies puts world 2024 at **28.5%** against the official **16.0%**,
+  nearly double. Digital-payment data covers just 5 of 40 high-income panel economies in 2024, so
+  that line stops in 2021 rather than faking a trend.
+
+This began as the empirical chapter of my bachelor's thesis. Rebuilding it with the pipeline above
+surfaced **five substantive errors** in the original, including two trend signs that flipped once
+country composition was held fixed. Section 7 of the notebook documents each one.
+
+---
+
+## Two papers, and they are not the same paper
+
+The repository holds two write-ups. They share a dataset and a methodology and nothing else.
+
+| | **[*Access Without Depth*](04_Paper/)** | **[*A balance-sheet window*](05_AutoResearch/PAPER_DRAFT_v5.md)** |
+|---|---|---|
+| **Asks** | what happened 2011–2024, and how aggregation choices distort the answer | what the 2021–24 saving surge was made of, and what moved with it |
+| **Method** | one analysis, validated series by series | 98 pre-registered experiments, kept and discarded |
+| **Status** | **finished** — [PDF of record](04_Paper/findex_2025_working_paper.pdf) | **live** — draft v5, rewritten whenever the ledger outgrows it |
+| **Regenerates from** | `paper_stats.json` | `findings.tsv` + the fixed harness |
+
+The second grew out of the first: the pitfall taxonomy in *Access Without Depth* became the rigor
+gates the research loop cannot skip. Neither supersedes the other.
+
+---
+
+## The research loop
+
+[`05_AutoResearch/`](05_AutoResearch/) runs pre-registered experiments against the same data and
+logs every one of them. The point is the discipline, not the volume: each experiment states its
+hypothesis, its exact test and its keep threshold **before** the answer is computed, a fixed
+harness makes the rigor gates impossible to skip, and results that fail their own bar are recorded
+as results rather than quietly dropped.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="03_Outputs/figures/dark/ledger_outcomes.png"><img alt="98 experiments: 41 kept, 48 discarded, 2 inconclusive, 7 exploratory" src="03_Outputs/figures/ledger_outcomes.png"></picture>
+
+Three things it found that the notebook could not:
+
+**Replication is where claims go to die.** Every *level-to-change* design in the ledger has
+failed — **0 keeps in 7 attempts**. The *partial* designs did produce three keeps, but every one
+of them that was later put to a replication or promotion test failed, which is why all three are
+still **window** claims rather than general ones. What survived did so because it was tested
+across wave transitions rather than inside a single one.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="03_Outputs/figures/dark/ledger_designs.png"><img alt="Keeps by design family" src="03_Outputs/figures/ledger_designs.png"></picture>
+
+**Population weighting is doing more work than it looks.** A population-weighted correlation over
+~77 economies has a Kish effective sample size near **7** — so the ledger now reports the
+unweighted twin beside every weighted statistic, and names the single economy whose removal moves
+the result most.
+
+<picture><source media="(prefers-color-scheme: dark)" srcset="03_Outputs/figures/dark/ledger_neff.png"><img alt="Nominal n against Kish effective n across the ledger" src="03_Outputs/figures/ledger_neff.png"></picture>
+
+**Denominators drift.** Six economies stop reporting individual survey items between 2021 and 2024
+while remaining in the wave. On the affected items this manufactures apparent co-movement — three
+of four margins in one module stop moving at all once the economy set is held fixed.
+
+---
 
 ## Repository
 
 ```
-01_Data/        Global Findex Database 2025 (World Bank, country-level CSV)
-02_Notebooks/   the analysis notebook
-03_Outputs/     exported figures
-04_Paper/       working paper (PDF + docx) and its reproduction scripts
-05_AutoResearch/ pre-registered research loop: harness, experiment ledger, logs, draft
+01_Data/          the Global Findex 2025 country file (path is a contract — see its README)
+02_Notebooks/     the analysis notebook
+03_Outputs/       figures + the shared visual system and its palette validator
+04_Paper/         Access Without Depth — PDF, docx, and the scripts that regenerate both
+05_AutoResearch/  the pre-registered loop: protocol, harness, ledger, logs, live draft
 ```
 
 ## Running it
@@ -86,7 +162,17 @@ pip install -r requirements.txt
 jupyter notebook 02_Notebooks/financial-inclusion-findex-2025.ipynb
 ```
 
+```bash
+python3 03_Outputs/build_figures.py && python3 03_Outputs/build_ledger_figures.py
+```
+
 ## Data & citation
 
-Global Findex Database 2025, World Bank — [worldbank.org/globalfindex](https://www.worldbank.org/en/publication/globalfindex).
-Klapper, L., Singer, D., Starita, L., & Norris, A. (2025). *The Global Findex Database 2025: Connectivity and Financial Inclusion in the Digital Economy.* Washington, DC: World Bank.
+Global Findex Database 2025, World Bank —
+[worldbank.org/globalfindex](https://www.worldbank.org/en/publication/globalfindex).
+Klapper, L., Singer, D., Starita, L., & Norris, A. (2025). *The Global Findex Database 2025:
+Connectivity and Financial Inclusion in the Digital Economy.* Washington, DC: World Bank.
+
+The individual-level microdata used by the research loop is licensed for research use with no
+redistribution. It is gitignored and has never been committed here; only aggregates and findings
+derived from it are published.
