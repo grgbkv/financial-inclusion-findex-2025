@@ -8616,3 +8616,150 @@ carried forward as v5's Appendix B. The B18 counter resets here: the next count 
    block. Highest-priority open design is the **all-windows Δ→Δ on `fin22d`** with a balanced
    denominator declared in advance. Prediction stream unchanged and **CLOSED**: `account_t_d`
    **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.
+
+---
+
+# Cycle 2026-08-26 — pre-registration (written BEFORE any outcome was computed)
+
+**B1 coverage run (done before any hypothesis was chosen; computes no outcome, so not a peek).**
+Country file **107 of 429 columns touched (25%)**, unchanged since E57x opened `fin22`. The only
+fully untouched country module is `con` (133 columns, 2024-only) and it stays **blocked** — numeric
+codes, no questionnaire (`HARNESS_V2_NOTES` 5–6). Micro **93 of 192 (48%)**; `con` is blocked at the
+micro level too (52 columns). The reachable untouched micro surface, declared exhausted by U26x, is
+the **`fin22` borrowing-source block (8 of 9 columns unused)** plus `dig_account` (1). Frames:
+`urbanicity` remains the only untouched country frame and is single-wave. Wave transitions:
+2011→2014 is the thinnest at 24 ledger mentions, but the whole `fin22` module is empty in 2011, so it
+is not reachable by this cycle's designs.
+
+**B18 distillation-trigger check, read against the highest-numbered draft `PAPER_DRAFT_v5.md`
+(B18 amendment 2026-08-16).**
+
+- **Corrections branch: 0 of 5.** v5 opened at zero — v4's two items were both executed in it.
+  Does not fire.
+- **Count branch: 0 of 10.** The counter reset at the 2026-08-25 rewrite (experiment count 95); no
+  experiment has run since. Does not fire.
+- **⇒ B18 DOES NOT FIRE. This is a normal experiment cycle.**
+
+**B17 (micro quota).** **OWED and PAID this cycle.** Last paid U27 (2026-08-23); the 2026-08-25
+distillation registered nothing, so this is the first cycle after the rewrite and the quota falls
+due. Slot 2 is **U28**.
+
+**B3 (lineage).** **E59** parent **E57**, chain length 1. **U28** parent **E57** on subject matter
+(the same item, at the individual level), design ancestor **U24**; chain length 1. Two consecutive
+experiments therefore descend from E57 and the cap of three is not reached — recorded so the next
+cycle knows the chain is at two. **U28x** parent none (module-opening pass).
+
+## Cycle shape (2026-08-15c shape)
+
+- **slot 1** — untouched-module pass: **U28x**, the mandatory exploratory mapping pass on the
+  untouched micro `fin22` block. **This is rule B2's breadth cell for the cycle.**
+- **slot 2** — micro: **U28**, the registered claim built on what U28x identifies (B17 quota).
+- **slot 3** — the agenda's priority-1 open design: **E59**, the all-windows Δ→Δ on `fin22d`
+  (agenda item 11.2), carrying the item-12.2 denominator re-check as a registered no-bar diagnostic.
+
+**B2 breadth cells this cycle, named as the rule requires.** U28x/U28 land on the **micro `fin22`
+block**, eight columns the ledger has never touched and the last reachable untouched micro family.
+E59 lands on the **2014→2017 and 2017→2021 transitions** (not the standard 2021→24 window) in a
+module opened two days ago.
+
+---
+
+## E59 (slot 3) — the all-windows Δ→Δ on `fin22d` (agenda item 11.2)
+
+**Parent: E57** (`keep`, chain length 1). **Stream** hypothesis. **Design** `delta-delta-multi`.
+**Frame** `pan_dev`.
+
+**Why it is registered.** E57 found a **third** counter-moving country margin, `fin22d`, and the
+first that is not a payment-mode item: in the 2024 developing-panel cross-section r(`fin22d`,
+`g20_any`) = **−0.557 weighted / −0.400 unweighted**, surviving G6, a bootstrap interval excluding
+zero, and BH over its own six-item family. E57 is a **cross-sectional composition** statement by
+construction, and **E48 is the standing proof that cross-section and Δ come apart** (the same cash
+margin classified counter-moving in the 2024 cross-section and failed its Δ test on the unweighted
+lens). Agenda item 11.2 registers the Δ design as the next move because `fin22d` is the
+best-conditioned cell the module screen has ever produced — fragility depth 14, ascent depth 0,
+denominator-invariant, base factor −0.261 / −0.026, M3-exact.
+
+**The question.** Does the counter-movement exist **within** economies over time — do economies where
+digital payment grew faster see `fin22d` grow more slowly — or is it only a statement about which
+economies sit where in a single year?
+
+**Design (B14-compliant): an ALL-WINDOWS design.** r(Δ`fin22d`, Δ`g20_any`) over **every transition
+both items support: 2014→2017, 2017→2021, 2021→2024**. **2011→2014 is NOT TESTABLE** — the whole
+`fin22` module and `g20_any` are empty in 2011 — and that is recorded, not treated as a pass.
+
+**REGISTERED SIGN (B15): NEGATIVE.** The predicted direction is that Δ`fin22d` and Δ`g20_any` move
+*against* each other, i.e. r ≤ −0.30. A cell at r ≥ +0.30 is the **opposite** pattern, is reported as
+such, and may not be counted toward the keep.
+
+**REGISTERED KEEP CONDITION (all-windows, B8's every-window form).** The Δ claim is kept only if in
+**all three windows**: r ≤ **−0.30** on **BOTH** lenses (B9/B11), **and** G6 keeps the sign, **and**
+the E4 magnitude rule `|r_droptop| ≥ 0.5 × |r_full|` holds, **and** the 2,000-draw country bootstrap
+percentile interval **excludes zero**. If only the weighted lens clears all three windows the result
+is `keep-weighted`; if only the unweighted lens, `keep-unweighted`; if neither clears all three,
+**DISCARD the Δ claim**. A discard leaves **E57 exactly as it stands** — a cross-sectional keep is not
+falsified by a Δ null (E48/E50 is the precedent, and that precedent is registered here in advance so
+the discard cannot later be read as a demotion).
+
+**REGISTERED DENOMINATOR RULE (B20), declared BEFORE the run.** `fin22` sits inside E56's payments
+release-block risk zone and its 2024 reporting set is **76 against 77 in the three earlier waves**.
+The **primary** is therefore computed on a **single fixed economy set**: the economies reporting
+**both** `fin22d` **and** `g20_any` in **all four** waves 2014/2017/2021/2024. The per-window
+pairwise-complete set is computed too and printed beside it; **where the two disagree the fixed-set
+number is the primary and the difference is reported as reporting-set movement**. The count,
+population share and **names** of the economies that drop are printed (B20's naming requirement).
+
+**REGISTERED SECONDARY 1 (no bar) — the long difference, with B16's path.** r(Δ`fin22d`,
+Δ`g20_any`) over **2014→2024** on the same fixed set, printed beside the **intermediate wave levels**
+of both items (B16). Any non-monotone path is stated.
+
+**REGISTERED SECONDARY 2 (no bar) — the E47/E57 anchor distinction.** The same all-windows design
+against Δ`account_t_d` instead of Δ`g20_any`: does the Δ pattern, if any, attach to digital payment
+or to financial access in general?
+
+**REGISTERED SECONDARY 3 (no bar) — agenda item 12.2, the denominator re-check owed on the two OLDER
+counter-moving margins.** `fin31d` and `fin34c` were screened before rule 9.1 existed and neither has
+been run on both denominators; v5 §12 item 4 records this and the agenda registers the re-check as
+"cheap and owed before either is used in another design". For each, in the 2024 cross-section against
+`g20_any`, report (i) r on the all-adult published denominator, (ii) r on the conditional rate
+item ÷ base, and (iii) the base factor r(base, `g20_any`). **Bases are declared now:** `fin32`
+(wage receipt, all-adult, 71–77 economies) for `fin34c`; for `fin31d` the only candidate base in the
+repo **is the anchor `g20_any` itself**, so the conditional twin is **NOT IDENTIFIED** and is reported
+as such rather than computed circularly. The published `_s` twins are **not** used — `HARNESS_V2_NOTES`
+item 10 documents them as *different items*, not the same concept conditionalised.
+
+**B6 / B9 / B10 / B12 / B21 on every cell.** Weighted and unweighted r; 2,000-draw country bootstrap
+percentile interval and `p_boot`; Kish `neff` beside the nominal n; G6 drop-top-5; the **largest
+single leave-one-out effect with the economy named**; and, on any cell where the two lenses disagree
+against the bar, **both** stability depths (fragility and ascent, economies named).
+
+**Declared.** G3: `fin22d` is an unregistered narrow variant of no registered concept; `g20_any` is
+the registered headline for `digital_payment`; `account_t_d` for `account`. Descriptive co-movement
+only, never causal. G5 n/a (no official series for a Δ correlation). G4 reported per window.
+
+---
+
+## U28x (slot 1) — EXPLORATORY mapping pass on the untouched micro `fin22` block
+
+Logged as **exploratory** under the peek rule (2026-07-11), **before** U28's registration. No
+hypothesis, no keep, no bar. **Parent: none.**
+
+**What it does.** For **every** `fin22*` column in the 2024 individual-level file: the column's
+value coding, the **number of respondents to whom it is asked** and the **number of economies**, the
+weighted pooled rate, and — the point of the pass — **which denominator each item sits on**, i.e.
+whether it is asked of all adults in the module sample or only of a conditional subsample. E57
+established that `fin22b`, `fin22d` and `fin22e` are M3-exact against the country file while
+`fin22c` and `fin22g` are **conditionally asked** in the micro file with all-adult country twins;
+this pass extends that to the whole block and fixes the denominators **before** any gradient is
+registered, so U28's comparison cannot be a denominator artifact (the U25 trap).
+
+**Also reported:** the M3 deviation of each item against its country-file twin over the module's
+economies, and the unweighted cell sizes of the education and income splits that U28 will use, so
+that **M2** is checked before the claim is written rather than after.
+
+**Coverage consumed.** The eight unused micro `fin22` columns — rule **B2's breadth cell** for this
+cycle and the last reachable untouched micro family.
+
+**U28's registration is written after this pass and before U28 is run.** What the pass may fix is
+**structure** — denominators, coverage, cell sizes. It computes **no gradient and no group
+difference**, so no outcome relevant to U28's bar is visible when U28 is registered. That boundary is
+stated here so the peek rule can be audited against it.
