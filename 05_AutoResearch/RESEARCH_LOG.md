@@ -8763,3 +8763,76 @@ cycle and the last reachable untouched micro family.
 **structure** — denominators, coverage, cell sizes. It computes **no gradient and no group
 difference**, so no outcome relevant to U28's bar is visible when U28 is registered. That boundary is
 stated here so the peek rule can be audited against it.
+
+---
+
+## U28 (slot 2) — registered AFTER U28x's structural pass and BEFORE any gradient was computed
+
+**Parent: E57** on subject matter (the same item, at the individual level); **design ancestor U24**
+(the access-absorption ruler). Chain length 1. **Stream** micro. **Design** `micro-cross-section`.
+**Frame** micro 2024, the **98-economy `fin22` module set**, pooled, weighted (`wgt`), M1 by
+construction. Single wave — cross-sectional description, **no trend language**.
+
+**What U28x fixed, and what it did not.** Structure only: the module base is **102,954 respondents
+over 98 economies**; `fin22a`, `fin22b`, `fin22d`, `fin22e` sit on that full base and `fin22f` on
+89.3% of it, while `fin22c`, `fin22g`, `fin22h` and `fin22a_1` are **conditional subsamples** (11–29%
+of the base); `fin22b`, `fin22d`, `fin22e`, `fin22f` are **M3-exact** (median and max |dev| 0.000pp)
+and `fin22a` is **not** (median 2.93pp) despite sitting on the full base. Education cells are 35,073
+primary-or-less against 67,457 secondary-or-more; **89 of 98 economies** carry ≥100 unweighted in
+both. **No rate, gradient or group difference was computed in that pass.**
+
+**Hypothesis.** E57 found `fin22d` counter-moving with digital payment **across economies** in the
+2024 cross-section. E59, run this cycle, found no within-economy Δ counterpart. The remaining reading
+of E57's composition fact is an **individual-level substitution** one: a non-formal borrowing source
+is what an adult uses when formal access is absent, so **within** economies the adult who uses
+`fin22d` should be the adult with **fewer resources and no account**. That is a directional,
+falsifiable prediction, and it is the opposite direction to every gradient the micro stream has kept
+(U4, U7, U10, U13, U14 are all *positive* in education).
+
+**Item, and what is established about it.** `fin22d` is a **non-formal borrowing source** — the
+harness's own headline `fin22a_22a1_22g_d` declares `fin22a` and `fin22g` the formal ones — asked of
+**all** module adults, and M3-exact against the country file. Its **meaning is not established**;
+there is no questionnaire in the repo, and that caveat travels with the claim.
+
+**Declared coding, fixed before the run.** `fin22d == 1` is the outcome; codes **2, 3 and 4 are
+retained in the denominator** as "not this source". This matches the country file's own
+construction — it is *why* the item is M3-exact at 0.000pp — and dropping the 281 DK/RF responses
+(0.27% of the base) would break that correspondence. Declared rather than chosen after the fact.
+
+**REGISTERED SIGN (B15): NEGATIVE on every leg.** A positive gradient of any size is the **opposite**
+pattern, is reported as such, and cannot count toward the keep.
+
+**REGISTERED KEEP CONDITION — all three legs must fire.**
+
+1. **Education.** gap = rate(`educ` ∈ {2,3}) − rate(`educ` == 1) is ≤ **−5pp** (the protocol's default
+   group-difference threshold) **and** its **log-odds twin** ≤ **−0.20** (rule B13: the scale-free
+   statistic is reported beside every pp comparison and wins where they disagree).
+2. **Access.** gap = rate(`account` == 1) − rate(`account` == 0) is ≤ **−5pp** **and** log-odds
+   ≤ **−0.20**.
+3. **Within-country (U19/U20/U22 form, against the pooled-weighting caveat).** In ≥ **75%** of the
+   **M2-qualifying** economies (≥100 unweighted in both education cells — 89 of 98 by U28x) the
+   education gap is **negative**.
+
+Any leg failing is a **DISCARD**, and the failing leg is named. Pooled `wgt` weights economies
+roughly equally (`HARNESS_V2_NOTES` item 3), which is exactly why leg 3 is a keep condition here and
+not a footnote.
+
+**REGISTERED SECONDARY 1 (family test, signs registered, NO bar).** The same two gradients on the
+other three all-module M3-exact items — **`fin22b`, `fin22e`, `fin22f`** — with **NEGATIVE predicted
+for all three** (B15). Reported as a count of items firing; descriptive breadth, and it may not
+rescue a failed primary.
+
+**REGISTERED SECONDARY 2 (no bar) — agenda item 4.7, a fourth margin on the access-absorption
+ruler.** absorption = 1 − (account-conditional education gap ÷ unconditional education gap), placed
+beside U24's **56.9%** (usage) and **8.6%** (welfare). Where the unconditional gap is negative,
+absorption < 0 means the account-conditional gap is **larger** in magnitude, i.e. **amplification**,
+and is reported with that word rather than as a small absorption.
+
+**REGISTERED SECONDARY 3 (no bar) — the reference margin, computed on the SAME sample.**
+`anydigpayment`, the ruler's usage anchor (U10), on the same 98-economy module base, so the contrast
+is internal and not against a number from a different sample.
+
+**Inference.** 2,000-draw **economy-cluster** percentile bootstrap (resample economies with
+replacement) on every gap, on both statistics, and on the absorption share; **Kish `neff`** of the
+pooled respondent weights beside the nominal respondent count (B10 — no significance language
+attaches to 102,954). **M2** ≥100 unweighted on every reported cell; **M3** carried from U28x.

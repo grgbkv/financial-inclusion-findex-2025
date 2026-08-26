@@ -1,0 +1,55 @@
+========================================================================================================
+U28x — EXPLORATORY mapping pass on the micro `fin22` borrowing-source block (2024)
+========================================================================================================
+columns present: fin22a, fin22a_1, fin22b, fin22c, fin22d, fin22e, fin22f, fin22g, fin22h
+
+column         n_asked n_nonmiss   econ  value codes (count)          denominator
+--------------------------------------------------------------------------------------------------------
+fin22a          102954    102954     98  1.0:10457, 2.0:92187, 3.0:120, 4.0:190
+fin22a_1         29567     29567     77  1.0:4244, 2.0:25248, 3.0:64, 4.0:11
+fin22b          102954    102954     98  1.0:33868, 2.0:68772, 3.0:129, 4.0:185
+fin22c           16444     16444     98  1.0:5989, 2.0:10430, 3.0:16, 4.0:9
+fin22d          102954    102954     98  1.0:20414, 2.0:82259, 3.0:128, 4.0:153
+fin22e          102954    102954     98  1.0:11012, 2.0:91701, 3.0:100, 4.0:141
+fin22f           91901     91901     90  1.0:26397, 2.0:65222, 3.0:218, 4.0:64
+fin22g           11798     11798     98  1.0:8439, 2.0:3304, 3.0:29, 4.0:26
+fin22h            8439      8439     98  1.0:6437, 2.0:1944, 3.0:37, 4.0:21
+
+  file total = 144090 respondents, 140 economies
+
+========================================================================================================
+DENOMINATOR STRUCTURE — respondent sets, and whether each item shares the module base
+========================================================================================================
+largest respondent set: `fin22a` with 102954 respondents over 98 economies -- taken as the MODULE BASE
+  fin22a       asked of 102954  (100.0% of the module base; 102954 of them inside it)   ALL-MODULE denominator
+  fin22a_1     asked of  29567  ( 28.7% of the module base; 29567 of them inside it)   CONDITIONAL subsample
+  fin22b       asked of 102954  (100.0% of the module base; 102954 of them inside it)   ALL-MODULE denominator
+  fin22c       asked of  16444  ( 16.0% of the module base; 16444 of them inside it)   CONDITIONAL subsample
+  fin22d       asked of 102954  (100.0% of the module base; 102954 of them inside it)   ALL-MODULE denominator
+  fin22e       asked of 102954  (100.0% of the module base; 102954 of them inside it)   ALL-MODULE denominator
+  fin22f       asked of  91901  ( 89.3% of the module base; 91901 of them inside it)   CONDITIONAL subsample
+  fin22g       asked of  11798  ( 11.5% of the module base; 11798 of them inside it)   CONDITIONAL subsample
+  fin22h       asked of   8439  (  8.2% of the module base; 8439 of them inside it)   CONDITIONAL subsample
+
+========================================================================================================
+M3 — micro share vs the country-file twin, over the module economies
+========================================================================================================
+  fin22a       n_econ  98   median |dev| 2.932pp   max |dev| 30.167pp   DIVERGES — different denominator
+  fin22a_1     n_econ  77   median |dev| 5.300pp   max |dev| 29.514pp   DIVERGES — different denominator
+  fin22b       n_econ  98   median |dev| 0.000pp   max |dev| 0.000pp   M3-EXACT
+  fin22c       n_econ  98   median |dev| 25.522pp   max |dev| 55.526pp   DIVERGES — different denominator
+  fin22d       n_econ  98   median |dev| 0.000pp   max |dev| 0.000pp   M3-EXACT
+  fin22e       n_econ  98   median |dev| 0.000pp   max |dev| 0.000pp   M3-EXACT
+  fin22f       n_econ  90   median |dev| 0.000pp   max |dev| 0.000pp   M3-EXACT
+  fin22g       n_econ  98   median |dev| 56.560pp   max |dev| 99.231pp   DIVERGES — different denominator
+  fin22h       n_econ  98   median |dev| 68.313pp   max |dev| 99.952pp   DIVERGES — different denominator
+
+========================================================================================================
+M2 CELL SIZES for the splits U28 will use (unweighted respondent counts, NO rates)
+========================================================================================================
+  module base                n=102954   educ prim-or-less  35073 / secondary+  67457   poorest40  35363 / richest60  66571
+  module base & account==1   n= 67131   educ prim-or-less  17067 / secondary+  49828   poorest40  19676 / richest60  46741
+  economies with >=100 unweighted in BOTH education cells on the module base: 89 of 98
+
+  educ coding: {1.0: np.int64(35073), 2.0: np.int64(53354), 3.0: np.int64(14103)}
+  account coding on the module base: {0: np.int64(35823), 1: np.int64(67131)}
