@@ -69,20 +69,38 @@ def gap(sub, col, hi_mask, lo_mask):
 
 
 def boot_gap(df, col, hi_mask, lo_mask, draws=DRAWS):
-    """2,000-draw ECONOMY-CLUSTER percentile bootstrap on (pp gap, log-odds gap)."""
-    econs = df["economy"].unique()
-    by = {e: idx for e, idx in df.groupby("economy").groups.items()}
-    pp, lo = [], []
+    """2,000-draw ECONOMY-CLUSTER percentile bootstrap on (pp gap, log-odds gap).
+
+    IMPLEMENTATION PATCH, disclosed: the first version resampled respondent rows and re-ran `gap`
+    on a 102,954-row frame 2,000 times, which did not finish. This version precomputes, per economy,
+    the four sufficient statistics of a weighted rate -- sum(w) and sum(w*y) inside each of the two
+    cells -- and resamples ECONOMIES over those. A weighted mean is sum(w*y)/sum(w), so resampling
+    the per-economy sums is ARITHMETICALLY IDENTICAL to resampling that economy's rows as a block.
+    The registered statistic and the registered cluster unit are unchanged.
+    """
+    d = df.dropna(subset=[col, "wgt"])
+    hi = hi_mask.reindex(d.index).fillna(False).to_numpy()
+    lo = lo_mask.reindex(d.index).fillna(False).to_numpy()
+    y = d[col].eq(1).to_numpy(dtype=float)
+    w = d["wgt"].to_numpy(dtype=float)
+    codes, econs = pd.factorize(d["economy"])
+    k = len(econs)
+    agg = np.zeros((k, 4))
+    np.add.at(agg[:, 0], codes[hi], w[hi])
+    np.add.at(agg[:, 1], codes[hi], (w * y)[hi])
+    np.add.at(agg[:, 2], codes[lo], w[lo])
+    np.add.at(agg[:, 3], codes[lo], (w * y)[lo])
+    pp, lo_out = [], []
     for _ in range(draws):
-        pick = RNG.choice(len(econs), len(econs))
-        idx = np.concatenate([by[econs[i]].to_numpy() for i in pick])
-        s = df.loc[idx]
-        g, l, _, _ = gap(s, col, hi_mask, lo_mask)
-        if pd.notna(g):
-            pp.append(g)
-            lo.append(l)
+        pick = RNG.integers(0, k, k)
+        s = agg[pick].sum(axis=0)
+        if s[0] <= 0 or s[2] <= 0:
+            continue
+        r_hi, r_lo = 100 * s[1] / s[0], 100 * s[3] / s[2]
+        pp.append(r_hi - r_lo)
+        lo_out.append(logodds(r_hi) - logodds(r_lo))
     f = lambda a: (float(np.percentile(a, 2.5)), float(np.percentile(a, 97.5)))
-    return f(pp), f(lo)
+    return f(pp), f(lo_out)
 
 
 def kish(w):
