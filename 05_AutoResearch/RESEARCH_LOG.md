@@ -8836,3 +8836,175 @@ is internal and not against a number from a different sample.
 replacement) on every gap, on both statistics, and on the absorption share; **Kish `neff`** of the
 pooled respondent weights beside the nominal respondent count (B10 — no significance language
 attaches to 102,954). **M2** ≥100 unweighted on every reported cell; **M3** carried from U28x.
+
+---
+
+## E59 — DISCARD the Δ claim. E57's counter-moving margin has no within-economy counterpart, and the failure is a SIGN REVERSAL
+
+Commit `82d74c8`. Stream hypothesis. Design `delta-delta-multi`. Frame `pan_dev`, **B20 fixed
+76-economy set**. **Parent E57**, chain length 1. Status **`discard`**.
+
+**B20 first, because it is the rule that governs the design.** `fin22d` and `g20_any` are reported by
+**77** developing-panel economies in 2014, 2017 and 2021 and by **76** in 2024. The fixed set — both
+items in all four waves — is **76 economies**; the single economy that drops is the **Russian
+Federation**, 2.6% of the item's adult population. The reporting-set movement B20 exists to catch is
+**negligible here**: the per-window pairwise-complete correlation differs from the fixed-set one by
+**Δr_w ≤ 0.008** in every window. This is the first time the rule has been applied prospectively and
+returned "no problem", which is worth recording — B20 is not a rule that always finds something.
+
+**B16 path, printed before the correlations** (weighted level, pp, fixed set):
+
+| item | 2014 | 2017 | 2021 | 2024 | path |
+|---|---|---|---|---|---|
+| `fin22d` | 14.7 | 11.0 | 17.5 | 19.9 | **NON-MONOTONE** — a fall, then a rise |
+| `g20_any` | 33.6 | 43.9 | 55.1 | 60.9 | monotone rising |
+| `account_t_d` | 54.1 | 64.3 | 69.7 | 75.2 | monotone rising |
+
+**The primary, and the verdict:**
+
+| window | r_w | r_u | G6 | E4 ret | boot [2.5, 97.5] | p_boot | largest LOO | bar |
+|---|---|---|---|---|---|---|---|---|
+| 2014→2017 | +0.130 | +0.157 | +0.072 | 0.55 | [−0.273, +0.470] | 0.593 | China −0.123 | **FAIL** |
+| 2017→2021 | −0.295 | −0.215 | −0.305 | 1.03 | [−0.606, +0.177] | 0.221 | India +0.172 | **FAIL** |
+| 2021→2024 | **+0.355** | +0.246 | +0.211 | 0.59 | **[+0.114, +0.543]** | **0.002** | India −0.118 | **FAIL** |
+
+**VERDICT: DISCARD, and the shape of the failure is the finding.** The registered sign was
+**NEGATIVE** and **no window reaches the −0.30 bar on either lens**. The one window whose bootstrap
+interval **excludes zero** is 2021→2024 at **+0.355** — pointing the **other way**. Under **B15** that
+is the **opposite pattern**, reported separately and not counted as partial support: in the most
+recent transition, economies where digital payment grew fastest are economies where this non-formal
+borrowing source grew **fastest too**. The sign runs **+ / − / +** across the three windows, which is
+E39's autocorrelation result seen once more — country-level Δ is dominated by wave-specific variation.
+The **2014→2024 long difference is +0.072 / +0.125**, i.e. the decade span sees nothing at all.
+
+**E57 is UNCHANGED, and that was registered in advance.** A cross-sectional composition keep is not
+falsified by a Δ null; **E48/E50** is the standing precedent and it was named in the pre-registration
+precisely so this discard could not later be read as a demotion. What the two results say jointly is
+sharper than either alone: **economies with more digital payment have less `fin22d` (composition),
+and economies where digital payment grew faster did not see `fin22d` grow more slowly (dynamics)**.
+Those are compatible, and the ledger now has a third module where they come apart.
+
+**SECONDARY 2 — the anchor distinction moves the other way from E57's.** Against Δ`account_t_d` the
+weighted lens gives **−0.286 / −0.448 / +0.306** while the unweighted gives **+0.088 / −0.172 /
++0.186**: lens-split in the two earlier windows, positive in the last, and every bootstrap interval
+except 2021→24's contains zero. E57's cross-section found `fin22d` counter-moving with **digital
+payment** and not with **access**; in Δ neither anchor produces the registered pattern.
+
+**SECONDARY 3 — agenda item 12.2 is DISCHARGED for one of its two items and closed as unidentifiable
+for the other.**
+
+- **`fin34c`**: all-adult **−0.552 / −0.486**; conditional on `fin32` (wage receipt) **−0.773 /
+  −0.735** — the **same class and markedly stronger on both lenses**. The base factor
+  r(`fin32`, `g20_any`) is **+0.411 / +0.599**, so the classification is **not** a penetration
+  artifact. The counter-moving reading of `fin34c` survives the denominator check that v5 §12 item 4
+  said it had never had.
+- **`fin31d`**: all-adult **−0.401 / −0.358**. The conditional twin is **NOT IDENTIFIED** — the only
+  candidate base in the repo *is* the anchor `g20_any`, so the conditional correlation would be
+  circular, and `fin31d_s` is a **different item** (`HARNESS_V2_NOTES` item 10), not the same concept
+  conditionalised. Declared in the pre-registration and **not computed**. This item's denominator
+  question cannot be closed without the questionnaire.
+
+**Gates.** G3 declared. G4: 76 of 77 economies. G5 n/a. G6: sign kept in all three windows. B10:
+`neff` **7.2** against a nominal 76 in every cell. B21 not computed — no window has the two lenses
+disagreeing against the bar, which is the registered trigger.
+
+---
+
+## U28x — EXPLORATORY. The micro `fin22` block is opened, and it is a BRANCHED module with two denominators
+
+Commit (mapping pass, run before U28's registration). Status `exploratory`. **Parent: none.** No
+hypothesis, no bar, no keep.
+
+**The module base is 102,954 respondents over 98 economies.** Denominators:
+
+| on the FULL module base | CONDITIONAL subsamples |
+|---|---|
+| `fin22a`, `fin22b`, `fin22d`, `fin22e` (102,954) · `fin22f` (91,901 / 90 economies, 89.3%) | `fin22a_1` (29,567) · `fin22c` (16,444) · `fin22g` (11,798) · `fin22h` (8,439) |
+
+`fin22h` is asked of **exactly** the 8,439 respondents who answered `fin22g == 1`, so the module has
+an explicit **follow-up branch** — structure the ledger did not have.
+
+**M3 against the country file, over the module economies:** `fin22b`, `fin22d`, `fin22e`, `fin22f`
+are **EXACT** (median and max |dev| **0.000pp**); `fin22c`, `fin22g`, `fin22h` diverge by 25.5 / 56.6
+/ 68.3pp median, which is the expected consequence of a conditionally-asked item against an all-adult
+country twin (E57 recorded two of these).
+
+**The one genuinely open discrepancy: `fin22a` diverges at median 2.93pp / max 30.17pp DESPITE sitting
+on the full module base.** Every other full-base item is exact to 0.000pp. There is no explanation in
+the repo, and it is recorded as an open question rather than reasoned away. Its consequence is
+concrete: **every micro claim on a formal borrowing source is blocked until it is resolved**, which is
+why U28 was built on the non-formal side.
+
+**M2, checked before the claim was written:** education cells 35,073 primary-or-less against 67,457
+secondary-or-more on the base; **89 of 98 economies** carry ≥100 unweighted in **both**.
+`educ` 1/2/3 = 35,073 / 53,354 / 14,103; `account` 0/1 = 35,823 / 67,131.
+
+**Coverage consumed.** Eight previously untouched micro columns — **rule B2's breadth cell** for this
+cycle, and with it the reachable untouched micro surface is down to `dig_account` alone.
+
+---
+
+## U28 — DISCARD. The substitution reading of E57 is rejected, and the education gradient that fails with it is the ledger's first NEGATIVE one
+
+Commit `8034aaa` (+ the disclosed bootstrap patch). Stream micro. Design `micro-cross-section`,
+2024, single wave. Frame: the 98-economy `fin22` module set, pooled, weighted. **Parent E57**
+(subject), **design ancestor U24**. Status **`discard`** — two of three registered legs fail.
+
+| leg | registered bar | result | verdict |
+|---|---|---|---|
+| 1 education | gap ≤ −5pp **and** log-odds ≤ −0.20 | 15.47% vs 25.73%, **−10.26pp**, log-odds **−0.638**, boot pp **[−12.35, −8.07]** | **PASS** |
+| 2 access | gap ≤ −5pp **and** log-odds ≤ −0.20 | 19.13% vs 21.26%, **−2.13pp**, log-odds −0.132, boot pp **[−4.64, +0.36]** — contains zero | **FAIL** |
+| 3 within-country | ≥75% of 89 qualifying economies negative | 65 of 89 = **73.0%**, median gap −3.95pp | **FAIL** (narrowly) |
+
+**VERDICT: DISCARD as registered, and the rejected leg is the substantive result.** The hypothesis
+was **substitution** — that a non-formal borrowing source is what an adult uses when formal access is
+absent. If that were the mechanism, **having an account** would be the variable that separates users
+from non-users. It is not: accountholders use `fin22d` **2.13pp** less than the unbanked, an interval
+that **contains zero**. Meanwhile the **education** gradient is large, and it is the **first negative
+education gradient in the micro stream** — U4, U7, U10, U13 and U14 are all positive, and this item
+runs the other way at −10.26pp with a log-odds twin agreeing at −0.638 (**B13**: the two statistics
+agree here, so there is no artifact question).
+
+**Read together: it is a RESOURCE gradient, not an ACCESS gradient.** Less-educated adults use this
+source much more; whether they hold an account barely matters. That is the opposite structure to
+every usage margin the ledger has measured, where access is the gate.
+
+**SECONDARY 1 — the family, with signs registered in advance: 0 of 3 fire, and two go the WRONG WAY on
+access.** `fin22b` **−1.53pp** education / **+3.92pp** access (log-odds +0.179); `fin22e` −2.03pp /
+**+4.08pp** (log-odds +0.473); `fin22f` **−11.56pp** / −2.00pp. So `fin22b` and `fin22e` are used
+**more** by accountholders — the direct opposite of substitution — while `fin22f`, the item E57x had
+to exclude from the country screen for having only one wave, **mirrors `fin22d` closely**. Under B15
+these positive results are the opposite pattern and are reported, not counted.
+
+**SECONDARY 2 — agenda item 4.7: the fourth margin on the access-absorption ruler, and it is
+AMPLIFICATION.** The account-conditional education gap is **−10.46pp** against an unconditional
+**−10.26pp**, so absorption is **−2.0%**: conditioning on account holding does not shrink the gradient
+at all, it very slightly widens it. The ruler now reads
+
+    usage (U10/U24)  56.9%   ·   welfare (U24)  8.6%   ·   liability (U28)  -2.0%
+
+and U24's finding that the ruler does not transfer from usage to welfare extends to a **third** margin
+type. Access absorbs resource gradients in things you need an account **to do**, and nothing else.
+
+**SECONDARY 3 — the reference on the SAME sample, which is what makes the contrast internal.**
+`anydigpayment` on these 98 economies: education gap **+27.71pp** (log-odds +1.139), access gap
+**+84.76pp**, absorption **56.9%** — reproducing U24's usage figure **exactly** on a different sample.
+That the anchor replicates to the decimal is the reason the −2.0% can be read as a property of the
+item rather than of the frame.
+
+**Gates and inference.** M1 weighted throughout. M2 ok on every reported cell (smallest 32,670). M3
+carried from U28x: `fin22d` exact at 0.000pp. **B10**: Kish `neff` **67,226** against a nominal
+102,954 — the micro file's weights are far less concentrated than the country file's, and no
+significance language attaches to the nominal n regardless. Economy-cluster bootstrap, 2,000 draws,
+on every primary gap. **Single wave — no trend language anywhere in this entry.**
+
+**A disclosed implementation patch.** The registered economy-cluster bootstrap was first written as a
+row-resample of a 102,954-row frame repeated 2,000 times and did not finish. It was rewritten on
+**per-economy sufficient statistics** — Σw and Σ(w·y) inside each cell — and resamples economies over
+those. A weighted mean is Σ(w·y)/Σw, so this is **arithmetically identical** to block-resampling each
+economy's rows; the registered statistic and the registered cluster unit are unchanged. Patch
+committed before the run that produced the verdict.
+
+**What may NOT be claimed from this, and why.** The negative education gradient passed its leg but was
+registered as **one leg of a conjunctive test**, so it cannot be logged as a keep here — that would be
+picking the surviving leg after seeing the result. It is registered as a **standalone next move**.
