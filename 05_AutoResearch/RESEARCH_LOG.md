@@ -9008,3 +9008,42 @@ committed before the run that produced the verdict.
 **What may NOT be claimed from this, and why.** The negative education gradient passed its leg but was
 registered as **one leg of a conjunctive test**, so it cannot be logged as a keep here — that would be
 picking the surviving leg after seeing the result. It is registered as a **standalone next move**.
+
+---
+
+# Wrap-up — 2026-08-26 (E59 · U28x · U28)
+
+**Two registered tests, two discards, and in both the rejected direction carried the information.**
+B18 did not fire (v5 opened both branches at zero on 2026-08-25), so this was a normal cycle under the
+2026-08-15c shape: slot 1 the mandatory mapping pass **U28x** on the last reachable untouched micro
+family, slot 2 the micro claim **U28** paying B17's owed quota, slot 3 the agenda's priority-1 design
+**E59**.
+
+**E59 — DISCARD.** The all-windows Δ→Δ on `fin22d` finds **no** within-economy counterpart to E57's
+cross-sectional counter-movement: **+0.130 / −0.295 / +0.355** weighted against a registered −0.30
+bar, with the **only** zero-excluding interval in the **opposite** direction (2021→24, +0.355,
+p_boot 0.002) and a 2014→2024 long difference of **+0.072**. E57 stands unchanged, as registered in
+advance under the E48/E50 precedent. **B20 ran prospectively for the first time and came back clean**
+(fixed vs pairwise Δr_w ≤ 0.008). Agenda item 12.2 is closed: `fin34c` is denominator-robust and
+**stronger** conditionally (−0.773 / −0.735), `fin31d` is **unidentifiable** without a questionnaire.
+
+**U28x — EXPLORATORY.** The micro `fin22` block is opened: a **branched** module, 102,954 respondents
+over 98 economies, five items on the full base and four conditional subsamples, `fin22h` asked of
+exactly the 8,439 who answered `fin22g == 1`. Four full-base items are M3-exact at 0.000pp; **`fin22a`
+is not** (median 2.93pp) despite sitting on the full base, which blocks the formal side of the module
+and is logged as an open question, not explained away.
+
+**U28 — DISCARD.** The substitution reading of E57 fails on the leg that carried the mechanism:
+accountholders use `fin22d` only **−2.13pp** less than the unbanked, an interval containing zero, and
+two family items go the **other** way (+3.92, +4.08pp). What survives is a **resource** gradient — the
+micro stream's **first negative education gradient**, −10.26pp / log-odds −0.638 against five standing
+positive ones — which cannot be claimed here because it was one leg of a conjunctive test and is
+registered instead as a standalone next move (item 13.5). The access-absorption ruler gains its
+fourth margin at **−2.0% (amplification)** beside usage 56.9% and welfare 8.6%, with the reference
+margin reproducing U24's 56.9% **exactly** on the same 98 economies.
+
+**State.** 98 logged experiments, 41 keeps. Country coverage **107 of 429 (25%)**, micro **101 of 192
+(53%)** — the reachable untouched micro surface is now `dig_account` alone, so `urbanicity` is the
+default breadth cell next cycle. B17 paid; B3 has E57 at two children of three; B18 next cycle at
+**0 of 5** corrections and **3 of 10** count. Prediction stream unchanged and **CLOSED**:
+`account_t_d` **5.014**, `fin17a_17a1_d` **6.831**, `fin24aSD_ND` **6.625**.

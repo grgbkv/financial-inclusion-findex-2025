@@ -4,7 +4,7 @@
 
 This file is the required cycle read (rule: Documentation obligation 1, 2026-08-15c). `RESEARCH_LOG.md` stays the append-only record and is consulted by `grep` for one experiment at a time, never front to back.
 
-**95 logged experiments** · 41 keeps · 38 prediction rows
+**98 logged experiments** · 41 keeps · 38 prediction rows
 
 ## Status counts
 
@@ -16,20 +16,20 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `keep-window` | 10 |
 | `inconclusive` | 2 |
 | `discard-weighted` | 4 |
-| `discard` | 42 |
-| `exploratory` | 6 |
+| `discard` | 44 |
+| `exploratory` | 7 |
 
 ## Design families
 
 | design | n | keeps |
 |---|---|---|
-| `micro-cross-section` | 27 | 17 |
+| `micro-cross-section` | 28 | 17 |
 | `delta-delta` | 19 | 9 |
-| `measurement` | 14 | 2 |
+| `measurement` | 15 | 2 |
 | `level-to-change` | 7 | 0 |
+| `delta-delta-multi` | 7 | 3 |
 | `partial` | 6 | 3 |
 | `gap-trajectory` | 6 | 2 |
-| `delta-delta-multi` | 6 | 3 |
 | `audit` | 6 | 1 |
 | `distribution` | 2 | 2 |
 | `level-cross-section` | 1 | 1 |
@@ -148,6 +148,7 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `E57x` | exploratory | measurement | 2014-2017-2021-2024 | pan_dev | na | EXPLORATORY mapping pass OPENS the ledger's thinnest reachable country module, `fin22` borrowing sources… |
 | `E57` | keep | measurement | 2024 | pan_dev | none | A THIRD counter-moving country-level margin exists and it is the FIRST that is not a payment-mode item: … |
 | `E58` | discard | delta-delta-multi | 2014->17|2017->21|2021->24 | pan_dev split by regionwb24_hi (SSA / five other developing regions pooled) | E22 | Registered PROMOTION of E22 REJECTED and E22 stays `keep-window`: the mobile-money~formal-saving co-move… |
+| `E59` | discard | delta-delta-multi | 2014->17|2017->21|2021->24 (primary) + 2014->2024 (secondary) | pan_dev, B20 fixed 76-economy set (all four waves, both items) | E57 | Registered DELTA claim REJECTED, and the failure is a SIGN REVERSAL ACROSS WINDOWS rather than a null: E… |
 | `M1` | keep | micro-cross-section | 2024 | micro | — | Not enough money (fin11a) barrier among unbanked adults is an income-graded reason, most cited by the po… |
 | `U1` | discard | micro-cross-section | 2024 | micro | — | Gender gap in account ownership is wider among the poorest income quintile than the richest (2024 wave, … |
 | `M2` | keep | micro-cross-section | 2024 | micro | — | Mobile-only accountholders are younger and less educated than bank-only accountholders (2024 wave) |
@@ -180,6 +181,8 @@ This file is the required cycle read (rule: Documentation obligation 1, 2026-08-
 | `U26x` | exploratory | measurement | 2024 | micro (90-economy fin39 split sample / 82-economy fin48-fin49 battery) | na | EXPLORATORY structural mapping pass OPENS the last two reachable untouched micro families and returns a … |
 | `U26` | discard | measurement | 2024 | micro (61-economy fin39 M2-filtered split sample) | none | Registered four-way orientation screen on the newly-opened fin39 module is a DISCARD -- 0 counter-moving… |
 | `U27` | discard | micro-cross-section | 2024 | micro (98-economy emergency-fund module set) | U24 | Registered SOURCE-COMPOSITION claim REJECTED on one of its two magnitude bars, and the rejection carries… |
+| `U28x` | exploratory | measurement | 2024 | micro (98-economy fin22 module set) | na | EXPLORATORY mapping pass OPENS the last reachable untouched micro family, the 9-column `fin22` borrowing… |
+| `U28` | discard | micro-cross-section | 2024 | micro (98-economy fin22 module set) | E57 (subject); design ancestor U24 | Registered SUBSTITUTION claim REJECTED on two of its three legs, and the rejection is the informative ha… |
 
 ## Prediction stream (CLOSED at P28)
 
